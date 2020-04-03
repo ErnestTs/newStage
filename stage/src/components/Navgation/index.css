@@ -1,0 +1,20 @@
+#topBar{
+    width: 100vw;
+    height: 70px;
+    background-color: #0F4C81; 
+    font-size: 16px;
+}
+
+#navgation .logo {
+    float: left;
+    margin-left: 109px;
+    width: 103px;
+    margin-top: 22px;
+}
+
+#loginOut {
+    float: right;
+    margin-right: 78px;
+    margin-top: 24px;
+    color: #fff;
+}
