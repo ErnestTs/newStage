@@ -1,8 +1,12 @@
 #topBar{
+    position: absolute;
     width: 100vw;
     height: 70px;
     background-color: #0F4C81; 
     font-size: 16px;
+    top: 0;
+    left: 0;
+    z-index: 5;
 }
 
 #navgation .logo {
@@ -12,9 +16,22 @@
     margin-top: 22px;
 }
 
+#navgation {
+    height: 100%;
+}
+
 #loginOut {
     float: right;
     margin-right: 78px;
     margin-top: 24px;
     color: #fff;
+    cursor: pointer;
+}
+
+.exit {
+    float: right;
+}
+
+.exit img {
+    margin-top: 22px;
 }

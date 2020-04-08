@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './index.css';
 
 import logo from '../../resource/logo.png';
-// import exitPng from '../../resource/exit.png';
+import exitPng from '../../resource/exit.png';
 
 /**
  * @author 方超 qq978070462
@@ -23,7 +23,7 @@ export default class Navgation extends Component {
                     <img src={logo} alt="" className="logo" />
                     <div className="exit">
                         <span>
-                            {/* <img src={exitPng} alt="" /> */}
+                            <img src={exitPng} alt="" />
                         </span>
                         <span id="loginOut" onClick={this.logout.bind(this)}>退出系统</span>
                     </div>
@@ -37,6 +37,6 @@ export default class Navgation extends Component {
      */
     logout() {
         sessionStorage.clear();
-        window.location.reload(true)
+        window.location.hash = "";
     }
 }

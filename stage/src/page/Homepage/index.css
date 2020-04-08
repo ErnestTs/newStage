@@ -1,0 +1,32 @@
+.page_home {
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    top: 70px;
+    background: #E0E0E0;
+}
+
+.page_home_routeView {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    margin: 0 70px 0 40px
+}
+
+.page_home_title {
+    margin: 37px 0;
+    font-size: 32px;
+    color: #202224;
+    letter-spacing: -0.11px;
+}
+
+#page_home_mainView {
+    width: 100%;
+    height: 78%;
+    background: #fff;
+    border: 0 solid #DCDEE0;
+    border-radius: 14px;
+    overflow: auto;
+    overflow-x: hidden
+}
