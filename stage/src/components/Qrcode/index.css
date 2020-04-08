@@ -1,0 +1,31 @@
+#component_qrcode {
+    height: 100%;
+    width: 100%;
+    float: left;
+}
+#qrcode_scanInput {
+    width: 275px;
+    height: 275px;
+    margin: auto;
+    margin-top: 10%;
+}
+
+#qrcode_scanInput input{
+    height: 100%;
+    width: 100%;
+    background: url(../../resource/scanCode.png) no-repeat;
+    background-size: contain;
+    ime-mode: disabled;
+    outline: none;
+    border: 0;
+    color: transparent;
+}
+
+#component_qrcode p {
+    text-align: center;
+    font-size: 21px;
+    color: #4091F7;
+    letter-spacing: 0.81px;
+    line-height: 30px;
+    margin-top: 25px;
+}

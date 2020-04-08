@@ -51,6 +51,7 @@ export default class Login extends Component {
                         title="验证码"
                         style={{width:"223px",display:"inline-block","verticalAlign": "middle"}}
                         placeholder="请输入验证码" 
+                        id="valideCode"
                         onChange={this.setValue.bind(this,"code")} 
                     />
                     <img id="code-img" src={this.state.validcode} />
@@ -69,10 +70,6 @@ export default class Login extends Component {
 
     componentDidMount(){
         this.getValideCode();
-        Toast.open({
-            type:"danger",
-            content: "Please select visitors."
-        })
     }
 
     /**
@@ -94,8 +91,10 @@ export default class Login extends Component {
 		Common.ajaxProc("getValidationCode", {}).done((data) => {
 			this.setState({
 				validcode: "data:image/png;base64," + data.result.base64Str,
-				digest: data.result.digest
-			});
+                digest: data.result.digest,
+                code:""
+            });
+            document.getElementById("valideCode").value = ""
 		});
     }
     

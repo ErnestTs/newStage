@@ -24,7 +24,8 @@ export default class Input extends Component {
                     {this.props.title}
                 </span>
                 
-                <input 
+                <input
+                    id={!!!!this.props.id?this.props.id:""}
                     type={!!this.props.type?this.props.type:"text"} 
                     placeholder={!this.props.placeholder?"":this.props.placeholder}
                     onFocus={()=>{this.setState({focus:true})}}

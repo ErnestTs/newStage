@@ -1,0 +1,158 @@
+#menu{
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 320px;
+}
+
+#menu_large {
+    width: 320px;
+    height: 100%;
+    background: #fff;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+#menu_large .gateInfo {
+    height: 243px;
+    background: #E7EDF2;
+    width: 100% ;
+    text-align: center;
+    padding-top: 60px;
+}
+
+#menu_Head {
+    height: 140px;
+}
+
+#menu_Head img {
+    width: 140px;
+    height: 140px;
+}
+
+#menu_Company {
+    font-size: 21px;
+    color: #323233;
+    text-align: center;
+    margin-top: 10px
+}
+
+#menu_Opname {
+    font-size: 16px;
+    color: #323233;
+    letter-spacing: 0;
+    margin-top: 2px
+}
+
+.menu_item {
+    cursor: pointer;
+    text-align: center;
+    width: 289px;
+    margin: auto;
+    height: 64px;
+    line-height: 64px;
+    font-size: 16px;
+    color: #323233;
+    position: relative;
+}
+
+.menu_item img {
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 76px;
+    top: 22px
+}
+
+.menu_item span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 64px;
+}
+
+.menu_itemGroup0 {
+    padding: 10px 0 15px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.menu_itemGroup1 {
+    padding: 15px 0;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.menu_itemGroup2 {
+    padding: 15px 0;
+}
+
+#menu_large .action {
+    background: #0F4C81;
+    border-radius: 6px;
+    color: #fff;
+    animation: onAction 0.5s forwards;
+    left: 15px;
+}
+
+.menu_actionBorder {
+    width: 5px;
+    height: 100%;
+    background: #0F4C81;
+    border-radius: 4px;
+    position: absolute;
+    left:-31px;
+    border:0 0 4px 4px;
+}
+
+@keyframes onAction
+	{
+	from {left: 0;}
+	to {left: 15px;}
+}
+
+/*Safari 和 Chrome:*/
+@-webkit-keyframes onAction
+{
+    from {
+        left: 0;
+        background: #fff;
+        color: #000;
+    }
+	to {
+        left: 15px;
+        background: #0F4C81;
+        color: #fff;
+    }
+}
+
+
+#menu_change {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url(../../resource/change.png) no-repeat;
+    z-index: 99;
+    top: -47px;
+}
+
+#menu_small {
+    width: 84px;
+    height: 100%;
+    background: #fff;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+#menu_small .action {
+    border: 0;
+    box-shadow: none;
+}
+
+#menu_small .menu_item {
+    width: 84px;
+    height: 52px;
+}
+
+#menu_small .menu_item img {
+    left: 31px;
+    top: 16px;
+}
