@@ -15,7 +15,7 @@
 }
 
 .page_home_title {
-    margin: 37px 0;
+    margin: 2% 0;
     font-size: 32px;
     color: #202224;
     letter-spacing: -0.11px;
@@ -29,4 +29,11 @@
     border-radius: 14px;
     overflow: auto;
     overflow-x: hidden
+}
+
+.fll {
+    float: left;
+}
+.flr {
+    float: right;
 }

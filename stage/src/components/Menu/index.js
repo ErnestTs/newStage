@@ -80,7 +80,8 @@ export default class Menu extends Component {
     }
 
     componentDidMount(){
-        this.changeItem(0,"二维码","qrcode");
+        // this.changeItem(0,"二维码","qrcode");
+        this.changeItem(0,"二维码","appointmentInfo");
     }
 
     render(){
