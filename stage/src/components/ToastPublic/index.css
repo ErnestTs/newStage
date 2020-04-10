@@ -29,7 +29,7 @@
     opacity: 0;
 }
 
-.success {
+#toast.success {
     background: #5cb85c;
     border-color: #4cae4c;
 }

@@ -10,6 +10,10 @@ import Toast from "../../components/ToastPublic/index.jsx"
 
 // components
 import Qrcode from "../../components/Qrcode/index"
+import IdCard from "../../components/IdCard/index"
+import PassPort from "../../components/PassPort/index"
+import Senseid from "../../components/Senseid/index"
+import AppointmentInfo from  "../../components/AppointmentInfo/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -42,12 +46,34 @@ export default class Homepage extends Component {
                         <Router>
                             <Switch>
                                 <Route path="/home/qrcode" component={Qrcode} />
+                                <Route path="/home/Certificates" component={this.state.Certificates} />
+                                <Route path="/home/appointmentInfo" component={AppointmentInfo} />
                             </Switch>
                         </Router>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    componentDidMount(){
+        switch(Common.$_Get().idcard){
+            case "1":
+                this.setState({
+                    Certificates: PassPort
+                })
+                break;
+            case "3":
+                this.setState({
+                    Certificates : Senseid
+                })
+                break;
+            default:
+                this.setState({
+                    Certificates : IdCard
+                })
+                break;
+        }
     }
 
     /**

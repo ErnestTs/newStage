@@ -101,6 +101,7 @@ export default class Common {
 		let url = window.document.location.href.toString();
 		let u = url.split("?");
 		if (typeof (u[1]) === "string") {
+			u[1] = u[1].split("#")[0];
 			u = u[1].split("&");
 			let get = {};
 			for (let i in u) {

@@ -1,0 +1,49 @@
+#component_idCard {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.scanCard_background {
+    height: 275px;
+    width: 275px;
+    margin: auto;
+    margin-top: 10%;
+    background: url(../../resource/scanCard.png) no-repeat;
+    background-size: contain;
+}
+
+#component_idCard p {
+    text-align: center;
+    font-size: 21px;
+    color: #4091F7;
+    letter-spacing: 0.81px;
+    line-height: 30px;
+    margin-top: 25px;
+}
+
+.btn_box {
+    width: 100%;
+    height: 56px;
+    margin-top: 40px
+}
+
+.btn_box div {
+    height: 100%;
+    width: 460px;
+    text-align: center;
+    line-height: 56px;
+    color:#fff;
+    font-size: 20px;
+    background: #0F4C81;
+    border-radius: 8px;
+    margin: auto
+}
+
+
+
+@media screen and (max-width: 1280px) {
+    .scanCard_background {
+        margin-top: 3%;
+    }
+}

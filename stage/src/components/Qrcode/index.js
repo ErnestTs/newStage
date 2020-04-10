@@ -16,7 +16,7 @@ export default class Qrcode extends Component {
         return (
             <div id="component_qrcode">
                 <div id="qrcode_scanInput">
-                    <input ref="qrcodeInput" onChange={this.getQrcode.bind(this)} autoFocus="autofocus" onBlur={this.getFocus.bind(this)} />
+                    <input id="qrcode_input" ref={(input)=>{this.qrcodeInput=input}}onChange={this.getQrcode.bind(this)} autoFocus="autofocus" onBlur={this.getFocus.bind(this)} />
                 </div>
                 <p>二维码扫描</p>
             </div>
@@ -33,8 +33,12 @@ export default class Qrcode extends Component {
     getQrcode(){
         let _this = this;
 		setTimeout(function () {
-            _this.analysisCode(_this.refs.qrcodeInput.value);
-            // _this.refs.qrcodeInput.value = ""
+            _this.analysisCode(_this.qrcodeInput.value);
+            try {
+                _this.qrcodeInput.value = ""
+            }catch(err){
+                console.log(err)
+            }
 		}, 1000);
     }
 
@@ -42,7 +46,7 @@ export default class Qrcode extends Component {
      * @description [获取焦点]
      */
     getFocus(){
-        this.refs.qrcodeInput.focus()
+        this.qrcodeInput.focus()
     }
 
     /**
@@ -78,6 +82,10 @@ export default class Qrcode extends Component {
         }
     }
 
+    /**
+     * @description [通过vid获取预约信息]
+     * @param {String} vid 
+     */
     getVisitorByVid(vid){
 		var sendData = {
 			vid: vid
@@ -91,10 +99,6 @@ export default class Qrcode extends Component {
                 })
                 return;
             }
-			// console.log("通过vid获取访客记录信息", data);
-			// if (!this.getVisitor(data.result.vphone)) return;
-
-			// if (this.isVistor === false) return;
 			if (data.status === 0 && data.result !== null) {
 				let result = data.result;
 
@@ -104,45 +108,44 @@ export default class Qrcode extends Component {
 					}
                 }
                 this.routerData = {
-                    visitInfo:{}
+					visitInfo:{
+						peopleCount:result.peopleCount,
+						vname: result.vname,
+						vtime: new Date(result.appointmentDate).format("yyyy-MM-dd hh:mm:ss"),
+						vphone: result.vphone,
+						vtype: result.visitType,
+						vemail: result.vemail,
+						vid: vid.substring(1),
+						signInGate: result.signInGate,
+						signInOpName: result.signInOpName,
+						signOutGate: result.signOutGate,
+						signOutOpName: result.signOutOpName,
+						member: result.memberName,
+						vcompany: result.vcompany,
+						remark: result.remark,
+						leaveTime: data.result.leaveTime === undefined ? null : data.result.leaveTime,
+						gid: result.gid
+					},
+					empInfo:{
+						ename: result.empName,
+						ephone: result.empPhone,
+						dept: result.dept,
+						workbay: result.workbay,
+						extendCol: result.extendCol
+					},
+					idcardContent: {
+						certNumber: this.cardId,
+						partyName: result.vname,
+						certNumber: result.cardId
+					},
+					tid: result.tid,
+					vgroup: result.vgroup,
+					appointmentDate: result.appointmentDate,
+					action: "qrcode",
+					vType: data.result.vType,
+					permission: data.result.permission,
+					qrtype: vid.substring(0, 1)
                 }
-				this.routerData.tid = result.tid;
-				this.routerData.vgroup = result.vgroup;
-				this.routerData.visitInfo = {
-					peopleCount:result.peopleCount,
-					vname: result.vname,
-					vtime: new Date(result.appointmentDate).format("yyyy-MM-dd hh:mm:ss"),
-					vphone: result.vphone,
-					vtype: result.visitType,
-					vemail: result.vemail,
-					vid: vid.substring(1),
-					signInGate: result.signInGate,
-					signInOpName: result.signInOpName,
-					signOutGate: result.signOutGate,
-					signOutOpName: result.signOutOpName,
-					member: result.memberName,
-					vcompany: result.vcompany,
-					remark: result.remark,
-					leaveTime: data.result.leaveTime === undefined ? null : data.result.leaveTime,
-					gid: result.gid
-				};
-				this.routerData.empInfo = {
-					ename: result.empName,
-					ephone: result.empPhone,
-					dept: result.dept,
-					workbay: result.workbay,
-					extendCol: result.extendCol
-				};
-				this.routerData.idcardContent = {
-					certNumber: this.cardId,
-					partyName: result.vname,
-					certNumber: result.cardId
-				};
-				this.routerData.appointmentDate = result.appointmentDate;
-				this.routerData.action = "qrcode";
-				this.routerData.vType = data.result.vType;
-				this.routerData.permission = data.result.permission;
-				this.routerData.qrtype = vid.substring(0, 1);
 				if (this.routerData.signOutDate === undefined || this.routerData.signOutDate === null) {
 					this.routerData.signOutDate = data.result.signOutDate;
 				}
@@ -168,7 +171,7 @@ export default class Qrcode extends Component {
 					this.getSignOp(this.routerData.visitInfo.vphone, this.routerData.visitInfo.vemail, result.signOutDate, result.appid);
 				}
 
-				this.props.history.push("/home/appointmentInfo");
+				this.props.history.push({pathname:"/home/appointmentInfo", state:this.routerData});
 			}
 		}.bind(this));
     }
@@ -299,54 +302,6 @@ export default class Qrcode extends Component {
 				this.routerData.visitInfo.signInOpName = "";
 				this.routerData.visitInfo.signOutGate = "";
 				this.routerData.visitInfo.signOutOpName = "";
-			}
-		}.bind(this));
-	}
-
-	getVisitor(vphone) {
-		let status = true;
-		let sendData = {
-			phone: vphone,
-			userid: sessionStorage.userid
-		};
-
-		Common.ajaxProcWithoutAsync("GetVisitor", sendData, sessionStorage.token, false).done(function (data) {
-			if(!data.result) return;
-			if (data.result.cardId === null) {
-                Toast.open({
-                    type:"danger",
-                    content: "初次访客请使用身份证扫描登记"
-                })
-				status = false;
-				// setTimeout(function (data) {
-				// 	this.props.routerCallback("readcard");
-				// }.bind(this), 2000);
-			}
-			// else {
-			// 	this.isVistor = true;
-			// 	this.cardId = data.result.cardId;
-			// 	if (data.result.signOutDate !== undefined && data.result.signOutDate !== null) {
-			// 		this.routerData.signOutDate = data.result.signOutDate;
-			// 	}
-			// 	console.log("3", this.routerData);
-			// }
-
-			return status;
-			if (data.result.signOutDate !== undefined && data.result.signOutDate !== null) {
-				this.routerData.signOutDate = data.result.signOutDate;
-			}
-			if (data.status === 1 || data.result === null || data.result.cardId === null) {
-                Toast.open({
-                    type:"danger",
-                    content: "无身份信息，访客请使用身份证扫描登记"
-                })
-				setTimeout(function (data) {
-					this.props.routerCallback("readcard");
-				}.bind(this), 3000);
-			}
-			else {
-				this.isVistor = true;
-				this.cardId = data.result.cardId;
 			}
 		}.bind(this));
 	}
