@@ -1,6 +1,3 @@
-/**
- * Created by duronal on 17/4/20.
- */
 import $ from 'jquery';
 import Base64Code from './Base64';
 
@@ -15,7 +12,7 @@ export default class Common {
 	// static url = "http://www.coolvisit.top/ykt/qcvisit/";
 	// static url = "http://139.217.223.183/qcvisit/";
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
-	// static cameraUrl = "http://www.coolvisit.top/qcvisitBase/stage/MyCamera.swf";
+	static cameraUrl = "http://www.coolvisit.top/stage/MyCamera.swf";
 	// static customPrintUrl = "http://www.coolvisit.top/ykt/card/custom/";
 
 	static ajaxProc(action, data, token) {
@@ -268,5 +265,249 @@ export default class Common {
 			o = Common.codeEnBase(t.join("")).split("");
 		return o.splice(n, 0, Common.randomString(5)), o.join("");
 	}
+
+
+/**
+ * @description [处理转译字符串]
+ * @param {String} str
+ * @returns {String}
+ */
+	static compileStr(str) {
+		if(!str){
+			return
+		}
+		let resStr = str;
+		resStr = resStr.replace(/&amp;/g,'&');
+		resStr = resStr.replace(/&lt;/g,'<');
+		resStr = resStr.replace(/&gt;/g,'>');
+		resStr = resStr.replace(/\\/g,'');
+		resStr = resStr.replace(/&quot;/g,'"');
+		resStr = resStr.replace(/&reg;/g,'®');
+		resStr = resStr.replace(/&nbsp;/g,"&nbsp;");
+		return resStr
+	}
+
+	/**
+	 * @description [初始化证照通]
+	 */
+	static initPassPort(){
+		// add by 方 添加读卡器驱动 用于读取身份证信息
+		$("#appbar").append(
+			'<object id="objIDCard" classid="clsid:10EC554B-357B-4188-9E5E-AC5039454D8B"></object>'
+		);
+		$("#appbar").append(
+			'<object classid="clsid:2DEFFB1F-4F4C-41B6-930A-63BE16732D61" id="objIDCard2" width="0" height="0"></object>'
+		);
+	}
+
+	static initIdCard(){
+
+	}
+
+	static scanByPassPort() {
+		let objIDCard = document.getElementById("objIDCard");
+		/**
+		 * 如果没有IDCard的识别核心没有加在成功则重新初始化一下
+		 */
+		if (!objIDCard.IsLoaded()) {
+			let nRet = objIDCard.InitIDCard("53574805357523480961", 1);
+			if (nRet !== 0) {
+				this.props.toastCallback(2, "show", "证件通驱动加载失败,请检查设备");
+				return;
+			}
+		}
+
+		/**
+		 * 设置RecogIDCard识别的证件类型。
+		 */
+
+		objIDCard.SetIDCardType(2, 0);
+
+		objIDCard.AddIDCardType(1, 0);
+		objIDCard.AddIDCardType(2, 0);
+		objIDCard.AddIDCardType(3, 0);
+		objIDCard.AddIDCardType(4, 0);
+		objIDCard.AddIDCardType(5, 0);
+		objIDCard.AddIDCardType(5, 0);
+		objIDCard.AddIDCardType(6, 0);
+		objIDCard.AddIDCardType(7, 0);
+		objIDCard.AddIDCardType(9, 0);
+		objIDCard.AddIDCardType(10, 0);
+		objIDCard.AddIDCardType(11, 0);
+		objIDCard.AddIDCardType(12, 0);
+		objIDCard.AddIDCardType(13, 0);
+		objIDCard.AddIDCardType(14, 0);
+		objIDCard.AddIDCardType(15, 0);
+		objIDCard.AddIDCardType(16, 0);
+		objIDCard.AddIDCardType(22, 0);
+		objIDCard.AddIDCardType(25, 0);
+		objIDCard.AddIDCardType(26, 0);
+
+		/**
+		 * ClassifyIDCard
+		 * 对即将识别的证件自动分类。
+		 * 返回值：1表示是芯片卡，2表示普通的MRZ证件，3代表不含有MRZ的证件，其它 失败。
+		 * 说明：调用该接口前已经通过调用SetIDCardID和AddIDCardID设置了要分类的证
+		 * 件类型，具体该分类接口要采集什么图像根据情况确定，内部采集图像。
+		 */
+		let nCardType = objIDCard.ClassifyIDCard();
+
+		let nDG = 3,
+			nViz = 1,
+			nImg = 15,
+			nResult = "";
+
+		if (nCardType === 1) {
+			/**
+			 * RecogChipCard
+			 * 功能：采集图象并识别带电子芯片的证件。
+			 */
+			nResult = objIDCard.RecogChipCard(nDG, nViz, nImg);
+		}
+		else if (nCardType === 2) {
+			/**
+			 * RecogGeneralMRZCard
+			 * 功能：采集图像并根据模板识别带有MRz的证件
+			 */
+			nResult = objIDCard.RecogGeneralMRZCard(nViz, nImg);
+		}
+
+		else if (nCardType === 3) {
+			/**
+			 * RecogCommonCard
+			 * 采集图像并对指定类型的证件进行识别
+			 */
+			nResult = objIDCard.RecogCommonCard(nImg);
+		}
+
+		/**
+		 * 如果nResult>0 则保存有效,根据识别字段进行自动归类
+		 */
+		if (nResult > 0) {
+			let nFieldNum = objIDCard.GetRecogFieldNum();
+			let result = [];
+			if (nFieldNum > 0) {
+				for (let i = 1; i <= nFieldNum; ++i) {
+					let temp = "";
+					temp += objIDCard.GetFieldName(i);
+					temp += ":";
+					temp += objIDCard.GetRecogResult(i);
+					result.push(temp);
+				}
+			}
+
+			objIDCard.SaveImageEx("C:\\head.jpg", 15);
+			let cardcode = objIDCard.EncodeToBase64("C:\\head.jpg");
+			let headcode = objIDCard.EncodeToBase64("C:\\headHead.jpg");
+
+			let count = result.length;
+			if (count === 6) {
+				let item = result[5];
+				if (item.substring(0, 6) === "公民身份号码") {
+					return this.readProcess(result, 1, headcode, cardcode);
+				}
+			}
+			else if (count === 13) {
+				let item = result[8];
+				if (item.substring(0, 6) === "港澳证件号码") {
+					return this.readProcess(result, 2, headcode, cardcode);
+				}
+			}
+			else if (count === 30) {
+				let item = result[0];
+				if (item.substring(0, 4) === "护照号码") {
+					return this.readProcess(result, 3, headcode, cardcode);
+				}
+			}
+			else if (count === 10) {
+				let item = result[6];
+				if (item.substring(0, 4) === "准驾车型") {
+					return this.readProcess(result, 4, headcode, cardcode);
+				}
+			}
+			else if (count === 19) {
+				let item = result[16];
+				if (item.substring(0, 4) === "签发次数") {
+					return this.readProcess(result, 5, headcode, cardcode);
+				}
+			}
+		}
+	}
+
+	static readProcess(result, type, head, card) {
+		let partyName = "",
+			certNumber = "",
+			certAddress = "",
+			effDate = "",
+			cardType = "",
+			expDate = "",
+			sex = "",
+			nationality = "",
+			birthday = "";
+
+
+		switch (type) {
+			case 1:
+				partyName = this.getCardColumn(result, 0, 3);
+				certNumber = this.getCardColumn(result, 5, 7);
+				certAddress = this.getCardColumn(result, 4, 3);
+				sex = this.getCardColumn(result, 1, 3);
+				nationality = this.getCardColumn(result, 2, 3);
+				birthday = this.getCardColumn(result, 3, 3);
+				effDate = "";
+				expDate = "";
+				cardType = 1;
+				break;
+			case 2:
+				partyName = this.getCardColumn(result, 1, 5);
+				certNumber = this.getCardColumn(result, 0, 5);
+				certAddress = "";
+				effDate = this.getCardColumn(result, 9, 5) + ' ';
+				expDate = this.getCardColumn(result, 10, 5);
+				cardType = 2;
+				break;
+			case 3:
+				partyName = this.getCardColumn(result, 1, 5);
+				certNumber = this.getCardColumn(result, 0, 8);
+				certAddress = this.getCardColumn(result, 13, 5);
+				effDate = this.getCardColumn(result, 15, 5);
+				expDate = this.getCardColumn(result, 26, 8);
+				cardType = 3;
+				break;
+			case 4:
+				partyName = this.getCardColumn(result, 1, 3);
+				certNumber = this.getCardColumn(result, 0, 3);
+				certAddress = this.getCardColumn(result, 3, 3);
+				effDate = this.getCardColumn(result, 5, 7);
+				expDate = this.getCardColumn(result, 9, 7);
+				cardType = 4;
+				break;
+			case 5:
+				partyName = this.getCardColumn(result, 2, 5);
+				certNumber = this.getCardColumn(result, 1, 5);
+				certAddress = this.getCardColumn(result, 17, 4);
+				effDate = this.getCardColumn(result, 15, 5);
+				expDate = this.getCardColumn(result, 6, 5);
+				cardType = 5;
+				break;
+			default:
+		}
+		return {certNumber:certNumber,partyName:partyName}
+	}
+
+	
+    /**
+     * 从读卡结果中获取字段值
+     * @param {*} result 读卡结果
+     * @param {*} index 字段索引
+     * @param {*} start 截取字符串的初始位置
+     */
+		getCardColumn(result, index, start) {
+			let item = result[index],
+				count = item.length;
+	
+			return item.substring(start, count);
+		}
+
 }
 

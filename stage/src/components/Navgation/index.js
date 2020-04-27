@@ -37,6 +37,6 @@ export default class Navgation extends Component {
      */
     logout() {
         sessionStorage.clear();
-        window.location.hash = "";
+        window.location.hash = "/login";
     }
 }

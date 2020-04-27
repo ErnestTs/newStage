@@ -252,6 +252,9 @@ export default class Qrcode extends Component {
 			}
 		}
 		else if (today < preTime) {
+			if(data.qrcodeConf > 1){
+				return true
+			}
             Toast.open({
                 type:"danger",
                 content: "该预约尚未到签入时间"
@@ -259,6 +262,9 @@ export default class Qrcode extends Component {
 			return false;
 		}
 		else if (today > latTime) {
+			if(data.qrcodeConf > 1){
+				return true
+			}
             Toast.open({
                 type:"danger",
                 content: "该预约已超过来访时间"

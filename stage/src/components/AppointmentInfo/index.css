@@ -66,6 +66,13 @@
     line-height: 50px;
 }
 
+.component_AppointmentInfo_appInfo_input {
+    border: 1px solid #4091F7;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-indent: 10px
+}
+
 
 @media screen and (max-width: 1280px) {
     .component_AppointmentInfo_appInfo, .component_AppointmentInfo_cardInfo {

@@ -1,0 +1,150 @@
+#component_Logistics {
+    width: 100%;
+    float: left;
+}
+
+#component_Logistics .mask {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+#component_Logistics .DatePicker {
+    position: fixed;
+    top: 10%;
+    right: 4%;
+}
+
+.component_Logistics_tableBoard {
+    width: 95%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.component_Logistics_tableBoard .ant-table-thead {
+    background: #E7EDF2;
+    border-radius: 12px;
+}
+
+.component_Logistics_tableBoard .ant-table-container table > thead > tr:first-child th {
+    background: #E7EDF2;
+}
+
+.component_Logistics_tableBoard .ant-table-container table > thead > tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+.component_Logistics_tableBoard .ant-table-container table > thead > tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.component_Logistics_tableBoard tr {
+    height: 95px;
+}
+.component_Logistics_tableBoard .ant-table-thead tr{
+    height: 48px;
+}
+
+.logisticState {
+    display: block;
+    float: left;
+    width: 92px;
+    height: 26px;
+    border-radius: 13.5px;
+    line-height: 26px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    margin-right: 30px;
+}
+
+.logisticState.noSignIn{
+    background: #C2DAF9;
+    color: #4091F7;
+}
+.logisticState.noSignIn:after {
+    content: "待签到"
+}
+
+.logisticState.noCheckOut{
+    background: #F8C6C6;
+    color: #F56C6C;
+}
+.logisticState.noCheckOut:after {
+    content: "待签出"
+}
+
+.logisticState.checkedOut{
+    background: #C3F1EB;
+    color: #00BA9A;
+}
+.logisticState.checkedOut:after {
+    content: "已签出"
+}
+
+
+.logisticBtn {
+    width: 56px;
+    height: 29px;
+    border-radius: 4px;
+    line-height: 29px;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    float: left;
+    vertical-align: middle;
+    margin-right: 30px;
+}
+.logisticBtn.noSignIn{
+    cursor: pointer;
+    background: #4091F7;
+}
+.logisticBtn.noSignIn:after {
+    content: "签到"
+}
+
+.logisticBtn.noCheckOut{
+    cursor: pointer;
+    background: #F56C6C;
+}
+.logisticBtn.noCheckOut:after {
+    content: "签出"
+}
+
+.logisticBtn.checkedOut{
+    background: none;
+}
+
+.logisticInfo {
+    cursor: pointer;
+    font-size: 12px;
+    color: #4091F7;
+    letter-spacing: 0;
+}
+
+
+
+@media screen and (max-width: 1660px) {
+    .logisticBtn,.logisticState {
+        display: block;
+        float: none;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    .logisticInfo {
+        display: block;
+        text-align: center;
+    }
+    #component_Logistics .DatePicker {
+        position: fixed;
+        top: 14%;
+        right: 5.5%;
+    }
+}

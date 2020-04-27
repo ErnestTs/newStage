@@ -36,7 +36,7 @@ export default class Login extends Component {
                     <Input 
                         title="账号" 
                         style={{marginBottom:"30px"}}
-                        placeholder="请输入用户名/邮箱地址" 
+                        placeholder="请输入用户名/邮箱地址"
                         onChange={this.setValue.bind(this,"username")}
                         state=""
                     />
@@ -317,6 +317,11 @@ export default class Login extends Component {
 	 * 获取门岗组信息
 	 */
 	getEquipmentGroupByUserid(){
+		if(!!sessionStorage.sid){
+            sessionStorage.setItem("EquipmentAccess","")
+            this.props.history.push("/home")
+			return
+		}
 		Common.ajaxProcWithoutAsync("getEquipmentGroupByUserid", {"userid": sessionStorage.userid}, sessionStorage.token).done((data)=>{
 			let tempArr = data.result;
 			let resStr = []
