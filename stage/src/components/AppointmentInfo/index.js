@@ -37,7 +37,15 @@ export default class AppointmentInfo extends Component {
 
     render(){
         // 渲染当前访客状态
-        var appointmentState = this.renderItemState({type:1,value:3})
+        var appointmentState_val = 1;
+        if(!!this.state.leaveTime){
+            appointmentState_val = 3
+        }else if(!!this.state.visitDate){
+            appointmentState_val = 2
+        }else if(this.state.permission == 0){
+            appointmentState_val = 0
+        }
+        var appointmentState = this.renderItemState({type:1,value:appointmentState_val})
         return (
             <div id="component_AppointmentInfo">
                 <div className="topBar">
@@ -85,7 +93,16 @@ export default class AppointmentInfo extends Component {
                             }
                         </ul>
                         <ul>
-                            {this.renderItem("备注", this.state.visitInfo.remark, {},"remark")}
+                            {
+                                (()=>{
+                                    if(appointmentState_val != 1){
+                                        return this.renderItem("备注", this.state.visitInfo.remark, {},"remark")
+                                    }else {
+                                        return this.renderExtendItem("备注","remark")
+                                    }
+                                })()
+                                
+                            }
                         </ul>
                     </div>
 
@@ -129,7 +146,7 @@ export default class AppointmentInfo extends Component {
                     </div>
                 </div>
 
-                <div id="component_AppointmentInfo_loginBTN">
+                <div id="component_AppointmentInfo_loginBTN" onClick={this.nextStep.bind(this)}>
                     下一步
                 </div>
             </div>
@@ -195,7 +212,6 @@ export default class AppointmentInfo extends Component {
      */
     renderExtendItem(name, key, value){
         value = !!value?value:"";
-        console.log(this.state.extendCol)
         return (
             <li key={key}>
                 <span className="component_AppointmentInfo_appInfo_key">
@@ -207,14 +223,26 @@ export default class AppointmentInfo extends Component {
     }
 
     /**
-     * 
+     * @description [修改扩展字段值]
      */
     setExtendValue(key,e){
-        let tempObj = this.state.extendCol;
-        tempObj[key] = e.target.value;
-        this.setState({
-            extendCol:tempObj
-        })
+        let tempObj;
+        switch(key){
+            case "remark":
+                tempObj = this.state.visitInfo;
+                tempObj[key] = e.target.value;
+                this.setState({
+                    visitInfo:tempObj
+                })
+                break;
+            default:
+                tempObj = this.state.extendCol;
+                tempObj[key] = e.target.value;
+                this.setState({
+                    extendCol:tempObj
+                })
+                break;
+        }
     }
 
     /**
