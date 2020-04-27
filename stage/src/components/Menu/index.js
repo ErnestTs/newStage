@@ -74,14 +74,14 @@ export default class Menu extends Component {
                     active:Appointment_3
                 },
             },
-            open: false,     // true-完整菜单 false-缩略菜单
+            open: true,     // true-完整菜单 false-缩略菜单
             active: -1,
         }
     }
 
     componentDidMount(){
-        // this.changeItem(0,"二维码","qrcode");
-        this.changeItem(0,"二维码","appointmentInfo");
+        this.changeItem(0,"二维码","qrcode");
+        // this.changeItem(0,"物流管理","logistics");
     }
 
     render(){

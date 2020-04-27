@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect, Route, HashRouter as Router, Switch } from "react-router-dom"
+import 'antd/dist/antd.css';
 import './index.css';
 
 import Common from "../../Common/index"
@@ -14,6 +15,9 @@ import IdCard from "../../components/IdCard/index"
 import PassPort from "../../components/PassPort/index"
 import Senseid from "../../components/Senseid/index"
 import AppointmentInfo from  "../../components/AppointmentInfo/index"
+import Logistics from "../../components/Logistics/index"
+import LogisticsInfo from "../../components/LogisticsInfo/index"
+import FaceRecognition from "../../components/FaceRecognition/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -28,7 +32,7 @@ export default class Homepage extends Component {
     constructor(props){
         super(props)
         this.state= {
-            open: false,
+            open: true,
             title:""
         }
     }
@@ -48,6 +52,10 @@ export default class Homepage extends Component {
                                 <Route path="/home/qrcode" component={Qrcode} />
                                 <Route path="/home/Certificates" component={this.state.Certificates} />
                                 <Route path="/home/appointmentInfo" component={AppointmentInfo} />
+                                <Route path="/home/logistics" component={Logistics} />
+                                <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
+                                <Route path="/home/face" name="face" component={FaceRecognition} />
+                                <Redirect to="/home/qrcode" />
                             </Switch>
                         </Router>
                     </div>
@@ -57,6 +65,10 @@ export default class Homepage extends Component {
     }
 
     componentDidMount(){
+        if(!sessionStorage.token){
+            this.props.history.push("/login")
+            return;
+        }
         switch(Common.$_Get().idcard){
             case "1":
                 this.setState({
