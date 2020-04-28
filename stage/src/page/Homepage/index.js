@@ -55,6 +55,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/logistics" component={Logistics} />
                                 <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
                                 <Route path="/home/face" name="face" component={FaceRecognition} />
+                                <Route path="/home/print" name="print" component={Qrcode} />
                                 <Redirect to="/home/qrcode" />
                             </Switch>
                         </Router>
