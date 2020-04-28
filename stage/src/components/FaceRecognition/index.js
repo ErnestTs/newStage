@@ -39,14 +39,17 @@ export default class FaceRecognition extends Component {
 
     componentDidMount(){
         // 守卫返回
-        // if(!this.props.history.location.state){
-        //     this.props.history.push("/home/qrcode");
-        //     return
-        // }
+        if(!this.props.history.location.state){
+            this.props.history.push("/home/qrcode");
+            return
+        }
         console.log(this.props.history.location.state)
         this.routerData = this.props.history.location.state
         
 		this.initCamera();
+        if(sessionStorage.photoSwitch == false || Common.$_Get().photo == 0){
+			this.appointmentSignin(this.routerData);
+        }
     }
 
     initCamera(){
@@ -91,7 +94,6 @@ export default class FaceRecognition extends Component {
 				if (data.status === 0) {
 					var sendData = this.routerData;
 					sendData.photoUrl = data.result.url;
-					if(sendData.action !== "logistics")	sessionStorage.vid = sendData.vid;
 					this.appointmentSignin(sendData);
 				}
 			}.bind(this));
@@ -196,33 +198,183 @@ export default class FaceRecognition extends Component {
                     })
 				}				
 			}.bind(this))
-		}else {
-			sendData.signInGate = !!sessionStorage.gateway?sessionStorage.gateway:this.props.routerData.signInGate;
-			sendData.signInOpName = sessionStorage.opname;
+        }else{
+            // 	/**邀请函签到 */
+        	if ((sendData.action === 'qrcode' || sendData.action === 'list') && sendData.qrtype === 'a') {
+        		sessionStorage.vid = "a" + sendData.vid;
+        		this.aSignin("appointmentSignin", sendData);
+        	}else {
+                sessionStorage.vid = "v" + sendData.vid;
+                this.vSignin("VisitAppointmentSignin", sendData);
+            }
+        }
+    }
+    
+    
+	aSignin(method, sendData) {
+		var msendData = {
+			userid: sessionStorage.userid,
+			phone: sendData.visit.vphone,
+			photoUrl: sendData.photoUrl,
+			id: sendData.vid,
+			cardId: sendData.cardId,
+			extendCol: this.routerData.extendCol,
+			remark: this.routerData.remark,
+			plateNum: this.routerData.plateNum,
+			signInGate: this.routerData.signInGate,
+			signOutGate: this.routerData.signOutGate,
+			signInOpName: this.routerData.signInOpName,
+			signOutOpName: this.routerData.signOutOpName
+		};
+
+		let remark = sessionStorage.remark;
+		try {
+			if (remark !== null && remark.length !== 0 && remark !== "null") {
+				msendData.remark = remark;
+			}
+		} catch (error) {
 			
-			/**邀请函签到 */
-			if ((sendData.action === 'qrcode' || sendData.action === 'list') && sendData.qrtype === 'a') {
-				sessionStorage.vid = "a" + sendData.vid;
-				this.aSignin("appointmentSignin", sendData);
-			}
-			else {
-				let signinMethod = "";
-				/**邀请签到 */
-				if (sendData.signin === "1") {
-					signinMethod = "appointmentSignin";
-					sessionStorage.vid = "a" + sendData.vid;
-					this.aSignin(signinMethod, sendData);
+        }
+
+		Common.ajaxProc(method, msendData, sessionStorage.token).done(function (data) {
+			this.setState({
+				onSignin:false
+			})
+			if (data.status === 0) {
+				if (this.state.isEng) {
+                    Toast.open({
+                        type:"success",
+                        content: "Visitor Check-in Success"
+                    })
 				}
-				else if (sendData.signin == "3") {
-					this.appSignin(sendData);
-				}
-				/**访客预约签到 */
 				else {
-					signinMethod = "VisitAppointmentSignin";
-					sessionStorage.vid = "v" + sendData.vid;
-					this.vSignin(signinMethod, sendData);
+                    Toast.open({
+                        type:"success",
+                        content: "访客签到成功"
+                    })
+				}
+				// sessionStorage.vid = "a" + sendData.vid;
+				sessionStorage.vid = "v" + data.result.vid;
+				sessionStorage.aid = "v" + data.result.vid;
+
+				sessionStorage.sign = "1";
+				// sessionStorage.aid = data.result.aid;
+				console.log(sessionStorage.vid, sessionStorage.aid);
+
+				// this.updateRemark(data.result.vid);
+				setTimeout(function () {
+                    this.props.history.replace({pathname:"print",state:sendData})
+				}.bind(this), 3000);
+			}
+			else if (data.status === 69) {
+                Toast.open({
+                    type:"danger",
+                    content: "请参加考试"
+                })
+				// $(".menuItem").removeClass("action");
+				if(Common.$_Get().idcard == "3"){
+					// this.props.routerCallback("vistorlist");
+					// $("#vistorlist").addClass("action");
+				}else{
+					// this.props.routerCallback("qrcode");
+					// $("#qrcode").addClass("action");
+				}
+			}		
+			else {
+                Toast.open({
+                    type:"danger",
+                    content: "访客签到失败"
+                })
+			}
+		}.bind(this));
+    }
+    
+    
+	vSignin(method, sendData) {
+		let temp = {
+			vid : sendData.vid,
+			phone : sendData.visit.vphone,
+			email : sendData.visit.vemail,
+			photoUrl : sendData.photoUrl,
+			cardId : this.routerData.cardId,
+			extendCol : this.routerData.extendCol,
+			remark: this.routerData.remark,
+			plateNum : this.routerData.plateNum,
+			signInGate: this.routerData.signInGate,
+			signOutGate: this.routerData.signOutGate,
+			signInOpName: this.routerData.signInOpName,
+			signOutOpName: this.routerData.signOutOpName
+		};
+		let jqXHR = Common.ajaxProc(method, temp, sessionStorage.token);
+		jqXHR.done(function (data) {
+			if (data.status === 0) {
+				if (this.state.isEng) {
+                    Toast.open({
+                        type:"success",
+                        content: "Visitor Check-in Success"
+                    })
+				}
+				else {
+                    Toast.open({
+                        type:"success",
+                        content: "访客签到成功"
+                    })
+				}
+
+				this.updateRemark(sendData.vid);
+
+				sessionStorage.vid = "v" + sendData.vid;
+				sessionStorage.sign = "2";
+
+				let length = data.result.glist.length,
+					glist = [];
+				if (length !== 0) {
+					for (let i = 0; i < length; i++) {
+						let item = data.result.glist[i];
+						glist.push(item.vid);
+					}
+					sessionStorage.glist = glist;
+				}
+				else {
+					sessionStorage.glist = "";
+				}
+
+				setTimeout(function () {
+                    this.props.history.replace({pathname:"print",state:sendData})
+				}.bind(this), 3000);
+			}
+			else if (data.status === 64) {
+                Toast.open({
+                    type:"danger",
+                    content: "该预约尚未到来访时间"
+                })
+			}
+			else if (data.status === 65) {
+                Toast.open({
+                    type:"danger",
+                    content: "该预约已超过来访时间"
+                })
+			}
+			else if (data.status === 66) {
+                Toast.open({
+                    type:"danger",
+                    content: "该用户已被禁止预约来访"
+                })
+			}
+			else if (data.status === 69) {
+                Toast.open({
+                    type:"danger",
+                    content: "请参加考试"
+                })
+				// $(".menuItem").removeClass("action");
+				if(Common.$_Get().idcard == "3"){
+					// this.props.routerCallback("vistorlist");
+					// $("#vistorlist").addClass("action");
+				}else{
+					// this.props.routerCallback("qrcode");
+					// $("#qrcode").addClass("action");
 				}
 			}
-		}
+		}.bind(this));
 	}
 }

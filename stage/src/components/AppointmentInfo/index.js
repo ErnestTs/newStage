@@ -1,4 +1,5 @@
 import React,{Component} from "react"
+import $ from "jquery"
 
 import Common from "../../Common/index"
 
@@ -31,19 +32,48 @@ export default class AppointmentInfo extends Component {
             extendCol:{},
             qrcodeConf:0,
             extendList:[],
-			regElementArr: ["appointmentDate", "name", "phone", "visitType", "empid", "access", "meetContent", "meetAddress", "qrcodeConf", "cardId", "email", "gatein", "gateout", "guardin", "guardout", "remark", "vcompany","peopleCount", "sname", "mobile" ],			// 已注册表单单元
+            onLogin: true,
+            regElementArr: [
+                "appointmentDate", 
+                "name", 
+                "phone", 
+                "visitType", 
+                "empid", 
+                "access", 
+                "meetContent", 
+                "meetAddress", 
+                "qrcodeConf", 
+                "cardId", 
+                "email", 
+                "gatein", 
+                "gateout", 
+                "guardin", 
+                "guardout", 
+                "remark", 
+                "vcompany",
+                "peopleCount", 
+                "sname", 
+                "mobile" 
+            ],			// 已注册表单单元
+            gatein:false,
+            guardin:false,
+            gateout:false,
+            guardout:false,
         }
     }
 
     render(){
         // 渲染当前访客状态
         var appointmentState_val = 1;
-        if(!!this.state.leaveTime){
+        if(!!this.state.visitInfo.signOutDate){
             appointmentState_val = 3
+            this.state.onLogin = false
         }else if(!!this.state.visitDate){
             appointmentState_val = 2
+            this.state.onLogin = false
         }else if(this.state.permission == 0){
             appointmentState_val = 0
+            this.state.onLogin = false
         }
         var appointmentState = this.renderItemState({type:1,value:appointmentState_val})
         return (
@@ -80,14 +110,17 @@ export default class AppointmentInfo extends Component {
                                 this.state.extendList.map((item,i,arr)=>{
 
                                     if(this.state.regElementArr.indexOf(item.fieldName) !== -1){
+                                        if(item.fieldName == "gatein"||item.fieldName == "guardin"||item.fieldName == "gateout"||item.fieldName == "guardout"){
+                                            this.state[item.fieldName] = true
+                                        }
                                         return
                                     }
                                     if((item.isDisplay&1) != 1){
                                         return
                                     }
-                                    console.log(item)
+                                    
                                     return (
-                                        this.renderExtendItem(item.displayName.split("#")[0],item.fieldName) 
+                                        this.renderExtendItem(item.displayName.split("#")[0],item.fieldName,item) 
                                     )
                                 })
                             }
@@ -98,7 +131,7 @@ export default class AppointmentInfo extends Component {
                                     if(appointmentState_val != 1){
                                         return this.renderItem("备注", this.state.visitInfo.remark, {},"remark")
                                     }else {
-                                        return this.renderExtendItem("备注","remark")
+                                        return this.renderExtendItem("备注","remark",{})
                                     }
                                 })()
                                 
@@ -146,7 +179,7 @@ export default class AppointmentInfo extends Component {
                     </div>
                 </div>
 
-                <div id="component_AppointmentInfo_loginBTN" onClick={this.nextStep.bind(this)}>
+                <div id="component_AppointmentInfo_loginBTN" style={{display:appointmentState_val==1||appointmentState_val==2?"block":"none"}} onClick={this.nextStep.bind(this)}>
                     下一步
                 </div>
             </div>
@@ -166,14 +199,23 @@ export default class AppointmentInfo extends Component {
         // console.log(JSON.stringify(this.routerData))
 
         console.log(this.routerData)
+        console.log(JSON.stringify(this.routerData))
 
         this.getExtendCol(this.routerData.vType)
         this.setState({
-            visitInfo:this.props.history.location.state.visitInfo,
-            empInfo:this.props.history.location.state.empInfo,
-            idcardContent:this.props.history.location.state.idcardContent,
-            extendCol:JSON.parse(Common.compileStr(_this.props.history.location.state.empInfo.extendCol).replace("\"\"\"\"","\"\'\'\"")),
-            qrcodeConf:this.props.history.location.state.qrcodeConf
+            visitInfo:this.routerData.visitInfo,
+            empInfo:this.routerData.empInfo,
+            idcardContent:this.routerData.idcardContent,
+            extendCol:JSON.parse(Common.compileStr(_this.routerData.empInfo.extendCol).replace("\"\"\"\"","\"\'\'\"")),
+            qrcodeConf:this.routerData.qrcodeConf,
+            visitDate: this.routerData.visitDate,
+            appointmentDate: this.routerData.appointmentDate,
+            leaveTime: this.routerData.leaveTime,
+            tid: this.routerData.tid,
+            action: this.routerData.action,
+            qrtype: this.routerData.qrtype,
+            vgroup: this.routerData.vgroup,
+            vType: this.routerData.vType
         })
 
 
@@ -208,16 +250,24 @@ export default class AppointmentInfo extends Component {
      * @description []
      * @param {*} name 
      * @param {*} key 
-     * @param {*} value 
+     * @param {*} required 
      */
-    renderExtendItem(name, key, value){
-        value = !!value?value:"";
+    renderExtendItem(name, key, required){
+        let cls = (required%1)==1?"required":"";
+        let elem;
+
+        if(key == "remark"){
+            elem = <input id={key} className={"component_AppointmentInfo_appInfo_input "+cls} onChange={this.setExtendValue.bind(this,key)} value={this.state.visitInfo.remark||""} />
+        }else {
+            elem = <input id={key} className={"component_AppointmentInfo_appInfo_input "+cls} onChange={this.setExtendValue.bind(this,key)} value={this.state.extendCol[key]||""} />
+        }
+
         return (
             <li key={key}>
                 <span className="component_AppointmentInfo_appInfo_key">
                     {name}:
                 </span>
-                <input id={key} className="component_AppointmentInfo_appInfo_input" onChange={this.setExtendValue.bind(this,key)} value={this.state.extendCol[key]} />
+                {elem}
             </li>
         )
     }
@@ -312,7 +362,11 @@ export default class AppointmentInfo extends Component {
 
                 Common.ajaxProcWithoutAsync("getDeptByEmpid", { empid: empid, userid: sessionStorage.userid }, sessionStorage.token).done((data)=>{
                     let tempObj = this.routerData.empInfo;
-                    tempObj.dept = data.result[0].deptName;
+                    if(!!data.result.length){
+                        tempObj.dept = data.result[0].deptName;
+                    }else{
+                        tempObj.dept = "";
+                    }
                     tempObj.workbay = !workbay?workbay:"";
                     this.setState({
                         empInfo: tempObj
@@ -335,5 +389,103 @@ export default class AppointmentInfo extends Component {
                 extendList:res.result
             })
 		})
-	}
+    }
+    
+    /**
+     * @description [下一步]
+     */
+    nextStep(){
+        // 签到
+        if(this.state.onLogin) {
+            // 根据门岗判断是否可以签到
+            if(!!$("#gateType").length){
+                if(typeof(sessionStorage.gid) != "undefined" && $("#gateType option:selected").val() != sessionStorage.gid){
+                    Toast.open({
+                        type:"danger",
+                        content: "请选择正确的门岗进行签到"
+                    })
+                    return;
+                }
+            }else{
+                if(typeof(sessionStorage.gid) != "undefined" && (this.state.visitInfo.gid != sessionStorage.gid)&& !!sessionStorage.gateList.length){
+                    Toast.open({
+                        type:"danger",
+                        content: "当前门岗不支持本次签到"
+                    })
+                    return;
+                }
+            }
+
+            // 查看必填项
+            let required = document.getElementsByClassName('required'),
+            reqlength = required.length;
+            for (let j = 0; j < reqlength; j++) {
+                let item = required[j];
+                if (item.value.length === 0) {
+                    item.style.borderColor = 'red';
+                    Toast.open({
+                        type:"danger",
+                        content: "请输入完整登记信息"
+                    })
+                    return;
+                }
+            }
+            
+            let sendData = {
+                vid: this.state.visitInfo.vid,
+                photoUrl: "",
+                cardId: this.routerData.idcardContent.certNumber,
+                idcontent: this.routerData,
+                signin: this.state.visitInfo.signin,
+                vcompany: this.state.visitInfo.vcompany,
+                visit: this.state.visitInfo,
+                extendCol: [],
+                action: this.routerData.action,
+                qrtype: this.routerData.qrtype,
+                remark: this.state.visitInfo.remark
+            };
+
+            // 处理扩展字段
+            let extendColGroup = this.state.extendCol;
+            extendColGroup.empid = this.state.empInfo.ename;
+            extendColGroup.visitType = this.state.visitInfo.vtype;
+            extendColGroup.phone = this.state.visitInfo.vphone;
+            extendColGroup.name = this.state.visitInfo.vname;
+            // 20200413 多门岗时 根据被访人的权限进行分配
+            if(!extendColGroup.hasOwnProperty("access")){
+                if(sessionStorage.sid==0){
+                    extendColGroup.access = !sessionStorage.EquipmentAccess?"\"\"":sessionStorage.EquipmentAccess
+                }else{
+                    extendColGroup.access = !this.state.empInfo.egids?"\"\"":this.state.empInfo.egids
+                }
+            }
+            if(this.state.gatein){
+                extendColGroup.gatein= sessionStorage.gname;
+                sendData.signInGate = sessionStorage.gname
+            }			
+            if(this.state.guardin){
+                extendColGroup.guardin= sessionStorage.opname;
+                sendData.signInOpName = sessionStorage.opname
+            }
+
+            let extendColList = []
+            for(let i in extendColGroup){
+                if(extendColGroup[i] === ""){
+                    extendColGroup[i] = "\"\""
+                }
+                extendColList.push(i+"="+extendColGroup[i])
+            }
+
+            sendData.extendCol = extendColList;
+
+
+            this.props.history.push({pathname:"face",state:sendData})
+
+
+        }
+        // 签出
+        else {
+
+        }
+    }
 }
