@@ -12,12 +12,16 @@ import Toast from "../../components/ToastPublic/index.jsx"
 // components
 import Qrcode from "../../components/Qrcode/index"
 import IdCard from "../../components/IdCard/index"
+import Register from "../../components/Register/index"
 import PassPort from "../../components/PassPort/index"
 import Senseid from "../../components/Senseid/index"
 import AppointmentInfo from  "../../components/AppointmentInfo/index"
 import Logistics from "../../components/Logistics/index"
 import LogisticsInfo from "../../components/LogisticsInfo/index"
 import FaceRecognition from "../../components/FaceRecognition/index"
+import VisitorInfo from "../../components/VisitorInfo/index"
+import Print from "../../components/Print/index"
+import VisitorList from "../../components/VisitorList/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -53,9 +57,13 @@ export default class Homepage extends Component {
                                 <Route path="/home/Certificates" component={this.state.Certificates} />
                                 <Route path="/home/appointmentInfo" component={AppointmentInfo} />
                                 <Route path="/home/logistics" component={Logistics} />
+                                <Route path="/home/register" component={Register} />
                                 <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
                                 <Route path="/home/face" name="face" component={FaceRecognition} />
-                                <Route path="/home/print" name="print" component={Qrcode} />
+                                <Route path="/home/face" name="face" component={FaceRecognition} />
+                                <Route path="/home/visitorInfo" name="VisitorInfo" component={VisitorInfo} />
+                                <Route path="/home/print" name="print" component={Print} />
+                                <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Redirect to="/home/qrcode" />
                             </Switch>
                         </Router>

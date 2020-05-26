@@ -13,7 +13,7 @@ export default class Common {
 	// static url = "http://139.217.223.183/qcvisit/";
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
 	static cameraUrl = "http://www.coolvisit.top/stage/MyCamera.swf";
-	// static customPrintUrl = "http://www.coolvisit.top/ykt/card/custom/";
+	static customPrintUrl = "http://www.coolvisit.top/card/custom/";
 
 	static ajaxProc(action, data, token) {
 		let jqXHR = $.ajax({

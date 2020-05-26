@@ -4,10 +4,10 @@
     float: left;
 }
 #qrcode_scanInput {
-    width: 275px;
-    height: 275px;
+    width: 25.4vh;
+    height: 25.4vh;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 15%;
 }
 
 #qrcode_scanInput input{

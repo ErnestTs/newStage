@@ -51,6 +51,10 @@
     height: 48px;
 }
 
+.component_Logistics_tableBoard .ant-table-thead .ant-table-cell {
+    text-align: center
+}
+
 .logisticState {
     display: block;
     float: left;

@@ -7,6 +7,13 @@ import "./index.css"
 // Toast
 import Toast from "../../components/ToastPublic/index.jsx"
 
+
+/**
+ * @author 方超 qq978070462
+ * @description [扫描二维码组件]
+ * @returns {React.Component}
+ */
+
 export default class Qrcode extends Component {
     constructor(props){
         super(props)
@@ -16,7 +23,7 @@ export default class Qrcode extends Component {
         return (
             <div id="component_qrcode">
                 <div id="qrcode_scanInput">
-                    <input id="qrcode_input" ref={(input)=>{this.qrcodeInput=input}}onChange={this.getQrcode.bind(this)} autoFocus="autofocus" onBlur={this.getFocus.bind(this)} />
+                    <input id="qrcode_input" ref={(input)=>{this.qrcodeInput=input}} onChange={this.getQrcode.bind(this)} autoFocus="autofocus" onBlur={this.getFocus.bind(this)} />
                 </div>
                 <p>二维码扫描</p>
             </div>
@@ -24,8 +31,8 @@ export default class Qrcode extends Component {
     }
 
     componentDidMount(){
-        this.getFocus()
-    }
+		this.getFocus()
+	}
 
     /**
      * @description [获取二维码]

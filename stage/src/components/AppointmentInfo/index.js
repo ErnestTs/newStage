@@ -199,7 +199,6 @@ export default class AppointmentInfo extends Component {
         // console.log(JSON.stringify(this.routerData))
 
         console.log(this.routerData)
-        console.log(JSON.stringify(this.routerData))
 
         this.getExtendCol(this.routerData.vType)
         this.setState({
@@ -486,6 +485,111 @@ export default class AppointmentInfo extends Component {
         // 签出
         else {
 
+            if (this.routerData.qrtype === 'a') {
+                this.state.remark = !this.state.remark? "":this.state.remark;
+                if (!!this.state.visitInfo.vid) {
+                    let sendData ;
+                    if(this.routerData.action == 'list'){
+                        sendData= {
+                            vid: this.state.visitInfo.vid,
+                            signOutGate: sessionStorage.gateway,
+                            signOutOpName: sessionStorage.opname,
+                            remark:this.state.remark
+                        }
+                    }else {
+                        sendData= {
+                            aid: this.state.visitInfo.vid,
+                            signOutGate: sessionStorage.gateway,
+                            signOutOpName: sessionStorage.opname,
+                            remark:this.state.remark
+                        }
+                    }
+                    let jqXHR = Common.ajaxProc("VisitorSignOutByVid", sendData, sessionStorage.token);
+                    jqXHR.done(function (data) {
+                        if (data.status === 0) {
+                            Toast.open({
+                                type:"success",
+                                content: "访客签出成功"
+                            })
+                        }
+                        setTimeout(function () {
+                            this.props.history.replace("/home/qrcode")
+                            window.changeItem(0,"二维码","qrcode");
+                        }.bind(this), 1500);
+                    }.bind(this));
+                }
+                else if (!!this.routerData.visitInfo.vphone) {
+                    let sendData = {
+                        userid: sessionStorage.userid,
+                        phone: this.routerData.visitInfo.vphone,
+                        signOutGate: sessionStorage.gateway,
+                        signOutOpName: sessionStorage.opname,
+                        remark:this.state.remark
+                    };
+                    let jqXHR = Common.ajaxProc("VisitorSignOut", sendData, sessionStorage.token);
+                    jqXHR.done(function (data) {
+                        if (data.status === 0) {
+                            Toast.open({
+                                type:"success",
+                                content: "访客签出成功"
+                            })
+
+                            window.changeItem(0,"二维码","qrcode");
+                        }
+                        setTimeout(function () {
+                            if(Common.$_Get().idcard == "3"){
+                                this.props.history.replace("/home/qrcode")
+                                window.changeItem(0,"二维码","qrcode");
+                            }else{
+                                this.props.history.replace("/home/qrcode")
+                                window.changeItem(0,"二维码","qrcode");
+                            }
+                        }.bind(this), 1500);
+                    }.bind(this));
+                }
+                else {
+                    Toast.open({
+                        type:"danger",
+                        content: "签出失败"
+                    })
+                }
+            }
+            else {
+                this.state.remark = !this.state.remark? "":this.state.remark;
+                let sendData = {
+                    vid: this.state.visitInfo.vid,
+                    signOutGate: sessionStorage.gateway,
+                    signOutOpName: sessionStorage.opname,
+                    remark:this.state.remark
+                }
+                let jqXHR = Common.ajaxProc("VisitorSignOutByVid", sendData, sessionStorage.token);
+                jqXHR.done(function (data) {
+                    if (data.status === 0) {
+                        Toast.open({
+                            type:"success",
+                            content: "访客签出成功"
+                        })
+
+                        window.changeItem(0,"二维码","qrcode");
+                    }
+                    else {
+                        Toast.open({
+                            type:"danger",
+                            content: "签出失败"
+                        })
+                    }
+                    setTimeout(function () {
+                        // $(".menuItem").removeClass("action");
+                        if(Common.$_Get().idcard == "3"){
+                            // this.props.routerCallback("vistorlist");
+                            // $("#vistorlist").addClass("action");
+                        }else{
+                            // this.props.routerCallback("qrcode");
+                            // $("#qrcode").addClass("action");
+                        }
+                    }.bind(this), 1500);
+                }.bind(this));
+            }
         }
     }
 }

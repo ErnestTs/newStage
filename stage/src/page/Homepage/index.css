@@ -4,14 +4,15 @@
     bottom: 0;
     left: 0;
     top: 70px;
-    background: #E0E0E0;
+    background: #F5F6FA;
 }
 
 .page_home_routeView {
     position: absolute;
     right: 0;
     height: 100%;
-    margin: 0 70px 0 40px
+    margin: 0 70px 0 40px;
+    overflow-x: hidden
 }
 
 .page_home_title {
@@ -27,8 +28,7 @@
     background: #fff;
     border: 0 solid #DCDEE0;
     border-radius: 14px;
-    overflow: auto;
-    overflow-x: hidden
+    /* overflow: hidden */
 }
 
 .fll {
