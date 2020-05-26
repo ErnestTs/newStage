@@ -82,6 +82,7 @@ export default class Menu extends Component {
     componentDidMount(){
         this.changeItem(0,"二维码","qrcode");
         // this.changeItem(0,"物流管理","logistics");
+        window.changeItem = this.changeItem.bind(this)
     }
 
     render(){
@@ -106,13 +107,13 @@ export default class Menu extends Component {
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
-                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"appointment")}
+                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
                             {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
                             {this.renderItem("今日访客",this.state.icon.Visitors,4,"visitor")}
                         </li>
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
-                            {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
+                            {/* {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")} */}
                         </li>
                     </ul>
                 </div>
@@ -129,7 +130,7 @@ export default class Menu extends Component {
                         </li>
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
-                            {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
+                            {/* {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")} */}
                         </li>
                     </ul>
                 </div>

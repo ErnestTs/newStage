@@ -140,7 +140,13 @@
 .otherExtendBoxItem div {
     display: inline;
 }
-.otherExtendBoxItem div input,select{
+.otherExtendBoxItem div input{
+    border: 1px solid #4091F7;
+    border-radius: 4px;
+    width: 50%;
+    text-indent: 10px;
+}
+.otherExtendBoxItem div select{
     border: 1px solid #4091F7;
     border-radius: 4px;
     width: 50%;

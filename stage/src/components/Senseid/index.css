@@ -5,10 +5,10 @@
 }
 
 .scanCard_background {
-    height: 275px;
-    width: 275px;
+    width: 25.4vh;
+    height: 25.4vh;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 11.8%;
     background: url(../../resource/scanCard.png) no-repeat;
     background-size: contain;
 }
@@ -42,8 +42,8 @@
 
 
 
-@media screen and (max-width: 1280px) {
+/* @media screen and (max-width: 1280px) {
     .scanCard_background {
         margin-top: 3%;
     }
-}
+} */

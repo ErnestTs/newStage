@@ -317,14 +317,9 @@ export default class Login extends Component {
 	 * 获取门岗组信息
 	 */
 	getEquipmentGroupByUserid(){
-		if(!!sessionStorage.sid){
-            sessionStorage.setItem("EquipmentAccess","")
-            this.props.history.push("/home")
-			return
-		}
-		Common.ajaxProcWithoutAsync("getEquipmentGroupByUserid", {"userid": sessionStorage.userid}, sessionStorage.token).done((data)=>{
+		let resStr = [];
+		Common.ajaxProc("getEquipmentGroupByUserid", {"userid": sessionStorage.userid}, sessionStorage.token).done((data)=>{
 			let tempArr = data.result;
-			let resStr = []
 			for(let i = 0; i < tempArr.length; i++){
 				// 0-全部 1-员工 2-访客 3-特殊
 				if(tempArr[i].etype == 0 || tempArr[i].etype == 2) {
@@ -335,7 +330,11 @@ export default class Login extends Component {
 					}
 				}
 			}
-            sessionStorage.setItem("EquipmentAccess",resStr.join(","))
+			if(sessionStorage.sid!=0){
+				sessionStorage.setItem("VisitorAccess",resStr.join(","))
+			}else{
+				sessionStorage.setItem("EquipmentAccess",resStr.join(","))
+			}
             this.props.history.push("/home")
 		})
 	}

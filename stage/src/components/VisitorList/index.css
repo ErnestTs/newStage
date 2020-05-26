@@ -1,0 +1,329 @@
+#component_VisitorList {
+    width: 100%;
+    height: 100%;
+    background: #F5F6FA;
+    position: relative;
+    overflow: hidden
+}
+
+#component_VisitorList .component_VisitorList_btnGroup {
+    height: 19%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup>div {}
+
+#component_VisitorList .component_VisitorList_topBar1 {
+    margin-bottom: 2.7%;
+    height: 38%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype{
+    overflow: hidden;
+    border: 1px solid #D8D8D8;
+    border-radius: 6px;
+    width: 43%;
+    margin-left: 4px;
+    float: left;
+    height: 100%;
+    box-sizing: border-box
+}
+
+#component_VisitorList .component_VisitorList_btnGroup div {
+    overflow: hidden;
+}
+
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li {
+    float: left;
+    width: 25%;
+    font-size: 16px;
+    color: #323233;
+    letter-spacing: 0;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-right: 1px solid #D8D8D8;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li:last-child{
+    border-right: 0;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li.action{
+    background: #4091F7;
+    color: #FFF;
+    background-color: #4091F7;
+    border-right: 1px solid #4091F7;
+    border-bottom: 1px solid #4091F7;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions{
+    float: right;
+    margin-right: 4px;
+    height: 100%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions .component_VisitorList_btnSelectAll{
+    background: #004C85;
+    border: 1px solid #004C85
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions .component_VisitorList_btnCheckOut{
+    background: #F56C6C;
+    border: 1px solid #F56C6C;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions .component_VisitorList_btnCancel{
+    background: #FFFFFF;
+    border: 1px solid #4091F7;
+    color: #4091F7;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li {
+    display: inline-block;
+    width: 120px;
+    height: 100%;
+    /* padding-top: 2.4%; */
+    border-radius: 8px;
+    color: #fff;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    position: relative;
+}
+/* @media screen and (max-width: 1280px) {
+    #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li {
+        padding-top: 0.4%;
+    }
+}
+@media screen and (max-width: 1441px) and (min-width:1281px) {
+    #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li {
+        padding-top: 1.4%;
+    }
+} */
+
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .visitorState {
+    float: left;
+    margin-left: 4px;
+    width: 45%;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup  .action {
+    border:0;
+    background:none;
+    box-shadow:none;
+    border-bottom: 4px solid #4091F7;
+    box-sizing: border-box
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .visitorState li {
+    float: left;
+    width: 33%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #323233;
+}
+
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria {
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria li {
+    display: inline-block;
+    margin-top: 0.7%
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria .searchContent {
+    width: 50%;
+    height: 40px;
+    text-align: left;
+    background: #F5F6FA;
+    border: 1px solid #4091F7;
+    border-radius: 19px;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle
+}
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria .searchContent input {
+    height: 100%;
+    width: 90%;
+    border: 0;
+    outline: none;
+    float: right;
+    background: #F5F6FA;
+    vertical-align: middle
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria .DatePickerBox {
+    background: #FFFFFF;
+    border: 1px solid #DCDEE0;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 20px;
+    width: 170px;
+    height: 40px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria .DatePicker {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#component_VisitorList_tableBox {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    left: 0;
+    right: 0;
+    border-radius: 14px;
+    padding-top: 2.4%;
+    box-sizing: border-box;
+    margin-top: 1%;
+}
+@media screen and (max-width: 1280px) {
+    #component_VisitorList_tableBox {
+        top: 23%;
+    }
+}
+@media screen and (max-width: 1441px) and (min-width:1281px) {
+    #component_VisitorList_tableBox {
+        top: 23%;
+    }
+}
+
+#component_VisitorList_tableBoard {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 2.4%;
+    height: 95%
+}
+
+#component_VisitorList_tableBoard .ant-table-thead {
+    background: #E7EDF2;
+    border-radius: 12px;
+}
+
+#component_VisitorList_tableBoard .ant-table-container table > thead > tr:first-child th {
+    background: #E7EDF2;
+}
+
+#component_VisitorList_tableBoard .ant-table-container table > thead > tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+#component_VisitorList_tableBoard .ant-table-container table > thead > tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+#component_VisitorList_tableBoard tr {
+    height: 90px;
+}
+#component_VisitorList_tableBoard .ant-table-thead tr{
+    height: 48px;
+}
+
+#component_VisitorList_tableBox .ant-table-thead .ant-table-cell {
+    text-align: center
+}
+
+#component_VisitorList_tableBox .ant-table-cell {
+    text-align: center
+}
+
+#component_VisitorList_tableBoard .tableItem_name {
+    text-align: left;
+    overflow: hidden;
+}
+
+#component_VisitorList_tableBoard .tableItem_name span {
+    margin-left: 4%;
+}
+
+#component_VisitorList_tableBoard .tableItem_name span img {
+    display: inline;
+    width: 6%;
+    margin-left: 4%;
+}
+@media screen and (max-width: 1280px) {
+    #component_VisitorList_tableBoard .tableItem_name span img  {
+        width: 12%;
+    }
+}
+@media screen and (max-width: 1441px) and (min-width:1281px) {
+    #component_VisitorList_tableBoard .tableItem_name span img  {
+        width: 8%;
+    }
+}
+
+#component_VisitorList_tableBoard .tableItem_name .defaultImg {
+    height: 60%;
+    display: inline;
+    margin-left: 4%;
+    cursor: pointer;
+}
+
+#component_VisitorList_tableBoard .tableItem_name .defaultImg img {
+    height: 100%;
+}
+
+#component_VisitorList_tableBoard .tableItem_name .ant-checkbox-wrapper {
+    /* margin-left: 7% */
+}
+
+#component_VisitorList_tableBoard .statusTag {
+    display: block;
+    border-radius: 13.5px;
+    width: 100%;
+    height: 26px;
+    line-height: 26px; 
+    max-width: 96px;
+}
+
+#component_VisitorList_tableBoard .statusTag.green {
+    background: #C3F1EB;
+    color: #00BA9A;
+}
+
+#component_VisitorList_tableBoard .statusTag.red {
+    background: #F8C6C6;
+    color: #F56C6C;
+}
+
+#component_VisitorList_tableBoard .statusTag.blue {
+    background: #C2DAF9;
+    color: #4091F7;
+}

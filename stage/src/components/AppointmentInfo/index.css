@@ -225,6 +225,11 @@
         right: 5%;
     }
 }
+@media screen and (max-height: 619px) {
+    #component_AppointmentInfo_loginBTN {
+        bottom: 0.4%
+    }
+}
 
 
 
