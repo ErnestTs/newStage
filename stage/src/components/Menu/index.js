@@ -113,7 +113,7 @@ export default class Menu extends Component {
                         </li>
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
-                            {/* {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")} */}
+                            {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
                         </li>
                     </ul>
                 </div>
@@ -130,7 +130,7 @@ export default class Menu extends Component {
                         </li>
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
-                            {/* {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")} */}
+                            {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
                         </li>
                     </ul>
                 </div>

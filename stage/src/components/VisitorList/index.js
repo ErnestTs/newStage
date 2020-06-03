@@ -71,16 +71,17 @@ export default class VisitorList extends Component{
                                     }} 
                                 />
                                 <div className="defaultImg">
-                                    <img src={defaultImg} />
-                                    <span>{data.vname}
-                                    <img 
+                                    <img onClick={this.goLogin.bind(this,data)} src={defaultImg} />
+                                    <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
+                                    <img
+                                        className="printIcon"
                                         src={printImg}
                                         onClick={
                                             ()=>{
                                                 this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+data.vid}]}})
                                             }
                                         }
-                                    /></span>
+                                    />
                                 </div>
                             </div>
                         )
@@ -214,7 +215,7 @@ export default class VisitorList extends Component{
     componentDidMount(){
 
         // 设定表格高度
-        let coefficient = document.body.clientHeight>1000?0.50:0.35
+        let coefficient = document.body.clientHeight>1000?0.50:0.3
         this.setState({
             tableHeight:document.body.clientHeight*coefficient
         })
@@ -369,11 +370,11 @@ export default class VisitorList extends Component{
 					if (item.visitdate !== null) {
 						item.visitdate = new Date(item.visitdate).format("yyyy-MM-dd hh:mm:ss");
 					}
-					if (item.leaveTime !== null) {
-						item.leaveTime = new Date(item.leaveTime).format("yyyy-MM-dd hh:mm:ss");
+					if (item.signOutDate !== null) {
+						item.signOutDate = new Date(item.signOutDate).format("yyyy-MM-dd hh:mm:ss");
                     }
 
-                    if(!!item.leaveTime){
+                    if(!!item.signOutDate){
                         item.state = 2;
                         leave++;
                         checkIn++;
@@ -482,5 +483,60 @@ export default class VisitorList extends Component{
                 return;
             }
         }.bind(this));
+    }
+
+    /**
+     * @description [点击签到]
+     */
+    goLogin(data){
+        if(data.state === 2){
+            return
+        }
+        let extendCol = !!data.extendCol?JSON.parse(data.extendCol.replace(/&quot;/g,'"')):{};
+        let qrType = this.state.vTypelist[this.state.vType].interface == "searchInviteByCondition"?"a":"v"
+        let obj = {
+            "visitInfo":{
+                "peopleCount":data.peopleCount||"",
+                "vname":data.vname||"",
+                "vtime":data.appointmentDate||"",
+                "vphone":data.vphone||"",
+                "vtype":data.visitType||"",
+                "vemail":data.vemail||"",
+                "vid":data.vid||"",
+                "signInGate":data.signInGate||"",
+                "signInOpName":data.signInOpName||"",
+                "signOutGate":data.signOutGate||"",
+                "signOutOpName":data.signOutOpName||"",
+                "member":null||"",
+                "vcompany":data.vcompany||"",
+                "remark":data.remark||"",
+                "leaveTime":data.leaveTime||"",
+                "gid":data.gid||""
+            },
+            "empInfo":{
+                "ename":data.empName||"",
+                "ephone":data.empPhone||"",
+                "extendCol":data.extendCol||""
+            },
+            "idcardContent":{
+                "certNumber":extendCol.cardId||"",
+                "partyName":data.vname||""
+            },
+            "tid":data.tid||"",
+            "vgroup":data.vgroup||"",
+            "appointmentDate":data.appointmentDate||"",
+            "action":"list",
+            "vType":data.vType||"",
+            "permission":data.permission||"",
+            "qrtype":qrType,
+            "signOutDate":data.signOutDate||"",
+            "visitDate":data.visitdate||"",
+            "leaveTime":data.leaveTime||"",
+            "qrcodeType":data.qrcodeType||"",
+            "qrcodeConf":data.qrcodeConf||"",
+            "aid":data.aid||"",
+            "signin":data.signin
+        }
+        this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
     }
 }

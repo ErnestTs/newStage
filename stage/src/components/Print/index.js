@@ -28,7 +28,7 @@ export default class Print extends Component {
                 </div>
 
                 <div id="btn_print" onClick={this.startPrint.bind(this)}>
-                    打印
+                    <span>打印</span>
                 </div>
             </div>
         )
@@ -44,6 +44,7 @@ export default class Print extends Component {
 
 
         let printList = this.props.history.location.state.printList;
+        console.log(printList)
         let printUrl = "";
         if(sessionStorage.badgeMode !== '0'){
             printUrl = Common.customPrintUrl + sessionStorage.badgeCustom + "/index.html?vid=" + printList[0].vid + "&userid=" + sessionStorage.userid + "&token=" + sessionStorage.token

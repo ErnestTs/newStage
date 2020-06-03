@@ -10,6 +10,8 @@
     float: left;
     width: 100%;
     position: relative;
+    padding-bottom: 3%;
+    box-sizing: border-box;
 }
 
 #component_AppointmentInfo .topBar {
@@ -23,7 +25,7 @@
 
 .topBar div {
     text-indent: 53px;
-    width: 50%;
+    width: 48%;
     font-size: 16px;
     color: #202224;
     letter-spacing: 0;
@@ -33,7 +35,7 @@
 
 .component_AppointmentInfo_appInfo, .component_AppointmentInfo_cardInfo {
     position: relative;
-    padding-top: 45px;
+    padding-top: 4vh;
     width: 50%;
     height: 100%;
     overflow: hidden;
@@ -76,7 +78,7 @@
 
 @media screen and (max-width: 1280px) {
     .component_AppointmentInfo_appInfo, .component_AppointmentInfo_cardInfo {
-        padding-top: 20px;
+        padding-top: 4vh;
     }
 }
 
@@ -102,6 +104,13 @@
     }
 }
 
+@media screen and (max-height: 619px) {
+    #component_AppointmentInfo_cardInfo_mask img {
+        width: 30%;
+        margin-top: 5%
+    }
+}
+
 #component_AppointmentInfo_cardInfo_mask p {
     margin-top: 12px;
     font-size: 21px;
@@ -112,16 +121,18 @@
 }
 
 #component_AppointmentInfo_cardInfo_mask .btn_box{
-    height: 44px;
+    height: 11.2%;
+    margin-top: 10%;
 }
 
 #component_AppointmentInfo_cardInfo_mask .btn_box div{
     background: #4091F7;
     border-radius: 8px; 
     width: 42%;
-    height: 44px;
-    line-height: 44px;
+    height: 100%;
+    line-height: normal;
     cursor: pointer;
+    position: relative;
 }
 
 
@@ -132,6 +143,14 @@
     border-radius: 4px;
     margin: auto;
     margin-top: 34px
+}
+
+#component_AppointmentInfo_cardInfo_mask .btn_box div span{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 #component_AppointmentInfo_cardInfo_board .cardForm {
@@ -206,28 +225,36 @@
 #component_AppointmentInfo_loginBTN {
     position: fixed;
     width: 274px;
-    height: 56px;
-    line-height: 56px;
+    height: 5%;
     background: #0F4C81;
     border-radius: 8px;
     text-align: center;
     color:#fff;
-    right: 3.5%;
+    right: 70px;
     bottom: 2%;
     cursor: pointer;
+    box-sizing: border-box
+}
+
+#component_AppointmentInfo_loginBTN span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 @media screen and (max-width: 1280px) {
     #component_AppointmentInfo_loginBTN {
         width: 180px;
-        height: 28px;
-        line-height: 28px;
+        height: 5%;
         right: 5%;
     }
 }
 @media screen and (max-height: 619px) {
     #component_AppointmentInfo_loginBTN {
-        bottom: 0.4%
+        bottom: 0.4%;
+        height: 4%;
     }
 }
 
@@ -278,4 +305,10 @@
 .appintmentState.finish{
     background: #C2DAF9;
     color: #4091F7;
+}
+
+#component_AppointmentInfo .arrow {
+    width: 2%;
+    height: 100%;
+    background-color: #00BBBB
 }

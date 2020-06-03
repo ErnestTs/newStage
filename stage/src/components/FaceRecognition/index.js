@@ -13,7 +13,8 @@ export default class FaceRecognition extends Component {
     constructor(props){
         super(props)
         this.state= {
-            photo:false
+			photo:false,
+			photoURL:""
         }
     }
 
@@ -22,7 +23,7 @@ export default class FaceRecognition extends Component {
             <div id="component_Face">
                 <div id="facePhoto">
                     <div id="cameraPanel">
-						<img src="" alt="" id="camera_img" />
+						<img src={this.state.photoURL} alt="" id="camera_img" />
                     </div>
                 </div>
                 <div id="faceBtn">
@@ -43,8 +44,9 @@ export default class FaceRecognition extends Component {
             this.props.history.push("/home/qrcode");
             return
         }
-        console.log(this.props.history.location.state)
-        this.routerData = this.props.history.location.state
+		this.routerData = this.props.history.location.state;
+		
+		console.log(this.routerData)
         
 		this.initCamera();
         if(sessionStorage.photoSwitch == false || Common.$_Get().photo == 0){
@@ -154,6 +156,19 @@ export default class FaceRecognition extends Component {
 		else {
 			this.uploadBlob = undefined;
 		}
+		if(Common.$_Get().idcard !== "3"){
+			let formData = new FormData();
+	
+			formData.append('filename', this.uploadBlob, 'avatar.png');
+	
+			Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
+				if (data.status === 0) {
+					this.setState({
+						photoURL:data.result.url
+					})
+				}
+			}.bind(this));
+		}
     }
 
 	/**
@@ -204,8 +219,14 @@ export default class FaceRecognition extends Component {
         		sessionStorage.vid = "a" + sendData.vid;
         		this.aSignin("appointmentSignin", sendData);
         	}else {
-                sessionStorage.vid = "v" + sendData.vid;
-                this.vSignin("VisitAppointmentSignin", sendData);
+				/**邀请签到 */
+				if (sendData.signin === "1") {
+					sessionStorage.vid = "a" + sendData.vid;
+					this.aSignin("appointmentSignin", sendData);
+				}else{
+					sessionStorage.vid = "v" + sendData.vid;
+					this.vSignin("VisitAppointmentSignin", sendData);
+				}
             }
         }
     }
@@ -263,7 +284,7 @@ export default class FaceRecognition extends Component {
 
 				// this.updateRemark(data.result.vid);
 				setTimeout(function () {
-                    this.props.history.replace({pathname:"print",state:sendData})
+					this.props.history.push({pathname:"print",state:{printList:[{vid:"v" + data.result.vid}]}})
 				}.bind(this), 3000);
 			}
 			else if (data.status === 69) {
@@ -321,8 +342,6 @@ export default class FaceRecognition extends Component {
                     })
 				}
 
-				this.updateRemark(sendData.vid);
-
 				sessionStorage.vid = "v" + sendData.vid;
 				sessionStorage.sign = "2";
 
@@ -340,7 +359,7 @@ export default class FaceRecognition extends Component {
 				}
 
 				setTimeout(function () {
-                    this.props.history.replace({pathname:"print",state:sendData})
+					this.props.history.push({pathname:"print",state:{printList:[{vid:"v" + sendData.vid}]}})
 				}.bind(this), 3000);
 			}
 			else if (data.status === 64) {

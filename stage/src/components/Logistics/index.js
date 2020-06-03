@@ -77,7 +77,7 @@ export default class Logistics extends Component {
                   }
                 }
             ],
-            dataSource:[],
+            dataSource:[{}],
             date:new Date().format('yyyy-MM-dd'),
             // date:"2020-03-13",
             moreInfo: false,
@@ -112,7 +112,14 @@ export default class Logistics extends Component {
         this.getLogisticsInfo(this.state.date)
 
         // 设定表格高度
-        let coefficient = document.body.clientHeight>1000?0.57:0.48
+        let coefficient =0
+        if(document.body.clientHeight>=1000){
+            coefficient = 0.57
+        }else if(document.body.clientHeight<1000&&document.body.clientHeight >= 800){
+            coefficient = 0.48
+        }else if(document.body.clientHeight<800){
+            coefficient = 0.42
+        }
         this.setState({
             tableHeight:document.body.clientHeight*coefficient
         })

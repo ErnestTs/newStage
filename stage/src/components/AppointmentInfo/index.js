@@ -19,15 +19,16 @@ export default class AppointmentInfo extends Component {
         super(props)
 
         this.state= {
+            infoOnShow:0,
             answerState:0,
             showCardMask:true,
             visitInfo:{},
             idcardContent:{},
             empInfo:{},
             cardInfo:{
-                name:"方超",
-                cardId:"370202199211043333",
-                address:"山东省青岛市市南区江苏路七号9户"
+                name:"",
+                cardId:"",
+                address:""
             },
             extendCol:{},
             qrcodeConf:0,
@@ -74,21 +75,25 @@ export default class AppointmentInfo extends Component {
         }else if(this.state.permission == 0){
             appointmentState_val = 0
             this.state.onLogin = false
+        }else{
+            this.state.onLogin = true
         }
         var appointmentState = this.renderItemState({type:1,value:appointmentState_val})
         return (
             <div id="component_AppointmentInfo">
                 <div className="topBar">
+                    <div className="fll arrow" onClick={this.changeInfo.bind(this,-1)}></div>
                     <div className="fll">来访信息
                     {appointmentState}
                     </div>
                     <div className="fll">身份信息</div>
+                    <div className="flr arrow" onClick={this.changeInfo.bind(this,1)}></div>
                 </div>
                 <div className="component_AppointmentInfo_mainBoard">
                     <div className="component_AppointmentInfo_appInfo fll">
                         <ul>
                             {this.renderItem("来访人姓名",this.state.visitInfo.vname,"vname",{type:0,value:this.state.answerState})}
-                            {this.renderItem("预约时间",this.state.visitInfo.vtime)}
+                            {this.renderItem("预约时间",new Date(this.state.visitInfo.vtime).format("yyyy-MM-dd hh:mm:ss"))}
                             {this.renderItem("来访事由",this.state.visitInfo.vtype)}
                             {this.renderItem("离开时间",this.state.visitInfo.leaveTime)}
                             {this.renderItem("来访人电话",this.state.visitInfo.vphone)}
@@ -144,7 +149,9 @@ export default class AppointmentInfo extends Component {
                             <img src={scanCard} />
                             <p>暂无身份信息</p>
                             <div className="btn_box">
-                                <div>读取证件</div>
+                                <div>
+                                    <span>读取证件</span>
+                                </div>
                             </div>
                         </div>
 
@@ -180,7 +187,7 @@ export default class AppointmentInfo extends Component {
                 </div>
 
                 <div id="component_AppointmentInfo_loginBTN" style={{display:appointmentState_val==1||appointmentState_val==2?"block":"none"}} onClick={this.nextStep.bind(this)}>
-                    下一步
+                    <span>下一步</span>
                 </div>
             </div>
         )
@@ -195,17 +202,22 @@ export default class AppointmentInfo extends Component {
         let _this = this
 
 
-        this.routerData = this.props.history.location.state;
-        // console.log(JSON.stringify(this.routerData))
+        this.routerData = this.props.history.location.state[this.state.infoOnShow];
 
         console.log(this.routerData)
 
         this.getExtendCol(this.routerData.vType)
+        let extendCol = {}
+        try {
+            extendCol = JSON.parse(_this.routerData.empInfo.extendCol.replace(/&quot;/g,'"'))
+        } catch (error) {
+            extendCol = {}
+        }
         this.setState({
             visitInfo:this.routerData.visitInfo,
             empInfo:this.routerData.empInfo,
             idcardContent:this.routerData.idcardContent,
-            extendCol:JSON.parse(Common.compileStr(_this.routerData.empInfo.extendCol).replace("\"\"\"\"","\"\'\'\"")),
+            extendCol:extendCol,
             qrcodeConf:this.routerData.qrcodeConf,
             visitDate: this.routerData.visitDate,
             appointmentDate: this.routerData.appointmentDate,
@@ -214,8 +226,12 @@ export default class AppointmentInfo extends Component {
             action: this.routerData.action,
             qrtype: this.routerData.qrtype,
             vgroup: this.routerData.vgroup,
-            vType: this.routerData.vType
+            vType: this.routerData.vType,
+            signin:this.routerData.signin
         })
+
+        // 校验答题
+        this.checkAnswer(this.routerData.visitInfo.vemail,this.routerData.visitInfo.vphone,this.routerData.idcardContent.certNumber)
 
 
         // 获取受访人信息
@@ -591,5 +607,107 @@ export default class AppointmentInfo extends Component {
                 }.bind(this));
             }
         }
+    }
+
+    /**
+     * @description [校验答题]
+     * @param {String} email 
+     * @param {String} phone 
+     * @param {String} cardId 
+     */
+	checkAnswer(email, phone, cardId){
+		if(this.state.answerState){
+			return
+		}
+		let flag = false;
+		for(let i = 0;i<arguments.length;i++){
+			if(sessionStorage.questionnaireSwitch == 0||((this.routerData.visitDate == this.routerData.appointmentDate)&&this.routerData.visitDate!=null)){
+				this.setState({
+					answerState:3
+				});
+				return;
+			}
+			if(flag){
+				continue;
+			}
+			let item = arguments[i];
+			if(!item){
+				continue;
+			}
+			if(this.routerData.tid == "0"||!!this.state.answerState){
+				this.setState({
+					answerState: 0
+				})
+				return;
+			}
+			let _this = this;
+			if((typeof item).toLocaleLowerCase() == "object"){
+				item = $("#idCardInput").val()
+			}
+			Common.ajaxProcWithoutAsync("getVisitorTypeByTid",{"tid": _this.routerData.tid,"userid": sessionStorage.userid},sessionStorage.token).done((data)=>{
+				if(!data.result.qid){
+					flag = true
+					this.setState({
+						answerState:2
+					})
+					return
+				}
+				let getAnswerResult = Common.ajaxProcWithoutAsync("getAnswerResult",{"identity": item,"userid": sessionStorage.userid},sessionStorage.token);
+				getAnswerResult.done((res)=>{
+					if(!res.result || !res.result.passDate) {
+						_this.setState({
+							answerState: 0
+						})
+					} else if ( new Date().getTime() > new Date(new Date(Number(res.result.passDate)).format("yyyy-MM-dd 00:00:00")).getTime()+Number(data.result.povDays)*24*60*60*1000){
+						_this.setState({
+							answerState: 0
+						})
+					}else {
+						flag = true
+						_this.setState({
+							answerState: 1
+						})
+					}
+				})
+			})
+
+		}
+    }
+    
+    changeInfo(step){
+        let count=0
+        if(step==1){
+            count = this.state.infoOnShow+1;
+            count = this.props.history.location.state.length <= count?this.props.history.location.state.length-1:count
+            this.routerData = this.props.history.location.state[count];
+        }else{
+            count = this.state.infoOnShow-1<=0?0:this.state.infoOnShow-1;
+            this.routerData = this.props.history.location.state[count];
+        }
+        this.getExtendCol(this.routerData.vType)
+        this.setState({
+            infoOnShow: count,
+            visitInfo:this.routerData.visitInfo,
+            empInfo:this.routerData.empInfo,
+            idcardContent:this.routerData.idcardContent,
+            extendCol:JSON.parse(this.routerData.empInfo.extendCol.replace(/&quot;/g,'"')),
+            qrcodeConf:this.routerData.qrcodeConf,
+            visitDate: this.routerData.visitDate,
+            appointmentDate: this.routerData.appointmentDate,
+            leaveTime: this.routerData.leaveTime,
+            tid: this.routerData.tid,
+            action: this.routerData.action,
+            qrtype: this.routerData.qrtype,
+            vgroup: this.routerData.vgroup,
+            vType: this.routerData.vType,
+            signin:this.routerData.signin
+        })
+
+        // 校验答题
+        this.checkAnswer(this.routerData.visitInfo.vemail,this.routerData.visitInfo.vphone,this.routerData.idcardContent.certNumber)
+
+
+        // 获取受访人信息
+        this.getEmpInfo(this.routerData.empInfo.ename)
     }
 }

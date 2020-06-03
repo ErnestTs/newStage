@@ -1,0 +1,257 @@
+#component_TempCards {
+    height: 100%;
+    width: 100%;
+    background: #F5F6FA;
+}
+
+#component_TempCards .component_TempCards_btnGroup{
+    height: 4vh;
+    padding-bottom: 3vh;
+}
+
+#component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype {
+    overflow: hidden;
+    border: 1px solid #D8D8D8;
+    border-radius: 6px;
+    width: 43%;
+    margin-left: 4px;
+    float: left;
+    height: 100%;
+    box-sizing: border-box
+}
+
+#component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype li {
+    float: left;
+    width: 33.3%;
+    font-size: 16px;
+    color: #323233;
+    letter-spacing: 0;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-right: 1px solid #D8D8D8;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative
+}
+
+#component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype li:last-child{
+    border-right: 0;
+}
+
+#component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype li span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+#component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype li.action{
+    background: #4091F7;
+    color: #FFF;
+    background-color: #4091F7;
+    border: 1px solid #4091F7;
+}
+
+.component_TempCards_tableBox {
+    width: 100%;
+    background: #fff;
+    height: 90%;
+    border-radius: 14px;
+    width: 100%;
+    padding-top: 2.4%;
+    box-sizing: border-box;
+}
+#component_TempCards .buttonsBox {
+    overflow: hidden;
+    height: 100%;
+}
+
+#component_TempCards .buttonsBox li {
+    width: 45%;
+    position: relative;
+    height: 29px;
+    float: left;
+    background: #FFFFFF;
+    border: 1px solid #4091F7;
+    border-radius: 6px;
+    line-height: normal;
+    margin-right: 5%;
+    text-align: center;
+    cursor: pointer;
+}
+#component_TempCards .buttonsBox li span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    font-size: 1.5vh
+}
+
+#component_TempCards .buttonsBox li.blue {
+    background: #4091F7;
+    color: #fff;
+    margin:0
+}
+
+#component_TempCards .searchCriteria {
+    float: right;
+    width: 50%;
+    text-align: right;
+    height: 100%;
+}
+
+#component_TempCards .searchCriteria li {
+    display: inline-block;
+}
+
+#component_TempCards .searchCriteria .searchContent {
+    width: 50%;
+    height: 100%;
+    text-align: left;
+    background: #F5F6FA;
+    border: 1px solid #4091F7;
+    border-radius: 19px;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle
+}
+#component_TempCards .searchCriteria .searchContent input {
+    height: 100%;
+    width: 90%;
+    border: 0;
+    outline: none;
+    float: right;
+    background: #F5F6FA;
+    vertical-align: middle
+}
+
+#component_TempCards .searchCriteria .DatePickerBox {
+    background: #FFFFFF;
+    border: 1px solid #DCDEE0;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 20px;
+    width: 170px;
+    height: 100%;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+#component_TempCards .searchCriteria .DatePicker {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.component_TempCards_mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.5;
+}
+
+#component_TempCards_submit,#component_TempCards_refuseSubmit,#component_TempCards_onreturn {
+    width: 28.1vw;
+    height: 24vh;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    margin: auto;
+    background: #fff;
+    border-radius: 39px;
+}
+
+#component_TempCards .title {
+    text-align: center;
+    font-size: 2.222vh;
+    color: #323233;
+    font-weight: bold;
+    margin-top: 4.16vh;
+    margin-bottom: 1.57vh;
+}
+
+#component_TempCards .inputBox {
+    width: 20vw;
+    margin: auto;
+    font-size: 2.1vh;
+    line-height: normal;
+}
+
+#component_TempCards .inputBox input {
+    width: 70%;
+    background: #FFFFFF;
+    border: 1px solid #4091F7;
+    border-radius: 6px;
+    text-indent: 5%;
+    line-height: normal;
+}
+
+#component_TempCards_refuseSubmit .inputBox input {
+    border: 1px solid #F56C6C;;
+}
+
+#component_TempCards .btnGroup {
+    margin: auto;
+    overflow: hidden;
+    width: 13.4vw;
+    margin-top: 4vh
+}
+
+#component_TempCards .btnGroup li {
+    height: 3.7vh;
+    float: left;
+    width: 5.4vw;
+    line-height: 3.7vh;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #4091F7;
+    border-radius: 6px;
+    font-size: 2vh;
+    cursor: pointer;
+}
+
+#component_TempCards_refuseSubmit .btnGroup li {
+    border: 1px solid #F56C6C;
+}
+
+#component_TempCards .btnGroup li:last-child {
+    float: right;
+    background: #4091F7;
+    color: #fff;
+}
+
+#component_TempCards_refuseSubmit .btnGroup li:last-child {
+    background: #F56C6C;
+}
+
+#component_TempCards .cards_state {
+    width: 100%;
+    height: 29px;
+    border-radius: 13.5px;
+    padding:2% 15%;
+    line-height: normal;
+}
+
+#component_TempCards .cards_state.borrowing{
+    background: #EFCEBB;
+    color: #D46929;
+}
+
+#component_TempCards .cards_state.returned {
+    background: #C3F1EB;
+    color: #00BA9A;
+}
+
+#component_TempCards .cards_state.rejected {
+    background: #F8C6C6;
+    color: #F56C6C;
+}
