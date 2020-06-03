@@ -55,6 +55,7 @@ export default class FaceRecognition extends Component {
     }
 
     initCamera(){
+		let _this = this
 		let flash = document.createElement("embed");
 		flash.setAttribute("src", Common.cameraUrl);
 		flash.setAttribute("style", "z-index:100");
@@ -68,6 +69,28 @@ export default class FaceRecognition extends Component {
 		flash.setAttribute("name", "My_Cam");
 		
 		document.getElementById("cameraPanel").appendChild(flash);
+
+		if (sessionStorage.photoSwitch === 'false') {
+			var sendData = this.routerData;
+			sendData.photoUrl = "";
+			if (sendData.action !== "logistics") sessionStorage.vid = sendData.vid;
+			this.appointmentSignin(sendData);
+		}
+		
+		if(Common.$_Get().idcard == "3" && Common.$_Get().photo == "1"){
+			window.callbackCamera = function(res){
+				var sendData = _this.routerData;
+				sendData.photoUrl = res;
+				if(sendData.action !== "logistics")	sessionStorage.vid = sendData.vid;
+				_this.appointmentSignin(sendData);
+			}
+			if(sessionStorage.cameraReady == 'true'){
+				sessionStorage.cameraReady = 'false'
+				window.Android.startActivity("camera");
+			}else{
+				window.Android.updateImage();
+			}
+		}
     }
 
     nextStep(){

@@ -91,10 +91,56 @@ export default class IdCard extends Component {
         };
         let resObj = {}
         Common.ajaxProcWithoutAsync("getLogisticsInfo", sendData, sessionStorage.token).done((res)=>{
-            if(res.result.list.length == 0){
+            if(res.result.list.length == 0||res.status !== 0){
                 resObj.state = false
             }else{
+                resObj.state = true
+                var datalist = res.result.list;
+                let _this = this
+                            
+                for (var i = 0; i < datalist.length; i++) {
+                    if (datalist[i].appointmentDate !== null) {
+                        datalist[i].appointmentDate = new Date(datalist[i].appointmentDate).format("yyyy-MM-dd hh:mm:ss");
+                    }
+                    if (datalist[i].visitdate !== null) {
+                        datalist[i].visitdate = new Date(datalist[i].visitdate).format("yyyy-MM-dd hh:mm:ss");
+                    }
+                    if (datalist[i].leaveTime !== null) {
+                        datalist[i].leaveTime = new Date(datalist[i].leaveTime).format("yyyy-MM-dd hh:mm:ss");
+                    }
+                    if (datalist[i].finishTime !== null) {
+                        datalist[i].finishTime = new Date(datalist[i].finishTime).format("yyyy-MM-dd hh:mm:ss");
+                    }
+                    
 
+                    if(!!datalist[i].leaveTime){
+                        datalist[i].state = 2;
+                    }else if(!!datalist[i].visitdate){
+                        datalist[i].state = 1;
+                    }else {
+                        datalist[i].state = 0;
+                    }
+                }			
+                let totalPage = Math.ceil(res.result.count / _this.state.pageSize);
+                for(var i =0;i < datalist.length; i++){
+                    datalist[i].logExtend = datalist[i].logExtend !== null?JSON.parse(datalist[i].logExtend.replace(/&quot;/g, '"')):[];
+                    datalist[i].driverExtend = datalist[i].driverExtend !== null?JSON.parse(datalist[i].driverExtend.replace(/&quot;/g, '"')):[];
+                    datalist[i].vehicleExtend = datalist[i].vehicleExtend !== null?JSON.parse(datalist[i].vehicleExtend.replace(/&quot;/g, '"')):[];
+                    datalist[i].goodsExtend = datalist[i].goodsExtend !== null?JSON.parse(datalist[i].goodsExtend.replace(/&quot;/g, '"')):[];
+                    datalist[i].memberInfo = datalist[i].memberInfo !== null?JSON.parse(datalist[i].memberInfo.replace(/&quot;/g, '"')):[];
+                    datalist[i].otherExtend = datalist[i].otherExtend !== null?JSON.parse(datalist[i].otherExtend.replace(/&quot;/g, '"')):[];
+                    if(!datalist[i].otherExtend){
+                        datalist[i].otherExtend = []
+                    }
+                    
+                    datalist[i].photoInfo = datalist[i].photoInfo.split(",");
+                    datalist[i].carLoginPhoto = datalist[i].photoInfo;
+                    datalist[i].carLogoutPhoto = datalist[i].photoInfo;
+                    
+
+                    datalist[i].key = "l"+datalist[i].appointmentDate
+                }
+                this.props.history.push({pathname:"logisticsInfo",state:datalist[0]})
             }
         })
 

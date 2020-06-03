@@ -145,17 +145,17 @@ export default class AppointmentInfo extends Component {
                     </div>
 
                     <div className="component_AppointmentInfo_cardInfo fll">
-                        <div id="component_AppointmentInfo_cardInfo_mask" style={{display:this.state.showCardMask?"block":"none"}}>
+                        <div id="component_AppointmentInfo_cardInfo_mask" style={{display:!!this.state.cardInfo.address?"block":"none"}}>
                             <img src={scanCard} />
                             <p>暂无身份信息</p>
                             <div className="btn_box">
-                                <div>
+                                <div onClick={this.getCardInfo.bind(this)}>
                                     <span>读取证件</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="component_AppointmentInfo_cardInfo_board" style={{display:!this.state.showCardMask?"block":"none"}}>
+                        <div id="component_AppointmentInfo_cardInfo_board" style={{display:!this.state.cardInfo.address?"block":"none"}}>
                             <div className="headerBox">
                                 <img src={defaultPhoto} />
                             </div>
@@ -230,9 +230,9 @@ export default class AppointmentInfo extends Component {
             vType: this.routerData.vType,
             signin:this.routerData.signin,
             cardInfo:{
-                name: this.routerData.certNumber,
-                cardId: this.routerData.partyName,
-                address: this.routerData.address||""
+                name: this.routerData.idcardContent.partyName,
+                cardId: this.routerData.idcardContent.certNumber,
+                address: this.routerData.idcardContent.address||""
             }
         })
 
@@ -242,6 +242,39 @@ export default class AppointmentInfo extends Component {
 
         // 获取受访人信息
         this.getEmpInfo(this.routerData.empInfo.ename)
+
+        // 加载对应的读卡模块
+        switch(Common.$_Get().idcard){
+            case "1":
+                Common.initPassPort()
+                break;
+            case "3":
+                let _this = this;
+                window.callbackId = function(res){
+                    if(!res){
+                        return
+                    }
+                    if(typeof(res) == "string"){
+                        try {
+                            res = JSON.parse(res)
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }
+                    let cardInfo = {
+                        name: res.name,
+                        cardId: res.cardId,
+                        address: res.address||""
+                    }
+                    _this.setState({
+                        cardInfo:cardInfo
+                    })
+                }
+                break;
+            default:
+                Common.initIdCard()
+                break;
+        }
     }
 
     /**
@@ -706,7 +739,12 @@ export default class AppointmentInfo extends Component {
             qrtype: this.routerData.qrtype,
             vgroup: this.routerData.vgroup,
             vType: this.routerData.vType,
-            signin:this.routerData.signin
+            signin:this.routerData.signin,
+            cardInfo:{
+                name: this.routerData.idcardContent.partyName,
+                cardId: this.routerData.idcardContent.certNumber,
+                address: this.routerData.idcardContent.address||""
+            }
         })
 
         // 校验答题
@@ -715,5 +753,37 @@ export default class AppointmentInfo extends Component {
 
         // 获取受访人信息
         this.getEmpInfo(this.routerData.empInfo.ename)
+    }
+
+    /**
+     * @description [读取卡片信息]
+     */
+    getCardInfo(){
+        let cardInfo;
+        switch(Common.$_Get().idcard){
+            case "1":
+                cardInfo = Common.scanByPassPort();
+                this.setState({
+                    cardInfo:{
+                        name: cardInfo.partyName,
+                        cardId: cardInfo.certNumber,
+                        address: cardInfo.address||""
+                    }
+                })
+                break;
+            case "3":
+                window.Android.startActivity("id")
+                break;
+            default:
+                cardInfo = Common.getIdCardInfo();
+                this.setState({
+                    cardInfo:{
+                        name: cardInfo.partyName,
+                        cardId: cardInfo.certNumber,
+                        address: cardInfo.address||""
+                    }
+                })
+                break;
+        }
     }
 }

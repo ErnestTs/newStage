@@ -183,6 +183,7 @@ export default class Menu extends Component {
         this.props.history.push("/home/"+path)
         this.props.changeTitle(name)
 		if(path === "qrcode" && Common.$_Get().idcard == '3'){
+            sessionStorage.cameraReady = 'false'
 			window.Android.startActivity("scan")
 		}
         this.setState({

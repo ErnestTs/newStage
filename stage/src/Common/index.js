@@ -14,6 +14,8 @@ export default class Common {
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
 	static cameraUrl = "http://www.coolvisit.top/stage/MyCamera.swf";
 	static customPrintUrl = "http://www.coolvisit.top/card/custom/";
+	
+	static Version = "2.4.8"
 
 	static ajaxProc(action, data, token) {
 		let jqXHR = $.ajax({
@@ -48,6 +50,29 @@ export default class Common {
 			async: false,
 			headers: {
 				'X-COOLVISIT-TOKEN': token
+			},
+			success: function(data){
+				if(data.status == 27) {
+					setTimeout(()=>{
+						sessionStorage.clear()
+						window.history.go(0)
+					}, 2000)
+					return;
+				}
+			}
+		});
+		return jqXHR;
+	}
+
+	static ajaxSenseidProc(action, data, token) {
+		let jqXHR = $.ajax({
+			url: this.url + action,
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			type: 'post',
+			timeout: 10000,
+			headers: {
+				'User-Agent':'android_senseid'
 			},
 			success: function(data){
 				if(data.status == 27) {
