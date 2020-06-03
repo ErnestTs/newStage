@@ -38,7 +38,8 @@ export default class PassPort extends Component {
     scanCard(){
         // 0-获取身份证信息
         // let cardInfo = Common.scanByPassPort();
-        let cardInfo={certNumber:"320911198301036314",partyName:"方超"}
+        let cardInfo={certNumber:"320911198301036314",partyName:"方超",address:"山东省青岛市市南区湖南路七号九户"}
+        this.state.cardInfo = cardInfo
 
         // 1-获取物流信息
         if(this.getLogisticsInfo(cardInfo.certNumber).state){
@@ -130,7 +131,8 @@ export default class PassPort extends Component {
                     },
                     "idcardContent":{
                         "certNumber":extendCol.cardId||"",
-                        "partyName":item.vname||""
+                        "partyName":item.vname||"",
+                        "address": this.state.cardInfo.address
                     },
                     "tid":item.tid||"",
                     "vgroup":item.vgroup||"",
@@ -203,12 +205,13 @@ export default class PassPort extends Component {
                             },
                             "idcardContent":{
                                 "certNumber":extendCol.cardId||"",
-                                "partyName":item.vname||""
+                                "partyName":item.vname||"",
+                                "address": this.state.cardInfo.address
                             },
                             "tid":item.tid||"",
                             "vgroup":item.vgroup||"",
                             "appointmentDate":item.appointmentDate||"",
-                            "action":"list",
+                            "action":"card",
                             "vType":item.vType||"",
                             "permission":item.permission||"",
                             "qrtype":qrType,

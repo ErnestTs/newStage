@@ -11,7 +11,8 @@ export default class Senseid extends Component {
     constructor(props){
         super(props)
         this.state= {
-            componentName : "Senseid"
+            componentName : "Senseid",
+            cardInfo:{}
         }
     }
 
@@ -41,7 +42,8 @@ export default class Senseid extends Component {
                     console.log(error)
                 }
             }
-            let cardInfo = {certNumber:res.cardId,partyName:res.name}
+            let cardInfo = {certNumber:res.cardId,partyName:res.name,address:res.address}
+            _this.state.cardInfo = cardInfo
 			_this.scanCard(cardInfo)
 		}
     }
@@ -146,12 +148,13 @@ export default class Senseid extends Component {
                     },
                     "idcardContent":{
                         "certNumber":extendCol.cardId||"",
-                        "partyName":item.vname||""
+                        "partyName":item.vname||"",
+                        "address":this.state.address
                     },
                     "tid":item.tid||"",
                     "vgroup":item.vgroup||"",
                     "appointmentDate":item.appointmentDate||"",
-                    "action":"list",
+                    "action":"card",
                     "vType":item.vType||"",
                     "permission":item.permission||"",
                     "qrtype":qrType,
@@ -224,7 +227,7 @@ export default class Senseid extends Component {
                             "tid":item.tid||"",
                             "vgroup":item.vgroup||"",
                             "appointmentDate":item.appointmentDate||"",
-                            "action":"list",
+                            "action":"card",
                             "vType":item.vType||"",
                             "permission":item.permission||"",
                             "qrtype":qrType,

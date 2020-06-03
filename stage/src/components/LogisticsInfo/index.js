@@ -336,7 +336,7 @@ export default class logisticsInfo extends Component {
                 </div>
 
                 <div id="component_logisticsInfo_loginBTN" onClick={this.nextStep.bind(this)}>
-                    下一步
+                    <span>下一步</span>
                 </div>
             </div>
         )

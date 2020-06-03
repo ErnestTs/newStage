@@ -213,6 +213,7 @@ export default class AppointmentInfo extends Component {
         } catch (error) {
             extendCol = {}
         }
+        
         this.setState({
             visitInfo:this.routerData.visitInfo,
             empInfo:this.routerData.empInfo,
@@ -227,7 +228,12 @@ export default class AppointmentInfo extends Component {
             qrtype: this.routerData.qrtype,
             vgroup: this.routerData.vgroup,
             vType: this.routerData.vType,
-            signin:this.routerData.signin
+            signin:this.routerData.signin,
+            cardInfo:{
+                name: this.routerData.certNumber,
+                cardId: this.routerData.partyName,
+                address: this.routerData.address||""
+            }
         })
 
         // 校验答题

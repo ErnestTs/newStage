@@ -145,7 +145,7 @@ export default class Logistics extends Component {
 			endDate: date,
 			psList: [1,3],
 			startIndex: this.state.startIndex,
-			requestedCount: 5,
+			requestedCount: 999999,
 			userid: sessionStorage.userid
 		};
 		Common.ajaxProcWithoutAsync('getLogisticsInfo', sendData, sessionStorage.token).done(function(data) {

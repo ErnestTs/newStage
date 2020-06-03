@@ -42,7 +42,9 @@ export default class IdCard extends Component {
     scanCard(){
         // 0-获取身份证信息
         let cardInfo = Common.getIdCardInfo();
+        this.state.cardInfo = cardInfo
         // let cardInfo={certNumber:"320911198301036314",partyName:"方超"}
+        console.log(cardInfo)
         if(cardInfo.partyName == "err0"){
             Toast.open({
                 type:"danger",
@@ -147,12 +149,13 @@ export default class IdCard extends Component {
                     },
                     "idcardContent":{
                         "certNumber":extendCol.cardId||"",
-                        "partyName":item.vname||""
+                        "partyName":item.vname||"",
+                        "address": this.state.cardInfo.address
                     },
                     "tid":item.tid||"",
                     "vgroup":item.vgroup||"",
                     "appointmentDate":item.appointmentDate||"",
-                    "action":"list",
+                    "action":"card",
                     "vType":item.vType||"",
                     "permission":item.permission||"",
                     "qrtype":qrType,
@@ -220,7 +223,8 @@ export default class IdCard extends Component {
                             },
                             "idcardContent":{
                                 "certNumber":extendCol.cardId||"",
-                                "partyName":item.vname||""
+                                "partyName":item.vname||"",
+                                "address": this.state.cardInfo.address
                             },
                             "tid":item.tid||"",
                             "vgroup":item.vgroup||"",
