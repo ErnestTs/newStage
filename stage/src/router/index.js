@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link, Redirect, Route, HashRouter as Router, Switch } from "react-router-dom"
+import Common from "../Common/index"
 
 // Navgation
 import Navgation from "../components/Navgation/index.js"
@@ -18,6 +19,8 @@ export default class RouterIndex extends Component {
     }
 
     render(){
+        console.log(Common.Version)
+
         return (
             <Router>
                 <div>

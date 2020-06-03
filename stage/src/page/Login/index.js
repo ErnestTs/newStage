@@ -70,6 +70,9 @@ export default class Login extends Component {
 
     componentDidMount(){
         this.getValideCode();
+		if(Common.$_Get().idcard == 3){
+			this.login()
+		}
     }
 
     /**
@@ -266,7 +269,7 @@ export default class Login extends Component {
     }
     
 	/**
-	* 获取扩展信息
+	* @description [获取扩展信息]
 	* @param {*} userid 
 	*/
 
@@ -283,7 +286,7 @@ export default class Login extends Component {
     
     
 	/**
-	 * 获取门岗信息
+	 * @description [获取门岗信息]
 	 */
 	getGateway() {
 		Common.ajaxProcWithoutAsync("getGate", {userid:sessionStorage.userid}, sessionStorage.token).done(function (data) {
@@ -301,7 +304,7 @@ export default class Login extends Component {
 	}
 
 	/**
-	 * 添加答题有效日期 tid默认为38 普通访客
+	 * @description [添加答题有效日期_tid默认为38-普通访客]
 	 */
 	getVisitorTypeByTid(){
 		Common.ajaxProcWithoutAsync("getVisitorTypeByTid", {"userid": sessionStorage.userid,tid: 38}, sessionStorage.token).done((data)=>{
@@ -314,7 +317,7 @@ export default class Login extends Component {
 	}
 
 	/**
-	 * 获取门岗组信息
+	 * @description [获取门岗组信息]
 	 */
 	getEquipmentGroupByUserid(){
 		let resStr = [];
@@ -337,5 +340,91 @@ export default class Login extends Component {
 			}
             this.props.history.push("/home")
 		})
+    }
+    
+    /**
+     * @description [senseid登录]
+     */
+    senseIdLogin(){
+		let user = Common.$_Get().account,
+			pwd = Common.$_Get().pw,
+			sendData = {};
+
+		let method = "Login";
+		sendData = {
+			email: user,
+			password: Common.lftPwdRule(pwd, 3, 5)
+		}
+		let jqXHR = Common.ajaxSenseidProc(method, sendData);
+		jqXHR.done(function (data) {
+			let result = data.result;
+
+			if (data.status === 0) {
+				sessionStorage.userid = result.userid;
+				sessionStorage.loginType = method;
+				sessionStorage.un = this.state.userName;
+				sessionStorage.ps = this.state.userPwd;
+				sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
+				sessionStorage.badgeMode = result.badgeMode;
+				sessionStorage.badgeCustom = result.badgeCustom;
+
+				this.setState({
+					userName: "",
+					userPwd: ""
+				})
+
+				/**存储结果用于刷新token,其他session暂不修改 */
+				sessionStorage.result = JSON.stringify(result);
+
+				/**
+				 * token格式
+				 * 管理员 userid-token
+				 * 前台 account-token
+				 */
+				let sname = user;
+				sessionStorage.token = result.userid + '-' + result.token;
+				sessionStorage.permissionSwitch = result.permissionSwitch;
+				sessionStorage.logo = result.logo;
+				sessionStorage.offDuty = result.offDuty;
+				sessionStorage.cardType = result.cardType;
+				sessionStorage.cardSize = result.cardSize;
+				sessionStorage.email = result.email;
+				sessionStorage.sid = result.subAccount;
+				sessionStorage.preExtendTime = result.preExtendTime;
+				sessionStorage.latExtendTime = result.latExtendTime;
+				sessionStorage.badgeMode = result.badgeMode;
+				sessionStorage.badgeCustom = result.badgeCustom;
+				sessionStorage.mainCompany = result.company;
+				sessionStorage.questionnaireSwitch = result.questionnaireSwitch;
+				sessionStorage.opname = result.username;
+				sessionStorage.company = result.company;
+				sessionStorage.gid = result.gid
+				sessionStorage.gname = result.gname
+				
+
+				this.getExtendVisitor(result.userid);
+
+				let value = Common.$_Get().photo;
+				if (value !== '0') {
+					sessionStorage.photoSwitch = true;
+				}
+				else {
+					sessionStorage.photoSwitch = false;
+				}
+				this.getCompayInfo(result.userid, user, method, sname);
+			}
+			else if (data.status == 1) {
+                Toast.open({
+                    type:"danger",
+                    content: "无效的用户 请重新登录"
+                });
+			}
+			else {
+                Toast.open({
+                    type:"danger",
+                    content: "登录失败 请重新登录"
+                });
+			}
+		}.bind(this));//此处需绑定this
 	}
 }
