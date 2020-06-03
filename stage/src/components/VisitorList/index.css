@@ -3,7 +3,8 @@
     height: 100%;
     background: #F5F6FA;
     position: relative;
-    overflow: hidden
+    overflow: hidden;
+    float: left;
 }
 
 #component_VisitorList .component_VisitorList_btnGroup {
@@ -13,8 +14,8 @@
 #component_VisitorList .component_VisitorList_btnGroup>div {}
 
 #component_VisitorList .component_VisitorList_topBar1 {
-    margin-bottom: 2.7%;
-    height: 38%;
+    margin-bottom: 2%;
+    height: 4vh;
 }
 
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype{
@@ -202,7 +203,7 @@
 
 #component_VisitorList_tableBox {
     position: absolute;
-    top: 20%;
+    top: 14%;
     width: 100%;
     bottom: 0;
     background-color: #fff;
@@ -326,4 +327,8 @@
 #component_VisitorList_tableBoard .statusTag.blue {
     background: #C2DAF9;
     color: #4091F7;
+}
+
+.printIcon {
+    margin-left: 5%;
 }

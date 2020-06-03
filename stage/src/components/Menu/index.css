@@ -2,11 +2,11 @@
     height: 100%;
     position: absolute;
     left: 0;
-    width: 320px;
+    width: 16.66666vw;
 }
 
 #menu_large {
-    width: 320px;
+    width: 100%;
     height: 100%;
     background: #fff;
     overflow: auto;
@@ -22,12 +22,12 @@
 }
 
 #menu_Head {
-    height: 140px;
+    height: 6.8vw;
 }
 
 #menu_Head img {
-    width: 140px;
-    height: 140px;
+    width: 6.8vw;
+    height: 6.8vw;
 }
 
 #menu_Company {
@@ -49,7 +49,7 @@
 .menu_item {
     cursor: pointer;
     text-align: center;
-    width: 289px;
+    width: 14vw;
     margin: auto;
     height: 64px;
     line-height: 64px;
@@ -63,7 +63,7 @@
     width: 24px;
     height: 24px;
     position: absolute;
-    left: 76px;
+    left: 2vw;
     top: 22px
 }
 
@@ -92,7 +92,6 @@
     border-radius: 6px;
     color: #fff;
     animation: onAction 0.5s forwards;
-    left: 15px;
 }
 
 .menu_actionBorder {
@@ -101,14 +100,14 @@
     background: #0F4C81;
     border-radius: 4px;
     position: absolute;
-    left:-31px;
+    left:-2.01vw;
     border:0 0 4px 4px;
 }
 
 @keyframes onAction
 	{
 	from {left: 0;}
-	to {left: 15px;}
+	to {left: 0.7vw;}
 }
 
 /*Safari 和 Chrome:*/
@@ -120,7 +119,7 @@
         color: #000;
     }
 	to {
-        left: 15px;
+        left: 0.7vw;
         background: #0F4C81;
         color: #fff;
     }

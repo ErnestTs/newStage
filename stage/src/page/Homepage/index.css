@@ -46,3 +46,9 @@ p{
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
+
+#objIDCard,#CertCtl {
+    position: fixed;
+    left: -777px;
+    top: -777px;
+}

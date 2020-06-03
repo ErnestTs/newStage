@@ -94,15 +94,22 @@
     position: fixed;
     width: 274px;
     height: 5%;
-    padding-top: 0.6%;
     background: #0F4C81;
     border-radius: 8px;
     text-align: center;
     color:#fff;
-    right: 3.5%;
+    right: 70px;
     bottom: 2%;
     cursor: pointer;
     box-sizing: border-box
+}
+
+#component_VisitorInfo_loginBTN span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 @media screen and (max-width: 1280px) {
@@ -114,7 +121,8 @@
 }
 @media screen and (max-height: 619px) {
     #component_VisitorInfo_loginBTN {
-        bottom: 0.4%
+        bottom: 0.4%;
+        height: 4%;
     }
 }
 

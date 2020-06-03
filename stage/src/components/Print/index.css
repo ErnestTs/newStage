@@ -31,7 +31,7 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    transform: scale(0.5) translate(-20%, 0);
+    transform: scale(0.7) translate(0%, -2%);
 }
 
 @media screen and (max-width: 1440px) {
@@ -45,18 +45,32 @@
         transform: scale(0.4) translate(-68%, 0);
     }
 }
+
+@media screen and (max-height: 619px) {
+    #mainFrame {
+        transform: scale(0.34) translate(-65%, 0);
+    }
+}
 #btn_print {
     position: fixed;
     width: 274px;
-    height: 56px;
-    line-height: 56px;
+    height: 5%;
     background: #0F4C81;
     border-radius: 8px;
     text-align: center;
     color:#fff;
-    right: 3.5%;
+    right: 70px;
     bottom: 2%;
     cursor: pointer;
+    box-sizing: border-box
+}
+
+#btn_print span{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 @media screen and (max-width: 1280px) {

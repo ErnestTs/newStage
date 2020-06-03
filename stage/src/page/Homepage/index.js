@@ -22,6 +22,7 @@ import FaceRecognition from "../../components/FaceRecognition/index"
 import VisitorInfo from "../../components/VisitorInfo/index"
 import Print from "../../components/Print/index"
 import VisitorList from "../../components/VisitorList/index"
+import TempCards from "../../components/TempCards/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -47,7 +48,7 @@ export default class Homepage extends Component {
                 <Menu changeSize={this.changeSize.bind(this)} changeTitle={this.changeTitle.bind(this)} history={this.props.history} />
                 <div 
                     className="page_home_routeView"
-                    style={{left:this.state.open?"320px":"84px"}}
+                    style={{left:this.state.open?"16.66666vw":"84px"}}
                 >
                     <p className="page_home_title">{this.state.title}</p>
                     <div id="page_home_mainView">
@@ -60,10 +61,10 @@ export default class Homepage extends Component {
                                 <Route path="/home/register" component={Register} />
                                 <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
                                 <Route path="/home/face" name="face" component={FaceRecognition} />
-                                <Route path="/home/face" name="face" component={FaceRecognition} />
                                 <Route path="/home/visitorInfo" name="VisitorInfo" component={VisitorInfo} />
                                 <Route path="/home/print" name="print" component={Print} />
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
+                                <Route path="/home/cards" component={TempCards} />
                                 <Redirect to="/home/qrcode" />
                             </Switch>
                         </Router>

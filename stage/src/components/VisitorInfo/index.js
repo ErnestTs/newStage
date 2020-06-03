@@ -190,7 +190,7 @@ export default class VisitorInfo extends Component {
 
 
                 <div id="component_VisitorInfo_loginBTN" onClick={this.nextStep.bind(this)}>
-                    下一步
+                    <span>下一步</span>
                 </div>
             </div>
         )

@@ -294,7 +294,7 @@ export default class Register extends Component {
                 </div>
 
                 <div id="component_Register_loginBTN" onClick={this.updatePhoto.bind(this)}>
-                    下一步
+                    <span>下一步</span>
                 </div>
             </div>
         )

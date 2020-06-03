@@ -24,15 +24,15 @@
 
 .btn_box {
     width: 100%;
-    height: 56px;
-    margin-top: 40px
+    height: 5vh;
+    margin-top: 3.7vh
 }
 
 .btn_box div {
     height: 100%;
     width: 460px;
     text-align: center;
-    line-height: 56px;
+    height: 5vh;
     color:#fff;
     font-size: 20px;
     background: #0F4C81;

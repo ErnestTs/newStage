@@ -292,16 +292,18 @@ export default class Common {
 	 */
 	static initPassPort(){
 		// add by 方 添加读卡器驱动 用于读取身份证信息
-		$("#appbar").append(
+		$("#page_home_mainView").append(
 			'<object id="objIDCard" classid="clsid:10EC554B-357B-4188-9E5E-AC5039454D8B"></object>'
 		);
-		$("#appbar").append(
+		$("#page_home_mainView").append(
 			'<object classid="clsid:2DEFFB1F-4F4C-41B6-930A-63BE16732D61" id="objIDCard2" width="0" height="0"></object>'
 		);
 	}
 
 	static initIdCard(){
-
+		$("#page_home_mainView").append(
+			'<embed id="CertCtl" type="application/cert-reader" />'
+		);
 	}
 
 	static scanByPassPort() {
@@ -496,18 +498,67 @@ export default class Common {
 	}
 
 	
-    /**
-     * 从读卡结果中获取字段值
-     * @param {*} result 读卡结果
-     * @param {*} index 字段索引
-     * @param {*} start 截取字符串的初始位置
-     */
-		getCardColumn(result, index, start) {
-			let item = result[index],
-				count = item.length;
-	
-			return item.substring(start, count);
+	/**
+	 * 从读卡结果中获取字段值
+	 * @param {*} result 读卡结果
+	 * @param {*} index 字段索引
+	 * @param {*} start 截取字符串的初始位置
+	 */
+	static getCardColumn(result, index, start) {
+		let item = result[index],
+			count = item.length;
+
+		return item.substring(start, count);
+	}
+
+	/**
+	 * @description [获取身份证信息]
+	 */
+	static getIdCardInfo() {
+		try {
+			let CertCtlObj = document.getElementById("CertCtl"); //Routon Card Reader
+			let jsonStr = CertCtlObj.connect();   //连接读卡器
+			jsonStr = this.transformStr(jsonStr);
+
+			if (jsonStr.resultFlag === 0) {
+				jsonStr = CertCtlObj.getStatus();   //得到读卡器状态
+				jsonStr = this.transformStr(jsonStr);
+
+				if (jsonStr.status === 0) {
+					jsonStr = CertCtlObj.readCert();      //读身份证信息
+					jsonStr = this.transformStr(jsonStr);
+					jsonStr.resultContent.head = ""
+					jsonStr.resultContent.card = ""
+					let data = {
+						idcardContent: jsonStr.resultContent,
+						action: this.state.action
+										};
+										return {certNumber:data.idcardContent.certNumber,partyName:data.idcardContent.partyName}
+				}
+			}
+			else {
+								console.log("CertCtl:"+jsonStr.resultFlag)
+								return {certNumber:"",partyName:"err1"};
+			}
 		}
+		catch (e) {
+						console.log("CertCtl:"+e)
+						return {certNumber:"",partyName:"err0"};
+		}
+	}
+
+	/**
+	 * @description [处理读卡器返回内容第一个字符乱码的问题]
+	 * @param {*} str 
+	 */
+	static transformStr(str) {
+		let first = str.substring(0, 1);
+
+		if (first !== '{') {
+			str = '{"' + str;
+		}
+		return JSON.parse(str);
+	}
 
 }
 

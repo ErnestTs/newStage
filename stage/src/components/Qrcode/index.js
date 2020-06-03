@@ -31,6 +31,14 @@ export default class Qrcode extends Component {
     }
 
     componentDidMount(){
+		let _this = this
+		if(Common.$_Get().idcard == "3"){
+			window.callbackQrcode = function(result){
+				sessionStorage.cameraReady = 'true'
+				_this.analysisCode(result);
+			}
+			window.changeItem(4, "今日访客", "visitor")
+		}
 		this.getFocus()
 	}
 
@@ -178,7 +186,7 @@ export default class Qrcode extends Component {
 					this.getSignOp(this.routerData.visitInfo.vphone, this.routerData.visitInfo.vemail, result.signOutDate, result.appid);
 				}
 
-				this.props.history.push({pathname:"/home/appointmentInfo", state:this.routerData});
+				this.props.history.push({pathname:"/home/appointmentInfo", state:[this.routerData]});
 			}
 		}.bind(this));
     }
