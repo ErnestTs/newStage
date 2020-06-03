@@ -494,7 +494,7 @@ export default class Common {
 				break;
 			default:
 		}
-		return {certNumber:certNumber,partyName:partyName}
+		return {certNumber:certNumber,partyName:partyName,address:certAddress}
 	}
 
 	
@@ -533,17 +533,17 @@ export default class Common {
 						idcardContent: jsonStr.resultContent,
 						action: this.state.action
 										};
-										return {certNumber:data.idcardContent.certNumber,partyName:data.idcardContent.partyName}
+										return {certNumber:data.idcardContent.certNumber,partyName:data.idcardContent.partyName,address:data.idcardContent.cardAddress}
 				}
 			}
 			else {
 								console.log("CertCtl:"+jsonStr.resultFlag)
-								return {certNumber:"",partyName:"err1"};
+								return {certNumber:"",partyName:"err1",address:""};
 			}
 		}
 		catch (e) {
 						console.log("CertCtl:"+e)
-						return {certNumber:"",partyName:"err0"};
+						return {certNumber:"",partyName:"err0",address:""};
 		}
 	}
 

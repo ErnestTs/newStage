@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import './index.css';
+import Common from "../../Common/index"
 
 import defaultPhoto from "../../resource/defaultPhoto.png"
 
@@ -81,7 +82,6 @@ export default class Menu extends Component {
 
     componentDidMount(){
         this.changeItem(0,"二维码","qrcode");
-        // this.changeItem(0,"物流管理","logistics");
         window.changeItem = this.changeItem.bind(this)
     }
 
@@ -182,6 +182,9 @@ export default class Menu extends Component {
     changeItem(i,name,path){
         this.props.history.push("/home/"+path)
         this.props.changeTitle(name)
+		if(path === "qrcode" && Common.$_Get().idcard == '3'){
+			window.Android.startActivity("scan")
+		}
         this.setState({
             active: i
         })
