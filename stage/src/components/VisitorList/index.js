@@ -61,7 +61,8 @@ export default class VisitorList extends Component{
                         return(
                             <div className="tableItem_name">
                                 <Checkbox 
-                                    checked={data.checked} 
+                                    checked={data.checked}
+                                    style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
                                         tempArr[data.key].checked = !tempArr[data.key].checked;
@@ -121,11 +122,15 @@ export default class VisitorList extends Component{
                     render:(data)=>{
                         switch(data){
                             case 0:
-                                return <span className="statusTag red">待签到</span>
+                                return <span className="statusTag red">已授权</span>
                             case 1:
                                 return <span className="statusTag green">已签到</span>
                             case 2:
                                 return <span className="statusTag blue">已签出</span>
+                            case 3:
+                                return <span className="statusTag red">已拒绝</span>
+                            case 4:
+                                return <span className="statusTag blue">未授权</span>
                             default:
                                 return <span className="statusTag"></span>
                         }
@@ -154,11 +159,14 @@ export default class VisitorList extends Component{
                                 })
                             }
                         </ul>
-                        <ul className="component_VisitorList_btnGroup_actions">
+                        <ul 
+                            className="component_VisitorList_btnGroup_actions"
+                            style={{display:this.state.vState==2&&this.state.vType==0?"block":"none"}}
+                        >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
                                 <span>批量签出</span>
                             </li>
-                            <li className="component_VisitorList_btnCheckOut">
+                            <li className="component_VisitorList_btnCheckOut" onClick={this.batchSignOut.bind(this)}>
                                 <span>签出</span>
                             </li>
                             <li className="component_VisitorList_btnCancel" onClick={this.selectAll.bind(this,false)}>
@@ -185,7 +193,7 @@ export default class VisitorList extends Component{
                         <ul className="searchCriteria">
                             <li className="searchContent">
                                 <input 
-                                    placeholder="请输入您想要的信息"
+                                    placeholder="请输入访客的姓名或者公司"
                                     onChange={this.queryRecord.bind(this)}
                                 />
                             </li>
@@ -332,7 +340,6 @@ export default class VisitorList extends Component{
      * @param {String} date [yyyy-MM-dd]
      */
     getVisitorInfo(){
-        console.log(1)
         let interfaceName = this.state.vTypelist[this.state.vType].interface;
         let sendData = {
             userid: sessionStorage.userid,
@@ -388,7 +395,21 @@ export default class VisitorList extends Component{
                         visiting++;
                         checkIn++;
                     }else {
-                        item.state = 0;
+                        if(item.status == 4){
+                            item.state = 3;
+                        }else{
+                            switch (item.permission) {
+                                case 0:
+                                    item.state = 4;
+                                    break;
+                                case 1:
+                                    item.state = 0;
+                                    break;
+                                case 2:
+                                    item.state = 3;
+                                    break;
+                            }
+                        }
                         noArrived++;
                     }
 
@@ -482,8 +503,8 @@ export default class VisitorList extends Component{
                 })
                 this.getVisitorInfo();
                 Toast.open({
-                    type:"danger",
-                    content: "请选择正确的门岗进行签到"
+                    type:"success",
+                    content: "访客签出成功"
                 })
                 return;
             }
