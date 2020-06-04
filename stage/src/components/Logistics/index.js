@@ -92,7 +92,13 @@ export default class Logistics extends Component {
         return (
             <div id="component_Logistics">
                 <div className="component_Logistics_tableBoard">
-                    <Table className="tableBox" dataSource={this.state.dataSource} columns={this.state.columns} scroll={{y:this.state.tableHeight}} />
+                    <Table 
+                        className="tableBox"
+                        dataSource={this.state.dataSource}
+                        columns={this.state.columns}
+                        scroll={{y:this.state.tableHeight}}
+                        locale={{emptyText: '暂无数据'}}
+                    />
                 </div>
                 <DatePicker 
                     className="DatePicker"
