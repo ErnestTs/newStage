@@ -72,11 +72,12 @@ export default class VisitorList extends Component{
                                     }} 
                                 />
                                 <div className="defaultImg">
-                                    <img onClick={this.goLogin.bind(this,data)} src={defaultImg} />
+                                    <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
                                     <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
                                     <img
                                         className="printIcon"
                                         src={printImg}
+                                        style={{display:data.state == 1?"inline-block":"none"}}
                                         onClick={
                                             ()=>{
                                                 this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+data.vid}]}})
@@ -111,8 +112,8 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '签出时间',
-                    dataIndex: 'leaveTime',
-                    key: 'leaveTime',
+                    dataIndex: 'signOutDate',
+                    key: 'signOutDate',
                     width:"15%",
                 },
                 {
@@ -122,7 +123,7 @@ export default class VisitorList extends Component{
                     render:(data)=>{
                         switch(data){
                             case 0:
-                                return <span className="statusTag red">已授权</span>
+                                return <span className="statusTag yellow">已授权</span>
                             case 1:
                                 return <span className="statusTag green">已签到</span>
                             case 2:
@@ -130,7 +131,9 @@ export default class VisitorList extends Component{
                             case 3:
                                 return <span className="statusTag red">已拒绝</span>
                             case 4:
-                                return <span className="statusTag blue">未授权</span>
+                                return <span className="statusTag brown">未授权</span>
+                            case 5:
+                                return <span className="statusTag coffee">已结束</span>
                             default:
                                 return <span className="statusTag"></span>
                         }
@@ -288,7 +291,7 @@ export default class VisitorList extends Component{
                 break;
             case "visiting":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 1){
+                    if(this.state.baseList[i].state !== 1 && this.state.baseList[i].state !== 5){
                         continue
                     }
                     tempArr.push(this.state.baseList[i])
@@ -302,7 +305,7 @@ export default class VisitorList extends Component{
                 break;
             case "checkIn":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0){
+                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
                         continue
                     }
                     tempArr.push(this.state.baseList[i])
@@ -310,10 +313,9 @@ export default class VisitorList extends Component{
                 break;
             case "noArrived":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 0){
-                        continue
+                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                        tempArr.push(this.state.baseList[i])
                     }
-                    tempArr.push(this.state.baseList[i])
                 }
                 break;
             default:
@@ -389,6 +391,10 @@ export default class VisitorList extends Component{
                     if(!!item.signOutDate){
                         item.state = 2;
                         leave++;
+                        checkIn++;
+                    }else if(!!item.leaveTime){
+                        item.state = 5;
+                        visiting++;
                         checkIn++;
                     }else if(!!item.visitdate){
                         item.state = 1;
@@ -515,7 +521,10 @@ export default class VisitorList extends Component{
      * @description [点击签到]
      */
     goLogin(data){
-        if(data.state === 2){
+        if(data.visitType == "常驻访客"){
+            return
+        }
+        if(data.state === 2||data.state === 3||data.state === 4){
             return
         }
         let extendCol = !!data.extendCol?JSON.parse(data.extendCol.replace(/&quot;/g,'"')):{};

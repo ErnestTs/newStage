@@ -45,10 +45,10 @@ export default class VisitorInfo extends Component {
     render(){
         return (
             <div id="component_VisitorInfo">
-                <div className="titleBox">
+                {/* <div className="titleBox">
                     <p className="title">预约信息</p>
                     <p>请填写下面的信息</p>
-                </div>
+                </div> */}
                 <div className="component_VisitorInfo_board">
                     <ul>
                         <li className="component_VisitorInfo_Item">

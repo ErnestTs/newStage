@@ -13,6 +13,8 @@ import Toast from "../../components/ToastPublic/index.jsx"
 import scanCard from "../../resource/scanCard.png"
 import defaultPhoto from "../../resource/defaultPhoto.png"
 import defaultCard from "../../resource/idcardimg.jpeg"
+import arrow_left from "../../resource/arrow_left.png"
+import arrow_right from "../../resource/arrow_right.png"
 
 export default class AppointmentInfo extends Component {
     constructor(props){
@@ -21,7 +23,6 @@ export default class AppointmentInfo extends Component {
         this.state= {
             infoOnShow:0,
             answerState:0,
-            showCardMask:true,
             visitInfo:{},
             idcardContent:{},
             empInfo:{},
@@ -69,6 +70,9 @@ export default class AppointmentInfo extends Component {
         if(!!this.state.visitInfo.signOutDate){
             appointmentState_val = 3
             this.state.onLogin = false
+        }else if(!!this.state.leaveTime){
+            appointmentState_val = 4
+            this.state.onLogin = false
         }else if(!!this.state.visitDate){
             appointmentState_val = 2
             this.state.onLogin = false
@@ -82,12 +86,16 @@ export default class AppointmentInfo extends Component {
         return (
             <div id="component_AppointmentInfo">
                 <div className="topBar">
-                    <div className="fll arrow" onClick={this.changeInfo.bind(this,-1)}></div>
+                    <div className="fll arrow" onClick={this.changeInfo.bind(this,-1)}>
+                        <img src={arrow_left} />
+                    </div>
                     <div className="fll">来访信息
                     {appointmentState}
                     </div>
                     <div className="fll">身份信息</div>
-                    <div className="flr arrow" onClick={this.changeInfo.bind(this,1)}></div>
+                    <div className="flr arrow" onClick={this.changeInfo.bind(this,1)}>
+                        <img src={arrow_right} />
+                    </div>
                 </div>
                 <div className="component_AppointmentInfo_mainBoard">
                     <div className="component_AppointmentInfo_appInfo fll">
@@ -95,7 +103,7 @@ export default class AppointmentInfo extends Component {
                             {this.renderItem("来访人姓名",this.state.visitInfo.vname,"vname",{type:0,value:this.state.answerState})}
                             {this.renderItem("预约时间",new Date(this.state.visitInfo.vtime).format("yyyy-MM-dd hh:mm:ss"))}
                             {this.renderItem("来访事由",this.state.visitInfo.vtype)}
-                            {this.renderItem("离开时间",this.state.visitInfo.leaveTime)}
+                            {this.renderItem("离开时间",!!this.state.visitInfo.leaveTime?new Date(this.state.visitInfo.leaveTime).format("yyyy-MM-dd hh:mm:ss"):"")}
                             {this.renderItem("来访人电话",this.state.visitInfo.vphone)}
                             {this.renderItem("被访人姓名",this.state.empInfo.ename)}
                             {this.renderItem("被访人电话",this.state.empInfo.ephone)}
@@ -103,7 +111,7 @@ export default class AppointmentInfo extends Component {
                             {this.renderItem("被访人位置",this.state.empInfo.workbay)}
                             {this.renderItem("同行人数",this.state.visitInfo.peopleCount,"peopleCount")}
                             {this.renderItem("来访单位",this.state.visitInfo.vcompany, "vcompany")}
-                            {this.renderItem("门禁权限","1,2,3,4", "access")}
+                            {this.renderItem("门禁权限",this.state.visitInfo.access, "access")}
                             {this.renderItem("会面内容",this.state.extendCol.meetContent, "meetContent")}
                             {this.renderItem("会面地点",this.state.extendCol.meetAddress, "meetAddress")}
                             {this.renderItem("权限时间(天)",this.state.qrcodeConf, "meetAddress")}
@@ -145,7 +153,7 @@ export default class AppointmentInfo extends Component {
                     </div>
 
                     <div className="component_AppointmentInfo_cardInfo fll">
-                        <div id="component_AppointmentInfo_cardInfo_mask" style={{display:!!this.state.cardInfo.address?"block":"none"}}>
+                        <div id="component_AppointmentInfo_cardInfo_mask" style={{display:!this.state.cardInfo.address?"block":"none"}}>
                             <img src={scanCard} />
                             <p>暂无身份信息</p>
                             <div className="btn_box">
@@ -155,7 +163,7 @@ export default class AppointmentInfo extends Component {
                             </div>
                         </div>
 
-                        <div id="component_AppointmentInfo_cardInfo_board" style={{display:!this.state.cardInfo.address?"block":"none"}}>
+                        <div id="component_AppointmentInfo_cardInfo_board" style={{display:!!this.state.cardInfo.address?"block":"none"}}>
                             <div className="headerBox">
                                 <img src={defaultPhoto} />
                             </div>
@@ -286,6 +294,9 @@ export default class AppointmentInfo extends Component {
      */
     renderItem( name, val, key, state){
         var state = !!state?this.renderItemState(state):"";
+        if(this.state.regElementArr.indexOf(key) !== -1){
+            return
+        }
         return (
             <li>
                 <span className="component_AppointmentInfo_appInfo_key">
@@ -373,19 +384,23 @@ export default class AppointmentInfo extends Component {
                     cls += " exemption"
                 }
                 break;
+            // state.type -1 状态
             case 1:
                 cls = "appintmentState"
                 if(state.value == 0){
-                    str = "未授权"
+                    str = "待审批"
                     cls += " err"
                 }else if(state.value == 1) {
-                    str = "已授权"
+                    str = "已发送"
                     cls += " authorize"
                 }else if(state.value == 2) {
                     str = "已签到"
                     cls += " signIn"
                 }else if(state.value == 3) {
                     str = "已签出"
+                    cls += " signout"
+                }else if(state.value == 4){
+                    str = "已结束"
                     cls += " finish"
                 }
                 break;

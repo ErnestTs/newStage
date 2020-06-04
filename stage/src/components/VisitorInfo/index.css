@@ -28,9 +28,9 @@
 .component_VisitorInfo_board {
     width: 460px;
     margin: auto;
-    height: 70%;
+    height: 95%;
     overflow: hidden;
-
+    margin-top: 3%
 }
 
 .component_VisitorInfo_board ul {

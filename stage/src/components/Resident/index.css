@@ -1,0 +1,30 @@
+#component_Resident {
+    height: 100%;
+    width: 100%;
+    overflow: hidden
+}
+
+#residentContent {
+    overflow: auto;
+    padding: 0 8%
+}
+
+#residentleft,#residentright{
+    float: left;
+    width: 50%;
+}
+
+.residentList {
+    height: 50px;
+    width: 87%;
+    margin: auto;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 16px;
+    color: #323233;
+    letter-spacing: 0;
+    line-height: 50px;
+}
+
+.residentitem {
+    margin-left: 10px;
+}
