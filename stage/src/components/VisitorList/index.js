@@ -37,7 +37,7 @@ export default class VisitorList extends Component{
                     stateList:["invite","checkIn","noArrived"]
                 },
                 {
-                    name:"常住访客",
+                    name:"常驻访客",
                     interface:"SearchRVisitorByCondition",
                     stateList:["total","leave","visiting"]
                 }
@@ -208,6 +208,7 @@ export default class VisitorList extends Component{
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize: 5 }}
+                            locale={{emptyText: '暂无数据'}}
                         />
                     </div>
                 </div>

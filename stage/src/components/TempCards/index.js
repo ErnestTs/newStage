@@ -190,6 +190,7 @@ export default class TempCards extends Component {
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize: 5 }}
+                            locale={{emptyText: '暂无数据'}}
                         />
                     </div>
                 </div>
