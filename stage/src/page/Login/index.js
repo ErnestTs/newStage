@@ -419,6 +419,12 @@ export default class Login extends Component {
                     content: "无效的用户 请重新登录"
                 });
 			}
+			else if (data.status == 75) {
+                Toast.open({
+                    type:"danger",
+                    content: "用户名或者密码错误，请重新输入"
+                });
+			}
 			else {
                 Toast.open({
                     type:"danger",

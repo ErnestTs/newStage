@@ -424,7 +424,8 @@ export default class VisitorInfo extends Component {
 				}
 			}
 			this.setState({
-                vTypeList:tempArr
+                vTypeList:tempArr,
+                vType:tempArr[0].name
 			})
 		})
     }
