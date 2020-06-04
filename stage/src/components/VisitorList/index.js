@@ -184,7 +184,10 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul className="searchCriteria">
                             <li className="searchContent">
-                                <input placeholder="请输入您想要的信息" />
+                                <input 
+                                    placeholder="请输入您想要的信息"
+                                    onChange={this.queryRecord.bind(this)}
+                                />
                             </li>
                             <li className="DatePickerBox">
                                 <DatePicker 
@@ -328,6 +331,7 @@ export default class VisitorList extends Component{
      * @param {String} date [yyyy-MM-dd]
      */
     getVisitorInfo(){
+        console.log(1)
         let interfaceName = this.state.vTypelist[this.state.vType].interface;
         let sendData = {
             userid: sessionStorage.userid,
@@ -335,7 +339,7 @@ export default class VisitorList extends Component{
             date: this.state.date,
             endDate: this.state.date,
         };
-        Common.ajaxProc(interfaceName, sendData, sessionStorage.token).done((data)=>{
+        Common.ajaxProcWithoutAsync(interfaceName, sendData, sessionStorage.token).done((data)=>{
             if(data.status == 0){
                 if(!data.result.length){
                     this.setState({
@@ -538,5 +542,35 @@ export default class VisitorList extends Component{
             "signin":data.signin
         }
         this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
+    }
+
+    /**
+     * @description [模糊搜索]
+     * @param {Event} e
+     */
+    queryRecord(e){
+        let key = e.target.value;
+        this.getVisitorInfo()
+        if(!key){
+            return
+        }
+        let _this = this;
+        setTimeout(()=>{
+            let tempArr = this.state.dataSource;
+            let resArr = []
+            for(let i = 0; i < tempArr.length; i++){
+                let item = tempArr[i]
+                if(!!item.vcompany){
+                    if(item.vname.indexOf(key) !== -1 || item.vcompany.indexOf(key) !== -1){
+                        resArr.push(item)
+                    }
+                }else if(item.vname.indexOf(key) !== -1){
+                    resArr.push(item)
+                }
+            }
+            _this.setState({
+                dataSource:resArr
+            })
+        },0)
     }
 }

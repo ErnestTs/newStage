@@ -47,7 +47,7 @@ p{
     box-sizing: content-box;
 }
 
-#objIDCard,#CertCtl {
+#objIDCard,#CertCtl,#objIDCard2 {
     position: fixed;
     left: -777px;
     top: -777px;
