@@ -167,6 +167,13 @@ export default class Login extends Component {
                     });
                     this.getValideCode()
                 }
+                else if (data.status == 75) {
+                    Toast.open({
+                        type:"danger",
+                        content: "用户名或者密码错误，请重新输入"
+                    });
+                    this.getValideCode()
+                }
                 else {
                     Toast.open({
                         type:"danger",

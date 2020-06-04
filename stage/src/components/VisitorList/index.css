@@ -298,7 +298,8 @@
 }
 
 #component_VisitorList_tableBoard .tableItem_name .defaultImg img {
-    height: 100%;
+    height: 3.7vh;
+    width: 3.7vh;
 }
 
 #component_VisitorList_tableBoard .tableItem_name .ant-checkbox-wrapper {
@@ -329,7 +330,23 @@
     color: #4091F7;
 }
 
-.printIcon {
+#component_VisitorList_tableBoard .statusTag.brown {
+    background: #FBD3AE;
+    color: #FF7B00;
+}
+
+#component_VisitorList_tableBoard .statusTag.yellow {
+    background: #FADF91;
+    color: #FF7B00;
+}
+
+#component_VisitorList_tableBoard .statusTag.coffee {
+    background: #EFCEBB;
+    color: #D46929;
+}
+
+#component_VisitorList_tableBoard .tableItem_name .defaultImg .printIcon {
     margin-left: 5%;
     width: 6%;
+    height: auto;
 }

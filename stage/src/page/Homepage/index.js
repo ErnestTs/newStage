@@ -23,6 +23,7 @@ import VisitorInfo from "../../components/VisitorInfo/index"
 import Print from "../../components/Print/index"
 import VisitorList from "../../components/VisitorList/index"
 import TempCards from "../../components/TempCards/index"
+import Resident from "../../components/Resident/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -65,6 +66,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/print" name="print" component={Print} />
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
+                                <Route path="/home/resident" component={Resident} />
                                 <Redirect to="/home/qrcode" />
                             </Switch>
                         </Router>

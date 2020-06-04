@@ -48,11 +48,10 @@ export default class Qrcode extends Component {
     getQrcode(){
         let _this = this;
 		setTimeout(function () {
-            _this.analysisCode(_this.qrcodeInput.value);
             try {
+				_this.analysisCode(_this.qrcodeInput.value);
                 _this.qrcodeInput.value = ""
             }catch(err){
-                console.log(err)
             }
 		}, 1000);
     }
@@ -82,7 +81,7 @@ export default class Qrcode extends Component {
                 };
                 
                 // 跳转至常驻访客！
-                this.props.history.push("/home/resident")
+                this.props.history.push({pathname:"/home/resident",state:routerData})
 
 			}
 			else {

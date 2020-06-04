@@ -302,13 +302,33 @@
     background: #C3F1EB;
     color: #00BA9A;
 }
-.appintmentState.finish{
+.appintmentState.signout{
     background: #C2DAF9;
     color: #4091F7;
+}
+.appintmentState.finish{
+    background: #EFCEBB;
+    color: #D46929;
 }
 
 #component_AppointmentInfo .arrow {
     width: 2%;
     height: 100%;
-    background-color: #00BBBB
+    position: relative;
+}
+
+#component_AppointmentInfo .arrow img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%;
+    height: 40%;
+}
+
+#component_AppointmentInfo .arrow.fll img {
+    right: 0;
+}
+
+#component_AppointmentInfo .arrow.flr img {
+    left: 0;
 }
