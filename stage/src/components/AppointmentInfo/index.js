@@ -608,10 +608,8 @@ export default class AppointmentInfo extends Component {
                         }
                         setTimeout(function () {
                             if(Common.$_Get().idcard == "3"){
-                                this.props.history.replace("/home/qrcode")
-                                window.changeItem(0,"二维码","qrcode");
+                                window.changeItem(0,"今日访客","visitor");
                             }else{
-                                this.props.history.replace("/home/qrcode")
                                 window.changeItem(0,"二维码","qrcode");
                             }
                         }.bind(this), 1500);
@@ -649,13 +647,10 @@ export default class AppointmentInfo extends Component {
                         })
                     }
                     setTimeout(function () {
-                        // $(".menuItem").removeClass("action");
                         if(Common.$_Get().idcard == "3"){
-                            // this.props.routerCallback("vistorlist");
-                            // $("#vistorlist").addClass("action");
+                            window.changeItem(0,"今日访客","visitor");
                         }else{
-                            // this.props.routerCallback("qrcode");
-                            // $("#qrcode").addClass("action");
+                            window.changeItem(0,"二维码","qrcode");
                         }
                     }.bind(this), 1500);
                 }.bind(this));
@@ -728,6 +723,10 @@ export default class AppointmentInfo extends Component {
 		}
     }
     
+    /**
+     * @description [切换当前访客]
+     * @param {*} step 
+     */
     changeInfo(step){
         let count=0
         if(step==1){

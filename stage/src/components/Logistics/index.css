@@ -92,6 +92,14 @@
     content: "已签出"
 }
 
+.logisticState.finish{
+    background: #EFCEBB;
+    color: #D46929;
+}
+.logisticState.finish:after {
+    content: "已结束"
+}
+
 
 .logisticBtn {
     width: 56px;
@@ -119,6 +127,14 @@
     background: #F56C6C;
 }
 .logisticBtn.noCheckOut:after {
+    content: "签出"
+}
+
+.logisticBtn.finish{
+    cursor: pointer;
+    background: #F56C6C;
+}
+.logisticBtn.finish:after {
     content: "签出"
 }
 

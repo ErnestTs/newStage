@@ -64,6 +64,9 @@ export default class Logistics extends Component {
                             case(2):
                                 tag = "checkedOut"
                                 break;
+                            case(3):
+                                tag = "finish"
+                                break;
                             default:
                                 break;
                         }
@@ -175,6 +178,8 @@ export default class Logistics extends Component {
 
                     if(!!datalist[i].leaveTime){
                         datalist[i].state = 2;
+                    }else if(!!datalist[i].finishTime){
+                        datalist[i].state = 3;
                     }else if(!!datalist[i].visitdate){
                         datalist[i].state = 1;
                     }else {
@@ -195,12 +200,10 @@ export default class Logistics extends Component {
                     
 					datalist[i].photoInfo = datalist[i].photoInfo.split(",");
 					
-					// datalist[i].carLoginPhoto = _this.getCarPhoto(datalist[i].logNum,1)
-                    // datalist[i].carLogoutPhoto = _this.getCarPhoto(datalist[i].logNum,2)
-					datalist[i].carLoginPhoto = datalist[i].photoInfo;
-					datalist[i].carLogoutPhoto = datalist[i].photoInfo;
+					datalist[i].carLoginPhoto = _this.getCarPhoto(datalist[i].logNum,1)||[]
+                    datalist[i].carLogoutPhoto = _this.getCarPhoto(datalist[i].logNum,2)||[]
                     
-
+                    console.log(datalist[i])
                     datalist[i].key = "l"+datalist[i].appointmentDate
                 }
 
