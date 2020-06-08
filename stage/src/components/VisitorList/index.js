@@ -77,7 +77,7 @@ export default class VisitorList extends Component{
                                     <img
                                         className="printIcon"
                                         src={printImg}
-                                        style={{display:data.state == 1?"inline-block":"none"}}
+                                        style={{display:data.state == 1&&data.visitType !== "常驻访客"?"inline-block":"none"}}
                                         onClick={
                                             ()=>{
                                                 this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+data.vid}]}})

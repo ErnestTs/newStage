@@ -19,6 +19,8 @@ export default class VisitorInfo extends Component {
         super(props)
         this.state= {
             visitorType:"",
+            visitorTypeList: [],
+
             empCompanyFocus:false,
             empCompany:"",
             empCompanyId:"",
@@ -35,8 +37,8 @@ export default class VisitorInfo extends Component {
             vname:"",
             vphone:"",
 
-            vTypeList: [],
             vType:"",
+            tid:"",
 
             inSubmit:false
         }
@@ -153,13 +155,13 @@ export default class VisitorInfo extends Component {
                                 拜访事由：
                             </p>
                             <select 
-                                value={this.state.vType||""} 
+                                value={this.state.visitorType||""} 
                                 onChange={(e)=>{
-                                    this.setState({vType:e.target.value})
+                                    this.setState({visitorType:e.target.value})
                                 }}
                             >
                                 {
-                                    this.state.vTypeList.map((item,i)=>{
+                                    this.state.visitorTypeList.map((item,i)=>{
                                         return (
                                             <option key={i+"vType"} value={item.value}>
                                                 {item.name}
@@ -211,9 +213,9 @@ export default class VisitorInfo extends Component {
             })
             return
         }
-        let {vname,vphone,vType,empCompany,empName,empPhone,empId} = this.state;
+        let {vname,vphone,vType,empCompany,empName,empPhone,empId,visitorType,tid} = this.state;
 
-        if(!vname||!vphone||!vType||!empCompany||!empName){
+        if(!vname||!vphone||!visitorType||!empCompany||!empName){
             Toast.open({
                 type:"danger",
                 content: "请填入完整的登记信息!"
@@ -239,10 +241,12 @@ export default class VisitorInfo extends Component {
 			empName: empName,
 			empid: empId,
 			appointmentDate: new Date().format("yyyy-MM-dd hh:mm:ss"),
-			visitType: vType,
+			visitType: visitorType,
 			peopleCount: 1,
 			memberName: "",
-			gid:sessionStorage.gid
+			gid:sessionStorage.gid,
+            vType:vType,
+            tid:tid
         };
         
         this.state.inSubmit = true
@@ -383,7 +387,8 @@ export default class VisitorInfo extends Component {
 	getVisitorType (){
 		Common.ajaxProcWithoutAsync("getVisitorType ",{"userid": sessionStorage.userid, 'category':2},sessionStorage.token).done((res)=>{
             if(res.status == 0 && !!res.result.length){
-                this.state.visitorType = res.result[0].vType
+                this.state.vType = res.result[0].vType
+                this.state.tid = res.result[0].tid
                 this.getExtendCol(res.result[0].vType)
             }
 		})
@@ -424,8 +429,8 @@ export default class VisitorInfo extends Component {
 				}
 			}
 			this.setState({
-                vTypeList:tempArr,
-                vType:tempArr[0].name
+                visitorTypeList:tempArr,
+                visitorType:tempArr[0].name
 			})
 		})
     }

@@ -192,7 +192,8 @@ export default class Resident extends Component {
             cardId: visitor.rid,
 			signInOpName: sessionStorage.opname,            
             signInGate: sessionStorage.gateway,
-            gid:sessionStorage.gid
+            gid:sessionStorage.gid,
+            phone:visitor.phone
         }
         Common.ajaxProc("ResidentVisitorSignIn", sendData, sessionStorage.token).done(function (data) {
             if (data.status === 0) {

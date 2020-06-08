@@ -170,7 +170,7 @@ export default class TempCards extends Component {
                     </ul>
                     <ul className="searchCriteria">
                         <li className="searchContent">
-                            <input placeholder="请输入您想要的信息" onChange={this.searchContent.bind(this)} />
+                            <input placeholder="请输入员工姓名或者申请卡号" onChange={this.searchContent.bind(this)} />
                         </li>
                         <li className="DatePickerBox">
                             <DatePicker 
@@ -372,8 +372,14 @@ export default class TempCards extends Component {
      * @description [提交申请]
      */
     passSubmit(){
-        alert(1)
         let _this = this
+        if(!this.state.onSubmitNum){
+            Toast.open({
+                type:"danger",
+                content: "请输入临时卡卡号"
+            })
+            return
+        }
         Common.ajaxProc(
             "updateInterimCard", 
             { 
@@ -388,7 +394,7 @@ export default class TempCards extends Component {
             if(res.status == 0){
                 Toast.open({
                     type:"success",
-                    content: "通过申请成功"
+                    content: "临时卡申请成功"
                 })
             }else {
                 Toast.open({
@@ -437,14 +443,14 @@ export default class TempCards extends Component {
                     content: "临时卡拒绝失败"
                 })
             }
-            _this.searchRecord(this.state.date, this.state.date, this.state.keyword, this.state.cardType)
+            _this.searchRecord(_this.state.date, _this.state.date, _this.state.keyword, _this.state.cardType)
             _this.setState({
                 onSubmit:false,
                 onReject:false,
                 onReturn:false,
                 rejectionReason:""
             })
-        })
+        }.bind(this));
     }
 
     /**
@@ -464,7 +470,7 @@ export default class TempCards extends Component {
                     content: "归还失败"
                 })
             }
-            _this.searchRecord(this.state.date, this.state.date, this.state.keyword, this.state.cardType)
+            _this.searchRecord(_this.state.date, _this.state.date, _this.state.keyword, _this.state.cardType)
             _this.setState({
                 onSubmit:false,
                 onReject:false,
