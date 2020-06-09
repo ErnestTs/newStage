@@ -194,7 +194,7 @@ export default class AppointmentInfo extends Component {
                     </div>
                 </div>
 
-                <div id="component_AppointmentInfo_loginBTN" style={{display:appointmentState_val==1||appointmentState_val==2?"block":"none"}} onClick={this.nextStep.bind(this)}>
+                <div id="component_AppointmentInfo_loginBTN" style={{display:appointmentState_val==1||appointmentState_val==4||appointmentState_val==2?"block":"none"}} onClick={this.nextStep.bind(this)}>
                     <span>下一步</span>
                 </div>
             </div>
@@ -391,7 +391,7 @@ export default class AppointmentInfo extends Component {
                     str = "待审批"
                     cls += " err"
                 }else if(state.value == 1) {
-                    str = "已发送"
+                    str = "已授权"
                     cls += " authorize"
                 }else if(state.value == 2) {
                     str = "已签到"
