@@ -150,7 +150,7 @@ export default class Register extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.nameRequired?<span className="required">*</span>:""}您的姓名:
+                                        {this.state.nameRequired?<span className="required">*</span>:""}访客姓名:
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
@@ -164,7 +164,7 @@ export default class Register extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.phoneRequired?<span className="required">*</span>:""}您的电话:
+                                        {this.state.phoneRequired?<span className="required">*</span>:""}访客手机号:
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
@@ -185,7 +185,7 @@ export default class Register extends Component {
                                             return (
                                                 <li className="memberItem" key={i+"memberItem"}>
                                                     <input type="text" value={item.name} onChange={this.setMember.bind(this,i,'name')} placeholder="随访人员姓名" />
-                                                    <input type="text" value={item.mobile} onChange={this.setMember.bind(this,i,'mobile')} placeholder="随访人员电话" />
+                                                    <input type="text" value={item.mobile} onChange={this.setMember.bind(this,i,'mobile')} placeholder="随访人员手机号" />
                                                 </li>
                                             )
                                         })
