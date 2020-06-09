@@ -22,7 +22,9 @@ export default class PassPort extends Component {
                 </div>
                 <p>请扫描证件信息</p>
                 <div className="btn_box">
-                    <div onClick={this.scanCard.bind(this)}>读取证件</div>
+                    <div onClick={this.scanCard.bind(this)}>
+                        <span>读取证件</span>
+                    </div>
                 </div>
             </div>
         )

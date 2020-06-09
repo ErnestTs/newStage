@@ -1,6 +1,6 @@
 .component_AppointmentInfo_mainBoard {
     width: 91.15%;
-    height: 75%;
+    height: 85%;
     margin: auto;
 }
 
@@ -20,7 +20,7 @@
     background: #E7EDF2;
     border-radius: 8px;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 2.778vh;
 }
 
 .topBar div {
@@ -35,18 +35,18 @@
 
 .component_AppointmentInfo_appInfo, .component_AppointmentInfo_cardInfo {
     position: relative;
-    padding-top: 4vh;
     width: 50%;
     height: 100%;
     overflow: hidden;
-    overflow-y: auto
+    overflow-y: auto;
+    padding-top: 2.778vh;
 }
 
 .component_AppointmentInfo_appInfo ul li {
     height: 50px;
     width: 87%;
     margin: auto;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 0.87px solid #E0E0E0;
     font-size: 16px;
     color: #323233;
     letter-spacing: 0;
@@ -72,7 +72,8 @@
     border: 1px solid #4091F7;
     border-radius: 4px;
     margin-top: 10px;
-    text-indent: 10px
+    text-indent: 10px;
+    margin-left: 27px
 }
 
 
@@ -122,7 +123,7 @@
 
 #component_AppointmentInfo_cardInfo_mask .btn_box{
     height: 11.2%;
-    margin-top: 10%;
+    margin-top: 2.778vh;
 }
 
 #component_AppointmentInfo_cardInfo_mask .btn_box div{
@@ -233,7 +234,8 @@
     right: 70px;
     bottom: 2%;
     cursor: pointer;
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-size: 18px;
 }
 
 #component_AppointmentInfo_loginBTN span {
