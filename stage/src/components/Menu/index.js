@@ -124,7 +124,7 @@ export default class Menu extends Component {
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
-                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"appointment")}
+                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
                             {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
                             {this.renderItem("今日访客",this.state.icon.Visitors,4,"visitor")}
                         </li>
@@ -160,16 +160,39 @@ export default class Menu extends Component {
         }
         if(this.state.open){
             return(
-                <div className={className} onClick={this.changeItem.bind(this,i,name,path)}>
+                <div 
+                    className={className} 
+                    onClick={this.changeItem.bind(this,i,name,path)}
+                    onMouseOverCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,icon.active,1)}
+                    onMouseOutCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,oIcon,0)}
+                >
                     <div style={{display:this.state.active == i?"block":"none"}} className="menu_actionBorder"></div>
-                    <img src={oIcon} /> <span>{name}</span>
+                    <img id={"icon_"+i} src={oIcon} />
+                    <span
+                        id={"span_"+i}
+                        style={{color:this.state.active !== i ?null:"#fff"}}
+                        onMouseOverCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,icon.active,1)}
+                        onMouseOutCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,oIcon,0)}
+                    >
+                        {name}
+                    </span>
                 </div>
             )
         }else {
             return(
-                <div className={className} onClick={this.changeItem.bind(this,i,name,path)}>
+                <div 
+                    className={className} 
+                    onClick={this.changeItem.bind(this,i,name,path)}
+                    onMouseOverCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,icon.active,1)}
+                    onMouseOutCapture={this.itemOnHover.bind(this,i,oIcon,0)}
+                >
                     <div style={{display:this.state.active == i?"block":"none",left:"0"}} className="menu_actionBorder"></div>
-                    <img src={oIcon} />
+                    <img 
+                        id={"icon_"+i+"s"} 
+                        src={oIcon}
+                        onMouseOverCapture={this.state.active == i?null:this.itemOnHover.bind(this,i,icon.active,1)}
+                        onMouseOutCapture={this.itemOnHover.bind(this,i,oIcon,0)}
+                    />
                 </div>
             )
         }
@@ -185,7 +208,8 @@ export default class Menu extends Component {
 		if(path === "qrcode" && Common.$_Get().idcard == '3'){
             sessionStorage.cameraReady = 'false'
 			window.Android.startActivity("scan")
-		}
+        }
+        document.getElementById("span_"+i).classList.remove("blue");
         this.setState({
             active: i
         })
@@ -202,5 +226,27 @@ export default class Menu extends Component {
         this.setState({
             open:tempBool
         })
+    }
+
+    /**
+     * @description [菜单hover效果]
+     * @param {*} icon [iCON]
+     * @param {Event} e
+     */
+    itemOnHover(i,icon,type,e){
+        let id;
+        if(this.state.open){
+            id = i
+        }else{
+            id = i+"s"
+        }
+        let img_Elem = document.getElementById("icon_"+id)
+        let span_Elem = document.getElementById("span_"+id)
+        img_Elem.src = icon;
+        if(!!span_Elem&&!!type){
+            span_Elem.classList.add("blue");
+        }else{
+            span_Elem.classList.remove("blue");
+        }
     }
 }
