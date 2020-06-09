@@ -101,7 +101,8 @@
     right: 70px;
     bottom: 2%;
     cursor: pointer;
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-size: 18px;
 }
 
 #component_VisitorInfo_loginBTN span {

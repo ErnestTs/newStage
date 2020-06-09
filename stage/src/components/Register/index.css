@@ -1,6 +1,6 @@
 .component_Register_mainBoard {
     width: 91.15%;
-    height: 75%;
+    height: 85%;
     margin: auto;
 }
 
@@ -20,7 +20,7 @@
     background: #E7EDF2;
     border-radius: 8px;
     margin: auto;
-    margin-top: 3.4%;
+    margin-top: 2.778vh;
 }
 
 .topBar div {
@@ -35,7 +35,7 @@
 
 .component_Register_appInfo, .component_Register_cardInfo {
     position: relative;
-    padding-top: 4vh;
+    padding-top: 2.778vh;
     width: 50%;
     height: 100%;
     overflow: hidden;
@@ -45,7 +45,7 @@
 .component_Register_appInfo>ul>li {
     width: 87%;
     margin: auto;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 0.87px solid #E0E0E0;
     font-size: 16px;
     color: #323233;
     letter-spacing: 0;
@@ -173,7 +173,7 @@
 
 #component_Register_cardInfo_mask .btn_box{
     height: 11.2%;
-    margin-top: 10%;
+    margin-top: 2.778vh;
 }
 
 #component_Register_cardInfo_mask .btn_box div{
@@ -284,7 +284,8 @@
     right: 70px;
     bottom: 2%;
     cursor: pointer;
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-size: 18px;
 }
 
 #component_Register_loginBTN span {
@@ -368,7 +369,7 @@
     border-radius: 6px;
     border: 1px solid #E7EDF2;
     float: left;
-    margin-left: 10px;
+    margin-right: 10px;
     font-size: 16px;
     color: #323233;
     cursor: pointer;
@@ -386,7 +387,7 @@
 
 .component_Register_Item ul {
     padding-top: 7px;
-    text-align: right
+    text-align: left;
 }
 
 .component_Register_Item ul .memberItem {
@@ -415,4 +416,8 @@
     text-align: center;
     color:#fff;
     cursor: pointer;
+}
+
+.component_Register_memberBox {
+    
 }

@@ -175,7 +175,7 @@ export default class Register extends Component {
                                 </div>
                             </li>
 
-                            <li className="component_Register_Item vtypeBox">
+                            <li className="component_Register_Item vtypeBox component_Register_memberBox">
                                 <span className="component_Register_appInfo_key">
                                     随访人员：
                                 </span>

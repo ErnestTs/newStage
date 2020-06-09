@@ -37,9 +37,16 @@
     font-size: 20px;
     background: #0F4C81;
     border-radius: 8px;
-    margin: auto
+    margin: auto;
+    position: relative;
 }
 
+.btn_box div span {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
 
 
 /* @media screen and (max-width: 1280px) {
