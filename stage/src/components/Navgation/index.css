@@ -18,20 +18,30 @@
 
 #navgation {
     height: 100%;
+    position: relative;
 }
 
 #loginOut {
     float: right;
     margin-right: 78px;
-    margin-top: 24px;
     color: #fff;
     cursor: pointer;
 }
 
 .exit {
-    float: right;
+    right: 0;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%)
 }
 
 .exit img {
-    margin-top: 22px;
+    height: 100%;
+    margin-top: -4px;
+} 
+
+.exit span {
+    display: inline-block;
+    vertical-align: middle;
 }
