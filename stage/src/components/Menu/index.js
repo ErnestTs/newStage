@@ -209,7 +209,9 @@ export default class Menu extends Component {
             sessionStorage.cameraReady = 'false'
 			window.Android.startActivity("scan")
         }
-        document.getElementById("span_"+i).classList.remove("blue");
+        if(!!document.getElementById("span_"+i)){
+            document.getElementById("span_"+i).classList.remove("blue");
+        }
         this.setState({
             active: i
         })
