@@ -8,8 +8,8 @@ export default class Common {
 	static cameraUrl = Common.protocol + window.location.host + "/stage/MyCamera.swf";
 	static customPrintUrl = Common.protocol + window.location.host + "/card/custom/";
 
-	static url = "http://www.coolvisit.top/qcvisitBase/";
-	// static url = "http://www.coolvisit.top/wmd/qcvisit/";
+	// static url = "http://www.coolvisit.top/qcvisitBase/";
+	static url = "http://www.coolvisit.top/wmd/qcvisit/";
 	// static url = "http://www.coolvisit.top/ykt/qcvisit/";
 	// static url = "http://139.217.223.183/qcvisit/";
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
