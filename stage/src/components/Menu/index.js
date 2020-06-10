@@ -81,7 +81,7 @@ export default class Menu extends Component {
     }
 
     componentDidMount(){
-        this.changeItem(0,"二维码","qrcode");
+        this.changeItem(4,"今日访客","visitor");
         window.changeItem = this.changeItem.bind(this)
     }
 
@@ -105,6 +105,8 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup0">
                             {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")} */}
+                            {this.renderItem("公司列表",this.state.icon.QRcode,0, "qrcode")}
+                            {this.renderItem("黑名单列表",this.state.icon.QRcode,1, "Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
                             {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
@@ -122,6 +124,8 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup0">
                             {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")} */}
+                            {this.renderItem("公司列表",this.state.icon.QRcode,0, "qrcode")}
+                            {this.renderItem("黑名单列表",this.state.icon.QRcode,1, "Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
                             {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
@@ -245,10 +249,12 @@ export default class Menu extends Component {
         let img_Elem = document.getElementById("icon_"+id)
         let span_Elem = document.getElementById("span_"+id)
         img_Elem.src = icon;
-        if(!!span_Elem&&!!type){
-            span_Elem.classList.add("blue");
-        }else{
-            span_Elem.classList.remove("blue");
+        if(!!span_Elem){
+            if(!!type){
+                span_Elem.classList.add("blue");
+            }else{
+                span_Elem.classList.remove("blue");
+            }
         }
     }
 }
