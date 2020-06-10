@@ -16,7 +16,7 @@
 #component_VisitorInfo .titleBox p {
     font-size: 16px;
     line-height: 22px;
-    color: #4091F7;
+    color: #AA9D84;
 }
 
 #component_VisitorInfo .titleBox .title {
@@ -75,7 +75,7 @@
 
 .component_VisitorInfo_board ul li .action {
     background: #FFFFFF;
-    border: 1px solid #0F4C81;
+    border: 1px solid #121212;
     box-shadow: 0 0 0 0 rgba(0,0,0,0.15);
     border-radius: 8px;
 }
@@ -94,7 +94,7 @@
     position: fixed;
     width: 274px;
     height: 5%;
-    background: #0F4C81;
+    background: #121212;
     border-radius: 8px;
     text-align: center;
     color:#fff;
@@ -132,13 +132,13 @@
     margin: auto;
     border: #323232;
     text-align: center;
-    border: 1px solid #0F4C81;
+    border: 1px solid #121212;
     box-sizing: border-box;
     border-radius: 8px;
     padding: 0
 }
 .itemBoard .list li {
-    border-bottom: 1px solid #0F4C81;
+    border-bottom: 1px solid #121212;
     height:30px;
     line-height:30px;
     margin-bottom: 0;

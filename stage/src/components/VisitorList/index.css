@@ -63,11 +63,11 @@
 }
 
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li.action{
-    background: #4091F7;
+    background: #AA9D84;
     color: #FFF;
-    background-color: #4091F7;
-    border-right: 1px solid #4091F7;
-    border-bottom: 1px solid #4091F7;
+    background-color: #AA9D84;
+    border-right: 1px solid #AA9D84;
+    border-bottom: 1px solid #AA9D84;
 }
 
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions{
@@ -88,8 +88,8 @@
 
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions .component_VisitorList_btnCancel{
     background: #FFFFFF;
-    border: 1px solid #4091F7;
-    color: #4091F7;
+    border: 1px solid #AA9D84;
+    color: #AA9D84;
 }
 
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li {
@@ -135,7 +135,7 @@
     border:0;
     background:none;
     box-shadow:none;
-    border-bottom: 4px solid #4091F7;
+    border-bottom: 4px solid #AA9D84;
     box-sizing: border-box
 }
 
@@ -167,7 +167,7 @@
     height: 40px;
     text-align: left;
     background: #F5F6FA;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 19px;
     box-sizing: border-box;
     overflow: hidden;
@@ -327,7 +327,7 @@
 
 #component_VisitorList_tableBoard .statusTag.blue {
     background: #C2DAF9;
-    color: #4091F7;
+    color: #AA9D84;
 }
 
 #component_VisitorList_tableBoard .statusTag.brown {

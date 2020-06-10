@@ -22,7 +22,7 @@
     position: absolute;
     width: 61px;
     height: 3px;
-    background: #0F4C81;
+    background: #121212;
     left: 0;
     bottom: -2px;
 }
@@ -59,13 +59,13 @@
     float: right;
     width: 5.5%;
     height: 90%;
-    color: #4091F7;
+    color: #AA9D84;
     background: #FFFFFF;
     text-align: center;
     margin-right: 1%;
     border-radius: 6px;
     cursor: pointer;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
 }
 
 #component_logisticsInfo_board .dataList .memberItem input {
@@ -76,7 +76,7 @@
     float: left;
     font-size: 16px;
     color: #333333;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 4px;
 }
 
@@ -99,7 +99,7 @@
     color: #F56C6C;
 }
 #component_logisticsInfo_board .dataList .memberState.noneed {
-    color: #4091F7;
+    color: #AA9D84;
 }
 
 .LogisticsInfo_item {
@@ -116,7 +116,7 @@
 .LogisticsInfo_item .btnGroup li {
     float: left;
     margin-right: 20px;
-    border: 2px solid #4091F7;
+    border: 2px solid #AA9D84;
     width: 100px;
     height: 40px;
     border-radius: 6px;
@@ -125,12 +125,12 @@
 }
 
 .LogisticsInfo_item .btnGroup .btn_blue {
-    background: #4091F7;
+    background: #AA9D84;
     color: #FFFFFF;
 }
 
 .LogisticsInfo_item .btnGroup .btn_white {
-    color: #4091F7;
+    color: #AA9D84;
     background: #FFFFFF;
 }
 
@@ -146,13 +146,13 @@
     display: inline;
 }
 .otherExtendBoxItem div input{
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 4px;
     width: 50%;
     text-indent: 10px;
 }
 .otherExtendBoxItem div select{
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 4px;
     width: 50%;
     text-indent: 10px;
@@ -164,7 +164,7 @@
     position: fixed;
     width: 274px;
     height: 5%;
-    background: #0F4C81;
+    background: #121212;
     border-radius: 8px;
     text-align: center;
     color:#fff;

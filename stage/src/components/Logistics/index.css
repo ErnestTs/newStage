@@ -70,7 +70,7 @@
 
 .logisticState.noSignIn{
     background: #C2DAF9;
-    color: #4091F7;
+    color: #AA9D84;
 }
 .logisticState.noSignIn:after {
     content: "待签到"
@@ -116,7 +116,7 @@
 }
 .logisticBtn.noSignIn{
     cursor: pointer;
-    background: #4091F7;
+    background: #AA9D84;
 }
 .logisticBtn.noSignIn:after {
     content: "签到"
@@ -145,7 +145,7 @@
 .logisticInfo {
     cursor: pointer;
     font-size: 12px;
-    color: #4091F7;
+    color: #AA9D84;
     letter-spacing: 0;
 }
 

@@ -49,10 +49,10 @@
 }
 
 #component_TempCards .component_TempCards_btnGroup .component_TempCards_btnGroup_vtype li.action{
-    background: #4091F7;
+    background: #AA9D84;
     color: #FFF;
-    background-color: #4091F7;
-    border: 1px solid #4091F7;
+    background-color: #AA9D84;
+    border: 1px solid #AA9D84;
 }
 
 .component_TempCards_tableBox {
@@ -75,7 +75,7 @@
     height: 29px;
     float: left;
     background: #FFFFFF;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 6px;
     line-height: normal;
     margin-right: 5%;
@@ -92,7 +92,7 @@
 }
 
 #component_TempCards .buttonsBox li.blue {
-    background: #4091F7;
+    background: #AA9D84;
     color: #fff;
     margin:0
 }
@@ -113,7 +113,7 @@
     height: 100%;
     text-align: left;
     background: #F5F6FA;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 19px;
     box-sizing: border-box;
     overflow: hidden;
@@ -189,7 +189,7 @@
 #component_TempCards .inputBox input {
     width: 70%;
     background: #FFFFFF;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 6px;
     text-indent: 5%;
     line-height: normal;
@@ -213,7 +213,7 @@
     line-height: 3.7vh;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 6px;
     font-size: 2vh;
     cursor: pointer;
@@ -225,7 +225,7 @@
 
 #component_TempCards .btnGroup li:last-child {
     float: right;
-    background: #4091F7;
+    background: #AA9D84;
     color: #fff;
 }
 

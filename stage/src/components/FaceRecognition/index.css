@@ -28,7 +28,7 @@
 }
 
 #faceBtn div {
-    border: 2px solid #4091F7;
+    border: 2px solid #AA9D84;
     width: 100px;
     height: 40px;
     border-radius: 6px;
@@ -39,12 +39,12 @@
 
 #faceBtn #faceRepeatBtn {
     float: left;
-    color: #4091F7;
+    color: #AA9D84;
     background: #FFFFFF;
 }
 
 #faceNextBtn {
     float: right;
-    background: #4091F7;
+    background: #AA9D84;
     color: #FFFFFF;
 }

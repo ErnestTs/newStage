@@ -6,7 +6,7 @@
 }
 
 .blue {
-    color:#0F4C81;
+    color:#121212;
 }
 
 #menu_large {
@@ -92,7 +92,7 @@
 }
 
 #menu_large .action {
-    background: #0F4C81;
+    background: #121212;
     border-radius: 6px;
     color: rgb(255, 255, 255) !important;
     animation: onAction 0.5s forwards;
@@ -101,7 +101,7 @@
 .menu_actionBorder {
     width: 5px;
     height: 100%;
-    background: #0F4C81;
+    background: #121212;
     border-radius: 4px;
     position: absolute;
     left:-2.01vw;
@@ -124,7 +124,7 @@
     }
 	to {
         left: 0.7vw;
-        background: #0F4C81;
+        background: #121212;
         color: #fff;
     }
 }

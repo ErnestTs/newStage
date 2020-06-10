@@ -56,10 +56,10 @@
 }
 .component_Register_appInfo ul li .companylist {
     overflow: hidden;
-    border: 1px solid #0F4C81;
+    border: 1px solid #121212;
 }
 .component_Register_appInfo ul li .companylist li {
-    border-bottom: 1px solid #0F4C81;
+    border-bottom: 1px solid #121212;
     height:30px;
     line-height:30px;
     margin-bottom: 0;
@@ -83,7 +83,7 @@
     display: block;
     float: left;
     font-size: 14px;
-    color: #4091F7;
+    color: #AA9D84;
     text-indent: 27px;
     line-height: 48px;
     text-align: left;
@@ -116,7 +116,7 @@
 }
 
 .component_Register_appInfo_input {
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 4px;
     margin-top: 10px;
     text-indent: 10px
@@ -165,7 +165,7 @@
 #component_Register_cardInfo_mask p {
     margin-top: 12px;
     font-size: 21px;
-    color: #4091F7;
+    color: #AA9D84;
     letter-spacing: 0.81px;
     text-align: center;
     line-height: 30px;
@@ -177,7 +177,7 @@
 }
 
 #component_Register_cardInfo_mask .btn_box div{
-    background: #4091F7;
+    background: #AA9D84;
     border-radius: 8px; 
     width: 42%;
     height: 100%;
@@ -228,7 +228,7 @@
 
 #component_Register_cardInfo_board .cardForm .cardForm_item input {
     width: 51%;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     border-radius: 4px;
     height: 30px;
     text-indent: 15px;
@@ -245,7 +245,7 @@
 
 .cardForm_item_address {
     font-size: 14px;
-    color: #4091F7;
+    color: #AA9D84;
     letter-spacing: 0;  
     float: left;
 }
@@ -256,7 +256,7 @@
     float: left;
     margin-left: 5%;
     text-align: center;
-    background: #4091F7;
+    background: #AA9D84;
     border-radius: 4px;
     color:#fff;
     height: 30px;
@@ -277,7 +277,7 @@
     position: fixed;
     width: 274px;
     height: 5%;
-    background: #0F4C81;
+    background: #121212;
     border-radius: 8px;
     text-align: center;
     color:#fff;
@@ -350,7 +350,7 @@
 }
 .appintmentState.finish{
     background: #C2DAF9;
-    color: #4091F7;
+    color: #AA9D84;
 }
 
 .vtypeBox {
@@ -377,7 +377,7 @@
 
 .vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
     background: #fff;
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
 }
 
 
@@ -395,7 +395,7 @@
 }
 
 .component_Register_Item ul .memberItem input {
-    border: 1px solid #4091F7;
+    border: 1px solid #AA9D84;
     color: #323233;
     height: 34px;
     border-radius: 6px;
@@ -411,7 +411,7 @@
     margin-bottom: 7px;
     text-align: center;
     line-height: 34px;
-    background: #4091F7;
+    background: #AA9D84;
     border-radius: 8px;
     text-align: center;
     color:#fff;
