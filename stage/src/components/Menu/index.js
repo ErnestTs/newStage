@@ -243,10 +243,12 @@ export default class Menu extends Component {
         let img_Elem = document.getElementById("icon_"+id)
         let span_Elem = document.getElementById("span_"+id)
         img_Elem.src = icon;
-        if(!!span_Elem&&!!type){
-            span_Elem.classList.add("blue");
-        }else{
-            span_Elem.classList.remove("blue");
+        if(!!span_Elem){
+            if(!!type){
+                span_Elem.classList.add("blue");
+            }else{
+                span_Elem.classList.remove("blue");
+            }
         }
     }
 }
