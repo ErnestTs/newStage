@@ -60,6 +60,20 @@ export default class Blacklist extends Component {
         return (
             <div id="component_Companylist">
                 <div id="component_Companylist_searchContent">
+
+                    <ul id="component_Companylist_stateList">
+                        <li className="action">
+                            全部
+                        </li>
+                        <li>
+                            不可预约
+                        </li>
+                        <li>
+                            需授权
+                        </li>
+                    </ul>
+
+                    <div id="component_Companylist_btn_refresh">刷新</div>
                     <div id="component_Companylist_inputBox">
                         <input 
                             type="text" 
@@ -67,7 +81,6 @@ export default class Blacklist extends Component {
                             onChange={this.searchInfo.bind(this)}
                         />
                     </div>
-                    <div id="component_Blacklist_btn_refresh">刷新</div>
                 </div>
                 <div className="component_Companylist_tableBox">
                     <div className="component_Companylist_tableBoard">

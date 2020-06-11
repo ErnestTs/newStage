@@ -48,6 +48,7 @@
     margin-bottom: 4.25vh;
     width: 100%;
     overflow: hidden;
+    height: 56px;
 }
 
 #component_Companylist_searchContent #component_Companylist_inputBox {
@@ -60,7 +61,8 @@
     box-sizing: border-box;
     overflow: hidden;
     vertical-align: middle;
-    float: right
+    float: right;
+    margin-top: 8px
 }
 
 #component_Companylist_searchContent #component_Companylist_inputBox input{
@@ -73,6 +75,20 @@
     box-sizing: border-box;
     font-size: 14px;
     color: #A6A6A6;
+}
+
+#component_Companylist_searchContent #component_Companylist_btn_refresh {
+    float: right;
+    width: 5.8%;
+    line-height: 40px;
+    text-align: center;
+    background: #AA9D84;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-top: 8px
 }
 
 .component_Companylist_tableBox{
@@ -116,5 +132,36 @@
 
 
 #component_Companylist .ant-pagination-item-active a{
+    color: #FFFFFF;
+}
+
+
+#component_Companylist #component_Companylist_stateList {
+    border: 1px solid #DCDEE0;
+    border-radius: 10px;
+    float: left;
+    width: 36.3%;
+    height: 100%;
+    box-sizing: border-box;
+    line-height: 56px;
+    overflow: hidden
+}
+
+#component_Companylist #component_Companylist_stateList li {
+    float: left;
+    width: 33.33333%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    border-left: 1px solid #DCDEE0;
+    cursor: pointer;
+}
+#component_Companylist #component_Companylist_stateList li:nth-child(1){
+    border-left: 0;
+}
+
+#component_Companylist #component_Companylist_stateList .action {
+    background: #AA9D84;
+    overflow: hidden;
     color: #FFFFFF;
 }
