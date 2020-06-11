@@ -10,9 +10,39 @@ import "./index.css"
 import Toast from "../../components/ToastPublic/index.jsx"
 
 export default class Blacklist extends Component {
-    consturctor(props){
+    constructor(props){
         super(props)
         this.state = {
+            columns:[
+                {
+                  title: '姓名',
+                  dataIndex: 'name',
+                  key: 'name',
+                },
+                {
+                  title: '身份证号',
+                  dataIndex: 'name',
+                  key: 'name',
+                },
+                {
+                  title: '手机号',
+                  dataIndex: 'name',
+                  key: 'name',
+                },
+                {
+                  title: '企业',
+                  dataIndex: 'name',
+                  key: 'name',
+                },
+                {
+                  title: '备注',
+                  dataIndex: 'name',
+                  key: 'name',
+                },
+            ],
+            dataSource:[
+                {}
+            ]
 
         }
     }

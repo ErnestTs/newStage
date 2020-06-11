@@ -32,6 +32,14 @@ import Appointment_1 from "../../resource/menu_icon/Appointment/1.png"
 import Appointment_2 from "../../resource/menu_icon/Appointment/2.png"
 import Appointment_3 from "../../resource/menu_icon/Appointment/3.png"
 
+import Blacklist_1 from "../../resource/menu_icon/Blacklist/1.png"
+import Blacklist_2 from "../../resource/menu_icon/Blacklist/2.png"
+import Blacklist_3 from "../../resource/menu_icon/Blacklist/3.png"
+
+import Companylist_1 from "../../resource/menu_icon/Companylist/1.png"
+import Companylist_2 from "../../resource/menu_icon/Companylist/2.png"
+import Companylist_3 from "../../resource/menu_icon/Companylist/3.png"
+
 
 export default class Menu extends Component {
     constructor(props){
@@ -74,6 +82,16 @@ export default class Menu extends Component {
                     hidden:Appointment_2,
                     active:Appointment_3
                 },
+                Blacklist:{
+                    normal:Blacklist_1,
+                    hidden:Blacklist_2,
+                    active:Blacklist_3
+                },
+                Companylist:{
+                    normal:Companylist_1,
+                    hidden:Companylist_2,
+                    active:Companylist_3
+                },
             },
             open: true,     // true-完整菜单 false-缩略菜单
             active: -1,
@@ -105,8 +123,8 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup0">
                             {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")} */}
-                            {this.renderItem("公司列表",this.state.icon.QRcode,0, "qrcode")}
-                            {this.renderItem("黑名单列表",this.state.icon.QRcode,1, "Certificates")}
+                            {this.renderItem("公司列表",this.state.icon.Companylist,0, "qrcode")}
+                            {this.renderItem("黑名单列表",this.state.icon.Blacklist,1, "Blacklist")}
                         </li>
                         <li className="menu_itemGroup1">
                             {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
@@ -125,7 +143,7 @@ export default class Menu extends Component {
                             {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")} */}
                             {this.renderItem("公司列表",this.state.icon.QRcode,0, "qrcode")}
-                            {this.renderItem("黑名单列表",this.state.icon.QRcode,1, "Certificates")}
+                            {this.renderItem("黑名单列表",this.state.icon.QRcode,1, "blacklist")}
                         </li>
                         <li className="menu_itemGroup1">
                             {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
