@@ -99,7 +99,7 @@ export default class Menu extends Component {
     }
 
     componentDidMount(){
-        this.changeItem(4,"今日访客","visitor");
+        this.changeItem(0,"公司列表","companylist");
         window.changeItem = this.changeItem.bind(this)
     }
 
@@ -123,7 +123,7 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup0">
                             {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")} */}
-                            {this.renderItem("公司列表",this.state.icon.Companylist,0, "qrcode")}
+                            {this.renderItem("公司列表",this.state.icon.Companylist,0, "companylist")}
                             {this.renderItem("黑名单列表",this.state.icon.Blacklist,1, "Blacklist")}
                         </li>
                         <li className="menu_itemGroup1">
