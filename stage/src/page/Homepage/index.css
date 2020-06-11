@@ -12,7 +12,7 @@
     right: 0;
     height: 100%;
     margin: 0 70px 0 40px;
-    overflow-x: hidden
+    overflow: hidden
 }
 
 .page_home_title {
