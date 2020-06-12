@@ -1,68 +1,57 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### react react-router
 
-In the project directory, you can run:
+##### 978070462@qq.com Ernest.Fang
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+|-- restructure
+    |-- .DS_Store
+    |-- .gitignore
+    |-- README.md
+    |-- package-lock.json
+    |-- package.json
+    |-- build
+    |-- public
+    |-- src                             
+        |-- .DS_Store
+        |-- App.css
+        |-- App.js
+        |-- App.test.js
+        |-- index.css
+        |-- index.js
+        |-- logo.svg
+        |-- serviceWorker.js
+        |-- setupTests.js
+        |-- Common
+        |-- components
+        |   |-- AppointmentInfo     // 访问详情页
+        |   |-- Blacklist           // 黑名单
+        |   |-- Companylist         // 公司列表
+        |   |-- FaceRecognition     // 人脸拍照
+        |   |-- IdCard              // 身份证阅读器
+        |   |-- Input               // 登录页输入框
+        |   |-- Logistics           // 物流列表
+        |   |   |-- moreInfo        // 物流列表-更多信息
+        |   |-- LogisticsInfo       // 物流详情
+        |   |-- Menu                // 菜单
+        |   |-- Navgation           // 上边栏
+        |   |-- PassPort            // 证照通
+        |   |-- Print               // 打印页
+        |   |-- Qrcode              // 二维码扫描页
+        |   |-- Register            // 现场登记
+        |   |-- Resident            // 常住访客页
+        |   |-- Senseid             // senseid读卡页
+        |   |-- TempCards           // 临时卡列表
+        |   |-- ToastPublic         // 公共提示
+        |   |-- VisitorInfo         // 现场预约
+        |   |-- VisitorList         // 今日访客
+        |-- page
+        |   |-- Homepage            //
+        |   |-- Login               //
+        |-- resource                //
+        |   |-- menu_icon           //
+        |-- router
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
