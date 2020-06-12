@@ -34,7 +34,7 @@
 
 
 
-.Input_box .action {
+.Input_box.action {
     border: 1px solid rgba(15,76,129,0.5);
     box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
     background: #FFFFFF;

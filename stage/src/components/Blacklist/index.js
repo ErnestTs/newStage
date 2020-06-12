@@ -83,6 +83,7 @@ export default class Blacklist extends Component {
                 <div id="component_Blacklist_PaginationBox">
                     <div id="component_Blacklist_Pagination">
                         <Pagination
+                            defaultCurrent={1}
                             total={this.state.defaultList.length}
                             showQuickJumper
                             pageSize={this.state.paginationOption.size}

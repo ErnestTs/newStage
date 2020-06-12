@@ -117,3 +117,27 @@
 #component_Blacklist .ant-pagination-item-active a{
     color: #FFFFFF;
 }
+#component_Blacklist .ant-pagination-item:hover {
+    border-color: #AA9D84;
+}
+#component_Blacklist .ant-pagination-next:hover {
+    border-color: #AA9D84;
+}
+#component_Blacklist .ant-pagination-prev:hover {
+    border-color: #AA9D84;
+}
+
+
+#component_Blacklist .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Blacklist .ant-pagination-prev:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Blacklist .ant-pagination-item:focus a, .ant-pagination-item:hover a {
+    color: #AA9D84
+}

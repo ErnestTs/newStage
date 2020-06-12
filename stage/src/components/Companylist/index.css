@@ -135,6 +135,31 @@
     color: #FFFFFF;
 }
 
+#component_Companylist .ant-pagination-item:hover {
+    border-color: #AA9D84;
+}
+#component_Companylist .ant-pagination-next:hover {
+    border-color: #AA9D84;
+}
+#component_Companylist .ant-pagination-prev:hover {
+    border-color: #AA9D84;
+}
+
+
+#component_Companylist .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Companylist .ant-pagination-prev:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Companylist .ant-pagination-item:focus a, .ant-pagination-item:hover a {
+    color: #AA9D84
+}
+
 
 #component_Companylist #component_Companylist_stateList {
     border: 1px solid #DCDEE0;
@@ -164,4 +189,28 @@
     background: #AA9D84;
     overflow: hidden;
     color: #FFFFFF;
+}
+
+.component_Companylist_IFSToast {
+    position: fixed;
+    left: 50%;
+    top: 76px;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.15);
+    border-radius: 4px;
+    width: 124px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+.component_Companylist_IFSToast i {
+    display: inline-block;
+    background: url(../../resource/i.png) no-repeat;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin-right: 8px;
 }
