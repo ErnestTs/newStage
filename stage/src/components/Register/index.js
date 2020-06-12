@@ -15,6 +15,8 @@ import defaultPhoto from "../../resource/defaultPhoto.png"
 import defaultCard from "../../resource/idcardimg.jpeg"
 
 export default class Register extends Component {
+    uploadBlob;
+
     constructor(props){
         super(props)
 
@@ -55,6 +57,9 @@ export default class Register extends Component {
             inSubmit:false,
 
             extendColList:[],
+
+            photoURL:"",
+            faceState:false,
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -269,7 +274,7 @@ export default class Register extends Component {
                             <div id="component_Register_cardInfo_mask_photoBox">
                                 <div id="Register_facePhoto" style={{ display: this.state.photoSwitch ? 'block' : 'none' }}>
                                     <div id="cameraPanel">
-                                        <img src="" alt="" id="Register_camera_img" />
+                                        <img src={this.state.photoURL}  style={{ opacity: !!this.state.photoURL ? '1' : '0' }} alt="" id="Register_camera_img" />
                                     </div>
                                 </div>
                                 <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
@@ -703,6 +708,13 @@ export default class Register extends Component {
             })
             return
         }
+        if(!this.state.faceState){
+            Toast.open({
+                type:"danger",
+                content: "未检测到人脸,请拍照。"
+            })
+            return
+        }
         for(let i = 0;i<this.state.extendColList.length;i++){
             let item = this.state.extendColList[i];
             switch(item.fieldName){
@@ -884,8 +896,102 @@ export default class Register extends Component {
      * @description [打开摄像头]
      */
     openCamera(){
-        this.setState({
-            photoSwitch:true
-        })
+        if(!this.state.photoSwitch){
+            this.setState({
+                photoSwitch:true
+            })
+        }else {
+            let camera = document.getElementById('camera');
+            let capture = document.getElementById('Register_camera_img');
+            let baseCode;
+            try {
+                baseCode = "data:image/png;base64," + camera.GetBase64Code();
+            } catch (error) {
+                baseCode = "data:image/png;base64,";
+            }
+    
+            if (!this.state.photo) {
+                camera.style.display = 'none';
+                capture.style.display = 'inline';
+                capture.setAttribute('src', baseCode);
+    
+                this.state.photo = true;
+            }
+    
+            else {
+                camera.style.display = 'inline';
+                capture.style.display = 'none';
+                capture.setAttribute('src', '');
+    
+                baseCode = undefined;
+                this.state.photo = false;
+            }
+    
+            /**
+             * 使用canvas裁剪图片为300x300
+             */
+            let canvas = document.createElement('canvas'),
+                img = document.getElementById('Register_camera_img'),
+                ctx = canvas.getContext('2d');
+    
+            canvas.width = 300;
+            canvas.height = 300;
+    
+            ctx.drawImage(img, -50, 0, img.width - 50, img.height);
+            // ctx.drawImage(img, -100, 0, img.width, img.height);
+    
+            baseCode = canvas.toDataURL();
+    
+            /**
+             * 	将base64转换成二进制流
+             */
+            if (baseCode != undefined) {
+                this.uploadBlob = Common.convertBase64UrlToBlob(baseCode);
+            }
+            else {
+                this.uploadBlob = undefined;
+            }
+            let formData = new FormData();
+    
+            formData.append('filename', this.uploadBlob, 'avatar.png');
+            
+            Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
+                if (data.status === 0) {
+                    this.setState({
+                        photoURL:data.result.url
+                    })
+                    let count = 0;
+                    window.interval = setInterval(() => {
+                        if(count >= 20) {
+                            clearInterval(window.interval)
+                            Toast.open({
+                                type:"danger",
+                                content: "人脸校验失败!"
+                            })
+                            return
+                        }else {
+                            this.getFaceStatus(data.result.url)
+                            count++
+                        }
+                    }, 1000);
+                }
+            }.bind(this));
+        }
+    }
+    
+    /**
+     * @description [校验人脸]
+     * @param {String} url 
+     */
+    getFaceStatus(url) {
+        let sendData = {photoUrl:url};
+        Common.ajaxProc("getFaceStatus",sendData,sessionStorage.token).done((res)=>{
+            if(res.result == 0) {
+                this.setState({
+                    faceState:true
+                })
+                clearInterval(window.interval)
+            }
+        });
     }
 }

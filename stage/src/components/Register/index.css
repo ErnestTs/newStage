@@ -153,6 +153,7 @@
     border-radius: 50%;
     position: relative;
     overflow: hidden;
+    transform: rotate(0deg);
 }
 
 #component_Register_cardInfo_mask_photoBox>img {
