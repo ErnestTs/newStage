@@ -80,7 +80,7 @@ export default class VisitorInfo extends Component {
                                 placeholder="请输入您要拜访公司的名称" value={this.state.empCompany||""}  onChange={this.setCompanyInfo.bind(this)} 
                                 onClick={(e)=>{
                                     e.target.classList.add("action");
-                                    if(!!this.state.empCompany){
+                                    if(!!this.state.empCompany && sessionStorage.sid != 0){
                                         this.setState({
                                             empCompanyFocus:true
                                         })
@@ -377,7 +377,7 @@ export default class VisitorInfo extends Component {
         if(sessionStorage.sid != 0){
 			this.getEmpListByGid()
         }else{
-
+            this.getMainCompanyInfo()
         }
     }
 
@@ -433,6 +433,37 @@ export default class VisitorInfo extends Component {
                 visitorType:tempArr[0].name
 			})
 		})
+    }
+
+    /**
+     * @description [获取主公司员工列表]
+     */
+    getMainCompanyInfo(){
+		Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((data)=>{
+			if (data.status === 0 && data.result.length !== 0) {
+				for(var i = 0; i < data.result.length; i++){
+                    if (data.status === 0 && data.result.length !== 0) {
+                        let tempArr = [];
+                        for(let i = 0; i < data.result.length;i++){
+                            if(data.result[i].empType === 1){
+                                tempArr.push(data.result[i])
+                            }
+                        }
+                        this.setState({
+                            empName:"",
+                            empNamePool: data.result,
+                            empNameList: tempArr,
+                        });
+                    }
+                }
+            }
+            this.setState({
+                empCompany: sessionStorage.mainCompany,
+                empCompanyId:"",
+                empCompanyFocus:false
+            })
+            this.setCompanyInfo = ()=>{}
+        })
     }
     
 

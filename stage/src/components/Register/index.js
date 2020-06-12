@@ -82,7 +82,7 @@ export default class Register extends Component {
                                             value={this.state.empCompany||""}
                                             onChange={this.setCompanyInfo.bind(this)} 
                                             onFocus={(e)=>{
-                                                if(!!this.state.empCompany){
+                                                if(!!this.state.empCompany && sessionStorage.sid != 0){
                                                     this.setState({
                                                         empCompanyFocus:true
                                                     })
@@ -396,7 +396,7 @@ export default class Register extends Component {
         if(sessionStorage.sid != 0){
 			this.getEmpListByGid()
         }else{
-
+            this.getMainCompanyInfo()
         }
     }
 
@@ -449,6 +449,36 @@ export default class Register extends Component {
 		})
     }
     
+    /**
+     * @description [获取主公司员工列表]
+     */
+    getMainCompanyInfo(){
+		Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((data)=>{
+			if (data.status === 0 && data.result.length !== 0) {
+				for(var i = 0; i < data.result.length; i++){
+                    if (data.status === 0 && data.result.length !== 0) {
+                        let tempArr = [];
+                        for(let i = 0; i < data.result.length;i++){
+                            if(data.result[i].empType === 1){
+                                tempArr.push(data.result[i])
+                            }
+                        }
+                        this.setState({
+                            empName:"",
+                            empNamePool: data.result,
+                            empNameList: tempArr,
+                        });
+                    }
+                }
+            }
+            this.setState({
+                empCompany: sessionStorage.mainCompany,
+                empCompanyId:"",
+                empCompanyFocus:false
+            })
+            this.setCompanyInfo = ()=>{}
+        })
+    }
 
 	/**
 	 * @description [根据门岗获取公司]
