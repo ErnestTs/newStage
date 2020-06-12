@@ -34,6 +34,7 @@ export default class Register extends Component {
             empCompanyId:"",
             empCompanyPool:[],
             empCompanyList:[],
+            empCompanyFloor:"",
 
             empNameFocus:false,
             empName:"",
@@ -104,13 +105,25 @@ export default class Register extends Component {
                                             <li 
                                                 value={item.id||""} 
                                                 key={i+"li"}
-                                                onClick={this.selectCompany.bind(this,item.companyName,item.id)}
+                                                onClick={this.selectCompany.bind(this,item.companyName,item.id,item.floor)}
                                             >
                                                 {item.companyName}
                                             </li>
                                         )
                                     })}
                                 </ul>
+                            </li>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.nameRequired?<span className="required">*</span>:""}公司楼层:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.empCompanyFloor||""}
+                                        />
+                                    </span>
+                                </div>
                             </li>
                             <li>
                                 <div>
@@ -175,7 +188,7 @@ export default class Register extends Component {
                                 </div>
                             </li>
 
-                            <li className="component_Register_Item vtypeBox component_Register_memberBox">
+                            {/* <li className="component_Register_Item vtypeBox component_Register_memberBox">
                                 <span className="component_Register_appInfo_key">
                                     随访人员：
                                 </span>
@@ -194,7 +207,7 @@ export default class Register extends Component {
                                             添加随访人员
                                     </li>
                                 </ul>
-                            </li>
+                            </li> */}
 
                             <li className="component_Register_Item vtypeBox">
                                 <span className="component_Register_appInfo_key">
@@ -520,7 +533,7 @@ export default class Register extends Component {
     /**
      * @description [点击选择公司]
      */
-    selectCompany(value,id){
+    selectCompany(value,id,floor){
         let _this = this
 		Common.ajaxProc('getSubAccountEmpList', { userid: sessionStorage.userid, subaccountId: id }, sessionStorage.token).done(function (data) {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
@@ -540,7 +553,8 @@ export default class Register extends Component {
         this.setState({
             empCompany: value,
             empCompanyId:id,
-            empCompanyFocus:false
+            empCompanyFocus:false,
+            empCompanyFloor:floor
         })
     }
 
