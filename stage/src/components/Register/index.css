@@ -129,6 +129,11 @@
     }
 }
 
+#component_Register_cardInfo_mask p {
+    width: 60%;
+    margin: auto;
+}
+
 #component_Register_cardInfo_mask,#component_Register_cardInfo_board {
     width: 95%;
     position: absolute;
@@ -140,19 +145,29 @@
     overflow: auto;
 }
 
-#component_Register_cardInfo_mask img {
+#component_Register_cardInfo_mask_photoBox {
     width: 43%;
-    margin-top: 10%
+    margin: auto;
+    margin-top: 10%;
+    border: 1px solid #AA9D84;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+#component_Register_cardInfo_mask_photoBox>img {
+    width: 100%;
+    position: relative;
 }
 
 @media screen and (max-width: 1280px) {
-    #component_Register_cardInfo_mask img {
+    #component_Register_cardInfo_mask_photoBox {
         width: 30%;
     }
 }
 
 @media screen and (max-height: 619px) {
-    #component_Register_cardInfo_mask img {
+    #component_Register_cardInfo_mask_photoBox {
         width: 30%;
         margin-top: 5%
     }
@@ -160,6 +175,40 @@
         bottom: 0.4% !important;
         height: 4% !important;
     }
+}
+
+#Register_facePhoto {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    
+}
+
+#cameraPanel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#cameraPanel #Register_camera_img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#Register_facePhoto #camera {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 140%;
+    height: 100%;
 }
 
 #component_Register_cardInfo_mask p {
@@ -172,19 +221,29 @@
 }
 
 #component_Register_cardInfo_mask .btn_box{
-    height: 11.2%;
+    height: 7.5%;
     margin-top: 2.778vh;
 }
 
 #component_Register_cardInfo_mask .btn_box div{
     background: #AA9D84;
     border-radius: 8px; 
-    width: 42%;
+    width: 27.6%;
     height: 100%;
     line-height: normal;
     cursor: pointer;
     position: relative;
+    display: inline-block;
 }
+
+#component_Register_cardInfo_mask .btn_box div:nth-child(2){
+    margin-left: 20px;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    background: #fff;
+    color: #AA9D84;
+}
+
 
 #component_Register_cardInfo_mask .btn_box div span{
     position: absolute;

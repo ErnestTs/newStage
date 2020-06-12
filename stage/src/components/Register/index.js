@@ -266,11 +266,21 @@ export default class Register extends Component {
 
                     <div className="component_Register_cardInfo fll">
                         <div id="component_Register_cardInfo_mask" style={{display:this.state.showCardMask?"block":"none"}}>
-                            <img src={scanCard} />
-                            <p>暂无身份信息</p>
+                            <div id="component_Register_cardInfo_mask_photoBox">
+                                <div id="Register_facePhoto" style={{ display: this.state.photoSwitch ? 'block' : 'none' }}>
+                                    <div id="cameraPanel">
+                                        <img src="" alt="" id="Register_camera_img" />
+                                    </div>
+                                </div>
+                                <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
+                            </div>
+                            <p>请告知访客采集人脸注意事项并询问是否同意采集人脸</p>
                             <div className="btn_box">
+                                <div onClick={this.openCamera.bind(this)}>
+                                    <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
+                                </div>
                                 <div>
-                                    <span>读取证件</span>
+                                    <span>发卡</span>
                                 </div>
                             </div>
                         </div>
@@ -411,6 +421,23 @@ export default class Register extends Component {
         }else{
 
         }
+
+		let flash = document.createElement("embed");
+		flash.setAttribute("src", Common.cameraUrl);
+		flash.setAttribute("style", "z-index:100");
+		flash.setAttribute("pluginspage", "http://www.macromedia.com/go/getflashplayer");
+		flash.setAttribute("quality", "high");
+		flash.setAttribute("allowscriptaccess", "sameDomain");
+		flash.setAttribute("wmode", "transparent");
+		flash.setAttribute("type", "application/x-shockwave-flash");
+		flash.setAttribute("id", "camera");
+		flash.setAttribute("align", "middle");
+		flash.setAttribute("name", "My_Cam");
+		
+        document.getElementById("cameraPanel").appendChild(flash);
+        
+        let cameraOffsetWidth = document.getElementById("component_Register_cardInfo_mask_photoBox").offsetWidth+"px"
+        document.getElementById("component_Register_cardInfo_mask_photoBox").style.height = cameraOffsetWidth;
     }
 
     /**
@@ -851,5 +878,14 @@ export default class Register extends Component {
                 vistorPhone: ''
             });
         }.bind(this));
+    }
+
+    /**
+     * @description [打开摄像头]
+     */
+    openCamera(){
+        this.setState({
+            photoSwitch:true
+        })
     }
 }
