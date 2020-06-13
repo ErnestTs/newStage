@@ -60,6 +60,8 @@ export default class Register extends Component {
 
             photoURL:"",
             faceState:false,
+            tempCard:"",
+            openToast:0, // 1-发卡
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -279,12 +281,12 @@ export default class Register extends Component {
                                 </div>
                                 <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
                             </div>
-                            <p>请告知访客采集人脸注意事项并询问是否同意采集人脸</p>
+                            <p>{this.state.tempCard||"请告知访客采集人脸注意事项并询问是否同意采集人脸"}</p>
                             <div className="btn_box">
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
                                 </div>
-                                <div>
+                                <div onClick={this.setToast.bind(this,1)}>
                                     <span>发卡</span>
                                 </div>
                             </div>
@@ -323,6 +325,24 @@ export default class Register extends Component {
 
                 <div id="component_Register_loginBTN" onClick={this.updatePhoto.bind(this)}>
                     <span>下一步</span>
+                </div>
+
+                <div style={{display:this.state.openToast?"block":"none"}} id="component_Register_Toast">
+                    <div style={{display:this.state.openToast == 1?"block":"none"}} id="component_Register_tempCardBox">
+                        <p className="title">发卡</p>
+                        <div className="inputBox">
+                            <span>申请卡号：</span>
+                            <input type="text" value={this.state.tempCard} />
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.setToast.bind(this,0)}>
+                                取消
+                            </li>
+                            <li>
+                                确定
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         )
@@ -581,7 +601,19 @@ export default class Register extends Component {
 					empNameList: tempArr,
 				});
 			}
-		})
+        })
+
+        let floorList = floor.split("、")
+        for(let j = 0; j<floorList.length;j++){
+            let itemArr = floorList[j].split("|");
+            for(let k = 0;k<itemArr.length;k++){
+                let tempItemArrStr = itemArr[k].split(",")
+                itemArr[k] = !!tempItemArrStr[1]?tempItemArrStr[1]:tempItemArrStr[0]
+            }
+            floorList[j] = itemArr.join(",")
+        }
+        floor = floorList.join("、")
+        
         this.setState({
             empCompany: value,
             empCompanyId:id,
@@ -960,10 +992,14 @@ export default class Register extends Component {
                     this.setState({
                         photoURL:data.result.url
                     })
+                    if(!!window.interval){
+                        return
+                    }
                     let count = 0;
                     window.interval = setInterval(() => {
                         if(count >= 20) {
                             clearInterval(window.interval)
+                            window.interval = null
                             Toast.open({
                                 type:"danger",
                                 content: "人脸校验失败!"
@@ -993,5 +1029,15 @@ export default class Register extends Component {
                 clearInterval(window.interval)
             }
         });
+    }
+
+    /**
+     * @description [更改弹窗状态]
+     * @param {Number} type 
+     */
+    setToast(type){
+        this.setState({
+            openToast:type
+        })
     }
 }

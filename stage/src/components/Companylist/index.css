@@ -132,7 +132,7 @@
 
 
 #component_Companylist .ant-pagination-item-active a{
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 #component_Companylist .ant-pagination-item:hover {

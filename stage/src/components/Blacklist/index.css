@@ -115,7 +115,7 @@
 }
 
 #component_Blacklist .ant-pagination-item-active a{
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 #component_Blacklist .ant-pagination-item:hover {
     border-color: #AA9D84;

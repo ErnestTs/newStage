@@ -481,3 +481,79 @@
 .component_Register_memberBox {
     
 }
+
+
+#component_Register_Toast {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+}
+
+#component_Register_tempCardBox {
+    width: 28.125vw;
+    height: 24vh;
+    background-color: #fff;
+    border-radius: 39px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+
+#component_Register_tempCardBox .title {
+    text-align: center;
+    font-size: 2.222vh;
+    color: #323233;
+    font-weight: bold;
+    margin-top: 4.16vh;
+    margin-bottom: 1.57vh;
+}
+
+#component_Register_tempCardBox .inputBox {
+    width: 100%;
+    margin: auto;
+    font-size: 2.1vh;
+    line-height: normal;
+    text-align: center
+}
+
+#component_Register_tempCardBox .inputBox input {
+    width: 14vw;
+    height: 3.7vh;
+    background: #FFFFFF;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    text-indent: 5%;
+    line-height: 3.7vh;
+}
+
+#component_Register_tempCardBox .btnGroup {
+    margin: auto;
+    overflow: hidden;
+    width: 13.4vw;
+    margin-top: 4vh
+}
+
+#component_Register_tempCardBox .btnGroup li {
+    height: 3.7vh;
+    float: left;
+    width: 5.4vw;
+    line-height: 3.7vh;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    font-size: 2vh;
+    cursor: pointer;
+    color:  #AA9D84;
+}
+
+#component_Register_tempCardBox .btnGroup li:last-child {
+    float: right;
+    background: #AA9D84;
+    color: #fff;
+}

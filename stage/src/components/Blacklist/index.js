@@ -1,5 +1,6 @@
 import React,{Component} from "react";
-import { Table,Pagination } from 'antd';
+import { Table,Pagination,ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 import moment from 'moment';
 
 import Common from "../../Common/index"
@@ -82,14 +83,16 @@ export default class Blacklist extends Component {
                 </div>
                 <div id="component_Blacklist_PaginationBox">
                     <div id="component_Blacklist_Pagination">
-                        <Pagination
-                            defaultCurrent={1}
-                            total={this.state.defaultList.length}
-                            showQuickJumper
-                            pageSize={this.state.paginationOption.size}
-                            showSizeChanger={false}
-                            onChange={this.paginationOnChange.bind(this)}
-                        />
+                        <ConfigProvider locale={zhCN}>
+                            <Pagination
+                                defaultCurrent={1}
+                                total={this.state.defaultList.length}
+                                showQuickJumper
+                                pageSize={this.state.paginationOption.size}
+                                showSizeChanger={false}
+                                onChange={this.paginationOnChange.bind(this)}
+                            />
+                        </ConfigProvider>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React,{Component} from "react";
-import { Table,Pagination } from 'antd';
+import { Table,Pagination,ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 import moment from 'moment';
 
 import Common from "../../Common/index"
@@ -139,14 +140,16 @@ export default class Companylist extends Component {
                 </div>
                 <div id="component_Companylist_PaginationBox">
                     <div id="component_Companylist_Pagination">
-                        <Pagination
-                            defaultCurrent={1}
-                            total={this.state.defaultList.length}
-                            showQuickJumper
-                            pageSize={this.state.paginationOption.size}
-                            showSizeChanger={false}
-                            onChange={this.paginationOnChange.bind(this)}
-                        />
+                        <ConfigProvider locale={zhCN}>
+                            <Pagination
+                                defaultCurrent={1}
+                                total={this.state.defaultList.length}
+                                showQuickJumper
+                                pageSize={this.state.paginationOption.size}
+                                showSizeChanger={false}
+                                onChange={this.paginationOnChange.bind(this)}
+                            />
+                        </ConfigProvider>
                     </div>
                 </div>
                 <div className="component_Companylist_IFSToast" style={{display:this.state.ifsToast?"block":"none"}}>
@@ -175,7 +178,7 @@ export default class Companylist extends Component {
     }
 
     /**
-     * @description [拉取黑名单]
+     * @description [拉取公司列表]
      */
     getCompanyList(){
         Common.ajaxProcWithoutAsync("getSubAccountByUserid",{"userid":2147483647,"startIndex":0,"requestedCount":999999},sessionStorage.token).done((res)=>{
@@ -204,6 +207,17 @@ export default class Companylist extends Component {
                         }else {
                             item.authorize = false
                         }
+
+                        let roomNumber = item.roomNumber.split("、")
+                        for(let j = 0; j<roomNumber.length;j++){
+                            let itemArr = roomNumber[j].split("|");
+                            for(let k = 0;k<itemArr.length;k++){
+                                let tempItemArrStr = itemArr[k].split(",")
+                                itemArr[k] = !!tempItemArrStr[1]?tempItemArrStr[1]:tempItemArrStr[0]
+                            }
+                            roomNumber[j] = itemArr.join(",")
+                        }
+                        item.roomNumber = roomNumber.join("、")
                         oList.push(item)
                     }
                 }
