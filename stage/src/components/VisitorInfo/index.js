@@ -1,4 +1,5 @@
 import React,{Component} from "react"
+import $ from "jquery"
 
 import Common from "../../Common/index"
 
@@ -7,25 +8,35 @@ import "./index.css"
 // Toast
 import Toast from "../../components/ToastPublic/index.jsx"
 
-/**
- * @author 方超 qq978070462
- * @description [现场预约组件]
- * @returns {React.Component}
- */
 
+//img
+import scanCard from "../../resource/scanCard.png"
+import defaultPhoto from "../../resource/defaultPhoto.png"
+import defaultCard from "../../resource/idcardimg.jpeg"
 
-export default class VisitorInfo extends Component {
+export default class Register extends Component {
+    uploadBlob;
+
     constructor(props){
         super(props)
-        this.state= {
-            visitorType:"",
-            visitorTypeList: [],
 
+        this.state= {
+            cardInfo:{
+                name:"方超",
+                cardId:"370202199211043333",
+                address:"山东省青岛市市南区江苏路七号9户"
+            },
+            qrcodeConf:0,
+            showCardMask:true,
+
+
+            visitorType:"",
             empCompanyFocus:false,
             empCompany:"",
             empCompanyId:"",
             empCompanyPool:[],
             empCompanyList:[],
+            empCompanyFloor:"",
 
             empNameFocus:false,
             empName:"",
@@ -36,110 +47,119 @@ export default class VisitorInfo extends Component {
 
             vname:"",
             vphone:"",
+            memberList:[
+                {name:"",mobile:""}
+            ],
 
+            vTypeList: [],
             vType:"",
-            tid:"",
 
-            inSubmit:false
+            inSubmit:false,
+
+            extendColList:[],
+
+            photoURL:"",
+            faceState:false,
+            tempCard:"",
+            openToast:0, // 1-发卡 2-其他提示
+            toastContent:"",
+
+            remark:"",
+			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
+			// regElementArr: ["name", "empid", "phone",  "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
         }
     }
 
     render(){
         return (
-            <div id="component_VisitorInfo">
-                {/* <div className="titleBox">
-                    <p className="title">预约信息</p>
-                    <p>请填写下面的信息</p>
-                </div> */}
-                <div className="component_VisitorInfo_board">
-                    <ul>
-                        <li className="component_VisitorInfo_Item">
-                            <p>
-                                您的姓名：
-                            </p>
-                            <input 
-                                placeholder="请输入您的姓名"
-                                value={this.state.vname||""}
-                                onChange={this.setInfo.bind(this, "vname")}
-                                onFocus={(e)=>{
-                                    e.target.classList.add("action");
-                                }}
-                                onBlur={(e)=>{
-                                    e.target.classList.remove("action");
-                                }}
-                            />
-                        </li>
-                        <li 
-                            className="component_VisitorInfo_Item"
-                        >
-                            <p>
-                                您要拜访的公司：
-                            </p>
-                            <input 
-                                className=""
-                                placeholder="请输入您要拜访公司的名称" value={this.state.empCompany||""}  onChange={this.setCompanyInfo.bind(this)} 
-                                onClick={(e)=>{
-                                    e.target.classList.add("action");
-                                    if(!!this.state.empCompany){
-                                        this.setState({
-                                            empCompanyFocus:true
-                                        })
-                                    }
-                                }}
-                                onBlur={(e)=>{
-                                    e.target.classList.remove("action");
-                                    if(!this.state.empCompany){
-                                        this.setState({
-                                            empCompanyFocus:false
-                                        })
-                                    }
-                                }}
-                            />
-                            <div className="itemBoard">
-                                <ul className="list" style={{display:this.state.empCompanyFocus?"block":"none"}}>
+            <div id="component_Register">
+                <div className="topBar">
+                    <div className="fll">来访信息
+                    </div>
+                    <div className="fll">身份信息</div>
+                </div>
+                <div className="component_Register_mainBoard">
+                    <div className="component_Register_appInfo fll">
+                        <ul>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.empidRequired?<span className="required">*</span>:""}被访人公司:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text" 
+                                            value={this.state.empCompany||""}
+                                            onChange={this.setCompanyInfo.bind(this)} 
+                                            onFocus={(e)=>{
+                                                if(!!this.state.empCompany){
+                                                    this.setState({
+                                                        empCompanyFocus:true
+                                                    })
+                                                }
+                                            }}
+                                            onBlur={(e)=>{
+                                                if(!this.state.empCompany){
+                                                    this.setState({
+                                                        empCompanyFocus:false
+                                                    })
+                                                }
+                                            }}
+                                        />
+                                    </span>
+                                </div>
+                                <ul className="companylist" style={{display:this.state.empCompanyFocus?"block":"none"}}>
                                     {this.state.empCompanyList.map((item,i)=>{
                                         return (
                                             <li 
                                                 value={item.id||""} 
                                                 key={i+"li"}
-                                                onClick={this.selectCompany.bind(this,item.companyName,item.id)}
+                                                onClick={this.selectCompany.bind(this,item.companyName,item.id,item.floor)}
                                             >
                                                 {item.companyName}
                                             </li>
                                         )
                                     })}
                                 </ul>
-                            </div>
-                        </li>
-                        <li 
-                            className="component_VisitorInfo_Item"
-                        >
-                            <p>
-                                您要拜访的人：
-                            </p>
-                            <input 
-                                className=""
-                                placeholder="请输入您要拜访人的姓名" value={this.state.empName||""}  onChange={this.setEmpNameInfo.bind(this)}
-                                onFocus={(e)=>{
-                                    e.target.classList.add("action");
-                                    if(!!this.state.empNameList.length){
-                                        this.setState({
-                                            empNameFocus:true
-                                        })
-                                    }
-                                }}
-                                onBlur={(e)=>{
-                                    e.target.classList.remove("action");
-                                }}
-                            />
-                            <div className="itemBoard">
-                                <ul className="list" style={{display:this.state.empNameFocus?"block":"none"}}>
+                            </li>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.nameRequired?<span className="required">*</span>:""}公司楼层:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.empCompanyFloor||""}
+                                            readOnly
+                                        />
+                                    </span>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.empidRequired?<span className="required">*</span>:""}被访人姓名:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.empName||""}
+                                            onChange={this.setEmpNameInfo.bind(this)}
+                                            onFocus={(e)=>{
+                                                if(!!this.state.empNameList.length){
+                                                    this.setState({
+                                                        empNameFocus:true
+                                                    })
+                                                }
+                                            }}
+                                        />
+                                    </span>
+                                </div>
+                                <ul className="companylist" style={{display:this.state.empNameFocus?"block":"none"}}>
                                     {this.state.empNameList.map((item,i)=>{
                                         return (
                                             <li 
                                                 value={item.empName||""} 
                                                 key={i+"li"}
-                                                onClick={this.selectEmp.bind(this,item.empName,item.empid,item.empPhone)}
+                                                onClick={this.selectEmp.bind(this,item.empName,item.empid,item.empPhone,item.egids)}
                                             >
                                                 {item.empName}
                                                 <span style={{ display: item.empType === 1 ? "inline" : "none" }}>（默认接待人）</span>
@@ -147,52 +167,195 @@ export default class VisitorInfo extends Component {
                                         )
                                     })}
                                 </ul>
-                            </div>
-                        </li>
+                            </li>
 
-                        <li className="component_VisitorInfo_Item">
-                            <p>
-                                拜访事由：
-                            </p>
-                            <select 
-                                value={this.state.visitorType||""} 
-                                onChange={(e)=>{
-                                    this.setState({visitorType:e.target.value})
-                                }}
-                            >
-                                {
-                                    this.state.visitorTypeList.map((item,i)=>{
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.nameRequired?<span className="required">*</span>:""}访客姓名:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.vname||""}
+                                            onChange={this.setInfo.bind(this, "vname")}
+                                        />
+                                    </span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.phoneRequired?<span className="required">*</span>:""}访客手机号:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.vphone||""} 
+                                            onChange={this.setInfo.bind(this, "vphone")}
+                                        />
+                                    </span>
+                                </div>
+                            </li>
+
+                            {/* <li className="component_Register_Item vtypeBox component_Register_memberBox">
+                                <span className="component_Register_appInfo_key">
+                                    随访人员：
+                                </span>
+                                <ul>
+                                    {
+                                        this.state.memberList.map((item,i)=>{
+                                            return (
+                                                <li className="memberItem" key={i+"memberItem"}>
+                                                    <input type="text" value={item.name} onChange={this.setMember.bind(this,i,'name')} placeholder="随访人员姓名" />
+                                                    <input type="text" value={item.mobile} onChange={this.setMember.bind(this,i,'mobile')} placeholder="随访人员手机号" />
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                    <li id="addMember" onClick={this.addMember.bind(this)}>
+                                            添加随访人员
+                                    </li>
+                                </ul>
+                            </li> */}
+
+                            <li className="component_Register_Item vtypeBox">
+                                <span className="component_Register_appInfo_key">
+                                    {this.state.visitTypeRequired?<span className="required">*</span>:""}拜访事由：
+                                </span>
+                                <ul className="component_Register_appInfo_vtypeItemBox">
+                                    {
+                                        this.state.vTypeList.map((item,i)=>{
+                                            return (
+                                                <li 
+                                                    className={this.state.visitorType == item.name?"action":""}
+                                                    key={i+"vType"}
+                                                    onClick={
+                                                        (e)=>{
+                                                            this.setState({
+                                                                visitorType:item.name
+                                                            })
+                                                        }
+                                                    }
+                                                >
+                                                    {item.name}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul>
+                            {
+                                this.state.extendColList.map((item,i,arr)=>{
+
+                                    if(this.state.regElementArr.indexOf(item.fieldName) !== -1){
+                                        if(item.fieldName == "gatein"||item.fieldName == "guardin"||item.fieldName == "gateout"||item.fieldName == "guardout"){
+                                            this.state[item.fieldName] = true
+                                        }
+                                        return
+                                    }
+                                    
+                                    if(item.inputType == "button"){
                                         return (
-                                            <option key={i+"vType"} value={item.value}>
-                                                {item.name}
-                                            </option>
+                                            this.renderExtendItem_select(item.displayName.split("#")[0],item.fieldName,item) 
                                         )
-                                    })
-                                }
-                            </select>
-                        </li>
-                        <li className="component_VisitorInfo_Item">
-                            <p>
-                                您的电话：
-                            </p>
-                            <input 
-                                placeholder="请输入您的电话"
-                                value={this.state.vphone||""} 
-                                onChange={this.setInfo.bind(this, "vphone")}
-                                onFocus={(e)=>{
-                                    e.target.classList.add("action");
-                                }}
-                                onBlur={(e)=>{
-                                    e.target.classList.remove("action");
-                                }}
-                            />
-                        </li>
-                    </ul>
+                                    }else{
+                                        return (
+                                            this.renderExtendItem(item.displayName.split("#")[0],item.fieldName,item) 
+                                        )
+                                    }
+                                })
+                            }
+                        </ul>
+                        <ul>
+                            {this.renderExtendItem("备注","remark",{})}
+                        </ul>
+                    </div>
+
+                    <div className="component_Register_cardInfo fll">
+                        <div id="component_Register_cardInfo_mask" style={{display:this.state.showCardMask?"block":"none"}}>
+                            <div id="component_Register_cardInfo_mask_photoBox">
+                                <div id="Register_facePhoto" style={{ display: this.state.photoSwitch ? 'block' : 'none' }}>
+                                    <div id="cameraPanel">
+                                        <img alt="" id="Register_camera_img" />
+                                    </div>
+                                </div>
+                                <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
+                            </div>
+                            <p>{!this.state.tempCard?"请告知访客采集人脸注意事项并询问是否同意采集人脸":"已发卡号："+this.state.tempCard}</p>
+                            <div className="btn_box">
+                                <div onClick={this.openCamera.bind(this)}>
+                                    <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
+                                </div>
+                                <div onClick={this.setToast.bind(this,1)}>
+                                    <span>发卡</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="component_Register_cardInfo_board" style={{display:!this.state.showCardMask?"block":"none"}}>
+                            <div className="headerBox">
+                                <img src={defaultPhoto} />
+                            </div>
+                            <div className="cardForm">
+                                <div className="cardForm_item">
+                                    <span className="cardForm_item_key">姓名:</span>
+                                    <input type="text" disabled defaultValue={this.state.cardInfo.name} />
+                                    <div className="btn">查询</div>
+                                </div>
+                                <div className="cardForm_item">
+                                    <span className="cardForm_item_key">证件号码:</span>
+                                    <input type="text" disabled defaultValue={this.state.cardInfo.cardId} />
+                                </div>
+                                <div className="cardForm_item">
+                                    <span className="cardForm_item_key">地址:</span>
+                                    <span className="cardForm_item_address">
+                                        {this.state.cardInfo.address}
+                                    </span>
+                                </div>
+                                <div className="cardForm_item" style={{height:"auto"}}>
+                                    <span className="cardForm_item_key">证件截图:</span>
+                                    <div className="cardForm_item_card">
+                                        <img src={defaultCard} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-
-                <div id="component_VisitorInfo_loginBTN" onClick={this.nextStep.bind(this)}>
+                <div id="component_Register_loginBTN" onClick={this.updatePhoto.bind(this)}>
                     <span>下一步</span>
+                </div>
+
+                <div style={{display:this.state.openToast?"block":"none"}} id="component_Register_Toast">
+                    <div style={{display:this.state.openToast == 1?"block":"none"}} id="component_Register_tempCardBox">
+                        <p className="title">发卡</p>
+                        <div className="inputBox">
+                            <span>申请卡号：</span>
+                            <input type="text" value={this.state.tempCard} onChange={(e)=>{this.setState({tempCard:e.target.value})}} />
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.closeTempCardBox.bind(this)}>
+                                取消
+                            </li>
+                            <li onClick={this.setToast.bind(this,0)}>
+                                确定
+                            </li>
+                        </ul>
+                    </div>
+                    <div style={{display:this.state.openToast == 2?"block":"none"}} id="component_Register_ToastBox">
+                        <p id="component_Register_tempCardBox_icon"></p>
+                        <div className="inputBox">
+                            {this.state.toastContent}
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.setToast.bind(this,0)}>
+                                知道了
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         )
@@ -202,168 +365,85 @@ export default class VisitorInfo extends Component {
         this.init()
     }
 
+
     /**
-     * @description [下一步]
+     * @description []
+     * @param {*} name 
+     * @param {*} key 
+     * @param {*} required 
      */
-    nextStep(){
-        if(this.state.inSubmit){
-            Toast.open({
-                type:"danger",
-                content: "提交中，请勿重复点击。"
-            })
-            return
-        }
-        let {vname,vphone,vType,empCompany,empName,empPhone,empId,visitorType,tid} = this.state;
-
-        if(!vname||!vphone||!visitorType||!empCompany||!empName){
-            Toast.open({
-                type:"danger",
-                content: "请填入完整的登记信息!"
-            })
-            return
-        }
-
-		if(!this.checkPhoneNum(vphone)){
-            Toast.open({
-                type:"danger",
-                content: "手机号码填写有误，请核实！"
-            })
-			return;
-		}
-
-		let sendData = {
-			company: empCompany,
-			userid: sessionStorage.userid,
-			ctype: sessionStorage.sid=="0"?'u':"s",
-			name: vname,
-			phone: vphone,
-			empPhone: empPhone,
-			empName: empName,
-			empid: empId,
-			appointmentDate: new Date().format("yyyy-MM-dd hh:mm:ss"),
-			visitType: visitorType,
-			peopleCount: 1,
-			memberName: "",
-			gid:sessionStorage.gid,
-            vType:vType,
-            tid:tid
-        };
-        
-        this.state.inSubmit = true
-
-        Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done((data)=>{
-			if (data.status === 0) {
-                Toast.open({
-                    type:"success",
-                    content: "现场预约提交成功!"
-                })
-				setTimeout(function (data) {
-					if(Common.$_Get().idcard == "3"){
-                        window.changeItem(4, "今日访客", "visitor")
-                        this.props.history.push("/home/visitor")
-					}else{
-                        window.changeItem(0,"二维码","qrcode")
-                        this.props.history.push("/home/qrcode")
-					}
-				}.bind(this), 3000);
-			}
-			else if (data.status === 43) {
-                Toast.open({
-                    type:"danger",
-                    content: "该访客当天预约次数已用完"
-                })
-                return;
-			}
-			else if (data.status === 1119) {
-                Toast.open({
-                    type:"danger",
-                    content: "被访人手机信息不完全"
-                })
-                return;
-			}else if(data.status === 66){
-                Toast.open({
-                    type:"danger",
-                    content: "该访客已在黑名单中"
-                })
-                return;
-			}
-			else {
-                Toast.open({
-                    type:"danger",
-                    content: "预约失败,请联系管理员"
-                })
-                return;
-			}
-			this.setState({
-				vistorName: "",
-				vistorPhone: "",
-				inSubmit: false
-			});
-        })
-
-
+    renderExtendItem(name, key, item){
+        return (
+            <li key={key}>
+                <div>
+                    <span className="component_Register_appInfo_key">
+                        {(item.required&8) == 8?<span className="required">*</span>:""}{name}:
+                    </span>
+                    <span className="component_Register_appInfo_value">
+                        <input type="text"
+                            value={this.state[key]||""}
+                            onChange={this.setInfo.bind(this, key)}
+                        />
+                    </span>
+                </div>
+            </li>
+        )
     }
-	
-	/**
-	 * @description [校验手机号码是否合法]
-	 * @param {String} phone 
-	 * @returns {Boolean} true-合法手机号 false-非法手机号
-	 */
-	checkPhoneNum(phone) {
-		if(!(/^1[3456789]\d{9}$/.test(phone))){
-			return false; 
-		}else{
-			return true
-		}
-	}
-
     /**
-     * @description [修改信息]
-     * @param {String} name 
-     * @param {Event} e 
+     * @description []
+     * @param {*} name 
+     * @param {*} key 
+     * @param {*} required 
      */
-    setInfo(name,e){
-        let tempObj = this.state
-        tempObj[name] = e.target.value
-        this.setState(tempObj)
+    renderExtendItem_select(name, key, item){
+        let options = item.inputValue.split(",")
+        return (
+            <li key={key}>
+                <div>
+                    <span className="component_Register_appInfo_key">
+                        {name}:
+                    </span>
+                    <span className="component_Register_appInfo_value">
+                        <select type="text"
+                            value={this.state[key]||""}
+                            onChange={this.setInfo.bind(this, key)}
+                        >
+                            {
+                                options.map((item, i)=>{
+                                    return (
+                                        <option value={item} key={i+key+"_option"}>
+                                            {item}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </span>
+                </div>
+            </li>
+        )
     }
 
     /**
-     * @description [输入受访公司]
+     * @description [修改扩展字段值]
      */
-    setCompanyInfo(e){
-        let key = e.target.value
-        if(!key.length){
-            this.setState({
-                empCompany:"",
-                empCompanyFocus:false,
-                empNameFocus:false,
-                empCompanyList: [],
-                empNameList:[],
-                empNamePool:[],
-                empName:""
-            })
-        }else {
-            this.state.empCompanyList = [];
-            for (let i = 0; i < this.state.empCompanyPool.length; i++) {
-                let item = this.state.empCompanyPool[i];
-                let company = item.companyName;
-                if (company.indexOf(key) !== -1) {
-                    this.state.empCompanyList.push(item);
-                }
-            }
-            if (this.state.empCompanyList.length !== 0) {
+    setExtendValue(key,e){
+        let tempObj;
+        switch(key){
+            case "remark":
+                tempObj = this.state.visitInfo;
+                tempObj[key] = e.target.value;
                 this.setState({
-                    empCompany:key,
-                    empCompanyFocus: true
-                });
-            }
-            else {
+                    visitInfo:tempObj
+                })
+                break;
+            default:
+                tempObj = this.state.extendCol;
+                tempObj[key] = e.target.value;
                 this.setState({
-                    empCompany:key,
-                    empCompanyFocus: false
-                });
-            }
+                    extendCol:tempObj
+                })
+                break;
         }
     }
 
@@ -379,6 +459,23 @@ export default class VisitorInfo extends Component {
         }else{
 
         }
+
+		let flash = document.createElement("embed");
+		flash.setAttribute("src", Common.cameraUrl);
+		flash.setAttribute("style", "z-index:100");
+		flash.setAttribute("pluginspage", "http://www.macromedia.com/go/getflashplayer");
+		flash.setAttribute("quality", "high");
+		flash.setAttribute("allowscriptaccess", "sameDomain");
+		flash.setAttribute("wmode", "transparent");
+		flash.setAttribute("type", "application/x-shockwave-flash");
+		flash.setAttribute("id", "camera");
+		flash.setAttribute("align", "middle");
+		flash.setAttribute("name", "My_Cam");
+		
+        document.getElementById("cameraPanel").appendChild(flash);
+        
+        let cameraOffsetWidth = document.getElementById("component_Register_cardInfo_mask_photoBox").offsetWidth+"px"
+        document.getElementById("component_Register_cardInfo_mask_photoBox").style.height = cameraOffsetWidth;
     }
 
     /**
@@ -393,22 +490,6 @@ export default class VisitorInfo extends Component {
             }
 		})
     }
-
-    /**
-     * @description [获取字段下标]
-     * @param {*} type 
-     */
-    getItemIndex(key){
-        let res = 0;
-        let tempArr = this.state.itemList;
-        for(let i = 0; i < tempArr.length; i++){
-            if(tempArr[i].name == key){
-                res = i;
-                break;
-            }
-        }
-        return res
-    }
     
 	/**
 	 * @description [根据访客类型获取扩展字段]
@@ -417,7 +498,16 @@ export default class VisitorInfo extends Component {
 	getExtendCol(type){
 		Common.ajaxProcWithoutAsync("getExtendTypeInfo",{"userid": sessionStorage.userid,"eType": type},sessionStorage.token).done((res)=>{
             let tempArr = [];
+            let tempExtendColList = [];
 			for(let i = 0; i < res.result.length; i++) {
+                if((res.result[i].isDisplay&8) != 8){
+                    continue;
+                }else{
+                    if((res.result[i].required&8) == 8 && this.state.regElementArr.indexOf(res.result[i].fieldName)!== -1){
+                        this.state[res.result[i].fieldName+"Required"] = true
+                    }
+                    tempExtendColList.push(res.result[i])
+                }
 				if(res.result[i].fieldName == "visitType"){
                     let optionArr = res.result[i].inputValue.split(",");
                     for(let j = 0; j < optionArr.length; j++){
@@ -427,10 +517,12 @@ export default class VisitorInfo extends Component {
                         })
                     }
 				}
-			}
+            }
+            
 			this.setState({
-                visitorTypeList:tempArr,
-                visitorType:tempArr[0].name
+                visitorType:tempArr[0].name,
+                vTypeList:tempArr,
+                extendColList:tempExtendColList
 			})
 		})
     }
@@ -461,11 +553,52 @@ export default class VisitorInfo extends Component {
 			}
 		})
     }
+
+
+    /**
+     * @description [输入受访公司]
+     */
+    setCompanyInfo(e){
+        let key = e.target.value
+        if(!key.length){
+            this.setState({
+                empCompany:"",
+                empCompanyFocus:false,
+                empNameFocus:false,
+                empCompanyList: [],
+                empNameList:[],
+                empNamePool:[],
+                empName:"",
+                empId:""
+            })
+        }else {
+            this.state.empCompanyList = [];
+            for (let i = 0; i < this.state.empCompanyPool.length; i++) {
+                let item = this.state.empCompanyPool[i];
+                let company = item.companyName;
+                if (company.indexOf(key) !== -1) {
+                    this.state.empCompanyList.push(item);
+                }
+            }
+            if (this.state.empCompanyList.length !== 0) {
+                this.setState({
+                    empCompany:key,
+                    empCompanyFocus: true
+                });
+            }
+            else {
+                this.setState({
+                    empCompany:key,
+                    empCompanyFocus: false
+                });
+            }
+        }
+    }
     
     /**
      * @description [点击选择公司]
      */
-    selectCompany(value,id){
+    selectCompany(value,id,floor){
         let _this = this
 		Common.ajaxProc('getSubAccountEmpList', { userid: sessionStorage.userid, subaccountId: id }, sessionStorage.token).done(function (data) {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
@@ -481,11 +614,24 @@ export default class VisitorInfo extends Component {
 					empNameList: tempArr,
 				});
 			}
-		})
+        })
+
+        let floorList = floor.split("、")
+        for(let j = 0; j<floorList.length;j++){
+            let itemArr = floorList[j].split("|");
+            for(let k = 0;k<itemArr.length;k++){
+                let tempItemArrStr = itemArr[k].split(",")
+                itemArr[k] = !!tempItemArrStr[1]?tempItemArrStr[1]:tempItemArrStr[0]
+            }
+            floorList[j] = itemArr.join(",")
+        }
+        floor = floorList.join("、")
+        
         this.setState({
             empCompany: value,
             empCompanyId:id,
-            empCompanyFocus:false
+            empCompanyFocus:false,
+            empCompanyFloor:floor
         })
     }
 
@@ -498,6 +644,7 @@ export default class VisitorInfo extends Component {
         if(!key.length){
             this.setState({
                 empName:"",
+                empId:"",
                 empNameFocus:false
             })
         }else {
@@ -523,17 +670,405 @@ export default class VisitorInfo extends Component {
             }
         }
     }
-
     
     /**
      * @description [点击选择员工]
      */
-    selectEmp(value,id,phone){
+    selectEmp(value,id,phone,egids){
+		let gids = ""
+		if(!!sessionStorage.VisitorAccess){
+			egids = egids.split(",")
+			let VisitorAccess = sessionStorage.VisitorAccess.split(",");
+			let tempEgids = []
+			for(let i = 0; i < egids.length; i++){
+				if(VisitorAccess.indexOf(egids[i]) !== -1){
+					tempEgids.push(egids[i])
+				}
+			}
+			gids = tempEgids.join(",")
+		}else{
+			gids = egids
+		}
         this.setState({
             empName: value,
             empId:id,
             empPhone:phone,
-            empNameFocus:false
+            empNameFocus:false,
+			egids: gids
         })
+    }
+
+    /**
+     * @description [修改信息]
+     * @param {String} name 
+     * @param {Event} e 
+     */
+    setInfo(name,e){
+        let tempObj = this.state
+        tempObj[name] = e.target.value
+        this.setState(tempObj)
+    }
+    
+    
+	/**
+	 * @description [校验手机号码是否合法]
+	 * @param {String} phone 
+	 * @returns {Boolean} true-合法手机号 false-非法手机号
+	 */
+	checkPhoneNum(phone) {
+		if(!(/^1[3456789]\d{9}$/.test(phone))){
+			return false; 
+		}else{
+			return true
+		}
+    }
+
+	/**
+	 * @description [添加随访人员]
+	 */
+	addMember(){
+        let tempArr = this.state.memberList;
+		tempArr.push({name:"",mobile:""})
+		this.setState({
+			memberList:tempArr
+		})
+	}
+    
+	/**
+	 * @description [修改随访人员]
+	 */
+	setMember(index, key, e){
+		let tempArr = this.state.memberList;
+		tempArr[index][key] = e.target.value
+		this.setState({
+			memberList:tempArr
+		})
+	}
+
+    updatePhoto(){
+        if(this.state.inSubmit){
+            Toast.open({
+                type:"danger",
+                content: "提交中，请勿重复点击。"
+            })
+            return
+        }
+        if(!this.state.faceState){
+            Toast.open({
+                type:"danger",
+                content: "未检测到人脸,请拍照。"
+            })
+            return
+        }
+        for(let i = 0;i<this.state.extendColList.length;i++){
+            let item = this.state.extendColList[i];
+            switch(item.fieldName){
+                case "name":
+                    item.fieldName = "vname"
+                    break;
+                
+                case "phone":
+                    item.fieldName = "vphone"
+                    break;
+                
+                case "visitType":
+                    item.fieldName = "visitorType"
+                    break;
+
+                case "empid":
+                    item.fieldName = "empId"
+                    break;
+                default:
+                    break;
+            }
+            if((item.required&8) == 8){
+                if(!this.state[item.fieldName]){
+                    Toast.open({
+                        type:"danger",
+                        content: "请填入完整的登记信息!"
+                    })
+                    return
+                }
+            }
+        }
+
+        if(!!this.state.vphone&& !this.checkPhoneNum(this.state.vphone)){
+            Toast.open({
+                type:"danger",
+                content: "手机号码填写有误，请核实！"
+            })
+            return
+        }
+
+        let extendColGroup = [];
+        for(let i = 0; i < this.state.extendColList.length;i++){
+            let item = this.state.extendColList[i];
+            if(!!this.state[item.fieldName]){
+                extendColGroup.push(
+                    item.fieldName+"="+this.state[item.fieldName]
+                )
+            }
+        }
+        if(!!this.state.empId){
+            extendColGroup.push("empid=" + this.state.empId);
+        }
+        if(!!this.state.visitorType){
+            extendColGroup.push("visitType=" + this.state.visitorType);
+        }
+        if(!!this.state.vphone){
+            extendColGroup.push("phone=" + this.state.vphone);
+        }
+        if(!!this.state.vname){
+            extendColGroup.push("name=" + this.state.vname);
+        }
+        if(sessionStorage.sid==0){
+            extendColGroup.push("access=" + sessionStorage.EquipmentAccess);
+        }else{
+            extendColGroup.push("access=" + "\""+this.state.egids+ "\"");
+        }
+        
+        if(this.state.gatein){
+            extendColGroup.push("gatein=" + sessionStorage.gname);
+        }			
+        if(this.state.guardin){
+            extendColGroup.push("guardin=" + sessionStorage.opname);
+        }
+
+
+        let card = {
+            cardId: this.state.cardInfo.cardId,
+            name: this.state.cardInfo.name,
+            address: this.state.cardInfo.address,
+            issue:"",
+            indate:"",
+            image:""
+        };
+
+        let sendData = {
+            email: "",
+            extendCol: extendColGroup,
+            company: this.state.empCompany||"",
+            name: this.state.vname||"",
+            visitType: this.state.visitorType||"",
+            phone: this.state.vphone||"",
+            empid: this.state.empId||"",
+            remark: this.state.remark||"",
+            signInGate: sessionStorage.gname,
+            signInOpName: sessionStorage.opname,
+            gid:sessionStorage.gid,
+            tid:this.state.tid,
+            vType:this.state.vType,
+            card: null,
+            cardNo:this.state.tempCard
+        };
+        // cardInfo:{
+        //     name:"方超",
+        //     cardId:"370202199211043333",
+        //     address:"山东省青岛市市南区江苏路七号9户"
+        // },
+
+        if(!this.state.showCardMask){
+            sendData.card = card
+        }
+
+        if(!!this.state.plateNum) {
+            sendData.plateNum = this.state.plateNum
+        }
+
+        if(!!this.state.meetAddress) {
+            sendData.meetingPoint = this.state.meetAddress
+        }
+
+        if(!!this.state.vcompany) {
+            sendData.vcompany = this.state.vcompany
+        }
+
+        if(!!this.state.photoUrl) {
+            sendData.photoUrl = this.state.photoUrl
+        }
+
+        // if(!($("#peopleCount").length && $("#peopleCount").val())){
+        if(!this.state.peopleCount){
+            if(!!this.state.memberList.length){
+                let tempArr = [];
+                for(let i = 0; i < this.state.memberList.length; i++){
+                    if(!!this.state.memberList[i].name){
+                        tempArr.push(this.state.memberList[i])
+                    }
+                }
+                if(!!tempArr.length){
+                    sendData.extendCol.push("peopleCount="+(tempArr.length+1));
+                    sendData.peopleCount = tempArr.length+1
+                }else {
+                    sendData.extendCol.push("peopleCount="+1);
+                    sendData.peopleCount = 1
+                }
+                sendData.memberName=JSON.stringify(tempArr)
+            }else{
+                sendData.extendCol.push("peopleCount="+1);
+                sendData.peopleCount = 1
+            }
+        }else {
+            sendData.peopleCount = this.state.peopleCount
+        }
+			
+        /**设置为提交状态 */
+        this.state.inSubmit = true
+        Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done(function (data) {
+            if (data.status === 0) {
+                sessionStorage.vid = data.result.vid;
+                Toast.open({
+                    type:"success",
+                    content: "现场登记成功！!"
+                })
+                // sessionStorage.memberList = JSON.stringify(data.result.glist)
+                // let tempArr = data.result.glist;
+                // tempArr.unshift({vid:data.result.vid})
+                
+                // setTimeout(() => {
+                //     this.props.history.replace({pathname:"print",state:{printList:tempArr}})
+                // }, 2000);
+            }else if(data.status === 66){
+                // Toast.open({
+                //     type:"danger",
+                //     content: "该访客已在黑名单中!"
+                // })
+                this.setState({
+                    toastContent:"该访客为黑名单人员，不可预约/登记",
+                    openToast:2
+                })
+            }
+            this.setState({
+                inSubmit: false,
+                vistorName: "",
+                vistorPhone: ''
+            });
+        }.bind(this));
+    }
+
+    /**
+     * @description [打开摄像头]
+     */
+    openCamera(){
+        if(!this.state.photoSwitch){
+            this.setState({
+                photoSwitch:true
+            })
+        }else {
+            let camera = document.getElementById('camera');
+            let capture = document.getElementById('Register_camera_img');
+            let baseCode;
+            try {
+                baseCode = "data:image/png;base64," + camera.GetBase64Code();
+            } catch (error) {
+                baseCode = "data:image/png;base64,";
+            }
+    
+            if (!this.state.photo) {
+                camera.style.display = 'none';
+                capture.style.display = 'inline';
+                capture.setAttribute('src', baseCode);
+    
+                this.state.photo = true;
+            }
+    
+            else {
+                camera.style.display = 'inline';
+                capture.style.display = 'none';
+                capture.setAttribute('src', '');
+    
+                baseCode = undefined;
+                this.state.photo = false;
+            }
+    
+            /**
+             * 使用canvas裁剪图片为300x300
+             */
+            let canvas = document.createElement('canvas'),
+                ctx = canvas.getContext('2d');
+    
+            canvas.width = 300;
+            canvas.height = 300;
+    
+            ctx.drawImage(capture, -50, 0, capture.offsetWidth - 50, capture.offsetHeight);
+            // ctx.drawImage(img, -100, 0, img.width, img.height);
+    
+            // baseCode = canvas.toDataURL();
+    
+            /**
+             * 	将base64转换成二进制流
+             */
+            if (baseCode != undefined) {
+                this.uploadBlob = Common.convertBase64UrlToBlob(baseCode);
+            }
+            else {
+                this.uploadBlob = undefined;
+            }
+            let formData = new FormData();
+            formData.enctype = "multipart/form-data";
+            formData.append('action', 'upload');
+            formData.append('filename', this.uploadBlob, 'avatar.png');
+            Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
+                if (data.status === 0) {
+                    this.setState({
+                        photoURL:data.result.url
+                    })
+                    if(!!window.interval){
+                        return
+                    }
+                    let count = 0;
+                    window.interval = setInterval(() => {
+                        if(count >= 20) {
+                            clearInterval(window.interval)
+                            window.interval = null
+                            Toast.open({
+                                type:"danger",
+                                content: "人脸校验失败!"
+                            })
+                            return
+                        }else {
+                            this.getFaceStatus(data.result.url)
+                            count++
+                        }
+                    }, 1000);
+                }
+            }.bind(this));
+        }
+    }
+    
+    /**
+     * @description [校验人脸]
+     * @param {String} url 
+     */
+    getFaceStatus(url) {
+        let sendData = {photoUrl:url};
+        Common.ajaxProc("getFaceStatus",sendData,sessionStorage.token).done((res)=>{
+            if(res.result == 0) {
+                this.setState({
+                    faceState:true
+                })
+                clearInterval(window.interval)
+            }
+        });
+    }
+
+    /**
+     * @description [更改弹窗状态]
+     * @param {Number} type 
+     */
+    setToast(type){
+        this.setState({
+            openToast:type
+        })
+    }
+
+    /**
+     * @description [关闭临时卡弹窗]
+     */
+    closeTempCardBox(){
+        this.setState({
+            tempCard:""
+        })
+        this.setToast(0)
     }
 }

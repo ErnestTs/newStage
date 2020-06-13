@@ -1,96 +1,339 @@
-#component_VisitorInfo {
+.component_Register_mainBoard {
+    width: 91.15%;
+    height: 85%;
+    margin: auto;
+}
+
+#component_Register {
+    overflow: hidden;
     height: 100%;
-    width: 100%;
     float: left;
-    padding-bottom: 2%;
+    width: 100%;
+    position: relative;
+    padding-bottom: 3%;
     box-sizing: border-box;
 }
 
-#component_VisitorInfo .titleBox {
-    width: 128px;
+#component_Register .topBar {
+    width: 91.15%;
+    height: 49px;
+    background: #E7EDF2;
+    border-radius: 8px;
     margin: auto;
-    margin-top: 5%;
-    margin-bottom: 3%
+    margin-top: 2.778vh;
 }
 
-#component_VisitorInfo .titleBox p {
+.topBar div {
+    text-indent: 53px;
+    width: 50%;
     font-size: 16px;
-    line-height: 22px;
+    color: #202224;
+    letter-spacing: 0;
+    line-height: 48px;
+    font-weight: bolder
+}
+
+.component_Register_appInfo, .component_Register_cardInfo {
+    position: relative;
+    padding-top: 2.778vh;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto
+}
+
+.component_Register_appInfo>ul>li {
+    width: 87%;
+    margin: auto;
+    border-bottom: 0.87px solid #E0E0E0;
+    font-size: 16px;
+    color: #323233;
+    letter-spacing: 0;
+}
+.component_Register_appInfo ul li>div{
+    height: 50px;
+    overflow: hidden
+}
+.component_Register_appInfo ul li .companylist {
+    overflow: hidden;
+    border: 1px solid #121212;
+}
+.component_Register_appInfo ul li .companylist li {
+    border-bottom: 1px solid #121212;
+    height:30px;
+    line-height:30px;
+    margin-bottom: 0;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center
+}
+
+.component_Register_appInfo_key {
+    display: block;
+    float: left;
+    line-height: 50px;
+    width: 100px;
+}
+
+.component_Register_appInfo_key .required {
+    color: red
+}
+
+.component_Register_appInfo_value {
+    display: block;
+    float: left;
+    font-size: 14px;
+    color: #AA9D84;
+    text-indent: 27px;
+    line-height: 48px;
+    text-align: left;
+    margin-top: 1px;
+    height: 97%;
+}
+
+.component_Register_appInfo_value input {
+    display: inline;
+    border: 0;
+    outline: none;
+    text-align: left;
+    float: left;
+    background-color: #fff;
+    width: 185%;
+    height: 100%;
+    line-height: normal;
+}
+
+.component_Register_appInfo_value select {
+    display: inline;
+    border: 0;
+    outline: none;
+    text-align: left;
+    float: left;
+    background-color: #fff;
+    width: 100%;
+    height: 48px;
+    line-height: normal;
+}
+
+.component_Register_appInfo_input {
+    border: 1px solid #AA9D84;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-indent: 10px
+}
+
+
+@media screen and (max-width: 1280px) {
+    .component_Register_appInfo, .component_Register_cardInfo {
+        padding-top: 4vh;
+    }
+}
+
+#component_Register_cardInfo_mask p {
+    width: 60%;
+    margin: auto;
+}
+
+#component_Register_cardInfo_mask,#component_Register_cardInfo_board {
+    width: 95%;
+    position: absolute;
+    height: 90%;
+    border: 0 solid #DCDEE0;
+    border-radius: 12px;
+    background: #F5F6FA;
+    text-align: center;
+    overflow: auto;
+}
+
+#component_Register_cardInfo_mask_photoBox {
+    width: 43%;
+    margin: auto;
+    margin-top: 10%;
+    border: 1px solid #AA9D84;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transform: rotate(0deg);
+}
+
+#component_Register_cardInfo_mask_photoBox>img {
+    width: 100%;
+    position: relative;
+}
+
+@media screen and (max-width: 1280px) {
+    #component_Register_cardInfo_mask_photoBox {
+        width: 30%;
+    }
+}
+
+@media screen and (max-height: 619px) {
+    #component_Register_cardInfo_mask_photoBox {
+        width: 30%;
+        margin-top: 5%
+    }
+    #component_Register_loginBTN {
+        bottom: 0.4% !important;
+        height: 4% !important;
+    }
+}
+
+#Register_facePhoto {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    
+}
+
+#cameraPanel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#cameraPanel #Register_camera_img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#Register_facePhoto #camera {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 140%;
+    height: 100%;
+}
+
+#component_Register_cardInfo_mask p {
+    margin-top: 12px;
+    font-size: 21px;
+    color: #AA9D84;
+    letter-spacing: 0.81px;
+    text-align: center;
+    line-height: 30px;
+}
+
+#component_Register_cardInfo_mask .btn_box{
+    height: 7.5%;
+    margin-top: 2.778vh;
+}
+
+#component_Register_cardInfo_mask .btn_box div{
+    background: #AA9D84;
+    border-radius: 8px; 
+    width: 27.6%;
+    height: 100%;
+    line-height: normal;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+#component_Register_cardInfo_mask .btn_box div:nth-child(2){
+    margin-left: 20px;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    background: #fff;
     color: #AA9D84;
 }
 
-#component_VisitorInfo .titleBox .title {
-    font-size: 32px;
-    line-height: 45px;
-    color: #323232;
+
+#component_Register_cardInfo_mask .btn_box div span{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
-.component_VisitorInfo_board {
-    width: 460px;
+
+#component_Register_cardInfo_board .headerBox{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #185EDB;
+    border-radius: 4px;
     margin: auto;
-    height: 95%;
+    margin-top: 34px
+}
+
+#component_Register_cardInfo_board .cardForm {
+    margin-top: 38px;
+}
+
+#component_Register_cardInfo_board .cardForm .cardForm_item {
+    width: 100%;
+    height: 54px;
+    line-height: 54px;
     overflow: hidden;
-    margin-top: 3%
+    width: 70%;
+    margin: auto;
 }
 
-.component_VisitorInfo_board ul {
-    overflow: auto;
-    height: 100%;
-    width: 100%;
-    padding-right: 17px;
-}
-
-.component_VisitorInfo_board ul li {
-    width: 100%;
-    margin-bottom: 2.3%;
-}
-
-.component_VisitorInfo_board ul li input {
-    width: 100%;
-    background: #E7EDF2;
-    border: 1px solid #DCDEE0;
-    border-radius: 8px;
-    height:56px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #323232;
-    letter-spacing: 0;
-    padding-left: 16px;
-    outline: none;
-}
-
-.component_VisitorInfo_board ul li select {
-    width: 100%;
-    background: #E7EDF2;
-    border: 1px solid #DCDEE0;
-    border-radius: 8px;
-    height:56px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #323232;
-    letter-spacing: 0;
-    padding-left: 16px;
-    outline: none;
-}
-
-.component_VisitorInfo_board ul li .action {
-    background: #FFFFFF;
-    border: 1px solid #121212;
-    box-shadow: 0 0 0 0 rgba(0,0,0,0.15);
-    border-radius: 8px;
-}
-
-.component_VisitorInfo_Item p {
-    font-size: 18px;
+#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_key {
+    text-align: left;
+    display: block;
+    float: left;
+    width: 28%;
+    font-size: 16px;
     color: #323233;
-    letter-spacing: 0;
-    line-height: 25px;
-    margin-bottom: 2.3%;
 }
 
+#component_Register_cardInfo_board .cardForm .cardForm_item input {
+    width: 51%;
+    border: 1px solid #AA9D84;
+    border-radius: 4px;
+    height: 30px;
+    text-indent: 15px;
+    font-size: 16px;
+    float: left;
+    margin-top: 12px;
+}
 
+@media screen and (max-width: 1280px) {
+    #component_Register_cardInfo_board .cardForm .cardForm_item input {
+        font-size: 12px;
+    }
+}
 
-#component_VisitorInfo_loginBTN {
+.cardForm_item_address {
+    font-size: 14px;
+    color: #AA9D84;
+    letter-spacing: 0;  
+    float: left;
+}
+
+#component_Register_cardInfo_board .cardForm .cardForm_item .btn {
+    width: 15%;
+    height: 100%;
+    float: left;
+    margin-left: 5%;
+    text-align: center;
+    background: #AA9D84;
+    border-radius: 4px;
+    color:#fff;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card {
+    width: 60%;
+    float: left;
+}
+#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card img {
+    width: 100%;
+}
+
+#component_Register_loginBTN {
     position: fixed;
     width: 274px;
     height: 5%;
@@ -105,7 +348,7 @@
     font-size: 18px;
 }
 
-#component_VisitorInfo_loginBTN span {
+#component_Register_loginBTN span {
     position: absolute;
     left: 0;
     top: 50%;
@@ -114,34 +357,242 @@
 }
 
 @media screen and (max-width: 1280px) {
-    #component_VisitorInfo_loginBTN {
+    #component_Register_loginBTN {
         width: 180px;
         height: 5%;
         right: 5%;
     }
 }
-@media screen and (max-height: 619px) {
-    #component_VisitorInfo_loginBTN {
-        bottom: 0.4%;
-        height: 4%;
-    }
+
+
+
+.answerState {
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 50px;
+    margin-left: 30px;
 }
 
-.itemBoard .list {
-    background-color: #fff;
-    margin: auto;
-    border: #323232;
-    text-align: center;
-    border: 1px solid #121212;
-    box-sizing: border-box;
-    border-radius: 8px;
-    padding: 0
+.answerState.err{
+    color: #FF4444;
 }
-.itemBoard .list li {
-    border-bottom: 1px solid #121212;
-    height:30px;
-    line-height:30px;
-    margin-bottom: 0;
-    font-size: 18px;
+.answerState.success{
+    color: #44FF44;
+}
+.answerState.exemption{
+    color: #00BBBB;
+}
+
+.appintmentState {
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: center;
+    display: inline-block;
+    line-height: 28px;
+    height: 28px;
+    width: 130px;
+    border-radius: 10px;
+    text-indent: 0;
+    margin-left: 60px;
+}
+
+.appintmentState.err{
+    background: #F8C6C6;
+    color: #F56C6C;
+}
+.appintmentState.authorize{
+    background: #FADF91;
+    color: #FF7B00;
+}
+.appintmentState.signIn{
+    background: #C3F1EB;
+    color: #00BA9A;
+}
+.appintmentState.finish{
+    background: #C2DAF9;
+    color: #AA9D84;
+}
+
+.vtypeBox {
+    overflow: auto;
+}
+
+.vtypeBox .component_Register_appInfo_vtypeItemBox {
+    float: left;
+    padding: 7px 0;
+}
+
+.vtypeBox .component_Register_appInfo_vtypeItemBox li {
+    padding: 0 23px;
+    line-height: 34px;
+    background: #E7EDF2;
+    border-radius: 6px;
+    border: 1px solid #E7EDF2;
+    float: left;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #323233;
     cursor: pointer;
+}
+
+.vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
+    background: #fff;
+    border: 1px solid #AA9D84;
+}
+
+
+.component_Register_mainBoard ol,ul,dl{
+    margin:0;
+}
+
+.component_Register_Item ul {
+    padding-top: 7px;
+    text-align: left;
+}
+
+.component_Register_Item ul .memberItem {
+    margin-bottom: 18px;
+}
+
+.component_Register_Item ul .memberItem input {
+    border: 1px solid #AA9D84;
+    color: #323233;
+    height: 34px;
+    border-radius: 6px;
+    text-align: center;
+    width: 33%;
+    line-height: normal;
+}
+.component_Register_Item ul .memberItem input:nth-child(even) {
+    margin-left: 10px;
+}
+
+.component_Register_Item #addMember {
+    margin-bottom: 7px;
+    text-align: center;
+    line-height: 34px;
+    background: #AA9D84;
+    border-radius: 8px;
+    text-align: center;
+    color:#fff;
+    cursor: pointer;
+}
+
+.component_Register_memberBox {
+    
+}
+
+
+#component_Register_Toast {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+}
+
+#component_Register_tempCardBox,#component_Register_ToastBox {
+    width: 28.125vw;
+    height: 24vh;
+    background-color: #fff;
+    border-radius: 39px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+
+#component_Register_tempCardBox .title {
+    text-align: center;
+    font-size: 2.222vh;
+    color: #323233;
+    font-weight: bold;
+    margin-top: 4.16vh;
+    margin-bottom: 1.57vh;
+}
+
+#component_Register_tempCardBox .inputBox {
+    width: 100%;
+    margin: auto;
+    font-size: 2.1vh;
+    line-height: normal;
+    text-align: center
+}
+
+#component_Register_tempCardBox .inputBox input {
+    width: 14vw;
+    height: 3.7vh;
+    background: #FFFFFF;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    text-indent: 5%;
+    line-height: 3.7vh;
+}
+
+#component_Register_tempCardBox .btnGroup {
+    margin: auto;
+    overflow: hidden;
+    width: 13.4vw;
+    margin-top: 4vh
+}
+
+#component_Register_tempCardBox .btnGroup li {
+    height: 3.7vh;
+    float: left;
+    width: 5.4vw;
+    line-height: 3.7vh;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    font-size: 2vh;
+    cursor: pointer;
+    color:  #AA9D84;
+}
+
+#component_Register_tempCardBox .btnGroup li:last-child {
+    float: right;
+    background: #AA9D84;
+    color: #fff;
+}
+
+#component_Register_ToastBox .inputBox {
+    width: 100%;
+    margin: auto;
+    font-size: 2.1vh;
+    line-height: normal;
+    text-align: center
+}
+#component_Register_ToastBox .btnGroup {
+    margin: auto;
+    overflow: hidden;
+    width: 13.4vw;
+    margin-top: 4vh;
+    text-align: center
+}
+
+#component_Register_ToastBox .btnGroup li {
+    height: 3.7vh;
+    width: 5.4vw;
+    line-height: 3.7vh;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    font-size: 2vh;
+    cursor: pointer;
+    color:  #fff;
+    margin: auto;
+    background-color: #AA9D84;
+}
+
+#component_Register_tempCardBox_icon {
+    width: 51px;
+    height: 51px;
+    margin: auto;
+    margin-top: 4.16vh;
+    margin-bottom: 1.57vh;
+    background-color: #AA9D84;
 }

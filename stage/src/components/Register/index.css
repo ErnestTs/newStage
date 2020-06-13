@@ -492,7 +492,7 @@
     left: 0;
 }
 
-#component_Register_tempCardBox {
+#component_Register_tempCardBox,#component_Register_ToastBox {
     width: 28.125vw;
     height: 24vh;
     background-color: #fff;
@@ -556,4 +556,43 @@
     float: right;
     background: #AA9D84;
     color: #fff;
+}
+
+#component_Register_ToastBox .inputBox {
+    width: 100%;
+    margin: auto;
+    font-size: 2.1vh;
+    line-height: normal;
+    text-align: center
+}
+#component_Register_ToastBox .btnGroup {
+    margin: auto;
+    overflow: hidden;
+    width: 13.4vw;
+    margin-top: 4vh;
+    text-align: center
+}
+
+#component_Register_ToastBox .btnGroup li {
+    height: 3.7vh;
+    width: 5.4vw;
+    line-height: 3.7vh;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    font-size: 2vh;
+    cursor: pointer;
+    color:  #fff;
+    margin: auto;
+    background-color: #AA9D84;
+}
+
+#component_Register_tempCardBox_icon {
+    width: 51px;
+    height: 51px;
+    margin: auto;
+    margin-top: 4.16vh;
+    margin-bottom: 1.57vh;
+    background-color: #AA9D84;
 }

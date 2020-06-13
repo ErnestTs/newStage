@@ -61,7 +61,8 @@ export default class Register extends Component {
             photoURL:"",
             faceState:false,
             tempCard:"",
-            openToast:0, // 1-发卡
+            openToast:0, // 1-发卡 2-其他提示
+            toastContent:"",
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -128,6 +129,7 @@ export default class Register extends Component {
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
                                             value={this.state.empCompanyFloor||""}
+                                            readOnly
                                         />
                                     </span>
                                 </div>
@@ -276,12 +278,12 @@ export default class Register extends Component {
                             <div id="component_Register_cardInfo_mask_photoBox">
                                 <div id="Register_facePhoto" style={{ display: this.state.photoSwitch ? 'block' : 'none' }}>
                                     <div id="cameraPanel">
-                                        <img src={this.state.photoURL}  style={{ opacity: !!this.state.photoURL ? '1' : '0' }} alt="" id="Register_camera_img" />
+                                        <img alt="" id="Register_camera_img" />
                                     </div>
                                 </div>
                                 <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
                             </div>
-                            <p>{this.state.tempCard||"请告知访客采集人脸注意事项并询问是否同意采集人脸"}</p>
+                            <p>{!this.state.tempCard?"请告知访客采集人脸注意事项并询问是否同意采集人脸":"已发卡号："+this.state.tempCard}</p>
                             <div className="btn_box">
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
@@ -332,14 +334,25 @@ export default class Register extends Component {
                         <p className="title">发卡</p>
                         <div className="inputBox">
                             <span>申请卡号：</span>
-                            <input type="text" value={this.state.tempCard} />
+                            <input type="text" value={this.state.tempCard} onChange={(e)=>{this.setState({tempCard:e.target.value})}} />
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.closeTempCardBox.bind(this)}>
+                                取消
+                            </li>
+                            <li onClick={this.setToast.bind(this,0)}>
+                                确定
+                            </li>
+                        </ul>
+                    </div>
+                    <div style={{display:this.state.openToast == 2?"block":"none"}} id="component_Register_ToastBox">
+                        <p id="component_Register_tempCardBox_icon"></p>
+                        <div className="inputBox">
+                            {this.state.toastContent}
                         </div>
                         <ul className="btnGroup">
                             <li onClick={this.setToast.bind(this,0)}>
-                                取消
-                            </li>
-                            <li>
-                                确定
+                                知道了
                             </li>
                         </ul>
                     </div>
@@ -740,13 +753,13 @@ export default class Register extends Component {
             })
             return
         }
-        if(!this.state.faceState){
-            Toast.open({
-                type:"danger",
-                content: "未检测到人脸,请拍照。"
-            })
-            return
-        }
+        // if(!this.state.faceState){
+        //     Toast.open({
+        //         type:"danger",
+        //         content: "未检测到人脸,请拍照。"
+        //     })
+        //     return
+        // }
         for(let i = 0;i<this.state.extendColList.length;i++){
             let item = this.state.extendColList[i];
             switch(item.fieldName){
@@ -820,15 +833,11 @@ export default class Register extends Component {
         if(this.state.guardin){
             extendColGroup.push("guardin=" + sessionStorage.opname);
         }
-
-
         let card = {
-            cardId: this.state.cardInfo.cardId,
-            name: this.state.cardInfo.name,
-            address: this.state.cardInfo.address,
-            issue:"",
-            indate:"",
-            image:""
+            cardId:this.state.cardId||"",
+            name:this.state.vname||"",
+            sex:this.state.sex||"",
+            image:this.state.photoURL||""
         };
 
         let sendData = {
@@ -845,17 +854,10 @@ export default class Register extends Component {
             gid:sessionStorage.gid,
             tid:this.state.tid,
             vType:this.state.vType,
-            card: null
+            card: null,
+            cardNo:this.state.tempCard,
+            card:card
         };
-        // cardInfo:{
-        //     name:"方超",
-        //     cardId:"370202199211043333",
-        //     address:"山东省青岛市市南区江苏路七号9户"
-        // },
-
-        if(!this.state.showCardMask){
-            sendData.card = card
-        }
 
         if(!!this.state.plateNum) {
             sendData.plateNum = this.state.plateNum
@@ -867,6 +869,10 @@ export default class Register extends Component {
 
         if(!!this.state.vcompany) {
             sendData.vcompany = this.state.vcompany
+        }
+
+        if(!!this.state.photoURL) {
+            sendData.photoUrl = this.state.photoURL
         }
 
         // if(!($("#peopleCount").length && $("#peopleCount").val())){
@@ -893,7 +899,8 @@ export default class Register extends Component {
         }else {
             sendData.peopleCount = this.state.peopleCount
         }
-			
+            
+        
         /**设置为提交状态 */
         this.state.inSubmit = true
         Common.ajaxProc("UpdatePhoto", sendData, sessionStorage.token).done(function (data) {
@@ -903,17 +910,21 @@ export default class Register extends Component {
                     type:"success",
                     content: "现场登记成功！!"
                 })
-                sessionStorage.memberList = JSON.stringify(data.result.glist)
-                let tempArr = data.result.glist;
-                tempArr.unshift({vid:data.result.vid})
+                // sessionStorage.memberList = JSON.stringify(data.result.glist)
+                // let tempArr = data.result.glist;
+                // tempArr.unshift({vid:data.result.vid})
                 
-                setTimeout(() => {
-                    this.props.history.replace({pathname:"print",state:{printList:tempArr}})
-                }, 2000);
+                // setTimeout(() => {
+                //     this.props.history.replace({pathname:"print",state:{printList:tempArr}})
+                // }, 2000);
             }else if(data.status === 66){
-                Toast.open({
-                    type:"danger",
-                    content: "该访客已在黑名单中!"
+                // Toast.open({
+                //     type:"danger",
+                //     content: "该访客已在黑名单中!"
+                // })
+                this.setState({
+                    toastContent:"该访客为黑名单人员，不可预约/登记",
+                    openToast:2
                 })
             }
             this.setState({
@@ -963,16 +974,15 @@ export default class Register extends Component {
              * 使用canvas裁剪图片为300x300
              */
             let canvas = document.createElement('canvas'),
-                img = document.getElementById('Register_camera_img'),
                 ctx = canvas.getContext('2d');
     
             canvas.width = 300;
             canvas.height = 300;
     
-            ctx.drawImage(img, -50, 0, img.width - 50, img.height);
+            ctx.drawImage(capture, -50, 0, capture.offsetWidth - 50, capture.offsetHeight);
             // ctx.drawImage(img, -100, 0, img.width, img.height);
     
-            baseCode = canvas.toDataURL();
+            // baseCode = canvas.toDataURL();
     
             /**
              * 	将base64转换成二进制流
@@ -984,11 +994,12 @@ export default class Register extends Component {
                 this.uploadBlob = undefined;
             }
             let formData = new FormData();
-    
+            formData.enctype = "multipart/form-data";
+            formData.append('action', 'upload');
             formData.append('filename', this.uploadBlob, 'avatar.png');
-            
             Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
                 if (data.status === 0) {
+                    this.state.photoURL = data.result.url
                     this.setState({
                         photoURL:data.result.url
                     })
@@ -1039,5 +1050,15 @@ export default class Register extends Component {
         this.setState({
             openToast:type
         })
+    }
+
+    /**
+     * @description [关闭临时卡弹窗]
+     */
+    closeTempCardBox(){
+        this.setState({
+            tempCard:""
+        })
+        this.setToast(0)
     }
 }
