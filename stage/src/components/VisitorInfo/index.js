@@ -66,8 +66,10 @@ export default class VisitorInfo extends Component {
             openToast:0, // 1-发卡 2-其他提示
             toastContent:"",
 
+            vaPerm:3,
+
             remark:"",
-			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
+			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark","appointmentDate"],			// 已注册表单单元
 			// regElementArr: ["name", "empid", "phone",  "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
         }
     }
@@ -77,6 +79,7 @@ export default class VisitorInfo extends Component {
             <div id="component_Register">
                 <div className="topBar">
                     <div className="fll">来访信息
+                    {this.renderItemState({type:2,value:this.state.vaPerm})}
                     </div>
                     <div className="fll">身份信息</div>
                 </div>
@@ -90,7 +93,7 @@ export default class VisitorInfo extends Component {
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text" 
-                                            value={this.state.empCompany||""}
+                                            value={this.state.empCompany.split("#")[0]||""}
                                             onChange={this.setCompanyInfo.bind(this)} 
                                             onFocus={(e)=>{
                                                 if(!!this.state.empCompany){
@@ -115,9 +118,9 @@ export default class VisitorInfo extends Component {
                                             <li 
                                                 value={item.id||""} 
                                                 key={i+"li"}
-                                                onClick={this.selectCompany.bind(this,item.companyName,item.id,item.floor)}
+                                                onClick={this.selectCompany.bind(this,item)}
                                             >
-                                                {item.companyName}
+                                                {item.companyName.split("#")[0]}
                                             </li>
                                         )
                                     })}
@@ -126,7 +129,7 @@ export default class VisitorInfo extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.nameRequired?<span className="required">*</span>:""}公司楼层:
+                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
@@ -602,8 +605,14 @@ export default class VisitorInfo extends Component {
     /**
      * @description [点击选择公司]
      */
-    selectCompany(value,id,floor){
+    selectCompany(item){
         let _this = this
+        let value = item.companyName;
+        let id = item.id;
+        let floor = item.floor
+        this.setState({
+            vaPerm:(item.vaPerm&4)==4?0:1
+        });
 		Common.ajaxProc('getSubAccountEmpList', { userid: sessionStorage.userid, subaccountId: id }, sessionStorage.token).done(function (data) {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
                 let tempArr = [];
@@ -615,7 +624,7 @@ export default class VisitorInfo extends Component {
 				_this.setState({
                     empName:"",
 					empNamePool: data.result,
-					empNameList: tempArr,
+                    empNameList: tempArr,
 				});
 			}
         })
@@ -1077,5 +1086,68 @@ export default class VisitorInfo extends Component {
             return
         }
         this.setToast(0)
+    }
+
+    /**
+     * @description [渲染节点中的特殊状态]
+     * @param {Object} state 
+     * @param {Number} state.type [答题-0,签到状态-1,是否授权-2]
+     * @param {Number} state.value [该状态的状态值]
+     */
+    renderItemState(state){
+        // state.type -0 答题
+        let cls = ""
+        let str = ""
+        switch(state.type){
+            case 0:
+                cls = "answerState"
+                if(state.value == 0){
+                    str = "未培训"
+                    cls += " err"
+                }else if(state.value == 1) {
+                    str = "已培训"
+                    cls += " success"
+                }else if(state.value == 2) {
+                    str = "免培训"
+                    cls += " exemption"
+                }
+                break;
+            // state.type -1 状态
+            case 1:
+                cls = "appintmentState"
+                if(state.value == 0){
+                    str = "待审批"
+                    cls += " err"
+                }else if(state.value == 1) {
+                    str = "已授权"
+                    cls += " authorize"
+                }else if(state.value == 2) {
+                    str = "已签到"
+                    cls += " signIn"
+                }else if(state.value == 3) {
+                    str = "已签出"
+                    cls += " signout"
+                }else if(state.value == 4){
+                    str = "已结束"
+                    cls += " finish"
+                }
+                break;
+            
+            case 2:
+                cls = "appintmentState"
+                if(state.value == 0){
+                    str = "未授权"
+                    cls += " err"
+                }else if(state.value == 1) {
+                    str = "已授权"
+                    cls += " authorize"
+                }
+                break;
+            default:
+                break;
+        }
+        return (
+            <span className={cls}>{str}</span>
+        )
     }
 }

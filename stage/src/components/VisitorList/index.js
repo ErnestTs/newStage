@@ -71,7 +71,8 @@ export default class VisitorList extends Component{
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
+                                    // style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
+                                    style={{display:"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
                                         tempArr[data.key].checked = !tempArr[data.key].checked;
@@ -173,7 +174,8 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul 
                             className="component_VisitorList_btnGroup_actions"
-                            style={{display:this.state.vState==2&&this.state.vType==0?"block":"none"}}
+                            // style={{display:this.state.vState==2&&this.state.vType==0?"block":"none"}}
+                            style={{display:"none"}}
                         >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
                                 <span>批量签出</span>
@@ -547,6 +549,7 @@ export default class VisitorList extends Component{
      * @description [点击签到]
      */
     goLogin(data){
+        return
         if(data.visitType == "常驻访客"){
             return
         }

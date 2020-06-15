@@ -53,7 +53,7 @@
 
 #component_Companylist_searchContent #component_Companylist_inputBox {
     width: 25%;
-    height: 40px;
+    height: 100%;
     text-align: left;
     background: #F5F6FA;
     border: 1px solid #AA9D84;
@@ -68,7 +68,7 @@
     border: none;
     outline: none;
     background: #F5F6FA;
-    line-height: 40px;
+    line-height: 4vh;
     padding-left: 2.265vw;
     width: 100%;
     box-sizing: border-box;
@@ -79,7 +79,7 @@
 #component_Companylist_searchContent #component_Companylist_btn_refresh {
     float: right;
     width: 5.8%;
-    line-height: 40px;
+    line-height: 4vh;
     text-align: center;
     background: #AA9D84;
     border-radius: 8px;

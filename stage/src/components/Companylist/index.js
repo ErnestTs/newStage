@@ -20,6 +20,11 @@ export default class Companylist extends Component {
                   title: '公司',
                   dataIndex: 'companyName',
                   key: 'companyName',
+                  render(data){
+                      return(
+                        <span>{data.split("#")[0]}</span>
+                      )
+                  }
                 },
                 {
                   title: '房间号',
