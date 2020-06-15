@@ -13,8 +13,9 @@ import Toast from "../../components/ToastPublic/index.jsx"
 import scanCard from "../../resource/scanCard.png"
 import defaultPhoto from "../../resource/defaultPhoto.png"
 import defaultCard from "../../resource/idcardimg.jpeg"
+import toastIcon from "../../resource/toastIcon.png"
 
-export default class Register extends Component {
+export default class VisitorInfo extends Component {
     uploadBlob;
 
     constructor(props){
@@ -340,13 +341,15 @@ export default class Register extends Component {
                             <li onClick={this.closeTempCardBox.bind(this)}>
                                 取消
                             </li>
-                            <li onClick={this.setToast.bind(this,0)}>
+                            <li onClick={this.setTempCard.bind(this,0)}>
                                 确定
                             </li>
                         </ul>
                     </div>
                     <div style={{display:this.state.openToast == 2?"block":"none"}} id="component_Register_ToastBox">
-                        <p id="component_Register_tempCardBox_icon"></p>
+                        <p id="component_Register_tempCardBox_icon">
+                            <img src={toastIcon} style={{width:"100%"}} />
+                        </p>
                         <div className="inputBox">
                             {this.state.toastContent}
                         </div>
@@ -753,13 +756,13 @@ export default class Register extends Component {
             })
             return
         }
-        if(!this.state.faceState){
-            Toast.open({
-                type:"danger",
-                content: "未检测到人脸,请拍照。"
-            })
-            return
-        }
+        // if(!this.state.faceState){
+        //     Toast.open({
+        //         type:"danger",
+        //         content: "未检测到人脸,请拍照。"
+        //     })
+        //     return
+        // }
         for(let i = 0;i<this.state.extendColList.length;i++){
             let item = this.state.extendColList[i];
             switch(item.fieldName){
@@ -833,15 +836,11 @@ export default class Register extends Component {
         if(this.state.guardin){
             extendColGroup.push("guardin=" + sessionStorage.opname);
         }
-
-
         let card = {
-            cardId: this.state.cardInfo.cardId,
-            name: this.state.cardInfo.name,
-            address: this.state.cardInfo.address,
-            issue:"",
-            indate:"",
-            image:""
+            cardId:this.state.cardId||"",
+            name:this.state.vname||"",
+            sex:this.state.sex||"",
+            image:this.state.photoURL||""
         };
 
         let sendData = {
@@ -859,17 +858,9 @@ export default class Register extends Component {
             tid:this.state.tid,
             vType:this.state.vType,
             card: null,
-            cardNo:this.state.tempCard
+            cardNo:this.state.tempCard,
+            card:card
         };
-        // cardInfo:{
-        //     name:"方超",
-        //     cardId:"370202199211043333",
-        //     address:"山东省青岛市市南区江苏路七号9户"
-        // },
-
-        if(!this.state.showCardMask){
-            sendData.card = card
-        }
 
         if(!!this.state.plateNum) {
             sendData.plateNum = this.state.plateNum
@@ -883,8 +874,8 @@ export default class Register extends Component {
             sendData.vcompany = this.state.vcompany
         }
 
-        if(!!this.state.photoUrl) {
-            sendData.photoUrl = this.state.photoUrl
+        if(!!this.state.photoURL) {
+            sendData.photoUrl = this.state.photoURL
         }
 
         // if(!($("#peopleCount").length && $("#peopleCount").val())){
@@ -911,7 +902,7 @@ export default class Register extends Component {
         }else {
             sendData.peopleCount = this.state.peopleCount
         }
-			
+            
         /**设置为提交状态 */
         this.state.inSubmit = true
         Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done(function (data) {
@@ -1010,6 +1001,7 @@ export default class Register extends Component {
             formData.append('filename', this.uploadBlob, 'avatar.png');
             Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
                 if (data.status === 0) {
+                    this.state.photoURL = data.result.url
                     this.setState({
                         photoURL:data.result.url
                     })
@@ -1069,6 +1061,20 @@ export default class Register extends Component {
         this.setState({
             tempCard:""
         })
+        this.setToast(0)
+    }
+
+    /**
+     * @description [保存临时卡]
+     */
+    setTempCard(){
+        if(!this.state.tempCard){
+            Toast.open({
+                type:"danger",
+                content: "请填写卡号"
+            })
+            return
+        }
         this.setToast(0)
     }
 }

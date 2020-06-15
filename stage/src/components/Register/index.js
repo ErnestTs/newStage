@@ -13,6 +13,7 @@ import Toast from "../../components/ToastPublic/index.jsx"
 import scanCard from "../../resource/scanCard.png"
 import defaultPhoto from "../../resource/defaultPhoto.png"
 import defaultCard from "../../resource/idcardimg.jpeg"
+import toastIcon from "../../resource/toastIcon.png"
 
 export default class Register extends Component {
     uploadBlob;
@@ -340,13 +341,15 @@ export default class Register extends Component {
                             <li onClick={this.closeTempCardBox.bind(this)}>
                                 取消
                             </li>
-                            <li onClick={this.setToast.bind(this,0)}>
+                            <li onClick={this.setTempCard.bind(this,0)}>
                                 确定
                             </li>
                         </ul>
                     </div>
                     <div style={{display:this.state.openToast == 2?"block":"none"}} id="component_Register_ToastBox">
-                        <p id="component_Register_tempCardBox_icon"></p>
+                        <p id="component_Register_tempCardBox_icon">
+                            <img src={toastIcon} style={{width:"100%"}} />
+                        </p>
                         <div className="inputBox">
                             {this.state.toastContent}
                         </div>
@@ -1059,6 +1062,20 @@ export default class Register extends Component {
         this.setState({
             tempCard:""
         })
+        this.setToast(0)
+    }
+
+    /**
+     * @description [保存临时卡]
+     */
+    setTempCard(){
+        if(!this.state.tempCard){
+            Toast.open({
+                type:"danger",
+                content: "请填写卡号"
+            })
+            return
+        }
         this.setToast(0)
     }
 }

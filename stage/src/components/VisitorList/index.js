@@ -36,10 +36,15 @@ export default class VisitorList extends Component{
                     interface:"searchInviteByCondition",
                     stateList:["invite","checkIn","noArrived"]
                 },
+                // {
+                //     name:"常驻访客",
+                //     interface:"SearchRVisitorByCondition",
+                //     stateList:["total","leave","visiting"]
+                // },
                 {
-                    name:"常驻访客",
+                    name:"待发卡访客",
                     interface:"SearchRVisitorByCondition",
-                    stateList:["total","leave","visiting"]
+                    stateList:["pad","wechat","invitation","stage"]
                 }
             ],
             vStateList:[
@@ -50,6 +55,10 @@ export default class VisitorList extends Component{
                 {name:"邀请总数",count:0,key:"invite"},
                 {name:"签到人数",count:0,key:"checkIn"},
                 {name:"未到人数",count:0,key:"noArrived"},
+                {name:"pad",count:0,key:"pad"},
+                {name:"小程序",count:0,key:"wechat"},
+                {name:"邀请函",count:0,key:"invitation"},
+                {name:"前台",count:0,key:"stage"},
             ],
             vState:0,
             columns:[
@@ -74,7 +83,7 @@ export default class VisitorList extends Component{
                                 <div className="defaultImg">
                                     <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
                                     <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
-                                    <img
+                                    {/* <img
                                         className="printIcon"
                                         src={printImg}
                                         style={{display:data.state == 1&&data.visitType !== "常驻访客"?"inline-block":"none"}}
@@ -83,7 +92,7 @@ export default class VisitorList extends Component{
                                                 this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+data.vid}]}})
                                             }
                                         }
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         )
@@ -153,9 +162,9 @@ export default class VisitorList extends Component{
                     <div className="component_VisitorList_topBar1">
                         <ul className="component_VisitorList_btnGroup_vtype">
                             {
-                                this.state.vTypelist.map((item,i)=>{
+                                this.state.vTypelist.map((item,i,arr)=>{
                                     return (
-                                        <li className={this.state.vType == i?"action":""} key={i+"vtype"} onClick={this.changeVtype.bind(this,i)}>
+                                        <li style={{width:100/arr.length+"%"}} className={this.state.vType == i?"action":""} key={i+"vtype"} onClick={this.changeVtype.bind(this,i)}>
                                             <span>{item.name}</span>
                                         </li>
                                     )
@@ -184,8 +193,9 @@ export default class VisitorList extends Component{
                                     if(this.state.vTypelist[this.state.vType].stateList.indexOf(item.key) == -1){
                                         return
                                     }else{
+                                        let length = this.state.vTypelist[this.state.vType].stateList.length
                                         return (
-                                            <li key={i+"vstate"} className={this.state.vState == i?"action":""} onClick={this.changeState.bind(this,i)}>
+                                            <li style={{width:100/length+"%"}} key={i+"vstate"} className={this.state.vState == i?"action":""} onClick={this.changeState.bind(this,i)}>
                                                 {item.name}({item.count})
                                             </li>
                                         )
@@ -230,9 +240,13 @@ export default class VisitorList extends Component{
     componentDidMount(){
 
         // 设定表格高度
-        let coefficient = document.body.clientHeight>1000?0.50:0.3
+        let coefficient = document.body.clientHeight>1000?0.70:0.58
+        // this.setState({
+        //     tableHeight:document.body.clientHeight*coefficient
+        // })
+        // 设定表格高度
         this.setState({
-            tableHeight:document.body.clientHeight*coefficient
+            tableHeight:document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
         })
 
         // 初始化
@@ -362,7 +376,11 @@ export default class VisitorList extends Component{
                             {name:"预约总数",count:0,key:"appointment"},
                             {name:"邀请总数",count:0,key:"invite"},
                             {name:"签到人数",count:0,key:"checkIn"},
-                            {name:"未到人数",count:0,key:"noArrived"}
+                            {name:"未到人数",count:0,key:"noArrived"},
+                            {name:"pad",count:0,key:"pad"},
+                            {name:"小程序",count:0,key:"wechat"},
+                            {name:"邀请函",count:0,key:"invitation"},
+                            {name:"前台",count:0,key:"stage"},
                         ]
                     })
                     return
