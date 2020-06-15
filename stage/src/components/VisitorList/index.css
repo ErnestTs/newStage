@@ -92,6 +92,12 @@
     color: #AA9D84;
 }
 
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions .component_VisitorList_setTempCard{
+    color: #FFFFFF;
+    border: 1px solid #AA9D84;
+    background: #AA9D84;
+}
+
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_actions li {
     display: inline-block;
     width: 120px;
@@ -233,12 +239,12 @@
 }
 
 #component_VisitorList_tableBoard .ant-table-thead {
-    background: #E7EDF2;
+    background: #EBEBEB;
     border-radius: 12px;
 }
 
 #component_VisitorList_tableBoard .ant-table-container table > thead > tr:first-child th {
-    background: #E7EDF2;
+    background: #EBEBEB;
 }
 
 #component_VisitorList_tableBoard .ant-table-container table > thead > tr:first-child th:first-child {

@@ -45,14 +45,14 @@
 }
 
 .blur {
-    background: #E7EDF2;
+    background: #EBEBEB;
     border: 1px solid #DCDEE0;
 }
 .blur .Input_title {
     display: none;
 }
 .blur input {
-    background: #E7EDF2;
+    background: #EBEBEB;
 }
 
 .error .Input_title {

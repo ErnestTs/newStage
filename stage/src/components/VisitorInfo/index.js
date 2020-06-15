@@ -13,6 +13,7 @@ import Toast from "../../components/ToastPublic/index.jsx"
 import scanCard from "../../resource/scanCard.png"
 import defaultPhoto from "../../resource/defaultPhoto.png"
 import defaultCard from "../../resource/idcardimg.jpeg"
+import scanFace from "../../resource/scanFace.png"
 import toastIcon from "../../resource/toastIcon.png"
 
 export default class VisitorInfo extends Component {
@@ -282,7 +283,7 @@ export default class VisitorInfo extends Component {
                                         <img alt="" id="Register_camera_img" />
                                     </div>
                                 </div>
-                                <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanCard} />
+                                <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanFace} />
                             </div>
                             <p>{!this.state.tempCard?"请告知访客采集人脸注意事项并询问是否同意采集人脸":"已发卡号："+this.state.tempCard}</p>
                             <div className="btn_box">
@@ -503,10 +504,10 @@ export default class VisitorInfo extends Component {
             let tempArr = [];
             let tempExtendColList = [];
 			for(let i = 0; i < res.result.length; i++) {
-                if((res.result[i].isDisplay&8) != 8){
+                if((res.result[i].isDisplay&2) != 2){
                     continue;
                 }else{
-                    if((res.result[i].required&8) == 8 && this.state.regElementArr.indexOf(res.result[i].fieldName)!== -1){
+                    if((res.result[i].required&2) == 2 && this.state.regElementArr.indexOf(res.result[i].fieldName)!== -1){
                         this.state[res.result[i].fieldName+"Required"] = true
                     }
                     tempExtendColList.push(res.result[i])

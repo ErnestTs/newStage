@@ -14,12 +14,12 @@
 }
 
 .component_Companylist_tableBoard .ant-table-thead {
-    background: #E7EDF2;
+    background: #EBEBEB;
     border-radius: 12px;
 }
 
 .component_Companylist_tableBoard .ant-table-container table > thead > tr:first-child th {
-    background: #E7EDF2;
+    background: #EBEBEB;
     color: #202224 !important;
 }
 
@@ -48,7 +48,7 @@
     margin-bottom: 4.25vh;
     width: 100%;
     overflow: hidden;
-    height: 56px;
+    height: 4vh;
 }
 
 #component_Companylist_searchContent #component_Companylist_inputBox {
@@ -62,7 +62,6 @@
     overflow: hidden;
     vertical-align: middle;
     float: right;
-    margin-top: 8px
 }
 
 #component_Companylist_searchContent #component_Companylist_inputBox input{
@@ -88,7 +87,6 @@
     color: #FFFFFF;
     cursor: pointer;
     margin-left: 20px;
-    margin-top: 8px
 }
 
 .component_Companylist_tableBox{
@@ -168,7 +166,7 @@
     width: 36.3%;
     height: 100%;
     box-sizing: border-box;
-    line-height: 56px;
+    line-height: 4vh;
     overflow: hidden
 }
 
@@ -180,6 +178,7 @@
     font-size: 16px;
     border-left: 1px solid #DCDEE0;
     cursor: pointer;
+    background-color: #fff;
 }
 #component_Companylist #component_Companylist_stateList li:nth-child(1){
     border-left: 0;

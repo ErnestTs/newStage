@@ -27,12 +27,12 @@
 }
 
 .component_Logistics_tableBoard .ant-table-thead {
-    background: #E7EDF2;
+    background: #EBEBEB;
     border-radius: 12px;
 }
 
 .component_Logistics_tableBoard .ant-table-container table > thead > tr:first-child th {
-    background: #E7EDF2;
+    background: #EBEBEB;
 }
 
 .component_Logistics_tableBoard .ant-table-container table > thead > tr:first-child th:first-child {

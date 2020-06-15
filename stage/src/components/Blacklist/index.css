@@ -14,12 +14,12 @@
 }
 
 .component_Blacklist_tableBoard .ant-table-thead {
-    background: #E7EDF2;
+    background: #EBEBEB;
     border-radius: 12px;
 }
 
 .component_Blacklist_tableBoard .ant-table-container table > thead > tr:first-child th {
-    background: #E7EDF2;
+    background: #EBEBEB;
     color: #202224 !important;
 }
 

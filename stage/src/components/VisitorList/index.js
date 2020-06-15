@@ -185,6 +185,14 @@ export default class VisitorList extends Component{
                                 <span>取消</span>
                             </li>
                         </ul>
+                        <ul 
+                            className="component_VisitorList_btnGroup_actions"
+                            style={{display:this.state.vType==3?"block":"none"}}
+                        >
+                            <li className="component_VisitorList_setTempCard">
+                                <span>发卡</span>
+                            </li>
+                        </ul>
                     </div>
                     <div className="component_VisitorList_topBar2">
                         <ul className="visitorState">

@@ -17,7 +17,7 @@
 #component_Register .topBar {
     width: 91.15%;
     height: 49px;
-    background: #E7EDF2;
+    background: #EBEBEB;
     border-radius: 8px;
     margin: auto;
     margin-top: 2.778vh;
@@ -154,10 +154,11 @@
     position: relative;
     overflow: hidden;
     transform: rotate(0deg);
+    background-color: #EBEBEB;
 }
 
 #component_Register_cardInfo_mask_photoBox>img {
-    width: 100%;
+    width: 45%;
     position: relative;
 }
 
@@ -252,6 +253,7 @@
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
+    font-size: 1.5vh
 }
 
 
@@ -425,19 +427,20 @@
 .vtypeBox .component_Register_appInfo_vtypeItemBox li {
     padding: 0 23px;
     line-height: 34px;
-    background: #E7EDF2;
+    background: #F4F4F4;
     border-radius: 6px;
-    border: 1px solid #E7EDF2;
+    border: 1px solid #F4F4F4;
     float: left;
     margin-right: 10px;
     font-size: 16px;
-    color: #323233;
+    color: #999;
     cursor: pointer;
 }
 
 .vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
-    background: #fff;
+    background: #AA9D84;
     border: 1px solid #AA9D84;
+    color: #fff
 }
 
 
