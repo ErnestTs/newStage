@@ -177,7 +177,8 @@
     border-radius: 19px;
     box-sizing: border-box;
     overflow: hidden;
-    vertical-align: middle
+    vertical-align: middle;
+    position: relative;
 }
 #component_VisitorList .component_VisitorList_btnGroup .searchCriteria .searchContent input {
     height: 100%;
@@ -187,6 +188,14 @@
     float: right;
     background: #F5F6FA;
     vertical-align: middle
+}
+
+#component_VisitorList .component_VisitorList_btnGroup .searchCriteria .searchContent img {
+    position: absolute;
+    height: 40%;
+    top: 55%;
+    left: 1vw;
+    transform: translateY(-50%)
 }
 
 #component_VisitorList .component_VisitorList_btnGroup .searchCriteria .DatePickerBox {

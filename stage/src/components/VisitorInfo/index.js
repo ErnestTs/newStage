@@ -771,13 +771,13 @@ export default class VisitorInfo extends Component {
             })
             return
         }
-        // if(!this.state.faceState){
-        //     Toast.open({
-        //         type:"danger",
-        //         content: "未检测到人脸,请拍照。"
-        //     })
-        //     return
-        // }
+        if(!this.state.faceState&&!this.state.tempCard){
+            Toast.open({
+                type:"danger",
+                content: "请记录人脸或发卡"
+            })
+            return
+        }
         for(let i = 0;i<this.state.extendColList.length;i++){
             let item = this.state.extendColList[i];
             switch(item.fieldName){
@@ -859,6 +859,7 @@ export default class VisitorInfo extends Component {
         };
 
         let sendData = {
+            userid:sessionStorage.userid,
             email: "",
             extendCol: extendColGroup,
             company: this.state.empCompany||"",
@@ -874,7 +875,9 @@ export default class VisitorInfo extends Component {
             vType:this.state.vType,
             card: null,
             cardNo:this.state.tempCard,
-            card:card
+            card:card,
+            appointmentDate: new Date().format("yyyy-MM-dd hh:mm:ss"),
+            empPhone:this.state.empPhone
         };
 
         if(!!this.state.plateNum) {
@@ -922,7 +925,6 @@ export default class VisitorInfo extends Component {
         this.state.inSubmit = true
         Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done(function (data) {
             if (data.status === 0) {
-                sessionStorage.vid = data.result.vid;
                 Toast.open({
                     type:"success",
                     content: "现场登记成功！!"

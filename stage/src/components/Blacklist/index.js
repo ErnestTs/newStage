@@ -10,6 +10,8 @@ import "./index.css"
 // Toast
 import Toast from "../../components/ToastPublic/index.jsx"
 
+import search_icon from "../../resource/search_icon.png"
+
 
 export default class Blacklist extends Component {
     constructor(props){
@@ -62,6 +64,7 @@ export default class Blacklist extends Component {
             <div id="component_Blacklist">
                 <div id="component_Blacklist_searchContent">
                     <div id="component_Blacklist_inputBox">
+                        <img src={search_icon} />
                         <input 
                             type="text" 
                             placeholder="请输入姓名/手机号/身份证搜索"

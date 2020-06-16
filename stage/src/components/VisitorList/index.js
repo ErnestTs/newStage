@@ -13,6 +13,7 @@ import Toast from "../../components/ToastPublic/index.jsx"
 
 import defaultImg from "../../resource/defaultPhoto_mini.png"
 import printImg from "../../resource/printImg.png"
+import search_icon from "../../resource/search_icon.png"
 
 export default class VisitorList extends Component{
     constructor(props){
@@ -215,6 +216,7 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul className="searchCriteria">
                             <li className="searchContent">
+                                <img src={search_icon} />
                                 <input 
                                     placeholder="请输入访客的姓名或者公司"
                                     onChange={this.queryRecord.bind(this)}

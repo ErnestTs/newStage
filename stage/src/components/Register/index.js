@@ -770,13 +770,13 @@ export default class Register extends Component {
             })
             return
         }
-        // if(!this.state.faceState){
-        //     Toast.open({
-        //         type:"danger",
-        //         content: "未检测到人脸,请拍照。"
-        //     })
-        //     return
-        // }
+        if(!this.state.faceState&&!this.state.tempCard){
+            Toast.open({
+                type:"danger",
+                content: "请记录人脸或发卡"
+            })
+            return
+        }
         for(let i = 0;i<this.state.extendColList.length;i++){
             let item = this.state.extendColList[i];
             switch(item.fieldName){

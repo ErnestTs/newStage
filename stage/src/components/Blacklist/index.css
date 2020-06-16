@@ -60,7 +60,8 @@
     box-sizing: border-box;
     overflow: hidden;
     vertical-align: middle;
-    float: right
+    float: right;
+    position: relative;
 }
 
 #component_Blacklist_searchContent #component_Blacklist_inputBox input{
@@ -73,6 +74,14 @@
     box-sizing: border-box;
     font-size: 14px;
     color: #A6A6A6;
+}
+
+#component_Blacklist_searchContent #component_Blacklist_inputBox img {
+    position: absolute;
+    height: 40%;
+    top: 55%;
+    left: 1vw;
+    transform: translateY(-50%)
 }
 
 .component_Blacklist_tableBox{

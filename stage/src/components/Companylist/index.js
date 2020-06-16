@@ -10,6 +10,8 @@ import "./index.css"
 // Toast
 import Toast from "../../components/ToastPublic/index.jsx"
 
+import search_icon from "../../resource/search_icon.png"
+
 
 export default class Companylist extends Component {
     constructor(props){
@@ -124,6 +126,7 @@ export default class Companylist extends Component {
 
                     <div id="component_Companylist_btn_refresh" onClick={this.refresh.bind(this,0)}>刷新</div>
                     <div id="component_Companylist_inputBox">
+                        <img src={search_icon} />
                         <input 
                             type="text" 
                             placeholder="请输入公司名称/房间号"
