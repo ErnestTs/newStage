@@ -213,14 +213,19 @@ export default class Companylist extends Component {
                             item.authorize = false
                         }
 
-                        let roomNumber = item.roomNumber.split("、")
+                        let roomNumber = item.roomNumber.split("、");
+                        let resRoomNumber = [];
                         for(let j = 0; j<roomNumber.length;j++){
                             let itemArr = roomNumber[j].split("|");
                             for(let k = 0;k<itemArr.length;k++){
                                 let tempItemArrStr = itemArr[k].split(",")
-                                itemArr[k] = !!tempItemArrStr[1]?tempItemArrStr[1]:tempItemArrStr[0]
+                                if(tempItemArrStr[0] == sessionStorage.gid){
+                                    resRoomNumber.push(tempItemArrStr[1])
+                                }else if(tempItemArrStr.length == 1){
+                                    resRoomNumber.push(tempItemArrStr[0])
+                                }
                             }
-                            roomNumber[j] = itemArr.join(",")
+                            roomNumber[j] = resRoomNumber.join(",")
                         }
                         item.roomNumber = roomNumber.join("、")
                         oList.push(item)

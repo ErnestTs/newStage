@@ -631,11 +631,16 @@ export default class Register extends Component {
         let floorList = floor.split("、")
         for(let j = 0; j<floorList.length;j++){
             let itemArr = floorList[j].split("|");
+            let resItemArr = []
             for(let k = 0;k<itemArr.length;k++){
                 let tempItemArrStr = itemArr[k].split(",")
-                itemArr[k] = !!tempItemArrStr[1]?tempItemArrStr[1]:tempItemArrStr[0]
+                if(tempItemArrStr[0] == sessionStorage.gid){
+                    resItemArr.push(tempItemArrStr[1])
+                }else if(tempItemArrStr.length == 1){
+                    resItemArr.push(tempItemArrStr[0])
+                }
             }
-            floorList[j] = itemArr.join(",")
+            floorList[j] = resItemArr.join(",")
         }
         floor = floorList.join("、")
         
