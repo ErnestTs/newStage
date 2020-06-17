@@ -586,5 +586,22 @@ export default class Common {
 		return JSON.parse(str);
 	}
 
+	/**
+	 * @description [校验通行策略]
+	 */
+	static checkPassConfig(){
+		let weekList = ["sun","mon","tues","wed","thur","fri","sat"]
+		let passConfigList = JSON.parse(sessionStorage.passConfigList)
+		let today = new Date()
+		let week=weekList[today.getDay()]
+		console.log(passConfigList)
+		for(let i = 0; i < passConfigList.length; i++){
+			let item = passConfigList[i];
+			if(item.cname == "send_card"){
+				console.log(item.pr[week].replace(/&quot;/g, '"'))
+			}
+		}
+	}
+
 }
 

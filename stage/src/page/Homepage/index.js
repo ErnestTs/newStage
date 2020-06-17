@@ -149,35 +149,9 @@ export default class Homepage extends Component {
                     let today = new Date()
 
                     if((item.conditions.gid == sessionStorage.gid) && (startDate<=today.getTime()&&today.getTime()<=endDate)){
-                        switch(today.getDay()){
-                            case 1:
-                                break;
-                        
-                            case 2:
-                                break;
-                        
-                            case 3:
-                                break;
-                        
-                            case 4:
-                                break;
-                        
-                            case 5:
-                                break;
-                        
-                            case 6:
-                                break;
-                        
-                            case 0:
-                                break;
-
-                            default:
-                                break;
-                        }
                         passConfigList.push(item)
                     }
                 }
-                console.log(passConfigList)
                 sessionStorage.setItem("passConfigList",JSON.stringify(passConfigList))
             }
         })

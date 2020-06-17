@@ -646,9 +646,9 @@ export default class VisitorInfo extends Component {
                     resItemArr.push(tempItemArrStr[0])
                 }
             }
-            floorList[j] = resItemArr.join(",")
+            floorList[j] = resItemArr.join("/")
         }
-        floor = floorList.join("、")
+        floor = floorList.join("/")
         
         this.setState({
             empCompany: value,
@@ -727,7 +727,7 @@ export default class VisitorInfo extends Component {
      * @param {Event} e 
      */
     setInfo(name,e){
-        if(name == "vphone"){
+        if(name == "vphone"&&!!e.target.value){
             let sendData = {
                 userid: sessionStorage.userid,
                 sids:this.state.empCompanyId,
@@ -885,7 +885,6 @@ export default class VisitorInfo extends Component {
             company: this.state.empCompany||"",
             name: this.state.vname||"",
             visitType: this.state.visitorType||"",
-            phone: this.state.vphone||"",
             empid: this.state.empId||"",
             remark: this.state.remark||"",
             signInGate: sessionStorage.gname,
@@ -902,6 +901,10 @@ export default class VisitorInfo extends Component {
 
         if(!!this.state.plateNum) {
             sendData.plateNum = this.state.plateNum
+        }
+
+        if(!!this.state.vphone) {
+            sendData.phone = this.state.vphone
         }
 
         if(!!this.state.meetAddress) {
@@ -959,7 +962,7 @@ export default class VisitorInfo extends Component {
                 if(!!this.state.tempCard){
                     Common.ajaxProc("updateVisitorCardNo",
                         {
-                            vid:data.result.vid,
+                            vid:data.result,
                             cardNo:this.state.tempCard,
                             cardOpName:sessionStorage.opname,
                         },sessionStorage.token).done((res)=>{
