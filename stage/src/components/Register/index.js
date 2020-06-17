@@ -338,7 +338,12 @@ export default class Register extends Component {
                         <p className="title">发卡</p>
                         <div className="inputBox">
                             <span>申请卡号：</span>
-                            <input type="text" value={this.state.tempCard} onChange={(e)=>{this.setState({tempCard:e.target.value})}} />
+                            <input 
+                                type="text" 
+                                value={this.state.tempCard} 
+                                onChange={(e)=>{this.setState({tempCard:e.target.value})}}
+                                ref={(input) => this.inputRef = input}
+                            />
                         </div>
                         <ul className="btnGroup">
                             <li onClick={this.closeTempCardBox.bind(this)}>
@@ -721,6 +726,21 @@ export default class Register extends Component {
      * @param {Event} e 
      */
     setInfo(name,e){
+        if(name == "vphone"){
+            let sendData = {
+                userid: sessionStorage.userid,
+                sids:this.state.empCompanyId,
+                phone:e.target.value
+            }
+            Common.ajaxProc("checkBlacklist",sendData,sessionStorage.token).done((res)=>{
+                if(!!res.result.length){
+                    this.setState({
+                        toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
+                        openToast:2
+                    })
+                }
+            })
+        }
         let tempObj = this.state
         tempObj[name] = e.target.value
         this.setState(tempObj)
@@ -871,9 +891,9 @@ export default class Register extends Component {
             gid:sessionStorage.gid,
             tid:this.state.tid,
             vType:this.state.vType,
-            card: null,
             cardNo:this.state.tempCard,
-            card:card
+            card:card,
+            clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
         };
 
         if(!!this.state.plateNum) {
@@ -925,22 +945,29 @@ export default class Register extends Component {
                 sessionStorage.vid = data.result.vid;
                 Toast.open({
                     type:"success",
-                    content: "现场登记成功！!"
+                    content: "现场登记成功！"
                 })
-                // sessionStorage.memberList = JSON.stringify(data.result.glist)
-                // let tempArr = data.result.glist;
-                // tempArr.unshift({vid:data.result.vid})
+                if(!!this.state.tempCard){
+                    Common.ajaxProc("updateVisitorCardNo",{vid:data.result.vid,cardNo:this.state.tempCard},sessionStorage.token).done((res)=>{
+                        if (data.status === 0) {
+                            Toast.open({
+                                type:"success",
+                                content: "发卡成功"
+                            })
+                        }
+                    })
+                }
                 
-                // setTimeout(() => {
-                //     this.props.history.replace({pathname:"print",state:{printList:tempArr}})
-                // }, 2000);
+                setTimeout(() => {
+                    window.changeItem(0,"公司列表","companylist")
+                }, 2000);
             }else if(data.status === 66){
                 // Toast.open({
                 //     type:"danger",
                 //     content: "该访客已在黑名单中!"
                 // })
                 this.setState({
-                    toastContent:"该访客为黑名单人员，不可预约/登记",
+                    toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
                     openToast:2
                 })
             }
@@ -1061,11 +1088,15 @@ export default class Register extends Component {
 
     /**
      * @description [更改弹窗状态]
-     * @param {Number} type 
+     * @param {Number} type  [1-发卡,2-其他提示]
      */
     setToast(type){
         this.setState({
             openToast:type
+        },()=>{
+            if(type == 1){
+                this.inputRef.focus();
+            }
         })
     }
 

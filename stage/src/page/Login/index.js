@@ -314,7 +314,7 @@ export default class Login extends Component {
 	 * @description [添加答题有效日期_tid默认为38-普通访客]
 	 */
 	getVisitorTypeByTid(){
-		Common.ajaxProcWithoutAsync("getVisitorTypeByTid", {"userid": sessionStorage.userid,tid: 38}, sessionStorage.token).done((data)=>{
+		Common.ajaxProc("getVisitorTypeByTid", {"userid": sessionStorage.userid,tid: 38}, sessionStorage.token).done((data)=>{
 			if(data.result != null){
 				sessionStorage.setItem("povDays", data.result.povDays)
 			}else {
@@ -344,7 +344,8 @@ export default class Login extends Component {
 				sessionStorage.setItem("VisitorAccess",resStr.join(","))
 			}else{
 				sessionStorage.setItem("EquipmentAccess",resStr.join(","))
-			}
+            }
+            this.getPassConfigList()
             this.props.history.push("/home")
 		})
     }
@@ -439,5 +440,19 @@ export default class Login extends Component {
                 });
 			}
 		}.bind(this));//此处需绑定this
-	}
+    }
+    
+
+    /**
+     * @description [获取通行策略]
+     */
+    getPassConfigList(){
+        let sendData = {
+            ctype:"3",    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
+            userid:sessionStorage.userid
+        }
+        Common.ajaxProc("getPassConfigList",sendData,sessionStorage.token).done((res)=>{
+            console.log(res)
+        })
+    }
 }
