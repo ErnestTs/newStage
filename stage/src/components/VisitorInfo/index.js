@@ -63,7 +63,7 @@ export default class VisitorInfo extends Component {
             photoURL:"",
             faceState:false,
             tempCard:"",
-            openToast:0, // 1-发卡 2-其他提示
+            openToast:0, // 1-发卡 2-其他提示 3-提示发卡
             toastContent:"",
 
             vaPerm:3,
@@ -293,7 +293,15 @@ export default class VisitorInfo extends Component {
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
                                 </div>
-                                <div onClick={this.setToast.bind(this,1)}>
+                                <div onClick={()=>{
+                                    if(!this.state.vaPerm){
+                                        this.setState({
+                                            toastContent:"该访客未授权，需等待员工授权后发卡",
+                                            openToast:2
+                                        })
+                                    }
+                                    this.setToast.bind(this,1)}
+                                }>
                                     <span>发卡</span>
                                 </div>
                             </div>
@@ -365,6 +373,19 @@ export default class VisitorInfo extends Component {
                         <ul className="btnGroup">
                             <li onClick={this.setToast.bind(this,0)}>
                                 知道了
+                            </li>
+                        </ul>
+                    </div>
+                    <div style={{display:this.state.openToast == 3?"block":"none"}} id="component_Register_ToastBox">
+                        <p id="component_Register_tempCardBox_icon">
+                            <img src={toastIcon} style={{width:"100%"}} />
+                        </p>
+                        <div className="inputBox">
+                            该时段需要梯控
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.setToast.bind(this,1)}>
+                                发卡
                             </li>
                         </ul>
                     </div>
@@ -465,6 +486,12 @@ export default class VisitorInfo extends Component {
     init(){
         // 获取默认访客类型
         this.getVisitorType();
+
+        let elevatorContro_time = Common.checkPassConfig()
+
+        this.setState({
+            elevatorContro_time:elevatorContro_time
+        })
 
         if(sessionStorage.sid != 0){
 			this.getEmpListByGid()
@@ -788,6 +815,13 @@ export default class VisitorInfo extends Component {
             Toast.open({
                 type:"danger",
                 content: "提交中，请勿重复点击。"
+            })
+            return
+        }
+        if(this.state.elevatorContro_time&&!this.state.tempCard){
+            this.setState({
+                toastContent:"",
+                openToast:3
             })
             return
         }

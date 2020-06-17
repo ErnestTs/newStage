@@ -63,8 +63,10 @@ export default class Register extends Component {
             photoURL:"",
             faceState:false,
             tempCard:"",
-            openToast:0, // 1-发卡 2-其他提示
+            openToast:0, // 1-发卡 2-其他提示 3-提示发卡
             toastContent:"",
+
+            elevatorContro_time:false,  // 梯控
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -367,6 +369,19 @@ export default class Register extends Component {
                             </li>
                         </ul>
                     </div>
+                    <div style={{display:this.state.openToast == 3?"block":"none"}} id="component_Register_ToastBox">
+                        <p id="component_Register_tempCardBox_icon">
+                            <img src={toastIcon} style={{width:"100%"}} />
+                        </p>
+                        <div className="inputBox">
+                            该时段需要梯控
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.setToast.bind(this,1)}>
+                                发卡
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         )
@@ -465,7 +480,11 @@ export default class Register extends Component {
         // 获取默认访客类型
         this.getVisitorType();
 
-        Common.checkPassConfig()
+        let elevatorContro_time = Common.checkPassConfig()
+
+        this.setState({
+            elevatorContro_time:elevatorContro_time
+        })
 
         if(sessionStorage.sid != 0){
 			this.getEmpListByGid()
@@ -789,6 +808,13 @@ export default class Register extends Component {
             Toast.open({
                 type:"danger",
                 content: "提交中，请勿重复点击。"
+            })
+            return
+        }
+        if(this.state.elevatorContro_time&&!this.state.tempCard){
+            this.setState({
+                toastContent:"",
+                openToast:3
             })
             return
         }

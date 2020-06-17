@@ -589,18 +589,27 @@ export default class Common {
 	/**
 	 * @description [校验通行策略]
 	 */
-	static checkPassConfig(){
+	static checkPassConfig(floor){
+		let resBoolean = false
 		let weekList = ["sun","mon","tues","wed","thur","fri","sat"]
 		let passConfigList = JSON.parse(sessionStorage.passConfigList)
 		let today = new Date()
 		let week=weekList[today.getDay()]
-		console.log(passConfigList)
 		for(let i = 0; i < passConfigList.length; i++){
 			let item = passConfigList[i];
 			if(item.cname == "send_card"){
-				console.log(item.pr[week].replace(/&quot;/g, '"'))
+				let ruleList = JSON.parse(item.pr[week].replace(/&quot;/g, '"'))
+				for(let j = 0; j < ruleList.length;j++){
+					let todayStr = new Date().format("yyyy/MM/dd")
+					let startTime = new Date(todayStr+" "+ruleList[j].startTime).getTime();
+					let endTime = new Date(todayStr+" "+ruleList[j].endTime).getTime();
+					if(startTime<=today.getTime()&&today.getTime()<=endTime){
+						resBoolean = true
+					}
+				}
 			}
 		}
+		return resBoolean
 	}
 
 }
