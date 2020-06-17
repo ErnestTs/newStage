@@ -893,6 +893,7 @@ export default class Register extends Component {
             vType:this.state.vType,
             cardNo:this.state.tempCard,
             card:card,
+            signOutOpName:sessionStorage.opname,
             clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
         };
 
@@ -948,7 +949,12 @@ export default class Register extends Component {
                     content: "现场登记成功！"
                 })
                 if(!!this.state.tempCard){
-                    Common.ajaxProc("updateVisitorCardNo",{vid:data.result.vid,cardNo:this.state.tempCard},sessionStorage.token).done((res)=>{
+                    Common.ajaxProc("updateVisitorCardNo",
+                        {
+                            vid:data.result.vid,
+                            cardNo:this.state.tempCard,
+                            cardOpName:sessionStorage.opname,
+                        },sessionStorage.token).done((res)=>{
                         if (data.status === 0) {
                             Toast.open({
                                 type:"success",

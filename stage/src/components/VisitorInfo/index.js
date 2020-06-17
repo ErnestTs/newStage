@@ -957,7 +957,12 @@ export default class VisitorInfo extends Component {
                     content: "现场预约成功"
                 })
                 if(!!this.state.tempCard){
-                    Common.ajaxProc("updateVisitorCardNo",{vid:data.result.vid,cardNo:this.state.tempCard},sessionStorage.token).done((res)=>{
+                    Common.ajaxProc("updateVisitorCardNo",
+                        {
+                            vid:data.result.vid,
+                            cardNo:this.state.tempCard,
+                            cardOpName:sessionStorage.opname,
+                        },sessionStorage.token).done((res)=>{
                         if (data.status === 0) {
                             Toast.open({
                                 type:"success",

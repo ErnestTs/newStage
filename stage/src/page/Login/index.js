@@ -345,7 +345,6 @@ export default class Login extends Component {
 			}else{
 				sessionStorage.setItem("EquipmentAccess",resStr.join(","))
             }
-            this.getPassConfigList()
             this.props.history.push("/home")
 		})
     }
@@ -442,17 +441,4 @@ export default class Login extends Component {
 		}.bind(this));//此处需绑定this
     }
     
-
-    /**
-     * @description [获取通行策略]
-     */
-    getPassConfigList(){
-        let sendData = {
-            ctype:"3",    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
-            userid:sessionStorage.userid
-        }
-        Common.ajaxProc("getPassConfigList",sendData,sessionStorage.token).done((res)=>{
-            console.log(res)
-        })
-    }
 }

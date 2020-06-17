@@ -102,6 +102,8 @@ export default class Homepage extends Component {
                 })
                 break;
         }
+
+        this.getPassConfigList()
     }
 
     /**
@@ -121,6 +123,63 @@ export default class Homepage extends Component {
     changeTitle(title){
         this.setState({
             title:title
+        })
+    }
+
+    /**
+     * @description [获取通行策略]
+     */
+    getPassConfigList(){
+        let sendData = {
+            ctype:"3",    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
+            userid:sessionStorage.userid
+        }
+        Common.ajaxProc("getPassConfigList",sendData,sessionStorage.token).done((res)=>{
+            if(res.status == 0){
+                let oList = res.result;
+                let passConfigList = [];
+                for(let i = 0;i < oList.length;i++){
+                    let item = oList[i];
+                    item.conditions = item.conditions.replace(/&quot;/g, '"')
+                    item.conditions = item.conditions.replace(/，/g, ',')
+                    item.conditions = JSON.parse(item.conditions)
+                    
+                    let startDate = new Date(item.pr.startDate).getTime();
+                    let endDate = new Date(item.pr.endDate).getTime();
+                    let today = new Date()
+
+                    if((item.conditions.gid == sessionStorage.gid) && (startDate<=today.getTime()&&today.getTime()<=endDate)){
+                        switch(today.getDay()){
+                            case 1:
+                                break;
+                        
+                            case 2:
+                                break;
+                        
+                            case 3:
+                                break;
+                        
+                            case 4:
+                                break;
+                        
+                            case 5:
+                                break;
+                        
+                            case 6:
+                                break;
+                        
+                            case 0:
+                                break;
+
+                            default:
+                                break;
+                        }
+                        passConfigList.push(item)
+                    }
+                }
+                console.log(passConfigList)
+                sessionStorage.setItem("passConfigList",JSON.stringify(passConfigList))
+            }
         })
     }
 }
