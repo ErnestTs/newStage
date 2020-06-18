@@ -208,7 +208,7 @@ export default class VisitorInfo extends Component {
 
                             <li style={{display:this.state.sexType ==2?"none":"block"}} className="component_Register_Item vtypeBox">
                                 <span className="component_Register_appInfo_key">
-                                    访客性别：
+                                    <span className="required">*</span>访客性别：
                                 </span>
                                 <ul className="component_Register_appInfo_sexTypeBox">
                                     <li 
@@ -882,6 +882,7 @@ export default class VisitorInfo extends Component {
                 default:
                     break;
             }
+            this.state.appointmentDate = new Date().format("yyyy-MM-dd hh:mm:ss");
             if((item.required&2) == 2){
                 if(!this.state[item.fieldName]){
                     Toast.open({
@@ -957,7 +958,7 @@ export default class VisitorInfo extends Component {
             vType:this.state.vType,
             cardNo:this.state.tempCard,
             card:card,
-            appointmentDate: new Date().format("yyyy-MM-dd hh:mm:ss"),
+            appointmentDate: this.state.appointmentDate,
             empPhone:this.state.empPhone,
             clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
         };
