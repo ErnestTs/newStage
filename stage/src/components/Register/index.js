@@ -68,6 +68,8 @@ export default class Register extends Component {
 
             elevatorContro_time:false,  // 梯控
 
+            sexType:2, // 0-女 1-男
+
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
 			// regElementArr: ["name", "empid", "phone",  "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -130,19 +132,6 @@ export default class Register extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
-                                    </span>
-                                    <span className="component_Register_appInfo_value">
-                                        <input type="text"
-                                            value={this.state.empCompanyFloor||""}
-                                            readOnly
-                                        />
-                                    </span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <span className="component_Register_appInfo_key">
                                         {this.state.empidRequired?<span className="required">*</span>:""}被访人姓名:
                                     </span>
                                     <span className="component_Register_appInfo_value">
@@ -174,6 +163,19 @@ export default class Register extends Component {
                                     })}
                                 </ul>
                             </li>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.empCompanyFloor||""}
+                                            readOnly
+                                        />
+                                    </span>
+                                </div>
+                            </li>
 
                             <li>
                                 <div>
@@ -201,6 +203,38 @@ export default class Register extends Component {
                                         />
                                     </span>
                                 </div>
+                            </li>
+
+                            <li style={{display:this.state.sexType ==2?"none":"block"}} className="component_Register_Item vtypeBox">
+                                <span className="component_Register_appInfo_key">
+                                    访客性别：
+                                </span>
+                                <ul className="component_Register_appInfo_sexTypeBox">
+                                    <li 
+                                        className={this.state.sexType == 1?"action":""}
+                                        onClick={
+                                            (e)=>{
+                                                this.setState({
+                                                    sexType:1
+                                                })
+                                            }
+                                        }
+                                    >
+                                        男
+                                    </li>
+                                    <li 
+                                        className={this.state.sexType == 0?"action":""}
+                                        onClick={
+                                            (e)=>{
+                                                this.setState({
+                                                    sexType:0
+                                                })
+                                            }
+                                        }
+                                    >
+                                        女
+                                    </li>
+                                </ul>
                             </li>
 
                             {/* <li className="component_Register_Item vtypeBox component_Register_memberBox">
@@ -731,7 +765,7 @@ export default class Register extends Component {
 			gids = tempEgids.join(",")
 		}else{
 			gids = egids
-		}
+        }
         this.setState({
             empName: value,
             empId:id,
@@ -926,6 +960,10 @@ export default class Register extends Component {
 
         if(!!this.state.plateNum) {
             sendData.plateNum = this.state.plateNum
+        }
+
+        if(this.state.sexType != 2) {
+            sendData.sex = this.state.sexType
         }
 
         if(!!this.state.vphone) {

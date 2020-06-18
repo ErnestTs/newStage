@@ -598,13 +598,17 @@ export default class Common {
 		for(let i = 0; i < passConfigList.length; i++){
 			let item = passConfigList[i];
 			if(item.cname == "send_card"){
-				let ruleList = JSON.parse(item.pr[week].replace(/&quot;/g, '"'))
-				for(let j = 0; j < ruleList.length;j++){
-					let todayStr = new Date().format("yyyy/MM/dd")
-					let startTime = new Date(todayStr+" "+ruleList[j].startTime).getTime();
-					let endTime = new Date(todayStr+" "+ruleList[j].endTime).getTime();
-					if(startTime<=today.getTime()&&today.getTime()<=endTime){
-						resBoolean = true
+				if(!item.pr[week]){
+					resBoolean = false
+				}else{
+					let ruleList = JSON.parse(item.pr[week].replace(/&quot;/g, '"'))
+					for(let j = 0; j < ruleList.length;j++){
+						let todayStr = new Date().format("yyyy/MM/dd")
+						let startTime = new Date(todayStr+" "+ruleList[j].startTime).getTime();
+						let endTime = new Date(todayStr+" "+ruleList[j].endTime).getTime();
+						if(startTime<=today.getTime()&&today.getTime()<=endTime){
+							resBoolean = true
+						}
 					}
 				}
 			}

@@ -440,6 +440,24 @@
     cursor: pointer;
 }
 
+.vtypeBox .component_Register_appInfo_sexTypeBox li {
+    padding: 0 31px;
+    line-height: 34px;
+    background: #F4F4F4;
+    border-radius: 6px;
+    border: 1px solid #F4F4F4;
+    float: left;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+}
+.vtypeBox .component_Register_appInfo_sexTypeBox li.action {
+    background: #AA9D84;
+    border: 1px solid #AA9D84;
+    color: #fff
+}
+
 .vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
     background: #AA9D84;
     border: 1px solid #AA9D84;

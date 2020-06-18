@@ -66,6 +66,10 @@ export default class VisitorInfo extends Component {
             openToast:0, // 1-发卡 2-其他提示 3-提示发卡
             toastContent:"",
 
+            elevatorContro_time:false,  // 梯控
+
+            sexType:1, // 0-女 1-男
+
             vaPerm:3,
 
             remark:"",
@@ -129,19 +133,6 @@ export default class VisitorInfo extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
-                                    </span>
-                                    <span className="component_Register_appInfo_value">
-                                        <input type="text"
-                                            value={this.state.empCompanyFloor||""}
-                                            readOnly
-                                        />
-                                    </span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <span className="component_Register_appInfo_key">
                                         {this.state.empidRequired?<span className="required">*</span>:""}被访人姓名:
                                     </span>
                                     <span className="component_Register_appInfo_value">
@@ -173,6 +164,19 @@ export default class VisitorInfo extends Component {
                                     })}
                                 </ul>
                             </li>
+                            <li>
+                                <div>
+                                    <span className="component_Register_appInfo_key">
+                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
+                                    </span>
+                                    <span className="component_Register_appInfo_value">
+                                        <input type="text"
+                                            value={this.state.empCompanyFloor||""}
+                                            readOnly
+                                        />
+                                    </span>
+                                </div>
+                            </li>
 
                             <li>
                                 <div>
@@ -200,6 +204,38 @@ export default class VisitorInfo extends Component {
                                         />
                                     </span>
                                 </div>
+                            </li>
+
+                            <li style={{display:this.state.sexType ==2?"none":"block"}} className="component_Register_Item vtypeBox">
+                                <span className="component_Register_appInfo_key">
+                                    访客性别：
+                                </span>
+                                <ul className="component_Register_appInfo_sexTypeBox">
+                                    <li 
+                                        className={this.state.sexType == 1?"action":""}
+                                        onClick={
+                                            (e)=>{
+                                                this.setState({
+                                                    sexType:1
+                                                })
+                                            }
+                                        }
+                                    >
+                                        男
+                                    </li>
+                                    <li 
+                                        className={this.state.sexType == 0?"action":""}
+                                        onClick={
+                                            (e)=>{
+                                                this.setState({
+                                                    sexType:0
+                                                })
+                                            }
+                                        }
+                                    >
+                                        女
+                                    </li>
+                                </ul>
                             </li>
 
                             {/* <li className="component_Register_Item vtypeBox component_Register_memberBox">
@@ -294,12 +330,12 @@ export default class VisitorInfo extends Component {
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
                                 </div>
                                 <div onClick={()=>{
-                                    if(!this.state.vaPerm){
-                                        this.setState({
-                                            toastContent:"该访客未授权，需等待员工授权后发卡",
-                                            openToast:2
-                                        })
-                                    }
+                                    // if(!this.state.vaPerm){
+                                    //     this.setState({
+                                    //         toastContent:"该访客未授权，需等待员工授权后发卡",
+                                    //         openToast:2
+                                    //     })
+                                    // }
                                     this.setToast.bind(this,1)}
                                 }>
                                     <span>发卡</span>
@@ -935,6 +971,10 @@ export default class VisitorInfo extends Component {
 
         if(!!this.state.plateNum) {
             sendData.plateNum = this.state.plateNum
+        }
+
+        if(this.state.sexType != 2) {
+            sendData.sex = this.state.sexType
         }
 
         if(!!this.state.vphone) {
