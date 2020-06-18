@@ -329,15 +329,7 @@ export default class VisitorInfo extends Component {
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
                                 </div>
-                                <div onClick={()=>{
-                                    // if(!this.state.vaPerm){
-                                    //     this.setState({
-                                    //         toastContent:"该访客未授权，需等待员工授权后发卡",
-                                    //         openToast:2
-                                    //     })
-                                    // }
-                                    this.setToast.bind(this,1)}
-                                }>
+                                <div onClick={this.sendCard.bind(this)}>
                                     <span>发卡</span>
                                 </div>
                             </div>
@@ -638,6 +630,7 @@ export default class VisitorInfo extends Component {
         if(!key.length){
             this.setState({
                 empCompany:"",
+                empCompanyId:"",
                 empCompanyFocus:false,
                 empNameFocus:false,
                 empCompanyList: [],
@@ -1272,5 +1265,26 @@ export default class VisitorInfo extends Component {
         return (
             <span className={cls}>{str}</span>
         )
+    }
+
+    /**
+     * @description [发卡]
+     */
+    sendCard(){
+        if(!this.state.empCompanyId){
+            Toast.open({
+                type:"danger",
+                content: "请选择公司"
+            })
+            return
+        }
+        if(!this.state.vaPerm){
+            this.setState({
+                toastContent:"该访客未授权，需等待员工授权后发卡",
+                openToast:2
+            })
+            return
+        }
+        this.setToast(1)
     }
 }
