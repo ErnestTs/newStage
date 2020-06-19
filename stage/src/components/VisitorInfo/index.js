@@ -792,7 +792,7 @@ export default class VisitorInfo extends Component {
             Common.ajaxProc("checkBlacklist",sendData,sessionStorage.token).done((res)=>{
                 if(!!res.result.length){
                     this.setState({
-                        toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
+                        toastContent:"您好，"+res.result[0].name+"为黑名单人员，不可邀请预约",
                         openToast:2
                     })
                 }
@@ -1034,7 +1034,7 @@ export default class VisitorInfo extends Component {
                             cardNo:this.state.tempCard,
                             cardOpName:sessionStorage.opname,
                         },sessionStorage.token).done((res)=>{
-                        if (data.status === 0) {
+                        if (res.status === 0) {
                             Toast.open({
                                 type:"success",
                                 content: "发卡成功"

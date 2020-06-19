@@ -74,6 +74,8 @@
     box-sizing: border-box;
     font-size: 14px;
     color: #A6A6A6;
+    width: 90%;
+    margin-left: 5%;
 }
 
 #component_Blacklist_searchContent #component_Blacklist_inputBox img {

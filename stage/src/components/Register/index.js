@@ -68,7 +68,7 @@ export default class Register extends Component {
 
             elevatorContro_time:false,  // 梯控
 
-            sexType:2, // 0-女 1-男
+            sexType:1, // 0-女 1-男
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -207,7 +207,7 @@ export default class Register extends Component {
 
                             <li style={{display:this.state.sexType ==2?"none":"block"}} className="component_Register_Item vtypeBox">
                                 <span className="component_Register_appInfo_key">
-                                    访客性别：
+                                    <span className="required">*</span>访客性别：
                                 </span>
                                 <ul className="component_Register_appInfo_sexTypeBox">
                                     <li 
@@ -790,7 +790,7 @@ export default class Register extends Component {
             Common.ajaxProc("checkBlacklist",sendData,sessionStorage.token).done((res)=>{
                 if(!!res.result.length){
                     this.setState({
-                        toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
+                        toastContent:"您好，"+res.result[0].name+"为黑名单人员，不可邀请预约",
                         openToast:2
                     })
                 }
@@ -1024,7 +1024,7 @@ export default class Register extends Component {
                             cardNo:this.state.tempCard,
                             cardOpName:sessionStorage.opname,
                         },sessionStorage.token).done((res)=>{
-                        if (data.status === 0) {
+                        if (res.status === 0) {
                             Toast.open({
                                 type:"success",
                                 content: "发卡成功"

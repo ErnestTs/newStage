@@ -1,4 +1,4 @@
-import React,{Component} from "react"
+import React,{Component,useState} from "react"
 import $ from "jquery"
 import { Table,DatePicker,Checkbox } from 'antd';
 import moment from 'moment';
@@ -154,10 +154,18 @@ export default class VisitorList extends Component{
             baseList:[],
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
+            onSelectList:[],
+            openToast:0,
+            tempCard:"",
         }
     }
 
     render(){
+        const { onSelectList } = this.state;
+        const rowSelection = {
+            onSelectList,
+            onChange: this.selectedRow
+        };
         return(
             <div id="component_VisitorList">
                 <div className="component_VisitorList_btnGroup">
@@ -192,7 +200,7 @@ export default class VisitorList extends Component{
                             className="component_VisitorList_btnGroup_actions"
                             style={{display:this.state.vType==3?"block":"none"}}
                         >
-                            <li className="component_VisitorList_setTempCard">
+                            <li className="component_VisitorList_setTempCard" onClick={this.sendCard.bind(this)}>
                                 <span>发卡</span>
                             </li>
                         </ul>
@@ -236,6 +244,7 @@ export default class VisitorList extends Component{
                 <div id="component_VisitorList_tableBox">
                     <div id="component_VisitorList_tableBoard">
                         <Table 
+                            rowSelection={this.state.vType == 3?rowSelection:null}
                             className="tableBox" 
                             columns={this.state.columns} 
                             dataSource={this.state.dataSource} 
@@ -243,6 +252,29 @@ export default class VisitorList extends Component{
                             pagination={{ pageSize: 5 }}
                             locale={{emptyText: '暂无数据'}}
                         />
+                    </div>
+                </div>
+
+                <div style={{display:this.state.openToast?"block":"none"}} id="component_Register_Toast">
+                    <div style={{display:this.state.openToast == 1?"block":"none"}} id="component_Register_tempCardBox">
+                        <p className="title">发卡</p>
+                        <div className="inputBox">
+                            <span>申请卡号：</span>
+                            <input 
+                                type="text"
+                                value={this.state.tempCard}
+                                onChange={(e)=>{this.setState({tempCard:e.target.value})}}
+                                ref={(input) => this.inputRef = input}
+                            />
+                        </div>
+                        <ul className="btnGroup">
+                            <li onClick={this.closeTempCardBox.bind(this)}>
+                                取消
+                            </li>
+                            <li onClick={this.setTempCard.bind(this,0)}>
+                                确定
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -289,7 +321,8 @@ export default class VisitorList extends Component{
         }
         this.setState({
             vType:index,
-            vState:vTypeIndex
+            vState:vTypeIndex,
+            onSelectList:[]
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
@@ -634,5 +667,87 @@ export default class VisitorList extends Component{
                 dataSource:resArr
             })
         },0)
+    }
+
+    /**
+     * @description [选中访客]
+     * @param {*} keys 
+     * @param {*} rows 
+     */
+    selectedRow(keys, rows){
+        console.log(rows)
+        // this.setState({
+        //     onSelectList:rows
+        // })
+    }
+
+    /**
+     * @description [发卡]
+     */
+    sendCard(){
+        let oList = this.state.onSelectList;
+        if(!oList.length){
+            Toast.open({
+                type:"danger",
+                content: "请选择访客"
+            })
+            return;
+        }else{
+            this.setToast(1)
+        }
+    }
+
+    /**
+     * @description [关闭临时卡弹窗]
+     */
+    closeTempCardBox(){
+        this.setState({
+            tempCard:""
+        })
+        this.setToast(0)
+    }
+
+    /**
+     * @description [保存临时卡]
+     */
+    setTempCard(){
+        if(!this.state.tempCard){
+            Toast.open({
+                type:"danger",
+                content: "请填写卡号"
+            })
+            return
+        }
+        let oList = this.state.onSelectList;
+        oList.map((item,i)=>{
+            Common.ajaxProc("updateVisitorCardNo",
+                {
+                    vid:item.vid,
+                    cardNo:this.state.tempCard,
+                    cardOpName:sessionStorage.opname,
+                },sessionStorage.token).done((res)=>{
+                if (res.status === 0) {
+                    Toast.open({
+                        type:"success",
+                        content: "发卡成功"
+                    })
+                }
+            })
+        })
+        this.setToast(0)
+    }
+
+    /**
+     * @description [更改弹窗状态]
+     * @param {Number} type 
+     */
+    setToast(type){
+        this.setState({
+            openToast:type
+        },()=>{
+            if(type == 1){
+                this.inputRef.focus();
+            }
+        })
     }
 }
