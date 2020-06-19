@@ -105,6 +105,11 @@ export default class Homepage extends Component {
 
         this.getPassConfigList()
         this.refreshToken()
+        let _this = this
+
+        setInterval(()=>{
+            _this.refreshToken()
+        },Common.FreshToken*60*60*1000)
     }
 
     /**
