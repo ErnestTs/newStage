@@ -18,6 +18,8 @@ export default class Common {
 	
 	static Version = "2.4.8"
 
+	static FreshToken = 6
+
 	static ajaxProc(action, data, token) {
 		let jqXHR = $.ajax({
 			url: this.url + action,
