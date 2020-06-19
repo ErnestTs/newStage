@@ -142,6 +142,7 @@ export default class Login extends Component {
                     sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
                     sessionStorage.badgeMode = result.badgeMode;
                     sessionStorage.badgeCustom = result.badgeCustom;
+                    sessionStorage.pemail = result.pemail;
 
                     sessionStorage.token = sendData.account + '-' + result.token;
                     sessionStorage.gid = result.gid;
