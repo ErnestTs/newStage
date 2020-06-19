@@ -142,6 +142,7 @@ export default class Login extends Component {
                     sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
                     sessionStorage.badgeMode = result.badgeMode;
                     sessionStorage.badgeCustom = result.badgeCustom;
+                    sessionStorage.pemail = result.pemail;
 
                     sessionStorage.token = sendData.account + '-' + result.token;
                     sessionStorage.gid = result.gid;
@@ -334,7 +335,7 @@ export default class Login extends Component {
 				// 0-全部 1-员工 2-访客 3-特殊
 				if(tempArr[i].etype == 0 || tempArr[i].etype == 2) {
 
-					let gidList = tempArr[i].gids.split(",")
+					let gidList = !!tempArr[i].gids?tempArr[i].gids.split(","):[]
 					if(gidList.indexOf(sessionStorage.gid) != -1 || sessionStorage.loginType =="Login"){
 						resStr.push(tempArr[i].egid)
 					}
