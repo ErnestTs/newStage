@@ -98,6 +98,14 @@ export default class Homepage extends Component {
                 })
                 break;
         }
+
+
+        let _this = this
+        this.refreshToken()
+
+        setInterval(()=>{
+            _this.refreshToken()
+        },Common.FreshToken*60*60*1000)
     }
 
     /**
@@ -119,4 +127,42 @@ export default class Homepage extends Component {
             title:title
         })
     }
+
+    /**
+     * @description [刷新token]
+     */
+	refreshToken() {
+		let result = JSON.parse(sessionStorage.result),
+			email = sessionStorage.email,
+			token = sessionStorage.token,
+			sendData = {
+				email: sessionStorage.pemail,
+				oldToken: token
+			};
+			if(sessionStorage.loginType != "LoginManager"){
+				sendData.email = sessionStorage.un
+			}
+
+		if (email === undefined || token === undefined) return;
+
+		Common.ajaxProc("refreshToken", sendData, sessionStorage.token).done(function (data) {
+			if (data.status === 0) {
+				/**存储结果用于刷新token,其他session暂不修改 */
+				sessionStorage.result = JSON.stringify(result);
+
+				/**
+				 * 拼接token格式
+				 * 管理员 userid-token
+				 * 前台 account-token
+				 */
+				if (sessionStorage.loginType === "LoginManager") {
+					// sessionStorage.token = sessionStorage.un + '-' + data.result.token;
+					sessionStorage.token = sessionStorage.userid + '-' + data.result.token;
+				}
+				else {
+					sessionStorage.token = sessionStorage.userid + '-' + data.result.token;
+				}
+			}
+		});
+	}
 }
