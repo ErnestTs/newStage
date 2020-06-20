@@ -44,7 +44,7 @@ export default class VisitorList extends Component{
                 // },
                 {
                     name:"待发卡访客",
-                    interface:"SearchRVisitorByCondition",
+                    interface:"getNotSendCardVisit",
                     stateList:["pad","wechat","invitation","stage"]
                 }
             ],
@@ -151,12 +151,85 @@ export default class VisitorList extends Component{
                     }
                 },
             ],
+            tempCardColumns:[
+                {
+                  title: '姓名',
+                  key: 'vname',
+                  width:"10%",
+                  render: (data)=>{
+                        return(
+                            <div className="tableItem_name">
+                                <Checkbox 
+                                    checked={data.checked}
+                                    // style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
+                                    style={{display:"none"}}
+                                    onClick={()=>{
+                                        let tempArr = this.state.dataSource;
+                                        tempArr[data.key].checked = !tempArr[data.key].checked;
+                                        this.setState({
+                                            dataSource:tempArr
+                                        })
+                                    }} 
+                                />
+                                <div className="defaultImg">
+                                    <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
+                                    <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
+                                    {/* <img
+                                        className="printIcon"
+                                        src={printImg}
+                                        style={{display:data.state == 1&&data.visitType !== "常驻访客"?"inline-block":"none"}}
+                                        onClick={
+                                            ()=>{
+                                                this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+data.vid}]}})
+                                            }
+                                        }
+                                    /> */}
+                                </div>
+                            </div>
+                        )
+                  }
+                },
+                {
+                    title: '被访人',
+                    dataIndex: 'empName',
+                    key: 'empName',
+                },
+                {
+                    title: '手机号',
+                    dataIndex: 'vphone',
+                    key: 'vphone',
+                },
+                {
+                    title: '拜访事由',
+                    dataIndex: 'vTypeOnShow',
+                    key: 'vTypeOnShow',
+                },
+                {
+                    title: '被访公司',
+                    dataIndex: 'company',
+                    key: 'company',
+                },
+                {
+                    title: '已授权楼层',
+                    dataIndex: 'company',
+                    key: 'company',
+                },
+                {
+                    title: '状态',
+                    dataIndex: 'state',
+                    key: 'state',
+                    render:()=>{
+                        return <span className="statusTag brown">待发卡</span>
+                    }
+                },
+            ],
             baseList:[],
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
             onSelectList:[],
             openToast:0,
             tempCard:"",
+            notSendCardVisits:0
         }
     }
 
@@ -174,8 +247,13 @@ export default class VisitorList extends Component{
                             {
                                 this.state.vTypelist.map((item,i,arr)=>{
                                     return (
-                                        <li style={{width:100/arr.length+"%"}} className={this.state.vType == i?"action":""} key={i+"vtype"} onClick={this.changeVtype.bind(this,i)}>
-                                            <span>{item.name}</span>
+                                        <li 
+                                            style={{width:100/arr.length+"%"}} 
+                                            className={this.state.vType == i?"action":""} 
+                                            key={i+"vtype"} 
+                                            onClick={this.changeVtype.bind(this,i)}
+                                        >
+                                            <span>{item.name}<span style={{display:i==3?"inline":"none"}}>({this.state.notSendCardVisits})</span></span>
                                         </li>
                                     )
                                 })
@@ -246,7 +324,7 @@ export default class VisitorList extends Component{
                         <Table 
                             rowSelection={this.state.vType == 3?rowSelection:null}
                             className="tableBox" 
-                            columns={this.state.columns} 
+                            columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize: 5 }}
@@ -303,6 +381,22 @@ export default class VisitorList extends Component{
     init(){
         // 获取当前表单
         this.getVisitorInfo()
+        
+        let sendData = {
+            userid: sessionStorage.userid,
+            gid: sessionStorage.gid,
+            date: this.state.date,
+            endDate: this.state.date,
+        };
+        Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
+            if(res.status == 0){
+                if(!!res.result.length){
+                    this.setState({
+                        notSendCardVisits:res.result.length
+                    })
+                }
+            }
+        })
     }
 
 
@@ -336,6 +430,7 @@ export default class VisitorList extends Component{
     changeState(i){
         let vStateList = this.state.vStateList;
         let tempArr = [];
+        console.log(vStateList[i].key)
         switch(vStateList[i].key){
             case "total":
                 tempArr = this.state.baseList
@@ -373,6 +468,34 @@ export default class VisitorList extends Component{
             case "noArrived":
                 for(let i = 0; i <this.state.baseList.length; i++){
                     if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "pad":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(this.state.baseList[i].clientNo == 0){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "wechat":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(this.state.baseList[i].clientNo == 1){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "invitation":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(this.state.baseList[i].clientNo == 2){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "stage":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(this.state.baseList[i].clientNo == 3){
                         tempArr.push(this.state.baseList[i])
                     }
                 }
@@ -429,6 +552,11 @@ export default class VisitorList extends Component{
                         ]
                     })
                     return
+                }
+                if(interfaceName == "getNotSendCardVisit"){
+                    this.setState({
+                        notSendCardVisits:data.result.length
+                    })
                 }
                 let resArr = [];
                 let total = data.result.length;

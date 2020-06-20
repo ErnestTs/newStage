@@ -54,7 +54,7 @@
     border-right: 0;
 }
 
-#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li span {
+#component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li>span {
     position: absolute;
     left: 0;
     top: 50%;
@@ -328,6 +328,7 @@
     height: 26px;
     line-height: 26px; 
     max-width: 96px;
+    margin: auto;
 }
 
 #component_VisitorList_tableBoard .statusTag.green {
