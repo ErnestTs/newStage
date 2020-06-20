@@ -38,7 +38,10 @@ export default class Register extends Component {
             empCompanyId:"",
             empCompanyPool:[],
             empCompanyList:[],
+
+            empCompanyFloorList:[],
             empCompanyFloor:"",
+            empCompanyFloorFocus:false,
 
             empNameFocus:false,
             empName:"",
@@ -171,10 +174,36 @@ export default class Register extends Component {
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
                                             value={this.state.empCompanyFloor||""}
-                                            readOnly
+                                            onFocus={(e)=>{
+                                                if(!!this.state.empNameList.length){
+                                                    this.setState({
+                                                        empCompanyFloorFocus:true
+                                                    })
+                                                }
+                                            }}
                                         />
                                     </span>
                                 </div>
+                                <ul className="companylist" style={{display:this.state.empCompanyFloorFocus?"block":"none"}}>
+                                    {this.state.empCompanyFloorList.map((item,i)=>{
+                                        return (
+                                            <li 
+                                                value={item||""}
+                                                key={i+"li"}
+                                                onClick={
+                                                    (e)=>{
+                                                        this.setState({
+                                                            empCompanyFloor:item,
+                                                            empCompanyFloorFocus:false
+                                                        })
+                                                    }
+                                                }
+                                            >
+                                                {item}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
                             </li>
 
                             <li>
@@ -635,7 +664,9 @@ export default class Register extends Component {
                 empNameList:[],
                 empNamePool:[],
                 empName:"",
-                empId:""
+                empId:"",
+                empCompanyFloor:"",
+                empCompanyFloorList:[]
             })
         }else {
             this.state.empCompanyList = [];
@@ -649,13 +680,17 @@ export default class Register extends Component {
             if (this.state.empCompanyList.length !== 0) {
                 this.setState({
                     empCompany:key,
-                    empCompanyFocus: true
+                    empCompanyFocus: true,
+                    empCompanyFloor:"",
+                    empCompanyFloorList:[]
                 });
             }
             else {
                 this.setState({
                     empCompany:key,
-                    empCompanyFocus: false
+                    empCompanyFocus: false,
+                    empCompanyFloor:"",
+                    empCompanyFloorList:[]
                 });
             }
         }
@@ -687,28 +722,11 @@ export default class Register extends Component {
 				});
 			}
         })
-
-        let floorList = floor.split("、")
-        for(let j = 0; j<floorList.length;j++){
-            let itemArr = floorList[j].split("|");
-            let resItemArr = []
-            for(let k = 0;k<itemArr.length;k++){
-                let tempItemArrStr = itemArr[k].split(",")
-                if(tempItemArrStr[0] == sessionStorage.gid){
-                    resItemArr.push(tempItemArrStr[1])
-                }else if(tempItemArrStr.length == 1){
-                    resItemArr.push(tempItemArrStr[0])
-                }
-            }
-            floorList[j] = resItemArr.join("/")
-        }
-        floor = floorList.join("/")
         
         this.setState({
             empCompany: value,
             empCompanyId:id,
-            empCompanyFocus:false,
-            empCompanyFloor:floor
+            empCompanyFocus:false
         })
     }
 
@@ -722,7 +740,9 @@ export default class Register extends Component {
             this.setState({
                 empName:"",
                 empId:"",
-                empNameFocus:false
+                empNameFocus:false,
+                empCompanyFloor:"",
+                empCompanyFloorList:[]
             })
         }else {
             this.state.empNameList = [];
@@ -736,13 +756,17 @@ export default class Register extends Component {
             if (this.state.empNameList.length !== 0) {
                 this.setState({
                     empName:key,
-                    empNameFocus: true
+                    empNameFocus: true,
+                    empCompanyFloor:"",
+                    empCompanyFloorList:[]
                 });
             }
             else {
                 this.setState({
                     empName:key,
-                    empNameFocus: false
+                    empNameFocus: false,
+                    empCompanyFloor:"",
+                    empCompanyFloorList:[]
                 });
             }
         }
@@ -772,6 +796,21 @@ export default class Register extends Component {
             empPhone:phone,
             empNameFocus:false,
 			egids: gids
+        },()=>{
+            Common.ajaxProc("getEquipmentGroupByUserid",{userid: sessionStorage.userid}).done((res)=>{
+                if(res.status == 0){
+                    let eList = res.result;
+                    let resArr = []
+                    for(let i = 0;i < eList.length; i++){
+                        if(gids.indexOf(eList[i].egid) !== -1){
+                            resArr.push(eList[i].egname)
+                        }
+                    }
+                    this.setState({
+                        empCompanyFloorList:resArr
+                    })
+                }
+            })
         })
     }
 

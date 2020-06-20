@@ -590,31 +590,29 @@ export default class Common {
 
 	/**
 	 * @description [校验通行策略]
+	 * @param {Array} floor [楼层]
 	 */
 	static checkPassConfig(floor){
-		let resBoolean = false
-		let weekList = ["sun","mon","tues","wed","thur","fri","sat"]
-		let passConfigList = JSON.parse(sessionStorage.passConfigList)
-		let today = new Date()
-		let week=weekList[today.getDay()]
-		for(let i = 0; i < passConfigList.length; i++){
-			let item = passConfigList[i];
-			if(item.cname == "send_card"){
-				if(!item.pr[week]){
-					resBoolean = false
-				}else{
-					let ruleList = JSON.parse(item.pr[week].replace(/&quot;/g, '"'))
-					for(let j = 0; j < ruleList.length;j++){
-						let todayStr = new Date().format("yyyy/MM/dd")
-						let startTime = new Date(todayStr+" "+ruleList[j].startTime).getTime();
-						let endTime = new Date(todayStr+" "+ruleList[j].endTime).getTime();
-						if(startTime<=today.getTime()&&today.getTime()<=endTime){
-							resBoolean = true
-						}
-					}
-				}
-			}
+		if(!floor){
+			return false
 		}
+		let resBoolean = false
+		let gNamesList = [];
+		let gName = sessionStorage.gname
+		for(let i =0; i < floor.length;i++){
+			gNamesList.push(gName+"-"+floor[i])
+		}
+		let sendData = {
+			"reqDate":new Date().getTime(),
+			"userid": sessionStorage.userid,
+			// "gNames":["T1-10F12F","T2-10F12F16F"]
+			"gNames":gNamesList
+		}
+		this.ajaxProcWithoutAsync("getSendCardStatus",sendData,sessionStorage.token).done((res)=>{
+			if(res.status == 0){
+				resBoolean = true
+			}
+		})
 		return resBoolean
 	}
 
