@@ -77,14 +77,14 @@
     border: none;
     outline: none;
     background: #F5F6FA;
-    line-height: 4vh;
+    line-height: normal;
     padding-left: 2.265vw;
-    width: 100%;
     box-sizing: border-box;
     font-size: 14px;
     color: #A6A6A6;
     width: 90%;
-    margin-left: 5%;    
+    margin-left: 5%;
+    height: 100%;
 }
 
 #component_Companylist_searchContent #component_Companylist_btn_refresh {
