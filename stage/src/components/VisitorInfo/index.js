@@ -182,6 +182,7 @@ export default class VisitorInfo extends Component {
                                                     })
                                                 }
                                             }}
+                                            readOnly
                                         />
                                     </span>
                                 </div>

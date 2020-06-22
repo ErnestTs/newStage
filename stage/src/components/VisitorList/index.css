@@ -37,7 +37,7 @@
 #component_VisitorList .component_VisitorList_btnGroup .component_VisitorList_btnGroup_vtype li {
     float: left;
     width: 25%;
-    font-size: 16px;
+    font-size: 1.48vh;
     color: #323233;
     letter-spacing: 0;
     text-align: center;
@@ -107,7 +107,7 @@
     color: #fff;
     box-sizing: border-box;
     text-align: center;
-    font-size: 20px;
+    font-size: 1.68vh;
     margin-left: 10px;
     cursor: pointer;
     position: relative;
@@ -148,10 +148,10 @@
 #component_VisitorList .component_VisitorList_btnGroup .visitorState li {
     float: left;
     width: 33%;
-    height: 50px;
-    line-height: 50px;
+    height: 4.62vh;
+    line-height: 4.62vh;
     text-align: center;
-    font-size: 16px;
+    font-size: 1.48vh;
     cursor: pointer;
     color: #323233;
 }
@@ -170,7 +170,7 @@
 
 #component_VisitorList .component_VisitorList_btnGroup .searchCriteria .searchContent {
     width: 50%;
-    height: 40px;
+    height: 3.7vh;
     text-align: left;
     background: #F5F6FA;
     border: 1px solid #AA9D84;
@@ -205,7 +205,7 @@
     text-align: center;
     margin-left: 20px;
     width: 170px;
-    height: 40px;
+    height: 3.7vh;
     overflow: hidden;
     vertical-align: middle;
 }
@@ -229,7 +229,7 @@
     box-sizing: border-box;
     margin-top: 1%;
 }
-@media screen and (max-width: 1280px) {
+/* @media screen and (max-width: 1280px) {
     #component_VisitorList_tableBox {
         top: 23%;
     }
@@ -238,7 +238,7 @@
     #component_VisitorList_tableBox {
         top: 23%;
     }
-}
+} */
 
 #component_VisitorList_tableBoard {
     width: 95%;
@@ -381,5 +381,22 @@
 }
 
 #component_VisitorList .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .ant-pagination-item-active a {
+    color:#AA9D84
+}
+
+#component_VisitorList .ant-pagination-item-active {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .ant-pagination-item:focus, .ant-pagination-item:hover {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+    color:#AA9D84;
     border-color:#AA9D84
 }

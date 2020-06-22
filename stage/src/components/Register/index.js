@@ -181,6 +181,7 @@ export default class Register extends Component {
                                                     })
                                                 }
                                             }}
+                                            readOnly
                                         />
                                     </span>
                                 </div>
@@ -776,9 +777,9 @@ export default class Register extends Component {
      * @description [点击选择员工]
      */
     selectEmp(value,id,phone,egids){
-		let gids = ""
+        let gids = ""
 		if(!!sessionStorage.VisitorAccess){
-			egids = egids.split(",")
+            egids = egids.split(",")
 			let VisitorAccess = sessionStorage.VisitorAccess.split(",");
 			let tempEgids = []
 			for(let i = 0; i < egids.length; i++){
@@ -802,7 +803,7 @@ export default class Register extends Component {
                     let eList = res.result;
                     let resArr = []
                     for(let i = 0;i < eList.length; i++){
-                        if(gids.indexOf(eList[i].egid) !== -1){
+                        if(this.state.egids.indexOf(eList[i].egid) !== -1){
                             resArr.push(eList[i].egname)
                         }
                     }

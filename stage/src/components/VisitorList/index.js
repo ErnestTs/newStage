@@ -155,7 +155,7 @@ export default class VisitorList extends Component{
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"10%",
+                  width:"15%",
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
@@ -211,8 +211,8 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '已授权楼层',
-                    dataIndex: 'company',
-                    key: 'company',
+                    dataIndex: 'floors',
+                    key: 'floors',
                 },
                 {
                     title: '状态',
@@ -327,7 +327,7 @@ export default class VisitorList extends Component{
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
-                            pagination={{ pageSize: 5 }}
+                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
                             locale={{emptyText: '暂无数据'}}
                         />
                     </div>
@@ -366,9 +366,13 @@ export default class VisitorList extends Component{
         // this.setState({
         //     tableHeight:document.body.clientHeight*coefficient
         // })
+        
         // 设定表格高度
         this.setState({
             tableHeight:document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
+        },()=>{
+            console.log(parseInt(this.state.tableHeight))
+            console.log(Math.round(parseInt(this.state.tableHeight)/90))
         })
 
         // 初始化
@@ -381,22 +385,7 @@ export default class VisitorList extends Component{
     init(){
         // 获取当前表单
         this.getVisitorInfo()
-        
-        let sendData = {
-            userid: sessionStorage.userid,
-            gid: sessionStorage.gid,
-            date: this.state.date,
-            endDate: this.state.date,
-        };
-        Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
-            if(res.status == 0){
-                if(!!res.result.length){
-                    this.setState({
-                        notSendCardVisits:res.result.length
-                    })
-                }
-            }
-        })
+        this.getTempCardCount()
     }
 
 
@@ -430,7 +419,6 @@ export default class VisitorList extends Component{
     changeState(i){
         let vStateList = this.state.vStateList;
         let tempArr = [];
-        console.log(vStateList[i].key)
         switch(vStateList[i].key){
             case "total":
                 tempArr = this.state.baseList
@@ -533,6 +521,7 @@ export default class VisitorList extends Component{
         };
         Common.ajaxProcWithoutAsync(interfaceName, sendData, sessionStorage.token).done((data)=>{
             if(data.status == 0){
+                this.getTempCardCount()
                 if(!data.result.length){
                     this.setState({
                         dataSource:[],
@@ -553,11 +542,6 @@ export default class VisitorList extends Component{
                     })
                     return
                 }
-                if(interfaceName == "getNotSendCardVisit"){
-                    this.setState({
-                        notSendCardVisits:data.result.length
-                    })
-                }
                 let resArr = [];
                 let total = data.result.length;
                 let leave = 0;
@@ -566,6 +550,10 @@ export default class VisitorList extends Component{
                 let invite = data.result.length;
                 let checkIn = 0;
                 let noArrived = 0;
+                let padCount = 0;
+                let wechatCount = 0;
+                let invitationCount = 0;
+                let stageCount = 0;
 
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
@@ -609,6 +597,21 @@ export default class VisitorList extends Component{
                         }
                         noArrived++;
                     }
+                    // 处理发卡计数
+                    switch(item.clientNo){
+                        case 0:
+                            padCount++
+                            break;
+                        case 1:
+                            wechatCount++
+                            break;
+                        case 2:
+                            invitationCount++
+                            break;
+                        case 3:
+                            stageCount++
+                            break;
+                    }
 
                     if(!!item.visitType){
                         item.vTypeOnShow = item.visitType.split("#")[0]
@@ -645,15 +648,32 @@ export default class VisitorList extends Component{
                         case "noArrived":
                             vStateList[i].count=noArrived
                             break;
+                        case "pad":
+                            vStateList[i].count=padCount
+                            break;
+                        case "wechat":
+                            vStateList[i].count=wechatCount
+                            break;
+                        case "invitation":
+                            vStateList[i].count=invitationCount
+                            break;
+                        case "stage":
+                            vStateList[i].count=stageCount
+                            break;
                         default:
                             break;
                     }
                 }
 
+
                 this.setState({
                     dataSource:resArr,
                     vStateList:vStateList,
                     baseList:resArr
+                },()=>{
+                    if(interfaceName == "getNotSendCardVisit"){
+                        this.changeState(7)
+                    }
                 })
             }
         })
@@ -875,6 +895,27 @@ export default class VisitorList extends Component{
         },()=>{
             if(type == 1){
                 this.inputRef.focus();
+            }
+        })
+    }
+    
+    /**
+     * @description [获取临时卡计数]
+     */
+    getTempCardCount(){
+        let sendData = {
+            userid: sessionStorage.userid,
+            gid: sessionStorage.gid,
+            date: this.state.date,
+            endDate: this.state.date,
+        };
+        Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
+            if(res.status == 0){
+                if(!!res.result.length){
+                    this.setState({
+                        notSendCardVisits:res.result.length
+                    })
+                }
             }
         })
     }

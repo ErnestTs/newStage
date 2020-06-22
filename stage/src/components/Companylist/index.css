@@ -94,7 +94,7 @@
     text-align: center;
     background: #AA9D84;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 1.68vh;
     color: #FFFFFF;
     cursor: pointer;
     margin-left: 20px;
@@ -186,7 +186,7 @@
     width: 33.33333%;
     box-sizing: border-box;
     text-align: center;
-    font-size: 16px;
+    font-size: 1.48vh;
     border-left: 1px solid #DCDEE0;
     cursor: pointer;
     background-color: #fff;
