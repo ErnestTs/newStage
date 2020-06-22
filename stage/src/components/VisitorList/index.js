@@ -230,9 +230,11 @@ export default class VisitorList extends Component{
     componentDidMount(){
 
         // 设定表格高度
-        let coefficient = document.body.clientHeight>1000?0.50:0.3
+        let coefficient = document.body.clientHeight>1000?0.70:0.58
+        
+        // 设定表格高度
         this.setState({
-            tableHeight:document.body.clientHeight*coefficient
+            tableHeight:document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
         })
 
         // 初始化
