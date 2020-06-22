@@ -218,7 +218,7 @@ export default class VisitorList extends Component{
                             columns={this.state.columns} 
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
-                            pagination={{ pageSize: 5 }}
+                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
                             locale={{emptyText: '暂无数据'}}
                         />
                     </div>
