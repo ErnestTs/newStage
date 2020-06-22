@@ -370,9 +370,6 @@ export default class VisitorList extends Component{
         // 设定表格高度
         this.setState({
             tableHeight:document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
-        },()=>{
-            console.log(parseInt(this.state.tableHeight))
-            console.log(Math.round(parseInt(this.state.tableHeight)/90))
         })
 
         // 初始化
