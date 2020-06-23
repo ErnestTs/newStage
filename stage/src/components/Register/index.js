@@ -995,7 +995,7 @@ export default class Register extends Component {
             cardNo:this.state.tempCard,
             card:card,
             signOutOpName:sessionStorage.opname,
-            clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-前台 4-访客机
+            clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
         };
 
         if(!!this.state.plateNum) {

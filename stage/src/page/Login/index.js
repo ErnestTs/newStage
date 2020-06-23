@@ -387,7 +387,7 @@ export default class Login extends Component {
 				/**
 				 * token格式
 				 * 管理员 userid-token
-				 * 前台 account-token
+				 * 礼宾台 account-token
 				 */
 				let sname = user;
 				sessionStorage.token = result.userid + '-' + result.token;

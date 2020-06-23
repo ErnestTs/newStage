@@ -156,7 +156,7 @@ export default class Homepage extends Component {
 				/**
 				 * 拼接token格式
 				 * 管理员 userid-token
-				 * 前台 account-token
+				 * 礼宾台 account-token
 				 */
 				if (sessionStorage.loginType === "LoginManager") {
 					// sessionStorage.token = sessionStorage.un + '-' + data.result.token;

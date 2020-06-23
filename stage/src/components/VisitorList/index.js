@@ -59,7 +59,7 @@ export default class VisitorList extends Component{
                 {name:"pad",count:0,key:"pad"},
                 {name:"小程序",count:0,key:"wechat"},
                 {name:"邀请函",count:0,key:"invitation"},
-                {name:"前台",count:0,key:"stage"},
+                {name:"礼宾台",count:0,key:"stage"},
             ],
             vState:0,
             columns:[
@@ -534,7 +534,7 @@ export default class VisitorList extends Component{
                             {name:"pad",count:0,key:"pad"},
                             {name:"小程序",count:0,key:"wechat"},
                             {name:"邀请函",count:0,key:"invitation"},
-                            {name:"前台",count:0,key:"stage"},
+                            {name:"礼宾台",count:0,key:"stage"},
                         ]
                     })
                     return
