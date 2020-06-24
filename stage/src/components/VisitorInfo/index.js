@@ -906,7 +906,7 @@ export default class VisitorInfo extends Component {
             })
             return
         }
-        if(!empCompanyFloorKey){
+        if(!this.state.empCompanyFloorKey){
             Toast.open({
                 type:"danger",
                 content: "请选择楼层"
@@ -1002,6 +1002,7 @@ export default class VisitorInfo extends Component {
             name: this.state.vname||"",
             visitType: this.state.visitorType||"",
             empid: this.state.empId||"",
+            empName:this.state.empName||"",
             remark: this.state.remark||"",
             signInGate: sessionStorage.gname,
             signInOpName: sessionStorage.opname,
@@ -1086,12 +1087,12 @@ export default class VisitorInfo extends Component {
                             cardNo:this.state.tempCard,
                             cardOpName:sessionStorage.opname,
                         },sessionStorage.token).done((res)=>{
-                        if (res.status === 0) {
-                            Toast.open({
-                                type:"success",
-                                content: "发卡成功"
-                            })
-                        }
+                            if (res.status === 0) {
+                                Toast.open({
+                                    type:"success",
+                                    content: "发卡成功"
+                                })
+                            }
                     })
                 }
                 
@@ -1103,6 +1104,12 @@ export default class VisitorInfo extends Component {
                     toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
                     openToast:2
                 })
+            }else if(data.status === 43){
+                Toast.open({
+                    type:"danger",
+                    content: "当前访客已超过预约限度"
+                })
+                return
             }
             this.setState({
                 inSubmit: false,

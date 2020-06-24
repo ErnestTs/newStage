@@ -904,7 +904,7 @@ export default class Register extends Component {
             })
             return
         }
-        if(!empCompanyFloorKey){
+        if(!this.state.empCompanyFloorKey){
             Toast.open({
                 type:"danger",
                 content: "请选择楼层"
