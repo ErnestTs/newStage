@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Base64Code from './Base64';
+import Toast from "../components/ToastPublic/index"
 
 export default class Common {
 	static protocol = window.location.href.split(":")[0] + "://";
@@ -31,13 +32,23 @@ export default class Common {
 				'X-COOLVISIT-TOKEN': token
 			},
 			success: function(data){
-				if(data.status == 27) {
+				if(data.status == 27||data.status == 29) {
+					Toast.open({
+							type:"danger",
+							content: "登录超时，请重新登录"
+					})
 					setTimeout(()=>{
 						sessionStorage.clear()
 						window.history.go(0)
 					}, 2000)
 					return;
 				}
+			},
+			error:function(data){
+				Toast.open({
+						type:"danger",
+						content: "请求失败，请检查网络"
+				})
 			}
 		});
 		return jqXHR;
@@ -55,13 +66,23 @@ export default class Common {
 				'X-COOLVISIT-TOKEN': token
 			},
 			success: function(data){
-				if(data.status == 27) {
+				if(data.status == 27||data.status == 29) {
+					Toast.open({
+							type:"danger",
+							content: "登录超时，请重新登录"
+					})
 					setTimeout(()=>{
 						sessionStorage.clear()
 						window.history.go(0)
 					}, 2000)
 					return;
 				}
+			},
+			error:function(data){
+				Toast.open({
+						type:"danger",
+						content: "请求失败，请检查网络"
+				})
 			}
 		});
 		return jqXHR;
@@ -78,13 +99,23 @@ export default class Common {
 				'User-Agent':'android_senseid'
 			},
 			success: function(data){
-				if(data.status == 27) {
+				if(data.status == 27||data.status == 29) {
+					Toast.open({
+							type:"danger",
+							content: "登录超时，请重新登录"
+					})
 					setTimeout(()=>{
 						sessionStorage.clear()
 						window.history.go(0)
 					}, 2000)
 					return;
 				}
+			},
+			error:function(data){
+				Toast.open({
+						type:"danger",
+						content: "请求失败，请检查网络"
+				})
 			}
 		});
 		return jqXHR;
