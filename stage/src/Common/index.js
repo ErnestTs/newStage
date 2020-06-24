@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Base64Code from './Base64';
+import Toast from "../components/ToastPublic/index"
 
 export default class Common {
 	static protocol = window.location.href.split(":")[0] + "://";
