@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import './index.css';
 import Common from "../../Common/index"
 
-import defaultPhoto from "../../resource/defaultPhoto.png"
+import defaultLogo from "../../resource/defaultLogo.png"
 
 import QRcode_1 from "../../resource/menu_icon/QRcode/1.png"
 import QRcode_2 from "../../resource/menu_icon/QRcode/2.png"
@@ -110,7 +110,8 @@ export default class Menu extends Component {
                 <div id="menu_large" style={{display:this.state.open?"block":"none"}}>
                     <div className="gateInfo">
                         <div id="menu_Head">
-                            <img src={sessionStorage.logo||defaultPhoto} />
+                            {/* <img src={sessionStorage.logo||defaultPhoto} /> */}
+                            <img src={defaultLogo} />
                         </div>
                         <p id="menu_Company">
                             {sessionStorage.company}
