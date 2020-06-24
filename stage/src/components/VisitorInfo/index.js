@@ -1070,7 +1070,7 @@ export default class VisitorInfo extends Component {
         this.state.inSubmit = true
         Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done(function (data) {
             if (data.status === 0) {
-                if(!this.state.vaPerm){
+                if(!this.state.vaPerm&&!this.state.tempCard){
                     this.setState({
                         toastContent:"请等待被访人授权后在“今日访客”中发卡。",
                         openToast:2
