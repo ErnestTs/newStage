@@ -40,8 +40,10 @@ export default class VisitorInfo extends Component {
             empCompanyList:[],
 
             empCompanyFloorList:[],
+            empCompanyFloorListOnShow:[],
             empCompanyFloor:"",
             empCompanyFloorFocus:false,
+            empCompanyFloorKey:"",
 
             empNameFocus:false,
             empName:"",
@@ -175,6 +177,7 @@ export default class VisitorInfo extends Component {
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
                                             value={this.state.empCompanyFloor||""}
+                                            onChange={this.changeFloor.bind(this)}
                                             onFocus={(e)=>{
                                                 if(!!this.state.empNameList.length){
                                                     this.setState({
@@ -182,12 +185,11 @@ export default class VisitorInfo extends Component {
                                                     })
                                                 }
                                             }}
-                                            readOnly
                                         />
                                     </span>
                                 </div>
                                 <ul className="companylist" style={{display:this.state.empCompanyFloorFocus?"block":"none"}}>
-                                    {this.state.empCompanyFloorList.map((item,i)=>{
+                                    {this.state.empCompanyFloorListOnShow.map((item,i)=>{
                                         return (
                                             <li 
                                                 value={item||""}
@@ -196,7 +198,9 @@ export default class VisitorInfo extends Component {
                                                     (e)=>{
                                                         this.setState({
                                                             empCompanyFloor:item,
-                                                            empCompanyFloorFocus:false
+                                                            empCompanyFloorFocus:false,
+                                                            empCompanyFloorKey:item,
+                                                            elevatorContro_time:Common.checkPassConfig([item])
                                                         })
                                                     }
                                                 }
@@ -544,13 +548,7 @@ export default class VisitorInfo extends Component {
     init(){
         // 获取默认访客类型
         this.getVisitorType();
-
-        let elevatorContro_time = Common.checkPassConfig()
-
-        this.setState({
-            elevatorContro_time:elevatorContro_time
-        })
-
+        
         if(sessionStorage.sid != 0){
 			this.getEmpListByGid()
         }else{
@@ -669,7 +667,8 @@ export default class VisitorInfo extends Component {
                 empName:"",
                 empId:"",
                 empCompanyFloor:"",
-                empCompanyFloorList:[]
+                empCompanyFloorList:[],
+                empCompanyFloorListOnShow:[]
             })
         }else {
             this.state.empCompanyList = [];
@@ -685,7 +684,8 @@ export default class VisitorInfo extends Component {
                     empCompany:key,
                     empCompanyFocus: true,
                     empCompanyFloor:"",
-                    empCompanyFloorList:[]
+                    empCompanyFloorList:[],
+                    empCompanyFloorListOnShow:[]
                 });
             }
             else {
@@ -693,7 +693,8 @@ export default class VisitorInfo extends Component {
                     empCompany:key,
                     empCompanyFocus: false,
                     empCompanyFloor:"",
-                    empCompanyFloorList:[]
+                    empCompanyFloorList:[],
+                    empCompanyFloorListOnShow:[]
                 });
             }
         }
@@ -745,7 +746,8 @@ export default class VisitorInfo extends Component {
                 empId:"",
                 empNameFocus:false,
                 empCompanyFloor:"",
-                empCompanyFloorList:[]
+                empCompanyFloorList:[],
+                empCompanyFloorListOnShow:[]
             })
         }else {
             this.state.empNameList = [];
@@ -761,7 +763,8 @@ export default class VisitorInfo extends Component {
                     empName:key,
                     empNameFocus: true,
                     empCompanyFloor:"",
-                    empCompanyFloorList:[]
+                    empCompanyFloorList:[],
+                    empCompanyFloorListOnShow:[]
                 });
             }
             else {
@@ -769,7 +772,8 @@ export default class VisitorInfo extends Component {
                     empName:key,
                     empNameFocus: false,
                     empCompanyFloor:"",
-                    empCompanyFloorList:[]
+                    empCompanyFloorList:[],
+                    empCompanyFloorListOnShow:[]
                 });
             }
         }
@@ -805,12 +809,13 @@ export default class VisitorInfo extends Component {
                     let eList = res.result;
                     let resArr = []
                     for(let i = 0;i < eList.length; i++){
-                        if(gids.indexOf(eList[i].egid) !== -1){
+                        if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
                             resArr.push(eList[i].egname)
                         }
                     }
                     this.setState({
-                        empCompanyFloorList:resArr
+                        empCompanyFloorList:resArr,
+                        empCompanyFloorListOnShow:resArr
                     })
                 }
             })
@@ -898,6 +903,13 @@ export default class VisitorInfo extends Component {
             Toast.open({
                 type:"danger",
                 content: "请记录人脸或发卡"
+            })
+            return
+        }
+        if(!empCompanyFloorKey){
+            Toast.open({
+                type:"danger",
+                content: "请选择楼层"
             })
             return
         }
@@ -1327,5 +1339,32 @@ export default class VisitorInfo extends Component {
             return
         }
         this.setToast(1)
+    }
+
+    /**
+     * @description [修改楼层]
+     * @param {Event} e 
+     */
+    changeFloor(e){
+        let key = e.target.value;
+        if(!key){
+            this.setState({
+                empCompanyFloor:"",
+                empCompanyFloorListOnShow:this.state.empCompanyFloorList,
+                empCompanyFloorKey:"",
+            })
+        }else{
+            let empCompanyFloorListOnShow = []
+            this.state.empCompanyFloorList.map((item)=>{
+                if(item.indexOf(key)!=-1){
+                    empCompanyFloorListOnShow.push(item)
+                }
+            })
+            this.setState({
+                empCompanyFloor:key,
+                empCompanyFloorKey:"",
+                empCompanyFloorListOnShow:empCompanyFloorListOnShow
+            })
+        }
     }
 }

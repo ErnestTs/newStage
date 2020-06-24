@@ -631,7 +631,7 @@ export default class Common {
 		let gNamesList = [];
 		let gName = sessionStorage.gname
 		for(let i =0; i < floor.length;i++){
-			gNamesList.push(gName+"-"+floor[i])
+			gNamesList.push(floor[i])
 		}
 		let sendData = {
 			"reqDate":new Date().getTime(),

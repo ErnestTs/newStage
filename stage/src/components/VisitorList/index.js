@@ -83,7 +83,7 @@ export default class VisitorList extends Component{
                                     }} 
                                 />
                                 <div className="defaultImg">
-                                    <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
+                                    {/* <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} /> */}
                                     <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
                                     {/* <img
                                         className="printIcon"
@@ -172,7 +172,7 @@ export default class VisitorList extends Component{
                                     }} 
                                 />
                                 <div className="defaultImg">
-                                    <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
+                                    {/* <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} /> */}
                                     <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
                                     {/* <img
                                         className="printIcon"
