@@ -110,7 +110,7 @@ export default class Menu extends Component {
                 <div id="menu_large" style={{display:this.state.open?"block":"none"}}>
                     <div className="gateInfo">
                         <div id="menu_Head">
-                            <img src={defaultPhoto} />
+                            <img src={sessionStorage.logo||defaultPhoto} />
                         </div>
                         <p id="menu_Company">
                             {sessionStorage.company}
