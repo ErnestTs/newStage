@@ -1014,7 +1014,6 @@ export default class VisitorInfo extends Component {
             appointmentDate: this.state.appointmentDate,
             empPhone:this.state.empPhone,
             clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
-            subAccountid:this.state.empCompanyId,
 			ctype: sessionStorage.sid=="0"?'u':"s"
         };
 
