@@ -45,7 +45,7 @@ export default class VisitorList extends Component{
                 {
                     name:"待发卡访客",
                     interface:"getNotSendCardVisit",
-                    stateList:["pad","wechat","invitation","stage"]
+                    stateList:["pad","wechat","invitation","stage","QL_FK"]
                 }
             ],
             vStateList:[
@@ -60,6 +60,7 @@ export default class VisitorList extends Component{
                 {name:"小程序",count:0,key:"wechat"},
                 {name:"邀请函",count:0,key:"invitation"},
                 {name:"礼宾台",count:0,key:"stage"},
+                {name:"访客机",count:0,key:"QL_FK"},
             ],
             vState:0,
             columns:[
@@ -200,6 +201,14 @@ export default class VisitorList extends Component{
                     key: 'vphone',
                 },
                 {
+                    title: '性别',
+                    dataIndex: 'sex',
+                    key: 'sex',
+                    render:(data)=>{
+                        return <span>{data==0?"女":"男"}</span>
+                    }
+                },
+                {
                     title: '拜访事由',
                     dataIndex: 'vTypeOnShow',
                     key: 'vTypeOnShow',
@@ -239,6 +248,7 @@ export default class VisitorList extends Component{
         const { onSelectList } = this.state;
         const rowSelection = {
             onSelectList,
+            type:'radio',
             onChange: this.selectedRow.bind(this)
         };
         const { Option } = Select;
@@ -295,7 +305,11 @@ export default class VisitorList extends Component{
                                     }else{
                                         let length = this.state.vTypelist[this.state.vType].stateList.length
                                         return (
-                                            <li style={{width:100/length+"%"}} key={i+"vstate"} className={this.state.vState == i?"action":""} onClick={this.changeState.bind(this,i)}>
+                                            <li style={{width:100/length+"%"}}
+                                                key={i+"vstate"}
+                                                className={this.state.vState == i?"action":""}
+                                                onClick={this.changeState.bind(this,i)}
+                                            >
                                                 {item.name}({item.count})
                                             </li>
                                         )
@@ -306,7 +320,7 @@ export default class VisitorList extends Component{
                         <ul className="searchCriteria">
                             <li className="searchContent">
                                 <img src={search_icon} />
-                                <input 
+                                <input
                                     placeholder="请输入访客的姓名或者公司"
                                     onChange={this.queryRecord.bind(this)}
                                 />
@@ -349,7 +363,7 @@ export default class VisitorList extends Component{
                             />
                         </div>
                         <div className="inputBox selectBox" style={{marginTop:"3vh"}}>
-                            <span>选择楼层：</span>
+                            <span>门禁权限：</span>
                             
                             <Select
                                 showSearch
@@ -419,6 +433,9 @@ export default class VisitorList extends Component{
                 let eList = res.result;
                 let resArr = []
                 for(let i = 0;i < eList.length; i++){
+                    if(!eList[i].gids){
+                        continue;
+                    }
                     if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
                         resArr.push({name:eList[i].egname,egid:eList[i].egid})
                     }
@@ -530,6 +547,13 @@ export default class VisitorList extends Component{
                     }
                 }
                 break;
+            case "QL_FK":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(this.state.baseList[i].clientNo == 4){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -551,9 +575,9 @@ export default class VisitorList extends Component{
 
     /**
      * @description [根据时间查询访客信息]
-     * @param {String} date [yyyy-MM-dd]
+     * @param {Boolean} noRefresh [是否刷新]
      */
-    getVisitorInfo(){
+    getVisitorInfo(noRefresh){
         let interfaceName = this.state.vTypelist[this.state.vType].interface;
         let sendData = {
             userid: sessionStorage.userid,
@@ -580,6 +604,7 @@ export default class VisitorList extends Component{
                             {name:"小程序",count:0,key:"wechat"},
                             {name:"邀请函",count:0,key:"invitation"},
                             {name:"礼宾台",count:0,key:"stage"},
+                            {name:"访客机",count:0,key:"QL_FK"},
                         ]
                     })
                     return
@@ -596,6 +621,7 @@ export default class VisitorList extends Component{
                 let wechatCount = 0;
                 let invitationCount = 0;
                 let stageCount = 0;
+                let QL_FKCount = 0
 
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
@@ -641,9 +667,6 @@ export default class VisitorList extends Component{
                     }
                     // 处理发卡计数
                     switch(item.clientNo){
-                        case 5:
-                            padCount++
-                            break;
                         case 1:
                             wechatCount++
                             break;
@@ -652,6 +675,12 @@ export default class VisitorList extends Component{
                             break;
                         case 3:
                             stageCount++
+                            break;
+                        case 4:
+                            QL_FKCount++
+                            break;
+                        case 5:
+                            padCount++
                             break;
                     }
 
@@ -702,6 +731,9 @@ export default class VisitorList extends Component{
                         case "stage":
                             vStateList[i].count=stageCount
                             break;
+                        case "QL_FK":
+                            vStateList[i].count=QL_FKCount
+                            break;
                         default:
                             break;
                     }
@@ -713,7 +745,7 @@ export default class VisitorList extends Component{
                     vStateList:vStateList,
                     baseList:resArr
                 },()=>{
-                    if(interfaceName == "getNotSendCardVisit"){
+                    if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
                         this.changeState(7)
                     }
                 })
@@ -835,18 +867,19 @@ export default class VisitorList extends Component{
      */
     queryRecord(e){
         let key = e.target.value;
-        this.getVisitorInfo()
         if(!key){
+            this.getVisitorInfo()
             return
         }
         let _this = this;
         setTimeout(()=>{
+            this.getVisitorInfo(true)
             let tempArr = this.state.dataSource;
             let resArr = []
             for(let i = 0; i < tempArr.length; i++){
                 let item = tempArr[i]
-                if(!!item.vcompany){
-                    if(item.vname.indexOf(key) !== -1 || item.vcompany.indexOf(key) !== -1){
+                if(!!item.company){
+                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1){
                         resArr.push(item)
                     }
                 }else if(item.vname.indexOf(key) !== -1){
@@ -975,7 +1008,7 @@ export default class VisitorList extends Component{
                 if(!!res.result.length){
                     let tempCount = 0
                     for(let i = 0;i < res.result.length;i++){
-                        if(!!res.result[i].clientNo&&res.result[i].clientNo !== 4){
+                        if(!!res.result[i].clientNo){
                             tempCount++
                         }
                     }

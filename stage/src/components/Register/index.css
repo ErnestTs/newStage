@@ -515,7 +515,7 @@
 
 #component_Register_tempCardBox,#component_Register_ToastBox {
     width: 28.125vw;
-    height: 24vh;
+    /* height: 24vh; */
     background-color: #fff;
     border-radius: 39px;
     position: absolute;
@@ -523,6 +523,7 @@
     top: 50%;
     transform: translate(-50%,-50%);
     overflow: hidden;
+    padding-bottom: 4.16vh;
 }
 
 #component_Register_tempCardBox .title {

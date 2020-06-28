@@ -171,7 +171,7 @@ export default class Register extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
+                                        {this.state.empidRequired?<span className="required">*</span>:""}门禁权限:
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
@@ -400,7 +400,7 @@ export default class Register extends Component {
                 </div>
 
                 <div id="component_Register_loginBTN" onClick={this.updatePhoto.bind(this)}>
-                    <span>下一步</span>
+                    <span>确定</span>
                 </div>
 
                 <div style={{display:this.state.openToast?"block":"none"}} id="component_Register_Toast">
@@ -975,7 +975,7 @@ export default class Register extends Component {
         if(sessionStorage.sid==0){
             extendColGroup.push("access=" + sessionStorage.EquipmentAccess);
         }else{
-            extendColGroup.push("access=" + "\""+this.state.egids+ "\"");
+            extendColGroup.push("access=" + "\""+this.state.empCompanyFloorKey+ "\"");
         }
         
         if(this.state.gatein){
@@ -1090,20 +1090,16 @@ export default class Register extends Component {
                     window.changeItem(0,"公司列表","companylist")
                 }, 2000);
             }else if(data.status === 66){
-                // Toast.open({
-                //     type:"danger",
-                //     content: "该访客已在黑名单中!"
-                // })
                 this.setState({
                     toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
                     openToast:2
                 })
+                this.setState({
+                    inSubmit: false,
+                    vistorName: "",
+                    vistorPhone: ''
+                });
             }
-            this.setState({
-                inSubmit: false,
-                vistorName: "",
-                vistorPhone: ''
-            });
         }.bind(this));
     }
 
@@ -1185,7 +1181,7 @@ export default class Register extends Component {
                             window.interval = null
                             Toast.open({
                                 type:"danger",
-                                content: "人脸校验失败!"
+                                content: "未通过人脸校验，请重新抓拍人脸"
                             })
                             return
                         }else {

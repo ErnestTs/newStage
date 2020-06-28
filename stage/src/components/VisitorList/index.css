@@ -444,3 +444,19 @@
 #component_VisitorList .selectBox input {
     border: 0 !important
 }
+
+#component_VisitorList .ant-radio-checked .ant-radio-inner {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .ant-radio-inner::after {
+    background-color: #AA9D84;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+#component_VisitorList .ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus + .ant-radio-inner {
+    border-color:#AA9D84
+}

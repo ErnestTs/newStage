@@ -172,7 +172,7 @@ export default class VisitorInfo extends Component {
                             <li>
                                 <div>
                                     <span className="component_Register_appInfo_key">
-                                        {this.state.empidRequired?<span className="required">*</span>:""}公司楼层:
+                                        {this.state.empidRequired?<span className="required">*</span>:""}门禁权限:
                                     </span>
                                     <span className="component_Register_appInfo_value">
                                         <input type="text"
@@ -401,7 +401,7 @@ export default class VisitorInfo extends Component {
                 </div>
 
                 <div id="component_Register_loginBTN" onClick={this.updatePhoto.bind(this)}>
-                    <span>下一步</span>
+                    <span>确定</span>
                 </div>
 
                 <div style={{display:this.state.openToast?"block":"none"}} id="component_Register_Toast">
@@ -892,7 +892,7 @@ export default class VisitorInfo extends Component {
             })
             return
         }
-        if(this.state.elevatorContro_time&&!this.state.tempCard){
+        if(this.state.elevatorContro_time&&!this.state.tempCard&&this.state.vaPerm){
             this.setState({
                 toastContent:"",
                 openToast:3
@@ -978,7 +978,7 @@ export default class VisitorInfo extends Component {
         if(sessionStorage.sid==0){
             extendColGroup.push("access=" + sessionStorage.EquipmentAccess);
         }else{
-            extendColGroup.push("access=" + "\""+this.state.egids+ "\"");
+            extendColGroup.push("access=" + "\""+this.state.empCompanyFloorKey+ "\"");
         }
         
         if(this.state.gatein){
@@ -1014,6 +1014,7 @@ export default class VisitorInfo extends Component {
             appointmentDate: this.state.appointmentDate,
             empPhone:this.state.empPhone,
             clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
+            subAccountid:this.state.empCompanyId
         };
 
         if(!!this.state.plateNum) {
@@ -1065,12 +1066,16 @@ export default class VisitorInfo extends Component {
             sendData.peopleCount = this.state.peopleCount
         }
         
-        
         /**设置为提交状态 */
         this.state.inSubmit = true
         Common.ajaxProc("addVisitorApponintmnet", sendData, sessionStorage.token).done(function (data) {
             if (data.status === 0) {
-                if(!this.state.vaPerm&&!this.state.tempCard){
+                if(this.state.elevatorContro_time&&!this.state.tempCard&&!this.state.vaPerm){
+                    this.setState({
+                        toastContent:"此时段有梯控，请等待被访人授权后在“今日访客”中发卡。",
+                        openToast:2
+                    })
+                }else if(!this.state.vaPerm&&!this.state.tempCard){
                     this.setState({
                         toastContent:"请等待被访人授权后在“今日访客”中发卡。",
                         openToast:2
@@ -1105,18 +1110,23 @@ export default class VisitorInfo extends Component {
                     toastContent:"您好，"+this.state.vphone+"为黑名单人员，不可邀请预约",
                     openToast:2
                 })
+                this.setState({
+                    inSubmit: false,
+                    vistorName: "",
+                    vistorPhone: ''
+                });
             }else if(data.status === 43){
                 Toast.open({
                     type:"danger",
                     content: "当前访客已超过预约限度"
                 })
+                this.setState({
+                    inSubmit: false,
+                    vistorName: "",
+                    vistorPhone: ''
+                });
                 return
             }
-            this.setState({
-                inSubmit: false,
-                vistorName: "",
-                vistorPhone: ''
-            });
         }.bind(this));
     }
 
