@@ -188,23 +188,23 @@ export default class Register extends Component {
                                     </span>
                                 </div>
                                 <ul className="companylist" style={{display:this.state.empCompanyFloorFocus?"block":"none"}}>
-                                    {this.state.empCompanyFloorListOnShow.map((item,i)=>{
+                                    {this.state.empCompanyFloorListOnShow.map((item,i,arr)=>{
                                         return (
-                                            <li 
-                                                value={item||""}
-                                                key={i+"li"}
+                                            <li
+                                                value={item.name||""}
+                                                key={item.egid}
                                                 onClick={
                                                     (e)=>{
                                                         this.setState({
-                                                            empCompanyFloor:item,
+                                                            empCompanyFloor:item.name,
                                                             empCompanyFloorFocus:false,
-                                                            empCompanyFloorKey:item,
-                                                            elevatorContro_time:Common.checkPassConfig([item])
+                                                            empCompanyFloorKey:item.egid,
+                                                            elevatorContro_time:Common.checkPassConfig([item.name])
                                                         })
                                                     }
                                                 }
                                             >
-                                                {item}
+                                                {item.name}
                                             </li>
                                         )
                                     })}
@@ -808,7 +808,7 @@ export default class Register extends Component {
                     let resArr = []
                     for(let i = 0;i < eList.length; i++){
                         if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
-                            resArr.push(eList[i].egname)
+                            resArr.push({name:eList[i].egname,egid:eList[i].egid})
                         }
                     }
                     this.setState({
@@ -1072,6 +1072,7 @@ export default class Register extends Component {
                 if(!!this.state.tempCard){
                     Common.ajaxProc("updateVisitorCardNo",
                         {
+                            access:this.state.empCompanyFloorKey,
                             vid:data.result.vid.split("v")[1],
                             cardNo:this.state.tempCard,
                             cardOpName:sessionStorage.opname,
@@ -1329,7 +1330,7 @@ export default class Register extends Component {
         }else{
             let empCompanyFloorListOnShow = []
             this.state.empCompanyFloorList.map((item)=>{
-                if(item.indexOf(key)!=-1){
+                if(item.name.indexOf(key)!=-1){
                     empCompanyFloorListOnShow.push(item)
                 }
             })

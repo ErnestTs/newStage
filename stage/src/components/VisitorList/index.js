@@ -1,6 +1,6 @@
-import React,{Component,useState} from "react"
+import React,{Component} from "react"
 import $ from "jquery"
-import { Table,DatePicker,Checkbox } from 'antd';
+import { Table,DatePicker,Checkbox,Select } from 'antd';
 import moment from 'moment';
 
 import Common from "../../Common/index"
@@ -229,7 +229,9 @@ export default class VisitorList extends Component{
             onSelectList:[],
             openToast:0,
             tempCard:"",
-            notSendCardVisits:0
+            notSendCardVisits:0,
+            floorsList:[],
+            targetFloorName:""
         }
     }
 
@@ -237,8 +239,9 @@ export default class VisitorList extends Component{
         const { onSelectList } = this.state;
         const rowSelection = {
             onSelectList,
-            onChange: this.selectedRow
+            onChange: this.selectedRow.bind(this)
         };
+        const { Option } = Select;
         return(
             <div id="component_VisitorList">
                 <div className="component_VisitorList_btnGroup">
@@ -345,6 +348,34 @@ export default class VisitorList extends Component{
                                 ref={(input) => this.inputRef = input}
                             />
                         </div>
+                        <div className="inputBox selectBox" style={{marginTop:"3vh"}}>
+                            <span>选择楼层：</span>
+                            
+                            <Select
+                                showSearch
+                                style={{ width: '14vw' }}
+                                placeholder="请选择楼层"
+                                value={this.state.targetFloorName||""}
+                                onChange={(val)=>{
+                                    this.setState({
+                                        targetFloorName:val
+                                    })
+                                }}
+                            >
+                                {
+                                    this.state.floorsList.map((item)=>{
+                                        return(
+                                            <Option 
+                                                value={item.name} 
+                                                key={item.egid}
+                                            >
+                                                {item.name}
+                                            </Option>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </div>
                         <ul className="btnGroup">
                             <li onClick={this.closeTempCardBox.bind(this)}>
                                 取消
@@ -383,6 +414,20 @@ export default class VisitorList extends Component{
         // 获取当前表单
         this.getVisitorInfo()
         this.getTempCardCount()
+        Common.ajaxProc("getEquipmentGroupByUserid",{userid: sessionStorage.userid}).done((res)=>{
+            if(res.status == 0){
+                let eList = res.result;
+                let resArr = []
+                for(let i = 0;i < eList.length; i++){
+                    if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                        resArr.push({name:eList[i].egname,egid:eList[i].egid})
+                    }
+                }
+                this.setState({
+                    floorsList:resArr
+                })
+            }
+        })
     }
 
 
@@ -459,7 +504,7 @@ export default class VisitorList extends Component{
                 break;
             case "pad":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 0){
+                    if(this.state.baseList[i].clientNo == 5){
                         tempArr.push(this.state.baseList[i])
                     }
                 }
@@ -596,7 +641,7 @@ export default class VisitorList extends Component{
                     }
                     // 处理发卡计数
                     switch(item.clientNo){
-                        case 0:
+                        case 5:
                             padCount++
                             break;
                         case 1:
@@ -820,10 +865,9 @@ export default class VisitorList extends Component{
      * @param {*} rows 
      */
     selectedRow(keys, rows){
-        console.log(rows)
-        // this.setState({
-        //     onSelectList:rows
-        // })
+        this.setState({
+            onSelectList:rows
+        })
     }
 
     /**
@@ -847,7 +891,8 @@ export default class VisitorList extends Component{
      */
     closeTempCardBox(){
         this.setState({
-            tempCard:""
+            tempCard:"",
+            targetFloorName:""
         })
         this.setToast(0)
     }
@@ -863,19 +908,38 @@ export default class VisitorList extends Component{
             })
             return
         }
+        if(!this.state.targetFloorName){
+            Toast.open({
+                type:"danger",
+                content: "请选择楼层"
+            })
+            return
+        }
         let oList = this.state.onSelectList;
         oList.map((item,i)=>{
+            let egid = "";
+            for(let i = 0; i < this.state.floorsList.length;i ++){
+                if(this.state.floorsList[i].name == this.state.targetFloorName){
+                    egid += this.state.floorsList[i].egid
+                }
+            }
             Common.ajaxProc("updateVisitorCardNo",
                 {
                     vid:item.vid,
                     cardNo:this.state.tempCard,
                     cardOpName:sessionStorage.opname,
+                    access:egid
                 },sessionStorage.token).done((res)=>{
                 if (res.status === 0) {
                     Toast.open({
                         type:"success",
                         content: "发卡成功"
                     })
+                    this.setState({
+                        onSelectList:[]
+                    })
+                    this.closeTempCardBox()
+                    this.getVisitorInfo()
                 }
             })
         })
@@ -909,8 +973,14 @@ export default class VisitorList extends Component{
         Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
             if(res.status == 0){
                 if(!!res.result.length){
+                    let tempCount = 0
+                    for(let i = 0;i < res.result.length;i++){
+                        if(!!res.result[i].clientNo&&res.result[i].clientNo !== 4){
+                            tempCount++
+                        }
+                    }
                     this.setState({
-                        notSendCardVisits:res.result.length
+                        notSendCardVisits:tempCount
                     })
                 }
             }

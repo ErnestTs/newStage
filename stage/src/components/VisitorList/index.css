@@ -400,3 +400,47 @@
     color:#AA9D84;
     border-color:#AA9D84
 }
+
+#component_VisitorList>#component_Register_Toast #component_Register_tempCardBox {
+    height: 32vh;
+}
+#component_VisitorList>#component_Register_Toast #component_Register_ToastBox {
+    height: 32vh;
+}
+
+#component_VisitorList .ant-select-selector {
+    padding: 0
+}
+
+#component_VisitorList .selectBox .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .selectBox .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color:#AA9D84
+}
+
+#component_VisitorList .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color:#AA9D84
+}
+
+#component_VisitorList #component_Register_tempCardBox .inputBox input,.ant-select.ant-select-single.ant-select-show-arrow{
+    width: 14vw;
+    height: 3.7vh;
+    background: #FFFFFF;
+    border: 1px solid #AA9D84;
+    border-radius: 6px;
+    text-indent: 5%;
+    line-height: 3.7vh;
+    box-shadow: none;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+#component_VisitorList .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    border: 0
+}
+
+#component_VisitorList .selectBox input {
+    border: 0 !important
+}
