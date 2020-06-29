@@ -17,9 +17,11 @@ export default class Common {
 	static cameraUrl = "http://www.coolvisit.top/wmd/stage/MyCamera.swf";
 	static customPrintUrl = "http://www.coolvisit.top/card/custom/";
 	
-	static Version = "2.4.8"
+	static Version = "2.4.8";
 
-	static FreshToken = 6
+	static FreshToken = 6;
+
+	static strict = !!this.$_Get().strict;
 
 	static ajaxProc(action, data, token) {
 		let jqXHR = $.ajax({

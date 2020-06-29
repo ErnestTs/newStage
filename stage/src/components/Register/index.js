@@ -636,7 +636,7 @@ export default class Register extends Component {
 						continue;
                     }
 					let gids = data.result[i].gids.split(",")
-					if(gids.indexOf(gid)!== -1){
+					if(gids.indexOf(gid)!== -1&&data.result[i].isUse == 1){
 						tempArr.push(data.result[i])
 					}
                 }
@@ -806,9 +806,20 @@ export default class Register extends Component {
                 if(res.status == 0){
                     let eList = res.result;
                     let resArr = []
-                    for(let i = 0;i < eList.length; i++){
-                        if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
-                            resArr.push({name:eList[i].egname,egid:eList[i].egid})
+                    if(Common.strict){
+                        let egids = this.state.egids.split(",");
+                        for(let i = 0;i < eList.length; i++){
+                            if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                                if(egids.indexOf(eList[i].egid+"")!==-1){
+                                    resArr.push({name:eList[i].egname,egid:eList[i].egid})
+                                }
+                            }
+                        }
+                    }else{
+                        for(let i = 0;i < eList.length; i++){
+                            if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                                resArr.push({name:eList[i].egname,egid:eList[i].egid})
+                            }
                         }
                     }
                     this.setState({
