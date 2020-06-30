@@ -1074,7 +1074,7 @@ export default class VisitorInfo extends Component {
                 sendData.peopleCount = 1
             }
         }else {
-            sendData.peopleCount = this.state.peopleCount
+            // sendData.peopleCount = this.state.peopleCount
         }
         
         /**设置为提交状态 */
