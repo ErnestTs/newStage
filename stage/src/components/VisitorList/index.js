@@ -146,6 +146,8 @@ export default class VisitorList extends Component{
                                 return <span className="statusTag brown">未授权</span>
                             case 5:
                                 return <span className="statusTag coffee">已结束</span>
+                            case 6:
+                                return <span className="statusTag red">已取消</span>
                             default:
                                 return <span className="statusTag"></span>
                         }
@@ -650,7 +652,11 @@ export default class VisitorList extends Component{
                     }else {
                         if(item.status == 4){
                             item.state = 3;
-                        }else{
+                        }
+                        else if(item.status == 5){
+                            item.state = 6;
+                        }
+                        else{
                             switch (item.permission) {
                                 case 0:
                                     item.state = 4;
@@ -660,6 +666,9 @@ export default class VisitorList extends Component{
                                     break;
                                 case 2:
                                     item.state = 3;
+                                    break;
+                                case 3:
+                                    item.state = 6;
                                     break;
                             }
                         }
