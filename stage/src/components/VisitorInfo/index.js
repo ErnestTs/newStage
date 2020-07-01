@@ -1098,7 +1098,7 @@ export default class VisitorInfo extends Component {
                     content: "现场预约成功"
                 })
                 if(!!this.state.tempCard){
-                    Common.ajaxProc("updateVisitorCardNo",
+                    Common.ajaxProcWithoutAsync("updateVisitorCardNo",
                         {
                             access:this.state.empCompanyFloorKey,
                             vid:data.result,
@@ -1109,6 +1109,11 @@ export default class VisitorInfo extends Component {
                                 Toast.open({
                                     type:"success",
                                     content: "发卡成功"
+                                })
+                            }else{
+                                Toast.open({
+                                    type:"danger",
+                                    content: "发卡失败"
                                 })
                             }
                     })

@@ -1081,7 +1081,7 @@ export default class Register extends Component {
                     content: "现场登记成功！"
                 })
                 if(!!this.state.tempCard){
-                    Common.ajaxProc("updateVisitorCardNo",
+                    Common.ajaxProcWithoutAsync("updateVisitorCardNo",
                         {
                             access:this.state.empCompanyFloorKey,
                             vid:data.result.vid.split("v")[1],
@@ -1092,6 +1092,11 @@ export default class Register extends Component {
                             Toast.open({
                                 type:"success",
                                 content: "发卡成功"
+                            })
+                        }else{
+                            Toast.open({
+                                type:"danger",
+                                content: "发卡失败"
                             })
                         }
                     })

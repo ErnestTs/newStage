@@ -10,12 +10,18 @@ let defaultState = {
 
 class ToastPublic extends Component {
     state = {
-        ...defaultState
+        ...defaultState,
+        taskQueue:[]
     }
     
     open(options){
+        if(this.state.display === "show"){
+            this.state.taskQueue.push(options)
+            return
+        }
         options = options || {};
         options.display = "show";
+        this.state.display = "show"
         this.setState({
           ...defaultState,
           ...options
@@ -28,6 +34,11 @@ class ToastPublic extends Component {
                     this.setState({
                         ...defaultState,
                         ...options
+                    },()=>{
+                        if(!!this.state.taskQueue.length){
+                            this.open(this.state.taskQueue[0])
+                            this.state.taskQueue.shift()
+                        }
                     })
                 }
             }, 3000)

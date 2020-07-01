@@ -168,7 +168,7 @@ export default class Companylist extends Component {
     }
 
     componentDidMount(){
-
+        
 
         // 设定表格高度
         this.setState({
