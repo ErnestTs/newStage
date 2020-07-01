@@ -435,6 +435,7 @@
     border: 1px solid #F4F4F4;
     float: left;
     margin-right: 10px;
+    margin-bottom: 10px;
     font-size: 16px;
     color: #999;
     cursor: pointer;
@@ -526,7 +527,6 @@
     top: 50%;
     transform: translate(-50%,-50%);
     overflow: hidden;
-    padding-bottom: 4.16vh;
 }
 
 #component_Register_tempCardBox .title {
@@ -560,7 +560,8 @@
     margin: auto;
     overflow: hidden;
     width: 13.4vw;
-    margin-top: 4vh
+    margin-top: 4vh;
+    margin-bottom: 4vh
 }
 
 #component_Register_tempCardBox .btnGroup li {

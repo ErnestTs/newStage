@@ -312,7 +312,7 @@ export default class VisitorInfo extends Component {
                                                         }
                                                     }
                                                 >
-                                                    {item.name}
+                                                    {item.name.split("#")[0]}
                                                 </li>
                                             )
                                         })
@@ -1063,12 +1063,12 @@ export default class VisitorInfo extends Component {
                 }
                 if(!!tempArr.length){
                     sendData.extendCol.push("peopleCount="+(tempArr.length+1));
-                    sendData.peopleCount = tempArr.length+1
+                    sendData.peopleCount = tempArr.length+1;
+                    sendData.memberName=JSON.stringify(tempArr)
                 }else {
                     sendData.extendCol.push("peopleCount="+1);
                     sendData.peopleCount = 1
                 }
-                sendData.memberName=JSON.stringify(tempArr)
             }else{
                 sendData.extendCol.push("peopleCount="+1);
                 sendData.peopleCount = 1
