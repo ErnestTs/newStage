@@ -148,7 +148,7 @@
 #component_Register_cardInfo_mask_photoBox {
     width: 43%;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 6%;
     border: 1px solid #AA9D84;
     border-radius: 50%;
     position: relative;
@@ -225,6 +225,7 @@
 #component_Register_cardInfo_mask .btn_box{
     height: 7.5%;
     margin-top: 2.778vh;
+    margin-bottom: 2.778vh;
 }
 
 #component_Register_cardInfo_mask .btn_box div{
@@ -593,6 +594,7 @@
     overflow: hidden;
     width: 13.4vw;
     margin-top: 4vh;
+    margin-bottom: 4vh;
     text-align: center
 }
 
