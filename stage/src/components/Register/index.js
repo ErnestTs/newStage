@@ -77,7 +77,7 @@ export default class Register extends Component {
             faceLoading:false,
 
             remark:"",
-			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
+			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark","pCardDate"],			// 已注册表单单元
 			// regElementArr: ["name", "empid", "phone",  "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
         }
     }
