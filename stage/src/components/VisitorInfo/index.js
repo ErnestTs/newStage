@@ -1002,9 +1002,13 @@ export default class VisitorInfo extends Component {
         
         if(this.state.gatein){
             extendColGroup.push("gatein=" + sessionStorage.gname);
-        }			
+        }
         if(this.state.guardin){
             extendColGroup.push("guardin=" + sessionStorage.opname);
+        }
+        // 添加发卡时间
+        if(!!this.state.tempCard){
+            extendColGroup.push("pCardDate=" + new Date().format("yyyy-MM-dd hh:mm:ss"));
         }
         let card = {
             cardId:this.state.cardId||"",
