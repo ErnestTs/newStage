@@ -818,7 +818,7 @@ export default class Register extends Component {
                         }
                     }else{
                         for(let i = 0;i < eList.length; i++){
-                            if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                            if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
                                 resArr.push({name:eList[i].egname,egid:eList[i].egid})
                             }
                         }
