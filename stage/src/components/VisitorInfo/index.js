@@ -918,7 +918,7 @@ export default class VisitorInfo extends Component {
             })
             return
         }
-        if(!this.state.faceState&&!this.state.tempCard&&this.state.vaPerm){
+        if(!this.state.faceState&&!this.state.tempCard){
             Toast.open({
                 type:"danger",
                 content: "请记录人脸或发卡"
