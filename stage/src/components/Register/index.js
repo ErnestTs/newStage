@@ -74,6 +74,7 @@ export default class Register extends Component {
             elevatorContro_time:false,  // 梯控
 
             sexType:1, // 0-女 1-男
+            faceLoading:false,
 
             remark:"",
 			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
@@ -901,6 +902,13 @@ export default class Register extends Component {
             })
             return
         }
+        if(this.state.faceLoading){
+            Toast.open({
+                type:"danger",
+                content: "当前人脸正在进行校验，请等待结果。"
+            })
+            return
+        }
         if(this.state.elevatorContro_time&&!this.state.tempCard){
             this.setState({
                 toastContent:"",
@@ -1199,8 +1207,10 @@ export default class Register extends Component {
                                 type:"danger",
                                 content: "未通过人脸校验，请重新抓拍人脸"
                             })
+                            this.state.faceLoading = false
                             return
                         }else {
+                            this.state.faceLoading = true
                             this.getFaceStatus(data.result.url)
                             count++
                         }

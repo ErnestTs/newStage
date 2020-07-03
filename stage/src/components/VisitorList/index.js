@@ -970,7 +970,8 @@ export default class VisitorList extends Component{
                     vid:item.vid,
                     cardNo:this.state.tempCard,
                     cardOpName:sessionStorage.opname,
-                    access:egid
+                    access:egid,
+                    appid:item.appid
                 },sessionStorage.token).done((res)=>{
                 if (res.status === 0) {
                     Toast.open({
