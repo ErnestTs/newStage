@@ -194,6 +194,7 @@ export default class Register extends Component {
                                             <li
                                                 value={item.name||""}
                                                 key={item.egid}
+                                                className={item.def?"defAccess":""}
                                                 onClick={
                                                     (e)=>{
                                                         this.setState({
@@ -807,8 +808,8 @@ export default class Register extends Component {
                 if(res.status == 0){
                     let eList = res.result;
                     let resArr = []
+                    let egids = this.state.egids.split(",");
                     if(Common.strict){
-                        let egids = this.state.egids.split(",");
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
@@ -819,13 +820,22 @@ export default class Register extends Component {
                     }else{
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
-                                resArr.push({name:eList[i].egname,egid:eList[i].egid})
+                                if(egids.indexOf(eList[i].egid+"")!==-1){
+                                    resArr.unshift({name:eList[i].egname,egid:eList[i].egid,def:true})
+                                }else{
+                                    resArr.push({name:eList[i].egname,egid:eList[i].egid,def:false})
+                                }
                             }
                         }
                     }
+                    let item = resArr[0]
                     this.setState({
                         empCompanyFloorList:resArr,
-                        empCompanyFloorListOnShow:resArr
+                        empCompanyFloorListOnShow:resArr,
+                        empCompanyFloor:item.name,
+                        empCompanyFloorFocus:false,
+                        empCompanyFloorKey:item.egid,
+                        elevatorContro_time:Common.checkPassConfig([item.name])
                     })
                 }
             })
@@ -1033,6 +1043,7 @@ export default class Register extends Component {
             card:card,
             signOutOpName:sessionStorage.opname,
             clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
+            floors:this.state.empCompanyFloor
         };
 
         if(!!this.state.plateNum) {

@@ -639,6 +639,13 @@ export default class VisitorList extends Component{
 					if (item.signOutDate !== null) {
 						item.signOutDate = new Date(item.signOutDate).format("yyyy-MM-dd hh:mm:ss");
                     }
+                    if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
+                        let toady = new Date().format("yyyy-MM-dd")
+                        let pCardDate = (JSON.parse(item.extendCol.replace(/&quot;/g,'"'))).pCardDate
+                        if(pCardDate==toady){
+                            continue;
+                        }
+                    }
 
                     if(!!item.signOutDate){
                         item.state = 2;
@@ -1020,8 +1027,13 @@ export default class VisitorList extends Component{
         Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
             if(res.status == 0){
                 if(!!res.result.length){
-                    let tempCount = 0
+                    let tempCount = 0;
+                    let toady = new Date().format("yyyy-MM-dd")
                     for(let i = 0;i < res.result.length;i++){
+                        let pCardDate = (JSON.parse(res.result[i].extendCol.replace(/&quot;/g,'"'))).pCardDate;
+                        if(pCardDate==toady){
+                            continue;
+                        }
                         if(!!res.result[i].clientNo){
                             tempCount++
                         }

@@ -620,3 +620,7 @@
     margin-top: 4.16vh;
     margin-bottom: 1.57vh;
 }
+
+#component_Register .defAccess {
+    color: #FF7B00
+}
