@@ -242,6 +242,7 @@ export default class VisitorList extends Component{
             tempCard:"",
             notSendCardVisits:0,
             floorsList:[],
+            floorsListOnShow:[],
             targetFloorName:""
         }
     }
@@ -370,7 +371,7 @@ export default class VisitorList extends Component{
                             <Select
                                 showSearch
                                 style={{ width: '14vw' }}
-                                placeholder="请选择楼层"
+                                placeholder="请选择门禁权限"
                                 value={this.state.targetFloorName||""}
                                 onChange={(val)=>{
                                     this.setState({
@@ -379,13 +380,14 @@ export default class VisitorList extends Component{
                                 }}
                             >
                                 {
-                                    this.state.floorsList.map((item)=>{
+                                    this.state.floorsListOnShow.map((item)=>{
                                         return(
                                             <Option 
                                                 value={item.name} 
                                                 key={item.egid}
+                                                className={ item.def?"defAccess":"" }
                                             >
-                                                {item.name}
+                                                <span>{item.name}</span>
                                             </Option>
                                         )
                                     })
@@ -443,7 +445,8 @@ export default class VisitorList extends Component{
                     }
                 }
                 this.setState({
-                    floorsList:resArr
+                    floorsList:resArr,
+                    floorsListOnShow:resArr,
                 })
             }
         })
@@ -924,6 +927,7 @@ export default class VisitorList extends Component{
             })
             return;
         }else{
+            this.getDefAccess(oList)
             this.setToast(1)
         }
     }
@@ -960,7 +964,7 @@ export default class VisitorList extends Component{
         let oList = this.state.onSelectList;
         oList.map((item,i)=>{
             let egid = "";
-            for(let i = 0; i < this.state.floorsList.length;i ++){
+            for(let i = 0; i < this.state.floorsList.length;i++){
                 if(this.state.floorsList[i].name == this.state.targetFloorName){
                     egid += this.state.floorsList[i].egid
                 }
@@ -1025,6 +1029,46 @@ export default class VisitorList extends Component{
                     this.setState({
                         notSendCardVisits:tempCount
                     })
+                }
+            }
+        })
+    }
+
+    /**
+     * @description [获取默认门禁]
+     */
+    getDefAccess(oList){
+        Common.ajaxProcWithoutAsync('getSubAccountByUserid', {userid:sessionStorage.userid}, sessionStorage.token).done((data)=>{
+            if (data.status === 0 && data.result.length !== 0) {
+                for(let i = 0;i<data.result.length;i++){
+                    if(data.result[i].companyName === oList[0].company){
+                        let sendData = { userid: sessionStorage.userid, subaccountId: data.result[i].id }
+                        Common.ajaxProcWithoutAsync('getSubAccountEmpList', sendData, sessionStorage.token).done((data)=>{
+                            if (data.status === 0 && data.result.length !== 0) {
+                                for(let i = 0;i<data.result.length;i++){
+                                    if(data.result[i].empName === oList[0].empName){
+                                        let egids = data.result[i].egids;
+                                        let floorsListOnShow = []
+                                        for(let i = 0; i<this.state.floorsList.length;i++){
+                                            if(egids.indexOf(this.state.floorsList[i].egid)!=-1){
+                                                this.state.floorsList[i].def = true
+                                                floorsListOnShow.unshift(this.state.floorsList[i])
+                                            }else{
+                                                this.state.floorsList[i].def = false
+                                                floorsListOnShow.push(this.state.floorsList[i])
+                                            }
+                                        }
+                                        this.setState({
+                                            targetFloorName:floorsListOnShow[0].name,
+                                            floorsListOnShow:floorsListOnShow 
+                                        })
+                                        break;
+                                    }
+                                }
+                            }
+                        })
+                        break;
+                    }
                 }
             }
         })

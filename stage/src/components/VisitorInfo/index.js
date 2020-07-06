@@ -1008,7 +1008,7 @@ export default class VisitorInfo extends Component {
         }
         // 添加发卡时间
         if(!!this.state.tempCard){
-            extendColGroup.push("pCardDate=" + new Date().format("yyyy-MM-dd hh:mm:ss"));
+            extendColGroup.push("pCardDate=" + new Date().getTime());
         }
         let card = {
             cardId:this.state.cardId||"",
