@@ -437,7 +437,7 @@ export default class VisitorList extends Component{
                 let eList = res.result;
                 let resArr = []
                 for(let i = 0;i < eList.length; i++){
-                    if(!eList[i].gids){
+                    if(!eList[i].gids||eList[i].egname.indexOf("FACE")==0){
                         continue;
                     }
                     if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
