@@ -936,7 +936,7 @@ export default class Register extends Component {
         if(!this.state.empCompanyFloorKey){
             Toast.open({
                 type:"danger",
-                content: "请选择楼层"
+                content: "请选择门禁权限"
             })
             return
         }
@@ -1004,7 +1004,7 @@ export default class Register extends Component {
         if(sessionStorage.sid==0){
             extendColGroup.push("access=" + sessionStorage.EquipmentAccess);
         }else{
-            extendColGroup.push("access=" + "\""+this.state.empCompanyFloorKey+ "\"");
+            extendColGroup.push("access=" + this.state.empCompanyFloorKey);
         }
         
         if(this.state.gatein){
@@ -1212,9 +1212,11 @@ export default class Register extends Component {
                     this.setState({
                         photoURL:data.result.url
                     })
-                    if(!!window.interval){
+                    if(this.state.faceLoading){
                         return
                     }
+                    let sendData = {"photoUrl":data.result.url};
+                    Common.ajaxProcWithoutAsync("uploadFace",sendData,sessionStorage.token)
                     let count = 0;
                     window.interval = setInterval(() => {
                         if(count >= 20) {
@@ -1227,7 +1229,6 @@ export default class Register extends Component {
                             this.state.faceLoading = false
                             return
                         }else {
-                            this.state.faceLoading = true
                             this.getFaceStatus(data.result.url)
                             count++
                         }
@@ -1246,6 +1247,7 @@ export default class Register extends Component {
         Common.ajaxProc("getFaceStatus",sendData,sessionStorage.token).done((res)=>{
             if(res.result == 0) {
                 this.setState({
+                    faceLoading:false,
                     faceState:true
                 })
                 clearInterval(window.interval)
