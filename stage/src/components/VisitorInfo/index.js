@@ -814,6 +814,9 @@ export default class VisitorInfo extends Component {
                     if(Common.strict){
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                                if(eList[i].egname.indexOf("FACE")==0){
+                                    continue;
+                                }
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     resArr.push({name:eList[i].egname,egid:eList[i].egid})
                                 }
@@ -822,6 +825,9 @@ export default class VisitorInfo extends Component {
                     }else{
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                                if(eList[i].egname.indexOf("FACE")==0){
+                                    continue;
+                                }
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     resArr.unshift({name:eList[i].egname,egid:eList[i].egid,def:true})
                                 }else{
