@@ -292,7 +292,7 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul 
                             className="component_VisitorList_btnGroup_actions"
-                            style={{display:this.state.vType==3?"block":"none"}}
+                            style={{display:this.state.vType==3||this.state.vType==0?"block":"none"}}
                         >
                             <li className="component_VisitorList_setTempCard" onClick={this.sendCard.bind(this)}>
                                 <span>发卡</span>
@@ -342,7 +342,7 @@ export default class VisitorList extends Component{
                 <div id="component_VisitorList_tableBox">
                     <div id="component_VisitorList_tableBoard">
                         <Table 
-                            rowSelection={this.state.vType == 3?rowSelection:null}
+                            rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:null}
                             className="tableBox" 
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource} 
