@@ -252,6 +252,7 @@ export default class VisitorList extends Component{
         const rowSelection = {
             onSelectList,
             type:'radio',
+            preserveSelectedRowKeys:false,
             onChange: this.selectedRow.bind(this)
         };
         const { Option } = Select;
@@ -458,6 +459,9 @@ export default class VisitorList extends Component{
      * @param {Number} index [下标]
      */
     changeVtype(index){
+        if(index==this.state.vType){
+            return
+        }
         let vState = this.state.vTypelist[index].stateList[0];
         let vTypeIndex = 0
         for(let i = 0; i < this.state.vStateList.length;i++){
@@ -709,7 +713,7 @@ export default class VisitorList extends Component{
                         item.vTypeOnShow = ""
                     }
                     item.checked = false;
-                    item.key = i;
+                    item.key = i+interfaceName+Math.random();
                     
                     resArr.push(item)
                 }
