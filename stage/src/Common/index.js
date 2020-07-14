@@ -10,14 +10,14 @@ export default class Common {
 	static customPrintUrl = Common.protocol + window.location.host + "/card/custom/";
 
 	// static url = "http://www.coolvisit.top/qcvisitBase/";
-	static url = "http://www.coolvisit.top/wmd/qcvisit/";
+	// static url = "http://www.coolvisit.top/wmd/qcvisit/";
 	// static url = "http://www.coolvisit.top/ykt/qcvisit/";
 	// static url = "http://139.217.223.183/qcvisit/";
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
-	static cameraUrl = "http://www.coolvisit.top/wmd/stage/MyCamera.swf";
-	static customPrintUrl = "http://www.coolvisit.top/card/custom/";
+	// static cameraUrl = "http://www.coolvisit.top/wmd/stage/MyCamera.swf";
+	// static customPrintUrl = "http://www.coolvisit.top/card/custom/";
 	
-	static Version = "2.4.8";
+	static Version = "2.4.8.0";
 
 	static FreshToken = 6;
 
