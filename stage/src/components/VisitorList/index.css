@@ -281,18 +281,18 @@
 }
 
 #component_VisitorList_tableBoard .tableItem_name {
-    text-align: left;
+    text-align: center;
     overflow: hidden;
 }
 
 #component_VisitorList_tableBoard .tableItem_name span {
-    margin-left: 4%;
+    /* margin-left: 4%; */
 }
 
 #component_VisitorList_tableBoard .tableItem_name span img {
     display: inline;
     width: 6%;
-    margin-left: 4%;
+    /* margin-left: 4%; */
 }
 @media screen and (max-width: 1280px) {
     #component_VisitorList_tableBoard .tableItem_name span img  {
@@ -308,7 +308,7 @@
 #component_VisitorList_tableBoard .tableItem_name .defaultImg {
     height: 60%;
     display: inline;
-    margin-left: 4%;
+    /* margin-left: 4%; */
     cursor: pointer;
 }
 
