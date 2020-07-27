@@ -34,10 +34,15 @@ export default class Blacklist extends Component {
                   key: 'phone',
                 },
                 {
-                  title: '禁止访问企业',
+                  title: '禁止访问企业（英文）',
                   dataIndex: 'sname',
                   key: 'sname',
                 },
+                // {
+                //   title: '禁止访问企业（英文）',
+                //   dataIndex: 'sname',
+                //   key: 'sname',
+                // },
                 {
                   title: '备注',
                   dataIndex: 'remark',
@@ -135,6 +140,16 @@ export default class Blacklist extends Component {
                         oList[i].key = i+"blackList"
                         if(!oList[i].sname){
                             oList[i].sname = "全部企业"
+                            oList[i].sname_eng = "all"
+                        }else{
+                            // let snameArr = oList[i].sname.split(",");
+                            // let sname_engArr = []
+                            // for(let i =0; i< snameArr.length;i++) {
+                            //     sname_engArr.push(snameArr[i].split('#')[1])
+                            //     i = snameArr[i].split('#')[0];
+                            // }
+                            // oList[i].sname = snameArr.join(",");
+                            // oList[i].sname_eng = sname_engArr.join(",");
                         }
                         tempArr.push(oList[i])
                     }
