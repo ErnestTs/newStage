@@ -236,7 +236,35 @@ export default class VisitorList extends Component{
                 </div>
                 <div id="component_VisitorList_signIn">
                     <div id="component_VisitorList_signInBoard">
-
+                        <h3>
+                            接待人信息
+                        </h3>
+                        <ul>
+                            <li>
+                                <span>
+                                    工号：
+                                </span>
+                                <input />
+                            </li>
+                            <li>
+                                <span>
+                                    身份证号：
+                                </span>
+                                <input />
+                            </li>
+                            <li>
+                                <span>
+                                    接待人姓名：
+                                </span>
+                                <input />
+                            </li>
+                            <li>
+                                <span>
+                                    手机号码：
+                                </span>
+                                <input />
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
