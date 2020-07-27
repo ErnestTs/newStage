@@ -31,6 +31,7 @@ export default class Input extends Component {
                     onFocus={()=>{this.setState({focus:true})}}
                     onBlur={()=>{this.setState({focus:false})}}
                     onChange={this.props.onChange}
+                    autocomplete="off"
                 />
             </div>
         )
