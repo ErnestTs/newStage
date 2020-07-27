@@ -62,7 +62,7 @@ export default class VisitorList extends Component{
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
+                                    style={{display:(this.state.vState==2&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
                                         tempArr[data.key].checked = !tempArr[data.key].checked;
@@ -176,6 +176,17 @@ export default class VisitorList extends Component{
                                 <span>取消</span>
                             </li>
                         </ul>
+                        <ul 
+                            className="component_VisitorList_btnGroup_actions"
+                            style={{display:this.state.vType==1?"block":"none"}}
+                        >
+                            <li className="component_VisitorList_btnSelectAll">
+                                <span>接待</span>
+                            </li>
+                            <li className="component_VisitorList_btnCancel" onClick={this.selectAll.bind(this,false)}>
+                                <span>取消</span>
+                            </li>
+                        </ul>
                     </div>
                     <div className="component_VisitorList_topBar2">
                         <ul className="visitorState">
@@ -221,6 +232,11 @@ export default class VisitorList extends Component{
                             pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
                             locale={{emptyText: '暂无数据'}}
                         />
+                    </div>
+                </div>
+                <div id="component_VisitorList_signIn">
+                    <div id="component_VisitorList_signInBoard">
+
                     </div>
                 </div>
             </div>

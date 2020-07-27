@@ -350,3 +350,21 @@
     width: 6%;
     height: auto;
 }
+
+#component_VisitorList_signIn {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto
+}
