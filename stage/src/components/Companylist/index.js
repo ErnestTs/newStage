@@ -19,12 +19,22 @@ export default class Companylist extends Component {
         this.state = {
             columns:[
                 {
-                  title: '公司',
+                  title: '公司（中文）',
                   dataIndex: 'companyName',
                   key: 'companyName',
                   render(data){
                       return(
                         <span>{data.split("#")[0]}</span>
+                      )
+                  }
+                },
+                {
+                  title: '公司（英文）',
+                  dataIndex: 'companyName',
+                  key: 'companyName',
+                  render(data){
+                      return(
+                        <span>{data.split("#")[1]}</span>
                       )
                   }
                 },
@@ -54,7 +64,7 @@ export default class Companylist extends Component {
                   }
                 },
                 {
-                  title: '是否可授权',
+                  title: '是否需授权',
                   dataIndex: 'authorize',
                   key: 'authorize',
                   render(data){

@@ -34,7 +34,7 @@ export default class Blacklist extends Component {
                   key: 'phone',
                 },
                 {
-                  title: '企业',
+                  title: '禁止访问企业',
                   dataIndex: 'sname',
                   key: 'sname',
                 },
@@ -133,6 +133,9 @@ export default class Blacklist extends Component {
                 for( let i = this.state.paginationOption.startIndex; i < oList.length;i++ ){
                     if(i< this.state.paginationOption.startIndex+this.state.paginationOption.size){
                         oList[i].key = i+"blackList"
+                        if(!oList[i].sname){
+                            oList[i].sname = "全部企业"
+                        }
                         tempArr.push(oList[i])
                     }
                 }

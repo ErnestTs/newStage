@@ -227,6 +227,9 @@ export default class Menu extends Component {
      */
     changeItem(i,name,path){
         this.props.history.push("/home/"+path)
+        if(name == "公司列表"){
+            name +="("+sessionStorage.gname+")"
+        }
         this.props.changeTitle(name)
 		if(path === "qrcode" && Common.$_Get().idcard == '3'){
             sessionStorage.cameraReady = 'false'
