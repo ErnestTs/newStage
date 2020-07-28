@@ -266,6 +266,7 @@ export default class VisitorList extends Component{
                                 <input 
                                     type="text" 
                                     value={this.state.signInInfo.empId}
+                                    ref={(input)=>{this.empIdInput=input}}
                                     onChange={
                                         ((e)=>{
                                             let val = e.target.value;
@@ -273,11 +274,16 @@ export default class VisitorList extends Component{
                                             obj.empId = val
                                             this.setState({
                                                 signInInfo:obj
+                                            },()=>{
+                                                let _this = this;
+                                                setTimeout(()=>{
+                                                    _this.getEmpNameById()
+                                                },1000)
                                             })
                                         }).bind(this)
                                     }
                                 />
-                                <span className="signInBoard_Btn">读取</span>
+                                <span className="signInBoard_Btn" onClick={this.getEmpNameById.bind(this)}>读取</span>
                             </li>
                             <li>
                                 <span className="signInBoard_label">
@@ -301,8 +307,7 @@ export default class VisitorList extends Component{
                                     className="signInBoard_Btn"
                                     onClick={
                                         (()=>{
-                                            // window.Android.startActivity("id");
-                                            window.callbackId({cardId:"1122334"})
+                                            window.Android.startActivity("id");
                                         }).bind(this)
                                     }
                                 >读取</span>
@@ -807,6 +812,8 @@ export default class VisitorList extends Component{
         }
         this.setState({
             goSignIn:true
+        },()=>{
+            this.empIdInput.focus()
         })
     }
 
@@ -909,6 +916,34 @@ export default class VisitorList extends Component{
                         phone:""
                     }
                 })
+            }
+        })
+    }
+
+    /**
+     * @description [根据IC卡查员工姓名]
+     */
+    getEmpNameById(){
+        Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
+            let empList = res.result;
+            let flag = false;
+            for(let i = 0;i < empList.length;i++){
+                if(this.state.signInInfo.empId == empList[i].empid){
+                    flag = true;
+                    let obj = this.state.signInInfo;
+                    obj.name = empList[i].empName
+                    this.setState({
+                        signInInfo:obj
+                    })
+                    break;
+                }
+            }
+            if(!flag){
+                Toast.open({
+                    type:"danger",
+                    content: "无效员工"
+                })
+                return
             }
         })
     }
