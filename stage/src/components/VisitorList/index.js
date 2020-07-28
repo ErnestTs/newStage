@@ -65,7 +65,12 @@ export default class VisitorList extends Component{
                                     style={{display:(this.state.vState==2&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
-                                        tempArr[data.key].checked = !tempArr[data.key].checked;
+                                        for(let i = 0;i < tempArr.length;i++){
+                                            if(tempArr[i].key == data.key){
+                                                tempArr[i].checked = !tempArr[i].checked
+                                                break;
+                                            }
+                                        }
                                         this.setState({
                                             dataSource:tempArr
                                         })
@@ -144,7 +149,13 @@ export default class VisitorList extends Component{
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
 
-            goSignIn:true
+            goSignIn:true,
+            signInInfo:{
+                empId:"",
+                cardId:"",
+                name:"",
+                phone:""
+            }
         }
     }
 
@@ -252,27 +263,88 @@ export default class VisitorList extends Component{
                                 <span className="signInBoard_label">
                                     工号：
                                 </span>
-                                <input type="text" />
+                                <input 
+                                    type="text" 
+                                    value={this.state.signInInfo.empId}
+                                    onChange={
+                                        ((e)=>{
+                                            let val = e.target.value;
+                                            let obj = this.state.signInInfo;
+                                            obj.empId = val
+                                            this.setState({
+                                                signInInfo:obj
+                                            })
+                                        }).bind(this)
+                                    }
+                                />
                                 <span className="signInBoard_Btn">读取</span>
                             </li>
                             <li>
                                 <span className="signInBoard_label">
                                     身份证号：
                                 </span>
-                                <input type="text" />
-                                <span className="signInBoard_Btn">读取</span>
+                                <input 
+                                    type="text"
+                                    value={this.state.signInInfo.cardId} 
+                                    onChange={
+                                        ((e)=>{
+                                            let val = e.target.value;
+                                            let obj = this.state.signInInfo;
+                                            obj.cardId = val
+                                            this.setState({
+                                                signInInfo:obj
+                                            })
+                                        }).bind(this)
+                                    }
+                                />
+                                <span 
+                                    className="signInBoard_Btn"
+                                    onClick={
+                                        (()=>{
+                                            // window.Android.startActivity("id");
+                                            window.callbackId({cardId:"1122334"})
+                                        }).bind(this)
+                                    }
+                                >读取</span>
                             </li>
                             <li>
                                 <span className="signInBoard_label">
                                     接待人姓名：
                                 </span>
-                                <input type="text" />
+                                <input 
+                                    type="text" 
+                                    value={this.state.signInInfo.name}
+                                    onChange={
+                                        ((e)=>{
+                                            let val = e.target.value;
+                                            let obj = this.state.signInInfo;
+                                            obj.name = val
+                                            this.setState({
+                                                signInInfo:obj
+                                            })
+                                        }).bind(this)
+                                    }
+                                />
                             </li>
                             <li>
                                 <span className="signInBoard_label">
                                     手机号码：
                                 </span>
-                                <input type="text" placeholder="（非必填）" />
+                                <input 
+                                    type="text" 
+                                    placeholder="（非必填）" 
+                                    value={this.state.signInInfo.phone} 
+                                    onChange={
+                                        ((e)=>{
+                                            let val = e.target.value;
+                                            let obj = this.state.signInInfo;
+                                            obj.phone = val
+                                            this.setState({
+                                                signInInfo:obj
+                                            })
+                                        }).bind(this)
+                                    }
+                                />
                             </li>
                         </ul>
                         <ul className="signInBoard_BTNGroup">
@@ -280,14 +352,20 @@ export default class VisitorList extends Component{
                                 onClick={
                                     (()=>{
                                         this.setState({
-                                            goSignIn:false
+                                            goSignIn:false,
+                                            signInInfo:{
+                                                empId:"",
+                                                cardId:"",
+                                                name:"",
+                                                phone:""
+                                            }
                                         })
                                     }).bind(this)
                                 }
                             >
                                 取消
                             </li>
-                            <li>
+                            <li onClick={this.setReceptionist.bind(this)}>
                                 确定
                             </li>
                         </ul>
@@ -315,8 +393,30 @@ export default class VisitorList extends Component{
      * @description [初始化]
      */
     init(){
+        let _this = this;
+        
         // 获取当前表单
         this.getVisitorInfo()
+
+        // 初始化senseid读取身份证
+		window.callbackId = function(res){
+            if(!res){
+                return
+            }
+            if(typeof(res) == "string"){
+                try {
+                    res = JSON.parse(res)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            let tempSignInfo = _this.state.signInInfo;
+            tempSignInfo.cardId = res.cardId;
+            tempSignInfo.name = res.name;
+            _this.setState({
+                signInInfo:tempSignInfo
+            })
+		}
     }
 
 
@@ -497,7 +597,7 @@ export default class VisitorList extends Component{
                         item.vTypeOnShow = ""
                     }
                     item.checked = false;
-                    item.key = i;
+                    item.key = i+"#"+interfaceName+Math.random();
                     
                     resArr.push(item)
                 }
@@ -687,9 +787,129 @@ export default class VisitorList extends Component{
                 dataArr.push(this.state.dataSource[i])
             }
         }
+        if(!dataArr.length){
+            Toast.open({
+                type:"danger",
+                content: "请选择访客"
+            })
+            return
+        }
         console.log(dataArr)
+        for(let i = 0; i < dataArr.length;i++){
+            this.checkAnswer(dataArr[i])
+            if(!this.checkAnswer(dataArr[i])){
+                Toast.open({
+                    type:"danger",
+                    content: "请确认访客已完成答题"
+                })
+                return
+            }
+        }
         this.setState({
             goSignIn:true
+        })
+    }
+
+    /**
+     * @description [校验答题]
+     * @param {String} email 
+     * @param {String} phone 
+     * @param {String} cardId 
+     */
+	checkAnswer(target){
+        let res = false;
+        let infoList = [target.vemail, target.vphone, target.cardId]
+		for(let i = 0;i<infoList.length;i++){
+			if(sessionStorage.questionnaireSwitch == 0){
+                res = true;
+                return res
+			}
+			if(res){
+				continue;
+			}
+			let item = infoList[i];
+			if(!item){
+				continue;
+			}
+			if(target.tid == "0"){
+                res = false
+				return res;
+			}
+			Common.ajaxProcWithoutAsync("getVisitorTypeByTid",{"tid": target.tid,"userid": sessionStorage.userid},sessionStorage.token).done((data)=>{
+				if(!data.result.qid){
+                    res = true
+                    return res
+				}
+				let getAnswerResult = Common.ajaxProcWithoutAsync("getAnswerResult",{"identity": item,"userid": sessionStorage.userid},sessionStorage.token);
+				getAnswerResult.done((res)=>{
+					if(!res.result || !res.result.passDate) {
+                        res = false
+						return false
+					} else if ( new Date().getTime() > new Date(new Date(Number(res.result.passDate)).format("yyyy-MM-dd 00:00:00")).getTime()+Number(data.result.povDays)*24*60*60*1000){
+                        res = false
+                        return false
+					}else {
+                        res = true
+						return true
+					}
+                })
+			})
+
+        }
+        return res
+    }
+
+    /**
+     * @description [设置接待人]
+     */
+    setReceptionist(){
+        let sendData = {
+            rname: this.state.signInInfo.name,
+            rempNo: this.state.signInInfo.empId,//工号
+            rcardId: this.state.signInInfo.cardId,
+            rphone: this.state.signInInfo.phone
+        }
+        if(!this.state.signInInfo.name){
+            Toast.open({
+                type:"danger",
+                content: "请输入接待人姓名"
+            })
+            return
+        }else {
+            Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
+                let empList = res.result;
+                let flag = false;
+                for(let i = 0;i < empList.length;i++){
+                    if(this.state.signInInfo.name == empList[i].empName){
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag){
+                    Toast.open({
+                        type:"danger",
+                        content: "无效员工"
+                    })
+                    return
+                }
+            })
+        }
+        Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
+            if(res.status==0){
+                Toast.open({
+                    type:"success",
+                    content: "绑定成功"
+                })
+                this.setState({
+                    goSignIn:false,
+                    signInInfo:{
+                        empId:"",
+                        cardId:"",
+                        name:"",
+                        phone:""
+                    }
+                })
+            }
         })
     }
 }
