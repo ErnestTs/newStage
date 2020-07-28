@@ -67,7 +67,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
                                 <Route path="/home/resident" component={Resident} />
-                                <Redirect to="/home/qrcode" />
+                                <Redirect to="/home/visitor" />
                             </Switch>
                         </Router>
                     </div>

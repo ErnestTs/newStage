@@ -357,7 +357,8 @@
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
     left: 0;
-    top: 0
+    top: 0;
+    z-index: 99;
 }
 
 #component_VisitorList_signIn #component_VisitorList_signInBoard {
@@ -366,4 +367,85 @@
     top: 50%;
     transform: translate(-50%,-50%);
     background-color: #fff;
+    width: 33.54vw;
+    box-sizing: border-box;
+    border-radius: 39px;
+    padding: 40px 60px;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard h3 {
+    text-align: center;
+    font-size: 21px;
+    color: #4D4E50;
+    margin-bottom: 30px;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_label {
+    width: 26%;
+    text-align: right;
+    font-size: 1.8vh;
+    line-height: 40px;
+    color: #4D4E50;
+    display: block;
+    float: left;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard li {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard li input {
+    float: left;
+    box-sizing: border-box;
+    height: 40px;
+    border: 1px solid #4091F7;
+    border-radius: 6px;
+    width: 45%;
+    margin-left: 10px;
+    text-indent: 10px
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_Btn {
+    background: #4091F7;
+    border-radius: 4px;
+    font-size: 1.11vh;
+    color: #FFFFFF;
+    line-height: 2.7vh;
+    float: left;
+    padding: 0 14px;
+    margin-left: 21px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_BTNGroup {
+    width: 45%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 3.7vh;
+    font-size: 1.8vh;
+    color: #4091F7;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_BTNGroup li {
+    float: left;
+    width: 5.2vw;
+    height: 3.7vh;
+    line-height: 3.7vh;
+    text-align: center;
+    cursor: pointer;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_BTNGroup li:nth-child(1) {
+    background: #FFFFFF;
+    border: 1px solid #4091F7;
+    border-radius: 6px;
+}
+
+#component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_BTNGroup li:nth-child(2) {
+    background: #4091F7;
+    border-radius: 6px;
+    color: #fff;
+    float: right;
 }

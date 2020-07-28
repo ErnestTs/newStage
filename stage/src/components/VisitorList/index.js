@@ -143,6 +143,8 @@ export default class VisitorList extends Component{
             baseList:[],
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
+
+            goSignIn:true
         }
     }
 
@@ -180,7 +182,10 @@ export default class VisitorList extends Component{
                             className="component_VisitorList_btnGroup_actions"
                             style={{display:this.state.vType==1?"block":"none"}}
                         >
-                            <li className="component_VisitorList_btnSelectAll">
+                            <li 
+                                className="component_VisitorList_btnSelectAll"
+                                onClick={this.goSignIn.bind(this)}
+                            >
                                 <span>接待</span>
                             </li>
                             <li className="component_VisitorList_btnCancel" onClick={this.selectAll.bind(this,false)}>
@@ -234,35 +239,56 @@ export default class VisitorList extends Component{
                         />
                     </div>
                 </div>
-                <div id="component_VisitorList_signIn">
+                <div    
+                    id="component_VisitorList_signIn"
+                    style={{display:this.state.goSignIn?"block":"none"}}
+                >
                     <div id="component_VisitorList_signInBoard">
                         <h3>
                             接待人信息
                         </h3>
                         <ul>
                             <li>
-                                <span>
+                                <span className="signInBoard_label">
                                     工号：
                                 </span>
-                                <input />
+                                <input type="text" />
+                                <span className="signInBoard_Btn">读取</span>
                             </li>
                             <li>
-                                <span>
+                                <span className="signInBoard_label">
                                     身份证号：
                                 </span>
-                                <input />
+                                <input type="text" />
+                                <span className="signInBoard_Btn">读取</span>
                             </li>
                             <li>
-                                <span>
+                                <span className="signInBoard_label">
                                     接待人姓名：
                                 </span>
-                                <input />
+                                <input type="text" />
                             </li>
                             <li>
-                                <span>
+                                <span className="signInBoard_label">
                                     手机号码：
                                 </span>
-                                <input />
+                                <input type="text" placeholder="（非必填）" />
+                            </li>
+                        </ul>
+                        <ul className="signInBoard_BTNGroup">
+                            <li
+                                onClick={
+                                    (()=>{
+                                        this.setState({
+                                            goSignIn:false
+                                        })
+                                    }).bind(this)
+                                }
+                            >
+                                取消
+                            </li>
+                            <li>
+                                确定
                             </li>
                         </ul>
                     </div>
@@ -649,5 +675,21 @@ export default class VisitorList extends Component{
                 dataSource:resArr
             })
         },0)
+    }
+
+    /**
+     * @description [点击发起接待]
+     */
+    goSignIn(){
+        let dataArr = []
+        for(let i = 0;i < this.state.dataSource.length;i++){
+            if(this.state.dataSource[i].checked){
+                dataArr.push(this.state.dataSource[i])
+            }
+        }
+        console.log(dataArr)
+        this.setState({
+            goSignIn:true
+        })
     }
 }
