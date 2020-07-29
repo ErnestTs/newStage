@@ -149,7 +149,7 @@ export default class VisitorList extends Component{
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
 
-            goSignIn:true,
+            goSignIn:false,
             signInInfo:{
                 empId:"",
                 cardId:"",
