@@ -180,7 +180,13 @@ export default class VisitorList extends Component{
                             style={{display:this.state.vState==2&&this.state.vType==0?"block":"none"}}
                         >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
-                                <span>批量签出</span>
+                                <span>全选</span>
+                            </li>
+                            <li 
+                                className="component_VisitorList_btnSelectAll"
+                                onClick={this.goSignIn.bind(this)}
+                            >
+                                <span>接待</span>
                             </li>
                             <li className="component_VisitorList_btnCheckOut" onClick={this.batchSignOut.bind(this)}>
                                 <span>签出</span>
@@ -189,7 +195,7 @@ export default class VisitorList extends Component{
                                 <span>取消</span>
                             </li>
                         </ul>
-                        <ul 
+                        {/* <ul 
                             className="component_VisitorList_btnGroup_actions"
                             style={{display:this.state.vType==1?"block":"none"}}
                         >
@@ -202,7 +208,7 @@ export default class VisitorList extends Component{
                             <li className="component_VisitorList_btnCancel" onClick={this.selectAll.bind(this,false)}>
                                 <span>取消</span>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
                     <div className="component_VisitorList_topBar2">
                         <ul className="visitorState">
