@@ -638,7 +638,7 @@ export default class VisitorInfo extends Component {
 					if(!data.result[i].gids||(data.result[i].vaPerm&2)!==2){
 						continue;
                     }
-					let gids = data.result[i].gids.split(",")
+                    let gids = data.result[i].gids.split(",")
 					if(gids.indexOf(gid)!== -1&&data.result[i].isUse == 1){
 						tempArr.push(data.result[i])
 					}
@@ -726,7 +726,13 @@ export default class VisitorInfo extends Component {
 					empNamePool: data.result,
                     empNameList: tempArr,
 				});
-			}
+			}else{
+				_this.setState({
+                    empName:"",
+					empNamePool: [],
+                    empNameList: [],
+				});
+            }
         })
         
         this.setState({

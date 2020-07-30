@@ -613,7 +613,9 @@ export default class VisitorList extends Component{
     changeDate(date){
         this.setState({
             date:date
-        },()=>{this.getVisitorInfo()})
+        },()=>{
+            this.getVisitorInfo()
+        })
     }
 
     /**
@@ -1078,6 +1080,10 @@ export default class VisitorList extends Component{
                     }
                     this.setState({
                         notSendCardVisits:tempCount
+                    })
+                }else{
+                    this.setState({
+                        notSendCardVisits:0
                     })
                 }
             }
