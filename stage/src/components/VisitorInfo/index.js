@@ -511,7 +511,13 @@ export default class VisitorInfo extends Component {
 					empNamePool: data.result,
 					empNameList: tempArr,
 				});
-			}
+			}else{
+				_this.setState({
+                    empName:"",
+					empNamePool: [],
+					empNameList: [],
+				});
+            }
 		})
         this.setState({
             empCompany: value,

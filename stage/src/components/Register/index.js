@@ -565,7 +565,13 @@ export default class Register extends Component {
 					empNamePool: data.result,
 					empNameList: tempArr,
 				});
-			}
+			}else{
+				_this.setState({
+                    empName:"",
+					empNamePool: [],
+					empNameList: [],
+				});
+            }
 		})
         this.setState({
             empCompany: value,
