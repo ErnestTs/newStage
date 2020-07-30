@@ -38,6 +38,15 @@ export default class Navgation extends Component {
 
     componentWillMount(){
         let _this = this;
+        if(window.location.hash == "#/login"){
+            _this.setState({
+                onShow:false
+            })
+        }else{
+            _this.setState({
+                onShow:true
+            })
+        }
         window.addEventListener("hashchange",()=>{
             if(window.location.hash == "#/login"){
                 _this.setState({

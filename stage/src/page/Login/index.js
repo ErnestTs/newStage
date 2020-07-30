@@ -69,10 +69,18 @@ export default class Login extends Component {
 
 
     componentDidMount(){
+        let _this = this;
         this.getValideCode();
 		if(Common.$_Get().idcard == 3){
 			this.login()
-		}
+        }
+        function goLogin(e){
+            if(window.location.hash == "#/login"&&e.keyCode == '13'){
+                _this.login()
+                window.removeEventListener("keypress",goLogin)
+            }
+        }
+        window.addEventListener("keypress",goLogin)
     }
 
     /**
