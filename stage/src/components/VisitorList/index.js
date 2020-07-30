@@ -23,7 +23,7 @@ export default class VisitorList extends Component{
             vType:0,
             vTypelist:[
                 {
-                    name:"签到访客",
+                    name:"登记访客",
                     interface:"SearchVisitByCondition",
                     stateList:["total","leave","visiting"]
                 },
@@ -67,7 +67,7 @@ export default class VisitorList extends Component{
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"25%",
+                  width:"15%",
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
@@ -102,9 +102,9 @@ export default class VisitorList extends Component{
                   }
                 },
                 {
-                    title: '被访人',
+                    title: "被访人",
                     dataIndex: 'empName',
-                    key: 'empName',
+                    key: 'empName'
                 },
                 {
                     title: '手机号',
@@ -115,6 +115,22 @@ export default class VisitorList extends Component{
                     title: '拜访事由',
                     dataIndex: 'vTypeOnShow',
                     key: 'vTypeOnShow',
+                },
+                {
+                    title: '被访公司（中文）',
+                    dataIndex: 'company',
+                    key: 'company',
+                    render:(data)=>{
+                        return data.split("#")[0]
+                    }
+                },
+                {
+                    title: '被访公司（英文）',
+                    dataIndex: 'company',
+                    key: 'company',
+                    render:(data)=>{
+                        return data.split("#")[1]
+                    }
                 },
                 {
                     title: '签到时间',
@@ -129,7 +145,7 @@ export default class VisitorList extends Component{
                     width:"15%",
                 },
                 {
-                    title: '',
+                    title: '状态',
                     dataIndex: 'state',
                     key: 'state',
                     render:(data)=>{
@@ -216,9 +232,20 @@ export default class VisitorList extends Component{
                     key: 'vTypeOnShow',
                 },
                 {
-                    title: '被访公司',
+                    title: '被访公司（中文）',
                     dataIndex: 'company',
                     key: 'company',
+                    render:(data)=>{
+                        return data.split("#")[0]
+                    }
+                },
+                {
+                    title: '被访公司（英文）',
+                    dataIndex: 'company',
+                    key: 'company',
+                    render:(data)=>{
+                        return data.split("#")[1]
+                    }
                 },
                 {
                     title: '已授权楼层',
@@ -462,6 +489,12 @@ export default class VisitorList extends Component{
         if(index==this.state.vType){
             return
         }
+        let colArr = this.state.columns
+        if(index == 2){
+            colArr[1].title = "邀请人"
+        }else{
+            colArr[1].title = "被访人"
+        }
         let vState = this.state.vTypelist[index].stateList[0];
         let vTypeIndex = 0
         for(let i = 0; i < this.state.vStateList.length;i++){
@@ -473,7 +506,8 @@ export default class VisitorList extends Component{
         this.setState({
             vType:index,
             vState:vTypeIndex,
-            onSelectList:[]
+            onSelectList:[],
+            columns:colArr
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
@@ -902,7 +936,7 @@ export default class VisitorList extends Component{
             for(let i = 0; i < tempArr.length; i++){
                 let item = tempArr[i]
                 if(!!item.company){
-                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1){
+                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1||item.company_eng.indexOf(key) !== -1){
                         resArr.push(item)
                     }
                 }else if(item.vname.indexOf(key) !== -1){
