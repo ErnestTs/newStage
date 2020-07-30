@@ -67,7 +67,7 @@ export default class VisitorList extends Component{
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"15%",
+                  width:"8%",
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
@@ -102,9 +102,12 @@ export default class VisitorList extends Component{
                   }
                 },
                 {
-                    title: "被访人",
-                    dataIndex: 'empName',
-                    key: 'empName'
+                    title: '性别',
+                    dataIndex: 'sex',
+                    key: 'sex',
+                    render:(data)=>{
+                        return <span>{data==0?"女":"男"}</span>
+                    }
                 },
                 {
                     title: '手机号',
@@ -117,9 +120,15 @@ export default class VisitorList extends Component{
                     key: 'vTypeOnShow',
                 },
                 {
+                    title: "被访人",
+                    dataIndex: 'empName',
+                    key: 'empName'
+                },
+                {
                     title: '被访公司（中文）',
                     dataIndex: 'company',
                     key: 'company',
+                    width:"15%",
                     render:(data)=>{
                         return data.split("#")[0]
                     }
@@ -128,6 +137,7 @@ export default class VisitorList extends Component{
                     title: '被访公司（英文）',
                     dataIndex: 'company',
                     key: 'company',
+                    width:"15%",
                     render:(data)=>{
                         return data.split("#")[1]
                     }
@@ -174,7 +184,7 @@ export default class VisitorList extends Component{
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"15%",
+                  width:"8%",
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
@@ -209,16 +219,6 @@ export default class VisitorList extends Component{
                   }
                 },
                 {
-                    title: '被访人',
-                    dataIndex: 'empName',
-                    key: 'empName',
-                },
-                {
-                    title: '手机号',
-                    dataIndex: 'vphone',
-                    key: 'vphone',
-                },
-                {
                     title: '性别',
                     dataIndex: 'sex',
                     key: 'sex',
@@ -227,14 +227,25 @@ export default class VisitorList extends Component{
                     }
                 },
                 {
+                    title: '手机号',
+                    dataIndex: 'vphone',
+                    key: 'vphone',
+                },
+                {
                     title: '拜访事由',
                     dataIndex: 'vTypeOnShow',
                     key: 'vTypeOnShow',
                 },
                 {
+                    title: '被访人',
+                    dataIndex: 'empName',
+                    key: 'empName',
+                },
+                {
                     title: '被访公司（中文）',
                     dataIndex: 'company',
                     key: 'company',
+                    width:"15%",
                     render:(data)=>{
                         return data.split("#")[0]
                     }
@@ -243,6 +254,7 @@ export default class VisitorList extends Component{
                     title: '被访公司（英文）',
                     dataIndex: 'company',
                     key: 'company',
+                    width:"15%",
                     render:(data)=>{
                         return data.split("#")[1]
                     }
@@ -491,9 +503,9 @@ export default class VisitorList extends Component{
         }
         let colArr = this.state.columns
         if(index == 2){
-            colArr[1].title = "邀请人"
+            colArr[4].title = "邀请人"
         }else{
-            colArr[1].title = "被访人"
+            colArr[4].title = "被访人"
         }
         let vState = this.state.vTypelist[index].stateList[0];
         let vTypeIndex = 0
