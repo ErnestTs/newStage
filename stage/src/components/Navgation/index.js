@@ -13,6 +13,10 @@ import exitPng from '../../resource/exit.png';
 export default class Navgation extends Component {
     constructor(props){
         super(props)
+
+        this.state={
+            onShow:false
+        }
     }
 
     render() {
@@ -21,7 +25,7 @@ export default class Navgation extends Component {
             <div id="topBar">
                 <div id="navgation">
                     <img src={logo} alt="" className="logo" />
-                    <div className="exit">
+                    <div style={{display:this.state.onShow?"block":"none"}} className="exit">
                         <span>
                             <img src={exitPng} alt="" />
                         </span>
@@ -30,6 +34,21 @@ export default class Navgation extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentWillMount(){
+        let _this = this;
+        window.addEventListener("hashchange",()=>{
+            if(window.location.hash == "#/login"){
+                _this.setState({
+                    onShow:false
+                })
+            }else{
+                _this.setState({
+                    onShow:true
+                })
+            }
+        })
     }
 
     /**
