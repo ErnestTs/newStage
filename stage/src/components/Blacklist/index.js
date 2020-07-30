@@ -56,7 +56,7 @@ export default class Blacklist extends Component {
             paginationOption:{
                 count:0,
                 startIndex:0,
-                size:5,
+                size:4,
             },
 
             key:""
