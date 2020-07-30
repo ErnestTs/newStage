@@ -34,7 +34,7 @@ export default class Blacklist extends Component {
                   key: 'phone',
                 },
                 {
-                  title: '禁止访问企业（英文）',
+                  title: '禁止访问企业（中文）',
                   dataIndex: 'sname',
                   key: 'sname',
                 },
@@ -72,7 +72,7 @@ export default class Blacklist extends Component {
                         <img src={search_icon} />
                         <input 
                             type="text" 
-                            placeholder="请输入手机号搜索"
+                            placeholder="请输入手机号/公司中文名/公司英文名搜索"
                             onChange={this.searchInfo.bind(this)}
                         />
                     </div>
@@ -211,7 +211,7 @@ export default class Blacklist extends Component {
         let oList = this.state.originalList;
         let tempDefArr = []
         for(let i = 0;i < oList.length; i++){
-            if(oList[i].phone.indexOf(key) !== -1){
+            if(oList[i].phone.indexOf(key) !== -1||oList[i].sname_eng.indexOf(key) !== -1||oList[i].sname.indexOf(key) !== -1||oList[i].sname_eng == "all"){
                 tempDefArr.push(oList[i])
             }
         }
