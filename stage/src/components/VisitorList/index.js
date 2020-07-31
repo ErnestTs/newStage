@@ -366,6 +366,7 @@ export default class VisitorList extends Component{
                                 <input
                                     placeholder="请输入访客的姓名或者公司"
                                     onChange={this.queryRecord.bind(this)}
+                                    id="visitorListQuery"
                                 />
                             </li>
                             <li className="DatePickerBox">
@@ -523,6 +524,7 @@ export default class VisitorList extends Component{
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
+            this.queryRecord()
         })
     }
 
@@ -626,7 +628,8 @@ export default class VisitorList extends Component{
         this.setState({
             date:date
         },()=>{
-            this.getVisitorInfo()
+            this.getVisitorInfo();
+            this.queryRecord()
         })
     }
 
@@ -937,6 +940,13 @@ export default class VisitorList extends Component{
      * @param {Event} e
      */
     queryRecord(e){
+        if(!e){
+            e = {
+                target:{
+                    value: document.getElementById("visitorListQuery").value
+                }
+            }
+        }
         let key = e.target.value;
         if(!key){
             this.getVisitorInfo()
@@ -950,7 +960,7 @@ export default class VisitorList extends Component{
             for(let i = 0; i < tempArr.length; i++){
                 let item = tempArr[i]
                 if(!!item.company){
-                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1||item.company_eng.indexOf(key) !== -1){
+                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1){
                         resArr.push(item)
                     }
                 }else if(item.vname.indexOf(key) !== -1){
