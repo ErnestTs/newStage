@@ -133,11 +133,12 @@ export default class Homepage extends Component {
      * @description [刷新token]
      */
 	refreshToken() {
-		let result = JSON.parse(sessionStorage.result),
-			email = sessionStorage.email,
+		let email = sessionStorage.email,
 			token = sessionStorage.token,
 			sendData = {
-				email: sessionStorage.pemail,
+                // email: sessionStorage.pemail||sessionStorage.email,
+                email: sessionStorage.email,
+                
 				oldToken: token
 			};
 			if(sessionStorage.loginType != "LoginManager"){
@@ -149,7 +150,7 @@ export default class Homepage extends Component {
 		Common.ajaxProc("refreshToken", sendData, sessionStorage.token).done(function (data) {
 			if (data.status === 0) {
 				/**存储结果用于刷新token,其他session暂不修改 */
-				sessionStorage.result = JSON.stringify(result);
+				// sessionStorage.result = JSON.stringify(result);
 
 				/**
 				 * 拼接token格式
