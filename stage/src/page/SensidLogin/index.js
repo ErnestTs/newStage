@@ -187,7 +187,7 @@ export default class Login extends Component {
                     }
 
 
-                    this.getCompayInfo(result.userid,user,this.state.username)
+                    // this.getCompayInfo(result.userid,user,this.state.username)
 
                     this.setState({
                         username: "",

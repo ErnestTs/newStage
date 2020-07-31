@@ -12,6 +12,7 @@ export default class Common {
 	// static url = "http://www.coolvisit.top/qcvisitBase/";
 	// static url = "http://www.coolvisit.top/wmd/qcvisit/";
 	// static url = "http://www.coolvisit.top/ykt/qcvisit/";
+	// static url = "http://test3.coolvisit.top/qcvisit/";
 	// static url = "http://139.217.223.183/qcvisit/";
 	// static printUrl = "http://www.coolvisit.top/card/index.html";
 	// static cameraUrl = "http://www.coolvisit.top/stage/MyCamera.swf";
