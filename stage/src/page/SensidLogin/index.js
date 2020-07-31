@@ -137,25 +137,57 @@ export default class Login extends Component {
             Common.ajaxProcWithoutAsync("Login",sendData).done((data)=>{
                 if (data.status === 0) {
                     let result = data.result;
-                    sessionStorage.userid = result.userid;
-                    sessionStorage.loginType = "Login";
-                    sessionStorage.un = this.state.userName;
-                    sessionStorage.ps = this.state.userPwd;
-                    sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
-                    sessionStorage.badgeMode = result.badgeMode;
-                    sessionStorage.badgeCustom = result.badgeCustom;
-                    sessionStorage.pemail = result.pemail;
+                    // sessionStorage.userid = result.userid;
+                    // sessionStorage.loginType = "Login";
+                    // sessionStorage.un = this.state.userName;
+                    // sessionStorage.ps = this.state.userPwd;
+                    // sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
+                    // sessionStorage.badgeMode = result.badgeMode;
+                    // sessionStorage.badgeCustom = result.badgeCustom;
+                    // sessionStorage.pemail = result.pemail;
 
-                    sessionStorage.token = result.userid + '-' + result.token;
-                    sessionStorage.gid = result.gid;
-                    sessionStorage.gname = result.gname;
+                    // sessionStorage.token = result.userid + '-' + result.token;
+                    // sessionStorage.gid = result.gid;
+                    // sessionStorage.gname = result.gname;
                     
 
-                    /**存储结果用于刷新token,其他session暂不修改 */
-                    sessionStorage.result = JSON.stringify(result);
+                    // /**存储结果用于刷新token,其他session暂不修改 */
+                    // sessionStorage.result = JSON.stringify(result);
+                    // sessionStorage.opname = result.username;
+                    // sessionStorage.company = result.company;
+                    let sname = user;
+                    sessionStorage.token = result.userid + '-' + result.token;
+                    sessionStorage.permissionSwitch = result.permissionSwitch;
+                    sessionStorage.logo = result.logo;
+                    sessionStorage.offDuty = result.offDuty;
+                    sessionStorage.cardType = result.cardType;
+                    sessionStorage.cardSize = result.cardSize;
+                    sessionStorage.email = result.email;
+                    sessionStorage.sid = result.subAccount;
+                    sessionStorage.preExtendTime = result.preExtendTime;
+                    sessionStorage.latExtendTime = result.latExtendTime;
+                    sessionStorage.badgeMode = result.badgeMode;
+                    sessionStorage.badgeCustom = result.badgeCustom;
+                    sessionStorage.mainCompany = result.company;
+                    sessionStorage.questionnaireSwitch = result.questionnaireSwitch;
+                    sessionStorage.opname = result.username;
+                    sessionStorage.company = result.company;
+                    sessionStorage.gid = result.gid
+                    sessionStorage.gname = result.gname
+				
+
+                    this.getExtendVisitor(result.userid);
+    
+                    let value = Common.$_Get().photo;
+                    if (value !== '0') {
+                        sessionStorage.photoSwitch = true;
+                    }
+                    else {
+                        sessionStorage.photoSwitch = false;
+                    }
 
 
-                    this.getCompayInfo(result.userid,result.pemail,this.state.username)
+                    this.getCompayInfo(result.userid,user,this.state.username)
 
                     this.setState({
                         username: "",
