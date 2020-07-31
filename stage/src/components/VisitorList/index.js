@@ -583,6 +583,13 @@ export default class VisitorList extends Component{
      * @param {Event} e
      */
     queryRecord(e){
+        if(!e){
+            e = {
+                target:{
+                    value: document.getElementById("visitorListQuery").value
+                }
+            }
+        }
         let key = e.target.value;
         this.getVisitorInfo()
         if(!key){
