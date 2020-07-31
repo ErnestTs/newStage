@@ -67,7 +67,7 @@ export default class Common {
 				'X-COOLVISIT-TOKEN': token
 			},
 			success: function(data){
-				if(data.status == 27||data.status == 29) {
+				if(data.status == 27||data.status == 28||data.status == 29) {
 					Toast.open({
 							type:"danger",
 							content: "登录超时，请重新登录"
