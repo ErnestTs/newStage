@@ -270,6 +270,7 @@ export default class VisitorList extends Component{
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
+            this.queryRecord()
         })
     }
 
@@ -337,7 +338,10 @@ export default class VisitorList extends Component{
     changeDate(date){
         this.setState({
             date:date
-        },()=>{this.getVisitorInfo()})
+        },()=>{
+            this.getVisitorInfo()
+            this.queryRecord()
+        })
     }
 
     /**
