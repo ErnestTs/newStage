@@ -198,6 +198,7 @@ export default class VisitorList extends Component{
                                 <input 
                                     placeholder="请输入访客的姓名或者公司"
                                     onChange={this.queryRecord.bind(this)}
+                                    id="visitorListQuery"
                                 />
                             </li>
                             <li className="DatePickerBox">
