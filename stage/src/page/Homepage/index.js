@@ -133,14 +133,17 @@ export default class Homepage extends Component {
      * @description [刷新token]
      */
 	refreshToken() {
+        if(Common.$_Get().idcard==3){
+            return
+        }
 		let email = sessionStorage.email,
-			token = sessionStorage.token,
-			sendData = {
+			token = sessionStorage.token;
+		let sendData = {
                 // email: sessionStorage.pemail||sessionStorage.email,
                 email: sessionStorage.email,
                 
 				oldToken: token
-			};
+            };
 			if(sessionStorage.loginType != "LoginManager"){
 				sendData.email = sessionStorage.un
 			}

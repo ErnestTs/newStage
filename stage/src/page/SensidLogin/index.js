@@ -141,10 +141,10 @@ export default class Login extends Component {
                     // sessionStorage.loginType = "Login";
                     // sessionStorage.un = this.state.userName;
                     // sessionStorage.ps = this.state.userPwd;
-                    // sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
-                    // sessionStorage.badgeMode = result.badgeMode;
-                    // sessionStorage.badgeCustom = result.badgeCustom;
-                    // sessionStorage.pemail = result.pemail;
+                    sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
+                    sessionStorage.badgeMode = result.badgeMode;
+                    sessionStorage.badgeCustom = result.badgeCustom;
+                    sessionStorage.pemail = result.pemail;
 
                     // sessionStorage.token = result.userid + '-' + result.token;
                     // sessionStorage.gid = result.gid;
@@ -158,6 +158,8 @@ export default class Login extends Component {
                     let sname = user;
                     sessionStorage.token = result.userid + '-' + result.token;
                     sessionStorage.permissionSwitch = result.permissionSwitch;
+                    sessionStorage.loginType = "Login";
+                    sessionStorage.un = user;
                     sessionStorage.logo = result.logo;
                     sessionStorage.offDuty = result.offDuty;
                     sessionStorage.cardType = result.cardType;
