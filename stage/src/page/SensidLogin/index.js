@@ -132,7 +132,7 @@ export default class Login extends Component {
         if(true){
             var sendData = {
                     email: user,
-                    password: this.lftPwdRule(pwd, 3, 5)
+                    password: Common.lftPwdRule(pwd, 3, 5)
                 }
             Common.ajaxProcWithoutAsync("Login",sendData).done((data)=>{
                 if (data.status === 0) {
