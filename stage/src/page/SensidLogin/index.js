@@ -146,7 +146,7 @@ export default class Login extends Component {
                     sessionStorage.badgeCustom = result.badgeCustom;
                     sessionStorage.pemail = result.pemail;
 
-                    sessionStorage.token = sendData.userid + '-' + result.token;
+                    sessionStorage.token = result.userid + '-' + result.token;
                     sessionStorage.gid = result.gid;
                     sessionStorage.gname = result.gname;
                     

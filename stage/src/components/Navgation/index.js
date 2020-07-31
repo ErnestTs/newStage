@@ -3,6 +3,7 @@ import './index.css';
 
 import logo from '../../resource/logo.png';
 import exitPng from '../../resource/exit.png';
+import Common from "../../Common/index"
 
 /**
  * @author 方超 qq978070462
@@ -36,6 +37,9 @@ export default class Navgation extends Component {
      *	@description [注销登出]
      */
     logout() {
+        if(Common.$_Get().idcard == "3"){
+            window.Android.finish()
+        }
         sessionStorage.clear();
         window.location.hash = "/login";
     }
