@@ -22,6 +22,8 @@ export default class Blacklist extends Component {
                   title: '姓名',
                   dataIndex: 'name',
                   key: 'name',
+                  width:"10%"
+
                 },
                 {
                   title: '身份证号',
@@ -37,11 +39,13 @@ export default class Blacklist extends Component {
                   title: '禁止访问企业（中文）',
                   dataIndex: 'sname',
                   key: 'sname',
+                  width:"30%"
                 },
                 {
                   title: '禁止访问企业（英文）',
                   dataIndex: 'sname_eng',
                   key: 'sname_eng',
+                  width:"30%"
                 },
                 {
                   title: '备注',

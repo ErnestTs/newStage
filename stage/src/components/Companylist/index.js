@@ -47,6 +47,7 @@ export default class Companylist extends Component {
                   title: '是否可邀请',
                   dataIndex: 'invite',
                   key: 'invite',
+                  width:"8%",
                   render(data){
                       return(
                           <span>{data?"是":"否"}</span>
@@ -57,6 +58,7 @@ export default class Companylist extends Component {
                   title: '是否可预约',
                   dataIndex: 'appointment',
                   key: 'appointment',
+                  width:"8%",
                   render(data){
                       return(
                           <span>{data?"是":"否"}</span>
@@ -67,6 +69,7 @@ export default class Companylist extends Component {
                   title: '是否需授权',
                   dataIndex: 'authorize',
                   key: 'authorize',
+                  width:"8%",
                   render(data){
                       return(
                           <span>{data?"是":"否"}</span>

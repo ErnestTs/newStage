@@ -386,7 +386,7 @@ export default class VisitorList extends Component{
                             rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:null}
                             className="tableBox" 
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
-                            dataSource={this.state.dataSource} 
+                            dataSource={this.state.dataSource}
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
                             locale={{emptyText: '暂无数据'}}
@@ -563,15 +563,14 @@ export default class VisitorList extends Component{
                 break;
             case "checkIn":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
-                        continue
+                    if(!!this.state.baseList[i].visitdate){
+                        tempArr.push(this.state.baseList[i])
                     }
-                    tempArr.push(this.state.baseList[i])
                 }
                 break;
             case "noArrived":
                 for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4||this.state.baseList[i].state == 6){
                         tempArr.push(this.state.baseList[i])
                     }
                 }
@@ -614,10 +613,17 @@ export default class VisitorList extends Component{
             default:
                 break;
         }
+        let index = this.state.vState
         this.setState({
             vState:i,
             dataSource: tempArr
+        },()=>{
+            if(index == this.state.vState){
+                return;
+            }
+            this.queryRecord()
         })
+        this.state.dataSource = tempArr
     }
 
     /**
@@ -819,9 +825,12 @@ export default class VisitorList extends Component{
                     vStateList:vStateList,
                     baseList:resArr
                 },()=>{
-                    if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
-                        this.changeState(7)
-                    }
+                    this.changeState(this.state.vState)
+                    // if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
+                    //     this.changeState(7)
+                    // }else{
+                    //     this.changeState(this.state.vState)
+                    // }
                 })
             }
         })
