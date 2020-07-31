@@ -74,7 +74,7 @@
 .menu_item span {
     display: inline-block;
     vertical-align: middle;
-    width: 64px;
+    /* width: 64px; */
 }
 
 .menu_itemGroup0 {

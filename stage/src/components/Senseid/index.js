@@ -23,13 +23,16 @@ export default class Senseid extends Component {
                 </div>
                 <p>请扫描证件信息</p>
                 <div className="btn_box">
-                    <div onClick={this.scanCard.bind(this)}>读取证件</div>
+                    <div onClick={this.scanCard.bind(this)}>
+                        <span>读取证件</span>
+                    </div>
                 </div>
             </div>
         )
     }
 
     componentDidMount(){
+        console.log("senseid")
 		let _this = this;
 		window.callbackId = function(res){
             if(!res){
