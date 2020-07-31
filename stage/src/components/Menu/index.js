@@ -81,7 +81,11 @@ export default class Menu extends Component {
     }
 
     componentDidMount(){
-        this.changeItem(0,"二维码","qrcode");
+        if(Common.$_Get().idcard!=3){
+            this.changeItem(0,"二维码","qrcode");
+        }else{
+            this.changeItem(4,"今日访客","visitor");
+        }
         window.changeItem = this.changeItem.bind(this)
     }
 

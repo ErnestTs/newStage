@@ -39,7 +39,8 @@ export default class Homepage extends Component {
         super(props)
         this.state= {
             open: true,
-            title:""
+            title:"",
+            defaultPath:"/home/qrcode"
         }
     }
 
@@ -67,7 +68,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
                                 <Route path="/home/resident" component={Resident} />
-                                <Redirect to="/home/qrcode" />
+                                <Redirect to={Common.$_Get().idcard==3?"/home/visitor":this.state.defaultPath} />
                             </Switch>
                         </Router>
                     </div>
@@ -76,7 +77,7 @@ export default class Homepage extends Component {
         )
     }
 
-    componentDidMount(){
+    componentWillMount(){
         if(!sessionStorage.token){
             this.props.history.push("/login")
             return;
