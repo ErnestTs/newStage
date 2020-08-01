@@ -20,9 +20,9 @@ export default class Register extends Component {
 
         this.state= {
             cardInfo:{
-                name:"方超",
-                cardId:"370202199211043333",
-                address:"山东省青岛市市南区江苏路七号9户"
+                name:"",
+                cardId:"",
+                address:""
             },
             qrcodeConf:0,
             showCardMask:true,
@@ -798,11 +798,6 @@ export default class Register extends Component {
             vType:this.state.vType,
             card: null
         };
-        // cardInfo:{
-        //     name:"方超",
-        //     cardId:"370202199211043333",
-        //     address:"山东省青岛市市南区江苏路七号9户"
-        // },
 
         if(!this.state.showCardMask){
             sendData.card = card
