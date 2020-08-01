@@ -77,7 +77,7 @@ export default class Homepage extends Component {
         )
     }
 
-    componentWillMount(){
+    componentDidMount(){
         if(!sessionStorage.token){
             this.props.history.push("/login")
             return;

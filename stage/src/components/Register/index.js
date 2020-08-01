@@ -442,7 +442,7 @@ export default class Register extends Component {
             }
             
 			this.setState({
-                visitorType:tempArr[0].name,
+                visitorType:tempArr.length?tempArr[0].name:"",
                 vTypeList:tempArr,
                 extendColList:tempExtendColList
 			})
