@@ -39,7 +39,8 @@ export default class Homepage extends Component {
         super(props)
         this.state= {
             open: true,
-            title:""
+            title:"",
+            defaultPath:"/home/qrcode"
         }
     }
 
@@ -67,7 +68,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
                                 <Route path="/home/resident" component={Resident} />
-                                <Redirect to="/home/visitor" />
+                                <Redirect to={Common.$_Get().idcard==3?"/home/visitor":this.state.defaultPath} />
                             </Switch>
                         </Router>
                     </div>
@@ -76,7 +77,7 @@ export default class Homepage extends Component {
         )
     }
 
-    componentDidMount(){
+    componentWillMount(){
         if(!sessionStorage.token){
             this.props.history.push("/login")
             return;
@@ -132,13 +133,17 @@ export default class Homepage extends Component {
      * @description [刷新token]
      */
 	refreshToken() {
-		let result = JSON.parse(sessionStorage.result),
-			email = sessionStorage.email,
-			token = sessionStorage.token,
-			sendData = {
-				email: sessionStorage.pemail,
+        if(Common.$_Get().idcard==3){
+            return
+        }
+		let email = sessionStorage.email,
+			token = sessionStorage.token;
+		let sendData = {
+                // email: sessionStorage.pemail||sessionStorage.email,
+                email: sessionStorage.email,
+                
 				oldToken: token
-			};
+            };
 			if(sessionStorage.loginType != "LoginManager"){
 				sendData.email = sessionStorage.un
 			}
@@ -148,7 +153,7 @@ export default class Homepage extends Component {
 		Common.ajaxProc("refreshToken", sendData, sessionStorage.token).done(function (data) {
 			if (data.status === 0) {
 				/**存储结果用于刷新token,其他session暂不修改 */
-				sessionStorage.result = JSON.stringify(result);
+				// sessionStorage.result = JSON.stringify(result);
 
 				/**
 				 * 拼接token格式
