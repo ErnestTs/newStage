@@ -441,21 +441,17 @@ export default class VisitorInfo extends Component {
     getMainCompanyInfo(){
 		Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((data)=>{
 			if (data.status === 0 && data.result.length !== 0) {
-				for(var i = 0; i < data.result.length; i++){
-                    if (data.status === 0 && data.result.length !== 0) {
-                        let tempArr = [];
-                        for(let i = 0; i < data.result.length;i++){
-                            if(data.result[i].empType === 1){
-                                tempArr.push(data.result[i])
-                            }
-                        }
-                        this.setState({
-                            empName:"",
-                            empNamePool: data.result,
-                            empNameList: tempArr,
-                        });
+                let tempArr = [];
+                for(let i = 0; i < data.result.length;i++){
+                    if(data.result[i].empType === 1){
+                        tempArr.push(data.result[i])
                     }
                 }
+                this.setState({
+                    empName:"",
+                    empNamePool: tempArr,
+                    empNameList: tempArr,
+                });
             }
             this.setState({
                 empCompany: sessionStorage.mainCompany,
