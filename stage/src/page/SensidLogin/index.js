@@ -137,7 +137,7 @@ export default class Login extends Component {
             Common.ajaxProcWithoutAsync("Login",sendData).done((data)=>{
                 if (data.status === 0) {
                     let result = data.result;
-                    // sessionStorage.userid = result.userid;
+                    sessionStorage.userid = result.userid;
                     // sessionStorage.loginType = "Login";
                     // sessionStorage.un = this.state.userName;
                     // sessionStorage.ps = this.state.userPwd;
