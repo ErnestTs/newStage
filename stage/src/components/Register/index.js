@@ -831,7 +831,9 @@ export default class Register extends Component {
                     sendData.extendCol.push("peopleCount="+1);
                     sendData.peopleCount = 1
                 }
-                sendData.memberName=JSON.stringify(tempArr)
+                if(!!tempArr.length){
+                    sendData.memberName=JSON.stringify(tempArr)
+                }
             }else{
                 sendData.extendCol.push("peopleCount="+1);
                 sendData.peopleCount = 1
