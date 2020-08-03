@@ -75,7 +75,7 @@ export default class VisitorList extends Component{
                                         this.setState({
                                             dataSource:tempArr
                                         })
-                                    }} 
+                                    }}
                                 />
                                 <div className="defaultImg">
                                     <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
