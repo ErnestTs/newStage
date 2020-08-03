@@ -23,7 +23,7 @@ export default class Senseid extends Component {
                 </div>
                 <p>请扫描证件信息</p>
                 <div className="btn_box">
-                    <div onClick={this.scanCard.bind(this)}>
+                    <div onClick={this.getCardInfoBySenseId.bind(this)}>
                         <span>读取证件</span>
                     </div>
                 </div>
