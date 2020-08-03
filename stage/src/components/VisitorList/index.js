@@ -65,11 +65,16 @@ export default class VisitorList extends Component{
                                     style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
-                                        tempArr[data.key].checked = !tempArr[data.key].checked;
+                                        for(let i = 0;i < tempArr.length;i++){
+                                            if(tempArr[i].key == data.key){
+                                                tempArr[i].checked = !tempArr[i].checked
+                                                break;
+                                            }
+                                        }
                                         this.setState({
                                             dataSource:tempArr
                                         })
-                                    }} 
+                                    }}
                                 />
                                 <div className="defaultImg">
                                     <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
