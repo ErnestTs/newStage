@@ -860,9 +860,9 @@ export default class VisitorList extends Component{
             return
         }
         for(let i = 0; i < dataArr.length;i++){
-            this.checkAnswer(dataArr[i])
             if(!this.checkAnswer(dataArr[i])){
                 this.setState({
+                    goSignIn:true,
                     signInRetuen:true,
                     signInRetuen_Name:dataArr[i].vname
                 })
@@ -929,12 +929,6 @@ export default class VisitorList extends Component{
      * @description [设置接待人]
      */
     setReceptionist(){
-        let sendData = {
-            rname: this.state.signInInfo.name,
-            rempNo: this.state.signInInfo.empId,//工号
-            rcardId: this.state.signInInfo.cardId,
-            rphone: this.state.signInInfo.phone
-        }
         if(!this.state.signInInfo.name){
             Toast.open({
                 type:"danger",
@@ -960,23 +954,47 @@ export default class VisitorList extends Component{
                 }
             })
         }
-        Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
-            if(res.status==0){
-                Toast.open({
-                    type:"success",
-                    content: "绑定成功"
-                })
-                this.setState({
-                    goSignIn:false,
-                    signInInfo:{
-                        empId:"",
-                        cardId:"",
-                        name:"",
-                        phone:""
-                    }
-                })
+        let selectedList = []
+        for(let i = 0;i < this.state.dataSource.length;i++){
+            if(this.state.dataSource[i].checked){
+                selectedList.push(this.state.dataSource[i])
             }
-        })
+        }
+        for(let i = 0;i < selectedList.length;i++){
+            let item = selectedList[i]
+            let sendData = {
+                vid:item.vid
+            }
+            if(!!this.state.signInInfo.name){
+                sendData.rname=this.state.signInInfo.name
+            }
+            if(!!this.state.signInInfo.empId){
+                sendData.rempNo=this.state.signInInfo.empId
+            }
+            if(!!this.state.signInInfo.cardId){
+                sendData.rcardId=this.state.signInInfo.cardId
+            }
+            if(!!this.state.signInInfo.phone){
+                sendData.rphone=this.state.signInInfo.phone
+            }
+            Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
+                if(res.status==0){
+                    Toast.open({
+                        type:"success",
+                        content: "绑定成功"
+                    })
+                    this.setState({
+                        goSignIn:false,
+                        signInInfo:{
+                            empId:"",
+                            cardId:"",
+                            name:"",
+                            phone:""
+                        }
+                    })
+                }
+            })
+        }
     }
 
     /**
