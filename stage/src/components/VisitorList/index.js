@@ -234,7 +234,7 @@ export default class VisitorList extends Component{
                         <ul className="searchCriteria">
                             <li className="searchContent">
                                 <input 
-                                    placeholder="请输入访客的姓名或者公司"
+                                    placeholder="请输入访客的姓名"
                                     onChange={this.queryRecord.bind(this)}
                                 />
                             </li>
@@ -829,7 +829,7 @@ export default class VisitorList extends Component{
             for(let i = 0; i < tempArr.length; i++){
                 let item = tempArr[i]
                 if(!!item.vcompany){
-                    if(item.vname.indexOf(key) !== -1 || item.vcompany.indexOf(key) !== -1){
+                    if(item.vname.indexOf(key) !== -1){
                         resArr.push(item)
                     }
                 }else if(item.vname.indexOf(key) !== -1){
