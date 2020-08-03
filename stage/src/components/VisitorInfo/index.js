@@ -717,7 +717,7 @@ export default class VisitorInfo extends Component {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
                 let tempArr = [];
                 for(let i = 0; i < data.result.length;i++){
-                    if(data.result[i].empType === 1){
+                    if(data.result[i].empType === 1||data.result[i].empType === 0){
                         tempArr.push(data.result[i])
                     }
                 }
