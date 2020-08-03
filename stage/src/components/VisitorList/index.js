@@ -13,6 +13,7 @@ import Toast from "../../components/ToastPublic/index.jsx"
 
 import defaultImg from "../../resource/defaultPhoto_mini.png"
 import printImg from "../../resource/printImg.png"
+import warningImg from "../../resource/warning.png"
 
 export default class VisitorList extends Component{
     constructor(props){
@@ -149,13 +150,17 @@ export default class VisitorList extends Component{
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
 
-            goSignIn:false,
-            signInInfo:{
+            goSignIn:false,     // 接待弹窗开关
+            signInRetuen:false, // 未答题驳回
+            signInRetuen_Name:"王师傅",
+            signInInfo:{        // 接待信息
                 empId:"",
                 cardId:"",
                 name:"",
                 phone:""
-            }
+            },
+
+            empList:[],         // 员工列表
         }
     }
 
@@ -260,7 +265,39 @@ export default class VisitorList extends Component{
                     id="component_VisitorList_signIn"
                     style={{display:this.state.goSignIn?"block":"none"}}
                 >
-                    <div id="component_VisitorList_signInBoard">
+                    <div id="component_VisitorList_signInRetuen" style={{display:this.state.signInRetuen?"block":"none"}}>
+                        <div>
+                            <img src={warningImg} />
+                        </div>
+                        <div id="component_VisitorList_signInRetuen_content">
+                            {this.state.signInRetuen_Name}暂不可接待，请先进行培训答题。
+                        </div>
+                        <div>
+                            <div
+                                id="component_VisitorList_signInRetuen_btn"
+                                onClick={
+                                    (()=>{
+                                        this.setState({
+                                            goSignIn:false,
+                                            signInRetuen:false,
+                                            signInRetuen_Name:"",
+                                            signInInfo:{
+                                                empId:"",
+                                                cardId:"",
+                                                name:"",
+                                                phone:""
+                                            }
+                                        })
+                                    }).bind(this)
+                                }
+                            >
+                                知道了
+                            </div>
+                        </div>
+                    </div>
+                    <div id="component_VisitorList_signInBoard"
+                        style={{display:!this.state.signInRetuen?"block":"none"}}
+                    >
                         <h3>
                             接待人信息
                         </h3>
@@ -409,6 +446,9 @@ export default class VisitorList extends Component{
         // 获取当前表单
         this.getVisitorInfo()
 
+        // 获取员工表单
+        this.getEmpList()
+
         // 初始化senseid读取身份证
 		window.callbackId = function(res){
             if(!res){
@@ -428,6 +468,20 @@ export default class VisitorList extends Component{
                 signInInfo:tempSignInfo
             })
 		}
+    }
+
+
+    /**
+     * @description [获取员工列表]
+     */
+    getEmpList(){
+        Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
+            if(res.status == 0){
+                this.setState({
+                    empList: res.result
+                })
+            }
+        })
     }
 
 
@@ -805,13 +859,12 @@ export default class VisitorList extends Component{
             })
             return
         }
-        console.log(dataArr)
         for(let i = 0; i < dataArr.length;i++){
             this.checkAnswer(dataArr[i])
             if(!this.checkAnswer(dataArr[i])){
-                Toast.open({
-                    type:"danger",
-                    content: "请确认访客已完成答题"
+                this.setState({
+                    signInRetuen:true,
+                    signInRetuen_Name:dataArr[i].vname
                 })
                 return
             }
@@ -930,27 +983,33 @@ export default class VisitorList extends Component{
      * @description [根据IC卡查员工姓名]
      */
     getEmpNameById(){
-        Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
-            let empList = res.result;
+        let _this = this
+        setTimeout(()=>{
+            let empList = _this.state.empList;
             let flag = false;
             for(let i = 0;i < empList.length;i++){
-                if(this.state.signInInfo.empId == empList[i].empid){
+                if(_this.state.signInInfo.empId == empList[i].cardNo){
                     flag = true;
-                    let obj = this.state.signInInfo;
+                    let obj = _this.state.signInInfo;
                     obj.name = empList[i].empName
-                    this.setState({
+                    _this.setState({
                         signInInfo:obj
                     })
                     break;
                 }
             }
             if(!flag){
+                let obj = _this.state.signInInfo;
+                obj.name = ""
+                _this.setState({
+                    signInInfo:obj
+                })
                 Toast.open({
                     type:"danger",
                     content: "无效员工"
                 })
                 return
             }
-        })
+        },1000)
     }
 }

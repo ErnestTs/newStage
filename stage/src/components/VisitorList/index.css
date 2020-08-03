@@ -449,3 +449,34 @@
     color: #fff;
     float: right;
 }
+
+#component_VisitorList_signInRetuen {
+    background-color: #fff;
+    padding:3.7vh 2.3vw;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    border-radius: 39px;
+}
+
+#component_VisitorList_signInRetuen_content {
+    font-size: 1.8vh;
+    color: #4D4E50;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 2.7vh;
+    margin-top: 1.5vh;
+    margin-bottom: 2.8vh
+}
+
+#component_VisitorList_signInRetuen_btn {
+    background: #4091F7;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 1.8vh;
+    color: #FFFFFF;
+    padding: 0.8vh 1.45vw;
+    cursor: pointer;
+}
