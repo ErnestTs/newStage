@@ -12,7 +12,8 @@ export default class Senseid extends Component {
         super(props)
         this.state= {
             componentName : "Senseid",
-            cardInfo:{}
+            cardInfo:{},
+            routerData:[]
         }
     }
 
