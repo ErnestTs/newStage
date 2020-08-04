@@ -49,9 +49,6 @@ export default class FaceRecognition extends Component {
 		console.log(this.routerData)
         
 		this.initCamera();
-        if(sessionStorage.photoSwitch == false || Common.$_Get().photo == 0){
-			this.appointmentSignin(this.routerData);
-        }
     }
 
     initCamera(){
