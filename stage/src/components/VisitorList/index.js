@@ -158,9 +158,14 @@ export default class VisitorList extends Component{
                     <div className="component_VisitorList_topBar1">
                         <ul className="component_VisitorList_btnGroup_vtype">
                             {
-                                this.state.vTypelist.map((item,i)=>{
+                                this.state.vTypelist.map((item,i,arr)=>{
                                     return (
-                                        <li className={this.state.vType == i?"action":""} key={i+"vtype"} onClick={this.changeVtype.bind(this,i)}>
+                                        <li 
+                                            style={{width:100/arr.length+"%"}} 
+                                            className={this.state.vType == i?"action":""} 
+                                            key={i+"vtype"} 
+                                            onClick={this.changeVtype.bind(this,i)}
+                                        >
                                             <span>{item.name}</span>
                                         </li>
                                     )
