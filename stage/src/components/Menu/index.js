@@ -123,10 +123,10 @@ export default class Menu extends Component {
                 </div>
                 <div id="menu_small" style={{display:!this.state.open?"block":"none"}}>
                     <ul>
-                        {/* <li className="menu_itemGroup0">
+                        <li className="menu_itemGroup0">
                             {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")}
-                        </li> */}
+                        </li>
                         <li className="menu_itemGroup1">
                             {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
                             {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
