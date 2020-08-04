@@ -132,10 +132,10 @@ export default class Menu extends Component {
                             {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
                             {this.renderItem("今日访客",this.state.icon.Visitors,4,"visitor")}
                         </li>
-                        <li className="menu_itemGroup2">
+                        {/* <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
                             {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
