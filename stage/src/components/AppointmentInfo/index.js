@@ -56,7 +56,10 @@ export default class AppointmentInfo extends Component {
                 "peopleCount", 
                 "sname", 
                 "mobile" 
-            ],			// 已注册表单单元
+            ],			// 已注册表单单元,
+			specialField: {
+                plateNum: "plateNum"
+            },
             gatein:false,
             guardin:false,
             gateout:false,
@@ -218,6 +221,9 @@ export default class AppointmentInfo extends Component {
         let extendCol = {}
         try {
             extendCol = JSON.parse(_this.routerData.empInfo.extendCol.replace(/&quot;/g,'"'))
+            if(extendCol===""){
+                extendCol = {}
+            }
         } catch (error) {
             extendCol = {}
         }
@@ -543,6 +549,9 @@ export default class AppointmentInfo extends Component {
                     extendColGroup[i] = "\"\""
                 }
                 extendColList.push(i+"="+extendColGroup[i])
+                if(!!this.state.specialField[i]){
+                    sendData[this.state.specialField[i]] = extendColGroup[i]
+                }
             }
 
             sendData.extendCol = extendColList;
