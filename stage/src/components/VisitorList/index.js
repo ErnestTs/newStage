@@ -758,6 +758,7 @@ export default class VisitorList extends Component{
      * @description [点击签到]
      */
     goLogin(data){
+        return
         if(data.visitType == "常驻访客"){
             return
         }
