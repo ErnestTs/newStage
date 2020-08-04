@@ -36,11 +36,11 @@ export default class VisitorList extends Component{
                     interface:"searchInviteByCondition",
                     stateList:["invite","checkIn","noArrived"]
                 },
-                // {
-                //     name:"常驻访客",
-                //     interface:"SearchRVisitorByCondition",
-                //     stateList:["total","leave","visiting"]
-                // }
+                {
+                    name:"常驻访客",
+                    interface:"SearchRVisitorByCondition",
+                    stateList:["total","leave","visiting"]
+                }
             ],
             vStateList:[
                 {name:"访客总数",count:0,key:"total"},
