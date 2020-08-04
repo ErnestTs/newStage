@@ -515,7 +515,7 @@ export default class AppointmentInfo extends Component {
             };
 
             // 处理扩展字段
-            let extendColGroup = this.state.extendCol;
+            let extendColGroup = this.state.extendCol||{};
             extendColGroup.empid = this.state.empInfo.ename;
             extendColGroup.visitType = this.state.visitInfo.vtype;
             extendColGroup.phone = this.state.visitInfo.vphone;
