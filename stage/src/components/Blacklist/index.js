@@ -139,25 +139,25 @@ export default class Blacklist extends Component {
                 let count = res.result.count
 
                 let tempArr= [];
-                for( let i = this.state.paginationOption.startIndex; i < oList.length;i++ ){
-                    if(i< this.state.paginationOption.startIndex+this.state.paginationOption.size){
-                        oList[i].key = i+"blackList"
-                        if(!oList[i].sname){
-                            oList[i].sname = "全部企业"
-                            oList[i].sname_eng = "all"
-                        }else{
-                            let snameArr = oList[i].sname.split("，");
-                            let sname_engArr = []
-                            for(let i =0; i< snameArr.length;i++) {
-                                sname_engArr.push(snameArr[i].split('#')[1])
-                                snameArr[i] = snameArr[i].split('#')[0];
-                            }
-                            oList[i].sname = snameArr.join("，");
-                            oList[i].sname_eng = sname_engArr.join("，");
+                for( let i = 0; i < oList.length;i++ ){
+                    
+                    oList[i].key = i+"blackList"
+                    if(!oList[i].sname){
+                        oList[i].sname = "全部企业"
+                        oList[i].sname_eng = "all"
+                    }else{
+                        let snameArr = oList[i].sname.split("，");
+                        let sname_engArr = []
+                        for(let i =0; i< snameArr.length;i++) {
+                            sname_engArr.push(snameArr[i].split('#')[1])
+                            snameArr[i] = snameArr[i].split('#')[0];
                         }
-                        tempArr.push(oList[i])
+                        oList[i].sname = snameArr.join("，");
+                        oList[i].sname_eng = sname_engArr.join("，");
                     }
+                    tempArr.push(oList[i])
                 }
+
 
                 let paginationOption = this.state.paginationOption;
                 paginationOption.count = count
