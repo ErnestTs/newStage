@@ -236,6 +236,7 @@ export default class Register extends Component {
                                         <input type="text"
                                             value={this.state.vphone||""} 
                                             onChange={this.setInfo.bind(this, "vphone")}
+                                            onBlur={this.vphoneOnBlur.bind(this)}
                                         />
                                     </span>
                                 </div>
@@ -1391,6 +1392,18 @@ export default class Register extends Component {
                 empCompanyFloor:key,
                 empCompanyFloorKey:"",
                 empCompanyFloorListOnShow:empCompanyFloorListOnShow
+            })
+        }
+    }
+
+    /**
+     * @description[手机号码输入框移除焦点]
+     */
+    vphoneOnBlur(){
+        if(!!this.state.vphone&& !this.checkPhoneNum(this.state.vphone)){
+            Toast.open({
+                type:"danger",
+                content: "手机号码填写有误，请核实！"
             })
         }
     }
