@@ -144,6 +144,7 @@ export default class Companylist extends Component {
                             type="text" 
                             placeholder="请输入公司名称/房间号"
                             onChange={this.searchInfo.bind(this)}
+                            id="searchCompanyInfoInput"
                         />
                     </div>
                 </div>
@@ -308,15 +309,22 @@ export default class Companylist extends Component {
 
     /**
      * @description [条件搜索]
-     * @param {Event} e 
+     * @param {Event} e
      */
     searchInfo(e){
+        if(!e){
+            e = {
+                target:{
+                    value:document.getElementById("searchCompanyInfoInput").value
+                }
+            }
+        }
         let key = e.target.value;
         if(!key){
-            this.init();
+            this.changeTag(this.state.typeListActive)
             return
         }
-        let oList = this.state.originalList;
+        let oList = this.state["list"+this.state.typeListActive]||this.state.originalList;
         let tempDefArr = []
         for(let i = 0;i < oList.length; i++){
             if(oList[i].companyName.indexOf(key) !== -1||oList[i].roomNumber.indexOf(key) !== -1){
@@ -355,9 +363,13 @@ export default class Companylist extends Component {
     changeTag(type){
         if(type == 0){
             this.setState({
-                typeListActive:0
+                typeListActive:0,
+                defaultList:this.state.originalList,
             },()=>{
                 this.init()
+                if(document.getElementById("searchCompanyInfoInput").value){
+                    this.searchInfo()
+                }
             })
         }else if(type == 1){
             let oList = this.state.originalList;
@@ -368,10 +380,14 @@ export default class Companylist extends Component {
                 }
             }
             this.setState({
+                list1:tempArr,
                 defaultList:tempArr,
                 typeListActive:1
             },()=>{
                 this.paginationOnChange(1)
+                if(document.getElementById("searchCompanyInfoInput").value){
+                    this.searchInfo()
+                }
             })
         }else if(type == 2){
             let oList = this.state.originalList;
@@ -382,10 +398,14 @@ export default class Companylist extends Component {
                 }
             }
             this.setState({
+                list2:tempArr,
                 defaultList:tempArr,
                 typeListActive:2
             },()=>{
                 this.paginationOnChange(1)
+                if(document.getElementById("searchCompanyInfoInput").value){
+                    this.searchInfo()
+                }
             })
         }
     }
