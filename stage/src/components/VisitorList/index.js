@@ -884,14 +884,14 @@ export default class VisitorList extends Component{
      * @param {String} cardId 
      */
 	checkAnswer(target){
-        let res = false;
+        let resBool = false;
         let infoList = [target.vemail, target.vphone, target.cardId]
 		for(let i = 0;i<infoList.length;i++){
 			if(sessionStorage.questionnaireSwitch == 0){
-                res = true;
-                return res
-			}
-			if(res){
+                resBool = true;
+                return resBool
+            }
+			if(resBool){
 				continue;
 			}
 			let item = infoList[i];
@@ -899,31 +899,31 @@ export default class VisitorList extends Component{
 				continue;
 			}
 			if(target.tid == "0"){
-                res = false
-				return res;
+                resBool = false
+				return resBool;
 			}
 			Common.ajaxProcWithoutAsync("getVisitorTypeByTid",{"tid": target.tid,"userid": sessionStorage.userid},sessionStorage.token).done((data)=>{
 				if(!data.result.qid){
-                    res = true
-                    return res
+                    resBool = true
+                    return resBool
 				}
 				let getAnswerResult = Common.ajaxProcWithoutAsync("getAnswerResult",{"identity": item,"userid": sessionStorage.userid},sessionStorage.token);
 				getAnswerResult.done((res)=>{
 					if(!res.result || !res.result.passDate) {
-                        res = false
+                        resBool = false
 						return false
 					} else if ( new Date().getTime() > new Date(new Date(Number(res.result.passDate)).format("yyyy-MM-dd 00:00:00")).getTime()+Number(data.result.povDays)*24*60*60*1000){
-                        res = false
+                        resBool = false
                         return false
 					}else {
-                        res = true
+                        resBool = true
 						return true
 					}
                 })
 			})
 
         }
-        return res
+        return resBool
     }
 
     /**
@@ -993,6 +993,7 @@ export default class VisitorList extends Component{
                             phone:""
                         }
                     })
+                    this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+item.vid}]}})
                 }
             })
         }
