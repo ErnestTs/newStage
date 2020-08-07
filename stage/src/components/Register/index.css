@@ -65,7 +65,8 @@
     margin-bottom: 0;
     font-size: 18px;
     cursor: pointer;
-    text-align: center
+    text-align: center;
+    overflow: hidden;
 }
 
 .component_Register_appInfo_key {
