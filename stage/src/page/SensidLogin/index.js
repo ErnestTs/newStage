@@ -137,8 +137,8 @@ export default class Login extends Component {
             Common.ajaxProcWithoutAsync("Login",sendData).done((data)=>{
                 if (data.status === 0) {
                     let result = data.result;
-                    // sessionStorage.userid = result.userid;
-                    // sessionStorage.loginType = "Login";
+                    sessionStorage.userid = result.userid;
+                    sessionStorage.loginType = "Login";
                     // sessionStorage.un = this.state.userName;
                     // sessionStorage.ps = this.state.userPwd;
                     sessionStorage.leaveExpiryTime = result.leaveExpiryTime;
@@ -146,15 +146,15 @@ export default class Login extends Component {
                     sessionStorage.badgeCustom = result.badgeCustom;
                     sessionStorage.pemail = result.pemail;
 
-                    // sessionStorage.token = result.userid + '-' + result.token;
-                    // sessionStorage.gid = result.gid;
-                    // sessionStorage.gname = result.gname;
+                    sessionStorage.token = result.userid + '-' + result.token;
+                    sessionStorage.gid = result.gid;
+                    sessionStorage.gname = result.gname;
                     
 
                     // /**存储结果用于刷新token,其他session暂不修改 */
                     // sessionStorage.result = JSON.stringify(result);
-                    // sessionStorage.opname = result.username;
-                    // sessionStorage.company = result.company;
+                    sessionStorage.opname = result.username;
+                    sessionStorage.company = result.company;
                     let sname = user;
                     sessionStorage.token = result.userid + '-' + result.token;
                     sessionStorage.permissionSwitch = result.permissionSwitch;
