@@ -88,6 +88,7 @@
 }
 
 #component_Companylist_searchContent #component_Companylist_btn_refresh {
+    /* float: left; */
     float: right;
     width: 5.8%;
     line-height: 4vh;

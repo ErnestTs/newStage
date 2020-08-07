@@ -140,7 +140,7 @@ export default class Blacklist extends Component {
 
                 let tempArr= [];
                 for( let i = 0; i < oList.length;i++ ){
-                    
+
                     oList[i].key = i+"blackList"
                     if(!oList[i].sname){
                         oList[i].sname = "全部企业"
@@ -167,6 +167,8 @@ export default class Blacklist extends Component {
                     dataSource:tempArr,
                     originalList:oList,
                     paginationOption:paginationOption
+                },()=>{
+                    this.paginationOnChange(1)
                 })
             }
         })
