@@ -343,6 +343,7 @@ export default class Companylist extends Component {
             typeListActive:0
         },()=>{
             this.init();
+            document.getElementById("searchCompanyInfoInput").value = ""
             this.setState({
                 ifsToast:true
             },()=>{
