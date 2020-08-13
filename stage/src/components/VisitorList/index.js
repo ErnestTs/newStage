@@ -482,6 +482,7 @@ export default class VisitorList extends Component{
                         continue;
                     }
                     if(eList[i].gids.indexOf(sessionStorage.gid) !== -1){
+                        eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                         resArr.push({name:eList[i].egname,egid:eList[i].egid})
                     }
                 }

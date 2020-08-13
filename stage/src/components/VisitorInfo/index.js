@@ -824,6 +824,7 @@ export default class VisitorInfo extends Component {
                                 if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
                                     continue;
                                 }
+                                eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     resArr.push({name:eList[i].egname,egid:eList[i].egid})
                                 }
@@ -835,6 +836,7 @@ export default class VisitorInfo extends Component {
                                 if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
                                     continue;
                                 }
+                                eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     resArr.unshift({name:eList[i].egname,egid:eList[i].egid,def:true})
                                 }else{
