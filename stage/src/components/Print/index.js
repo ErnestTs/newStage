@@ -13,7 +13,8 @@ export default class Print extends Component {
         this.state= {
             printUrl:"",
             printList:[],
-            printing:false
+            printing:false,
+            language: ""
         }
     }
 
@@ -22,7 +23,7 @@ export default class Print extends Component {
             <div id="component_print">
                 <div id="printArea">
                     <div id="mainFrame">
-                        <iframe id="viframe" src={this.state.printUrl} >
+                        <iframe id="viframe" src={this.state.printUrl+"&l="+this.state.language} >
 
                         </iframe>
                     </div>
@@ -30,6 +31,34 @@ export default class Print extends Component {
 
                 <div id="btn_print" onClick={this.startPrint.bind(this)}>
                     <span>打印</span>
+                </div>
+
+                <div id="print_langBox" style={{display:!this.state.language?"block":"none"}}>
+                    <div id="print_langBox_board">
+                        <div>
+                            请选择打印的语言
+                        </div>
+                        <ul>
+                            <li onClick={
+                                ()=>{
+                                    this.setState({
+                                        language:"chn"
+                                    })
+                                }
+                            }>
+                                中文
+                            </li>
+                            <li onClick={
+                                ()=>{
+                                    this.setState({
+                                        language:"eng"
+                                    })
+                                }
+                            }>
+                                English
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         )
@@ -101,7 +130,7 @@ export default class Print extends Component {
             for(let i of this.state.printList) {
                 printVids.push(i.vid)
             }
-            window.Android.print(printVids.join(","));
+            window.Android.print(printVids.join(","),this.state.language);
             return;
         }
         this.state.printing = true

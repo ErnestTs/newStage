@@ -961,6 +961,7 @@ export default class VisitorList extends Component{
                 selectedList.push(this.state.dataSource[i])
             }
         }
+        let printList = []
         for(let i = 0;i < selectedList.length;i++){
             let item = selectedList[i]
             let sendData = {
@@ -993,10 +994,11 @@ export default class VisitorList extends Component{
                             phone:""
                         }
                     })
-                    this.props.history.replace({pathname:"print",state:{printList:[{vid:"v"+item.vid}]}})
+                    printList.push({vid:"v"+item.vid})
                 }
             })
         }
+        this.props.history.replace({pathname:"print",state:{printList:printList}})
     }
 
     /**
