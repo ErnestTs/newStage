@@ -365,7 +365,7 @@ export default class Register extends Component {
                             }
                         </ul>
                         <ul>
-                            {(this.state.remarkDisplay&2)==2?this.renderExtendItem("备注","remark",{a:1,required:this.state.remark_Required}):""}
+                            {(this.state.remarkDisplay&8)==8?this.renderExtendItem("备注","remark",{a:1,required:this.state.remark_Required}):""}
                         </ul>
                     </div>
 
