@@ -79,7 +79,26 @@ export default class VisitorInfo extends Component {
             faceLoading:false,
 
             remark:"",
-			regElementArr: ["name","vname", "empid", "empId","empCompany","visitorType", "visitType", "phone","vphone", "gatein", "gateout", "guardin", "guardout","remark","appointmentDate","pCardDate"],			// 已注册表单单元
+            remarkDisplay:0,
+            remark_Required:0,
+			regElementArr: [
+                "name",
+                "vname",
+                "empid",
+                "empId",
+                "empCompany",
+                "visitorType",
+                "visitType",
+                "phone",
+                "vphone",
+                "gatein",
+                "gateout",
+                "guardin",
+                "guardout",
+                "appointmentDate",
+                "pCardDate",
+                "remark"
+            ],			// 已注册表单单元
 			// regElementArr: ["name", "empid", "phone",  "gatein", "gateout", "guardin", "guardout","remark"],			// 已注册表单单元
         }
     }
@@ -347,7 +366,7 @@ export default class VisitorInfo extends Component {
                             }
                         </ul>
                         <ul>
-                            {this.renderExtendItem("备注","remark",{})}
+                            {(this.state.remarkDisplay&2)==2?this.renderExtendItem("备注","remark",{a:1,required:this.state.remark_Required}):""}
                         </ul>
                     </div>
 
@@ -598,6 +617,10 @@ export default class VisitorInfo extends Component {
             let tempArr = [];
             let tempExtendColList = [];
 			for(let i = 0; i < res.result.length; i++) {
+                if(res.result[i].fieldName == "remark"){
+                    this.state.remarkDisplay = res.result[i].isDisplay;
+                    this.state.remark_Required = res.result[i].required
+                }
                 if((res.result[i].isDisplay&2) != 2){
                     continue;
                 }else{
