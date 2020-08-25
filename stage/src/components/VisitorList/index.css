@@ -409,7 +409,8 @@
 }
 
 #component_VisitorList .ant-select-selector {
-    padding: 0
+    padding: 0;
+    left:2px;
 }
 
 #component_VisitorList .selectBox .ant-select:not(.ant-select-disabled):hover .ant-select-selector {

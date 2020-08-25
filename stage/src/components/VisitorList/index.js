@@ -266,6 +266,12 @@ export default class VisitorList extends Component{
                     title: '已授权楼层',
                     dataIndex: 'floors',
                     key: 'floors',
+                    render:(data)=>{
+                        if(!!data&&data[data.length-1]=="/"){
+                            data = data.slice(0,data.length-1)
+                        }
+                        return <span>{data}</span>
+                    }
                 },
                 {
                     title: '状态',
