@@ -38,6 +38,7 @@ export default class Register extends Component {
             empCompanyId:"",
             empCompanyPool:[],
             empCompanyList:[],
+            empCompanyDefAccess:"",
 
             empCompanyFloorList:[],
             empCompanyFloorListOnShow:[],
@@ -747,12 +748,14 @@ export default class Register extends Component {
                     empName:"",
 					empNamePool: data.result,
 					empNameList: tempArr,
+                    empCompanyDefAccess:item.vegids
 				});
 			}else{
 				_this.setState({
                     empName:"",
 					empNamePool: [],
 					empNameList: [],
+                    empCompanyDefAccess:""
 				});
             }
         })
@@ -826,6 +829,9 @@ export default class Register extends Component {
 			gids = tempEgids.join(",")
 		}else{
 			gids = egids
+        }
+        if(!gids){
+            gids = this.state.empCompanyDefAccess+""
         }
         this.setState({
             empName: value,
