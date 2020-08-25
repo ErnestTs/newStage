@@ -701,7 +701,7 @@ export default class VisitorInfo extends Component {
             for (let i = 0; i < this.state.empCompanyPool.length; i++) {
                 let item = this.state.empCompanyPool[i];
                 let company = item.companyName;
-                if (company.indexOf(key) !== -1) {
+                if (company.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
                     this.state.empCompanyList.push(item);
                 }
             }
@@ -786,7 +786,7 @@ export default class VisitorInfo extends Component {
             for (let i = 0; i < this.state.empNamePool.length; i++) {
                 let item = this.state.empNamePool[i];
                 let empName = item.empName;
-                if (empName.indexOf(key) !== -1||item.empType === 1) {
+                if (empName.toLowerCase().indexOf(key.toLowerCase()) !== -1||item.empType === 1) {
                     this.state.empNameList.push(item);
                 }
             }
@@ -841,6 +841,7 @@ export default class VisitorInfo extends Component {
                     let eList = res.result;
                     let resArr = []
                     let egids = this.state.egids.split(",");
+                    let defGnames = [];
                     if(Common.strict){
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
@@ -861,6 +862,11 @@ export default class VisitorInfo extends Component {
                                 }
                                 eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
+                                    let tempGname = eList[i].egname.replace(/F/g, "")
+                                    defGnames.push(tempGname+"F");
+                                    defGnames.push(tempGname+"M");
+                                }
+                                if(defGnames.indexOf(eList[i].egname)!=-1){
                                     resArr.unshift({name:eList[i].egname,egid:eList[i].egid,def:true})
                                 }else{
                                     resArr.push({name:eList[i].egname,egid:eList[i].egid,def:false})
