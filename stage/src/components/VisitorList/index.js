@@ -113,6 +113,7 @@ export default class VisitorList extends Component{
                     title: '手机号',
                     dataIndex: 'vphone',
                     key: 'vphone',
+                    width:"10%",
                 },
                 {
                     title: '拜访事由',
@@ -122,13 +123,14 @@ export default class VisitorList extends Component{
                 {
                     title: "被访人",
                     dataIndex: 'empName',
-                    key: 'empName'
+                    key: 'empName',
+                    width:"11%",
                 },
                 {
                     title: '被访公司（中文）',
                     dataIndex: 'company',
                     key: 'company',
-                    width:"15%",
+                    width:"11%",
                     render:(data)=>{
                         return data.split("#")[0]
                     }
@@ -137,7 +139,7 @@ export default class VisitorList extends Component{
                     title: '被访公司（英文）',
                     dataIndex: 'company',
                     key: 'company',
-                    width:"15%",
+                    width:"11%",
                     render:(data)=>{
                         return data.split("#")[1]
                     }
@@ -146,18 +148,19 @@ export default class VisitorList extends Component{
                     title: '签到时间',
                     dataIndex: 'visitdate',
                     key: 'visitdate',
-                    width:"15%",
+                    width:"11%",
                 },
                 {
                     title: '签出时间',
                     dataIndex: 'signOutDate',
                     key: 'signOutDate',
-                    width:"15%",
+                    width:"11%",
                 },
                 {
                     title: '状态',
                     dataIndex: 'state',
                     key: 'state',
+                    width:"8%",
                     render:(data)=>{
                         switch(data){
                             case 0:
