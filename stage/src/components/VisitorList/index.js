@@ -1138,10 +1138,26 @@ export default class VisitorList extends Component{
                             if (data.status === 0 && data.result.length !== 0) {
                                 for(let i = 0;i<data.result.length;i++){
                                     if(data.result[i].empName === oList[0].empName){
-                                        let egids = data.result[i].vegids;
-                                        let floorsListOnShow = []
+                                        let oTargetSex = oList[0].sex==0?false:true;
+                                        let oTargetAccess = JSON.parse(oList[0].extendCol.replace(/&quot;/g, '"')).access
+                                        let egids = oTargetAccess;
+                                        let floorsListOnShow = [];
+                                        let defGname = "";
                                         for(let i = 0; i<this.state.floorsList.length;i++){
-                                            if(egids.indexOf(this.state.floorsList[i].egid)!=-1){
+                                            if(this.state.floorsList[i].egid == egids){
+                                                if(oTargetSex){
+                                                    defGname = this.state.floorsList[i].name.replace(/F/g, "M");
+                                                }else{
+                                                    defGname = this.state.floorsList[i].name.replace(/M/g, "F");
+                                                }
+                                            }
+                                            if(
+                                                (!!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "F"||this.state.floorsList[i].name.indexOf("F&")!=-1))||
+                                                (!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "M"||this.state.floorsList[i].name.indexOf("M&")!=-1))
+                                            ){
+                                                continue
+                                            }
+                                            if(defGname == this.state.floorsList[i].name){
                                                 this.state.floorsList[i].def = true
                                                 floorsListOnShow.unshift(this.state.floorsList[i])
                                             }else{
