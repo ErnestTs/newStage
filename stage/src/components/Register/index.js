@@ -1273,6 +1273,7 @@ export default class Register extends Component {
                             this.state.faceLoading = false
                             return
                         }else {
+                            this.state.faceLoading = true
                             this.getFaceStatus(data.result.url)
                             count++
                         }

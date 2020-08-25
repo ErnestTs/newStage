@@ -1299,6 +1299,7 @@ export default class VisitorInfo extends Component {
                             this.state.faceLoading = false
                             return
                         }else {
+                            this.state.faceLoading = true
                             this.getFaceStatus(data.result.url)
                             count++
                         }
