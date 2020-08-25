@@ -1135,7 +1135,7 @@ export default class VisitorList extends Component{
                             if (data.status === 0 && data.result.length !== 0) {
                                 for(let i = 0;i<data.result.length;i++){
                                     if(data.result[i].empName === oList[0].empName){
-                                        let egids = data.result[i].egids;
+                                        let egids = data.result[i].vegids;
                                         let floorsListOnShow = []
                                         for(let i = 0; i<this.state.floorsList.length;i++){
                                             if(egids.indexOf(this.state.floorsList[i].egid)!=-1){

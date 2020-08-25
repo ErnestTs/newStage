@@ -179,7 +179,7 @@ export default class Register extends Component {
                                             <li 
                                                 value={item.empName||""} 
                                                 key={i+"li"}
-                                                onClick={this.selectEmp.bind(this,item.empName,item.empid,item.empPhone,item.egids)}
+                                                onClick={this.selectEmp.bind(this,item.empName,item.empid,item.empPhone,item.vegids)}
                                             >
                                                 {item.empName}
                                                 <span style={{ display: item.empType === 1 ? "inline" : "none" }}>（默认接待人）</span>
