@@ -392,12 +392,12 @@ export default class VisitorList extends Component{
                 <div id="component_VisitorList_tableBox">
                     <div id="component_VisitorList_tableBoard">
                         <Table 
-                            rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:null}
+                            rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:{rowSelection:false}}
                             className="tableBox" 
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource}
                             scroll={{y:this.state.tableHeight}} 
-                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
+                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90),showSizeChanger:false }}
                             locale={{emptyText: '暂无数据'}}
                         />
                     </div>
