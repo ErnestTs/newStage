@@ -740,9 +740,12 @@ export default class Register extends Component {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
                 let tempArr = [];
                 for(let i = 0; i < data.result.length;i++){
-                    let endDate = new Date(data.result[i].endDate.slice(0,4)+"-"+data.result[i].endDate.slice(4,6)+"-"+data.result[i].endDate.slice(6,8)+" 23:59:59").getTime();
+                    let endDate = 0
+                    if(!!data.result[i].endDate){
+                        endDate = new Date(data.result[i].endDate.slice(0,4)+"-"+data.result[i].endDate.slice(4,6)+"-"+data.result[i].endDate.slice(6,8)+" 23:59:59").getTime();
+                    }
                     if(data.result[i].empType === 1||data.result[i].empType === 0){
-                        if(new Date().getTime()<endDate){
+                        if(new Date().getTime()<endDate||!data.result[i].endDate){
                             tempArr.push(data.result[i])
                         }
                     }
