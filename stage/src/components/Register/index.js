@@ -739,21 +739,25 @@ export default class Register extends Component {
 		Common.ajaxProc('getSubAccountEmpList', { userid: sessionStorage.userid, subaccountId: id }, sessionStorage.token).done(function (data) {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
                 let tempArr = [];
+                let onShowArr=[]
                 for(let i = 0; i < data.result.length;i++){
                     let endDate = 0
                     if(!!data.result[i].endDate){
                         endDate = new Date(data.result[i].endDate.slice(0,4)+"-"+data.result[i].endDate.slice(4,6)+"-"+data.result[i].endDate.slice(6,8)+" 23:59:59").getTime();
                     }
-                    if(data.result[i].empType === 1||data.result[i].empType === 0){
+                    if(data.result[i].empType === 1||data.result[i].empType === 0||data.result[i].empType === 2){
                         if(new Date().getTime()<endDate||!data.result[i].endDate){
                             tempArr.push(data.result[i])
                         }
+                    }
+                    if(data.result[i].empType === 1){
+                        onShowArr.push(data.result[i])
                     }
                 }
 				_this.setState({
                     empName:"",
 					empNamePool: tempArr,
-					empNameList: tempArr,
+					empNameList: onShowArr,
                     empCompanyDefAccess:item.vegids
 				});
 			}else{
@@ -780,6 +784,13 @@ export default class Register extends Component {
     setEmpNameInfo(e){
         let key = e.target.value
         if(!key.length){
+            this.state.empNameList = [];
+            for (let i = 0; i < this.state.empNamePool.length; i++) {
+                let item = this.state.empNamePool[i];
+                if (item.empType === 1) {
+                    this.state.empNameList.push(item);
+                }
+            }
             this.setState({
                 empName:"",
                 empId:"",
@@ -823,7 +834,7 @@ export default class Register extends Component {
      */
     selectEmp(value,id,phone,egids){
         let gids = ""
-		if(!!sessionStorage.VisitorAccess){
+		if(!!sessionStorage.VisitorAccess&&!!egids){
             egids = egids.split(",")
 			let VisitorAccess = sessionStorage.VisitorAccess.split(",");
 			let tempEgids = []
