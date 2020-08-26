@@ -278,7 +278,7 @@ export default class Login extends Component {
      */
 	getManagerName(sname, userid) {
 		Common.ajaxProcWithoutAsync("GetManager", { account: sname }, sessionStorage.token).done(function (data) {
-			sessionStorage.opname = data.result.sname;
+			// sessionStorage.opname = data.result.sname;
 			sessionStorage.company = data.result.company
 			this.getExtendVisitor(userid);
 		}.bind(this));

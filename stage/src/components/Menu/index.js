@@ -110,11 +110,11 @@ export default class Menu extends Component {
                 <div id="menu_large" style={{display:this.state.open?"block":"none"}}>
                     <div className="gateInfo">
                         <div id="menu_Head">
-                            {/* <img src={sessionStorage.logo||defaultPhoto} /> */}
+                            {/* <img src={sessionStorage.logo||defaultLogo} /> */}
                             <img src={defaultLogo} />
                         </div>
                         <p id="menu_Company">
-                            {sessionStorage.company}
+                            {/* {sessionStorage.company} */}
                         </p>
                         <p id="menu_Opname">
                             {sessionStorage.opname}
