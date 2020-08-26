@@ -222,9 +222,10 @@ export default class Blacklist extends Component {
                 oList[i].remark.indexOf(key) !== -1||
                 oList[i].phone.indexOf(key) !== -1||
                 // oList[i].sname_eng.indexOf(key) !== -1||
-                oList[i].sname.indexOf(key) !== -1||
-                oList[i].sname_eng == "all"
+                oList[i].sname.indexOf(key) !== -1
             ){
+                tempDefArr.unshift(oList[i])
+            }else if(oList[i].sname_eng == "all"){
                 tempDefArr.push(oList[i])
             }
         }
