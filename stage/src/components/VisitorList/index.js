@@ -1157,12 +1157,12 @@ export default class VisitorList extends Component{
                                                     defGname = this.state.floorsList[i].name.replace(/M/g, "F");
                                                 }
                                             }
-                                            if(
-                                                (!!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "F"||this.state.floorsList[i].name.indexOf("F&")!=-1))||
-                                                (!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "M"||this.state.floorsList[i].name.indexOf("M&")!=-1))
-                                            ){
-                                                continue
-                                            }
+                                            // if(
+                                            //     (!!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "F"||this.state.floorsList[i].name.indexOf("F&")!=-1))||
+                                            //     (!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "M"||this.state.floorsList[i].name.indexOf("M&")!=-1))
+                                            // ){
+                                            //     continue
+                                            // }
                                             if(defGname == this.state.floorsList[i].name){
                                                 this.state.floorsList[i].def = true
                                                 floorsListOnShow.unshift(this.state.floorsList[i])
