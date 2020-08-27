@@ -58,7 +58,7 @@ export default class Print extends Component {
     }
 
     printCard(vid) {
-        if(vid[0]!="a"||vid[0]!="v"){
+        if(vid[0]!="a"&&vid[0]!="v"){
             vid = "v"+vid
         }
         let printUrl = "";
