@@ -147,7 +147,8 @@
 }
 
 #component_Register_cardInfo_mask_photoBox {
-    width: 43%;
+    /* width: 43%; */
+    width: 65%;
     margin: auto;
     margin-top: 6%;
     border: 1px solid #AA9D84;
@@ -214,19 +215,34 @@
     height: 100%;
 }
 
-#component_Register_cardInfo_mask p {
+/* #component_Register_cardInfo_mask p {
     margin-top: 12px;
     font-size: 21px;
     color: #AA9D84;
     letter-spacing: 0.81px;
     text-align: center;
     line-height: 30px;
+} */
+
+#component_Register_cardInfo_mask p {
+    margin-top: 6px;
+    font-size: 16px;
+    color: #AA9D84;
+    letter-spacing: 0.81px;
+    text-align: center;
+    line-height: 20px;
 }
 
-#component_Register_cardInfo_mask .btn_box{
+/* #component_Register_cardInfo_mask .btn_box{
     height: 7.5%;
     margin-top: 2.778vh;
     margin-bottom: 2.778vh;
+} */
+
+#component_Register_cardInfo_mask .btn_box{
+    height: 7.5%;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 #component_Register_cardInfo_mask .btn_box div{

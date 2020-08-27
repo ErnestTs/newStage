@@ -381,7 +381,7 @@ export default class VisitorInfo extends Component {
                                 </div>
                                 <img style={{ opacity: !this.state.photoSwitch ? '1' : '0' }} src={scanFace} />
                             </div>
-                            <p>{!this.state.tempCard?"请告知访客采集人脸注意事项并询问是否同意采集人脸":"已发卡号："+this.state.tempCard}</p>
+                            <p>{!this.state.tempCard?"请询问访客是否同意采集人脸协议":"已发卡号："+this.state.tempCard}</p>
                             <div className="btn_box">
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
