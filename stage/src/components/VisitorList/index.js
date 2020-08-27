@@ -286,6 +286,7 @@ export default class VisitorList extends Component{
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
             onSelectList:[],
+            selectedRowKeys:[],
             openToast:0,
             tempCard:"",
             notSendCardVisits:0,
@@ -296,9 +297,10 @@ export default class VisitorList extends Component{
     }
 
     render(){
-        const { onSelectList } = this.state;
+        const { onSelectList,selectedRowKeys } = this.state;
         const rowSelection = {
             onSelectList,
+            // selectedRowKeys,
             type:'radio',
             preserveSelectedRowKeys:false,
             onChange: this.selectedRow.bind(this)
@@ -392,13 +394,24 @@ export default class VisitorList extends Component{
                 <div id="component_VisitorList_tableBox">
                     <div id="component_VisitorList_tableBoard">
                         <Table 
-                            rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:{rowSelection:false}}
+                            rowSelection={this.state.vType == 3||this.state.vType == 0?rowSelection:null}
                             className="tableBox" 
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource}
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90),showSizeChanger:false }}
                             locale={{emptyText: '暂无数据'}}
+                            onRow={(record)=>{
+                                return {
+                                    onClick:(e)=>{
+                                        return
+                                        this.setState({
+                                            selectedRowKeys:[record.key],
+                                            onSelectList:[record],
+                                        })
+                                    }
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -999,6 +1012,7 @@ export default class VisitorList extends Component{
      */
     selectedRow(keys, rows){
         this.setState({
+            selectedRowKeys:keys,
             onSelectList:rows
         })
     }
