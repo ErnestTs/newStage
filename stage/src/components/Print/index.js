@@ -95,6 +95,17 @@ export default class Print extends Component {
         if(this.state.printing){
             return;
         }
+        if(Common.$_Get().idcard == "3"){
+            let printVids = []
+            for(let i of this.state.printList) {
+                if(i.vid[0]!="a"&&i.vid[0]!="v"){
+                    i.vid = "v"+i.vid
+                }
+                printVids.push(i.vid)
+            }
+            window.Android.print(printVids.join(","));
+            return;
+        }
         this.state.printing = true
         for(let i = 0; i < this.state.printList.length;i++){
             let item = this.state.printList[i]
