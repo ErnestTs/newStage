@@ -59,7 +59,7 @@ export default class Print extends Component {
     }
 
     printCard(vid) {
-        if(vid[0]!="a"||vid[0]!="v"){
+        if(vid[0]!="a"&&vid[0]!="v"){
             vid = "v"+vid
         }
         let printUrl = "";
@@ -99,6 +99,9 @@ export default class Print extends Component {
         if(Common.$_Get().idcard == "3"){
             let printVids = []
             for(let i of this.state.printList) {
+                if(i.vid[0]!="a"&&i.vid[0]!="v"){
+                    i.vid = "v"+i.vid
+                }
                 printVids.push(i.vid)
             }
             window.Android.print(printVids.join(","));
