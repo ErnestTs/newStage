@@ -12,8 +12,7 @@ export default class Print extends Component {
         super(props)
         this.state= {
             printUrl:"",
-            printList:[],
-            printing:false
+            printList:[]
         }
     }
 
@@ -36,6 +35,7 @@ export default class Print extends Component {
     }
 
     componentDidMount(){
+
         // 守卫返回
         if(!this.props.history.location.state){
             this.props.history.push("/home/qrcode");
@@ -43,9 +43,17 @@ export default class Print extends Component {
         }
         let _this = this;
 
+        let LODOP = document.createElement("object");
+        LODOP.setAttribute("id", "lodop");
+        LODOP.setAttribute("width", 0);
+        LODOP.setAttribute("height", 0);
+        LODOP.setAttribute("style", "position:absolute;left:0px;top:-100px;width:0px;height:0px;");
+        LODOP.setAttribute("classid", "clsid:2105C259-1E0C-4534-8141-A753534CB4CA");
+
+        document.getElementById("component_print").appendChild(LODOP);
 
         let printList = this.props.history.location.state.printList;
-        console.log(printList)
+        
         let printUrl = "";
         if(sessionStorage.badgeMode !== '0'){
             printUrl = Common.customPrintUrl + sessionStorage.badgeCustom + "/index.html?vid=" + printList[0].vid + "&userid=" + sessionStorage.userid + "&token=" + sessionStorage.token
