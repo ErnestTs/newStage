@@ -12,7 +12,8 @@ export default class Print extends Component {
         super(props)
         this.state= {
             printUrl:"",
-            printList:[]
+            printList:[],
+            printing:false
         }
     }
 
@@ -93,6 +94,14 @@ export default class Print extends Component {
 
     startPrint(){
         if(this.state.printing){
+            return;
+        }
+        if(Common.$_Get().idcard == "3"){
+            let printVids = []
+            for(let i of this.state.printList) {
+                printVids.push(i.vid)
+            }
+            window.Android.print(printVids.join(","));
             return;
         }
         this.state.printing = true
