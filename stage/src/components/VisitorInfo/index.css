@@ -143,12 +143,14 @@
     border-radius: 12px;
     background: #F5F6FA;
     text-align: center;
-    overflow: auto;
+    /* overflow: auto; */
+    overflow: hidden;
 }
 
 #component_Register_cardInfo_mask_photoBox {
     /* width: 43%; */
-    width: 65%;
+    /* width: 65%; */
+    height: 38vh;
     margin: auto;
     margin-top: 3%;
     border: 1px solid #AA9D84;

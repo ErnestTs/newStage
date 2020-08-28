@@ -143,12 +143,14 @@
     border-radius: 12px;
     background: #F5F6FA;
     text-align: center;
-    overflow: auto;
+    /* overflow: auto; */
+    overflow: hidden;
 }
 
 #component_Register_cardInfo_mask_photoBox {
     /* width: 43%; */
-    width: 65%;
+    /* width: 65%; */
+    height: 38vh;
     margin: auto;
     margin-top: 3%;
     border: 1px solid #AA9D84;
@@ -161,7 +163,10 @@
 
 #component_Register_cardInfo_mask_photoBox>img {
     width: 45%;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%)
 }
 
 @media screen and (max-width: 1280px) {
@@ -604,7 +609,9 @@
     margin: auto;
     font-size: 2.1vh;
     line-height: normal;
-    text-align: center
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0 2vw;
 }
 #component_Register_ToastBox .btnGroup {
     margin: auto;

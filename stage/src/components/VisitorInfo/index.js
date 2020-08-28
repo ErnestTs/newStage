@@ -592,8 +592,8 @@ export default class VisitorInfo extends Component {
 		
         document.getElementById("cameraPanel").appendChild(flash);
         
-        let cameraOffsetWidth = document.getElementById("component_Register_cardInfo_mask_photoBox").offsetWidth+"px"
-        document.getElementById("component_Register_cardInfo_mask_photoBox").style.height = cameraOffsetWidth;
+        let cameraOffsetHeight = document.getElementById("component_Register_cardInfo_mask_photoBox").offsetHeight+"px"
+        document.getElementById("component_Register_cardInfo_mask_photoBox").style.width = cameraOffsetHeight;
     }
 
     /**
