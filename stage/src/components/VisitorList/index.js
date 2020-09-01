@@ -114,6 +114,9 @@ export default class VisitorList extends Component{
                     dataIndex: 'vphone',
                     key: 'vphone',
                     width:"10%",
+                    render:(data)=>{
+                        return <span>{data.replace(/(?<=[\d]{3})[\d](?=[\d]{4})/g, "*")}</span>
+                    }
                 },
                 {
                     title: '拜访事由',
@@ -233,6 +236,9 @@ export default class VisitorList extends Component{
                     title: '手机号',
                     dataIndex: 'vphone',
                     key: 'vphone',
+                    render:(data)=>{
+                        return <span>{data.replace(/(?<=[\d]{3})[\d](?=[\d]{4})/g, "*")}</span>
+                    }
                 },
                 {
                     title: '拜访事由',
