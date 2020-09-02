@@ -9,7 +9,7 @@ export default class Common {
 	static cameraUrl = Common.protocol + window.location.host + "/stage/MyCamera.swf";
 	static customPrintUrl = Common.protocol + window.location.host + "/card/custom/";
 
-	// static url = "http://www.coolvisit.top/qcvisitBase/";
+	// static url = "https://visitor.internet.genscript.com/qcvisit/";
 	// static url = "http://test3.coolvisit.top/qcvisit/";
 	// static url = "http://www.coolvisit.top/ykt/qcvisit/";
 	// static url = "http://139.217.223.183/qcvisit/";

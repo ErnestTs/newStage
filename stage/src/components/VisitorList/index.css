@@ -383,7 +383,8 @@
 #component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_label {
     width: 26%;
     text-align: right;
-    font-size: 1.8vh;
+    /* font-size: 1.8vh; */
+    font-size: 21px;
     line-height: 40px;
     color: #4D4E50;
     display: block;
@@ -403,15 +404,16 @@
     border-radius: 6px;
     width: 45%;
     margin-left: 10px;
-    text-indent: 10px
+    text-indent: 10px;
+    font-size: 20px
 }
 
 #component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_Btn {
     background: #4091F7;
     border-radius: 4px;
-    font-size: 1.11vh;
+    font-size: 14px;
     color: #FFFFFF;
-    line-height: 2.7vh;
+    line-height: 28px;
     float: left;
     padding: 0 14px;
     margin-left: 21px;
@@ -424,15 +426,15 @@
     overflow: hidden;
     margin: 0 auto;
     margin-top: 3.7vh;
-    font-size: 1.8vh;
+    font-size: 16px;
     color: #4091F7;
 }
 
 #component_VisitorList_signIn #component_VisitorList_signInBoard .signInBoard_BTNGroup li {
     float: left;
     width: 5.2vw;
-    height: 3.7vh;
-    line-height: 3.7vh;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     cursor: pointer;
 }
