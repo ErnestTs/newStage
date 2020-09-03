@@ -43,6 +43,8 @@ export default class Print extends Component {
                                 ()=>{
                                     this.setState({
                                         language:"chn"
+                                    },()=>{
+                                        this.startPrint.bind(this)
                                     })
                                 }
                             }>
@@ -52,6 +54,8 @@ export default class Print extends Component {
                                 ()=>{
                                     this.setState({
                                         language:"eng"
+                                    },()=>{
+                                        this.startPrint.bind(this)
                                     })
                                 }
                             }>
@@ -139,5 +143,6 @@ export default class Print extends Component {
             this.printCard(item.vid)
         }
         this.state.printing = false
+        this.props.history.replace({pathname:"visitor"})
     }
 }
