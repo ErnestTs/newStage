@@ -25,7 +25,7 @@ export default class VisitorList extends Component{
                 {
                     name:"签到访客",
                     interface:"SearchVisitByCondition",
-                    stateList:["total","leave","visiting"]
+                    stateList:["visiting","leave","total",]
                 },
                 {
                     name:"预约访客",
@@ -44,13 +44,13 @@ export default class VisitorList extends Component{
                 }
             ],
             vStateList:[
-                {name:"访客总数",count:0,key:"total"},
-                {name:"离开人数",count:0,key:"leave"},
                 {name:"正在拜访人数",count:0,key:"visiting"},
+                {name:"离开人数",count:0,key:"leave"},
                 {name:"预约总数",count:0,key:"appointment"},
                 {name:"邀请总数",count:0,key:"invite"},
                 {name:"签到人数",count:0,key:"checkIn"},
                 {name:"未到人数",count:0,key:"noArrived"},
+                {name:"访客总数",count:0,key:"total"},
             ],
             vState:0,
             columns:[
@@ -63,7 +63,7 @@ export default class VisitorList extends Component{
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:(this.state.vState==2&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
+                                    style={{display:(this.state.vState==0&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
                                         for(let i = 0;i < tempArr.length;i++){
@@ -182,7 +182,7 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul 
                             className="component_VisitorList_btnGroup_actions"
-                            style={{display:this.state.vState==2&&this.state.vType==0?"block":"none"}}
+                            style={{display:this.state.vState==0&&this.state.vType==0?"block":"none"}}
                         >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
                                 <span>全选</span>
@@ -321,7 +321,7 @@ export default class VisitorList extends Component{
                                                 let _this = this;
                                                 setTimeout(()=>{
                                                     _this.getEmpNameById()
-                                                },1000)
+                                                },300)
                                             })
                                         }).bind(this)
                                     }
@@ -593,9 +593,9 @@ export default class VisitorList extends Component{
                         dataSource:[],
                         baseList:[],
                         vStateList:[
-                            {name:"访客总数",count:0,key:"total"},
-                            {name:"离开人数",count:0,key:"leave"},
                             {name:"正在拜访人数",count:0,key:"visiting"},
+                            {name:"离开人数",count:0,key:"leave"},
+                            {name:"访客总数",count:0,key:"total"},
                             {name:"预约总数",count:0,key:"appointment"},
                             {name:"邀请总数",count:0,key:"invite"},
                             {name:"签到人数",count:0,key:"checkIn"},
@@ -700,6 +700,8 @@ export default class VisitorList extends Component{
                     dataSource:resArr,
                     vStateList:vStateList,
                     baseList:resArr
+                },()=>{
+                    this.changeState(0)
                 })
             }
         })
@@ -1006,16 +1008,21 @@ export default class VisitorList extends Component{
      */
     getEmpNameById(){
         let _this = this
+        
         setTimeout(()=>{
+            if(!_this.state.signInInfo.empId){
+                return
+            }
             let empList = _this.state.empList;
             let flag = false;
             for(let i = 0;i < empList.length;i++){
-                if(_this.state.signInInfo.empId == empList[i].cardNo){
+                if((_this.state.signInInfo.empId == empList[i].empNo||_this.state.signInInfo.empId == empList[i].cardNo)){
                     flag = true;
                     let obj = _this.state.signInInfo;
-                    obj.name = empList[i].empName
+                    obj.name = empList[i].empName;
+                    obj.empId = empList[i].empNo||"";
                     _this.setState({
-                        signInInfo:obj
+                        signInInfo:obj,
                     })
                     break;
                 }
@@ -1033,5 +1040,26 @@ export default class VisitorList extends Component{
                 return
             }
         },1000)
+    }
+
+    /**
+     *  @description [16进制转10进制]
+     */
+    hex2int(hex){
+        var len = hex.length, a = new Array(len), code;
+        for (var i = 0; i < len; i++) {
+            code = hex.charCodeAt(i);
+            if (48<=code && code < 58) {
+                code -= 48;
+            } else {
+                code = (code & 0xdf) - 65 + 10;
+            }
+            a[i] = code;
+        }
+         
+        return a.reduce(function(acc, c) {
+            acc = 16 * acc + c;
+            return acc;
+        }, 0);
     }
 }

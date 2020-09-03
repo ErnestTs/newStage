@@ -26,7 +26,7 @@ export default class Navgation extends Component {
                         <span>
                             <img src={exitPng} alt="" />
                         </span>
-                        <span id="loginOut" onClick={this.logout.bind(this)}>退出系统</span>
+                        <span id="loginOut" onClick={this.logout.bind(this)}>主页面</span>
                     </div>
                 </div>
             </div>
