@@ -19,6 +19,7 @@ export default class Print extends Component {
     }
 
     render(){
+        let _this = this
         return (
             <div id="component_print">
                 <div id="printArea">
@@ -44,7 +45,7 @@ export default class Print extends Component {
                                     this.setState({
                                         language:"chn"
                                     },()=>{
-                                        this.startPrint.bind(this)
+                                        this.startPrint()
                                     })
                                 }
                             }>
@@ -55,7 +56,7 @@ export default class Print extends Component {
                                     this.setState({
                                         language:"eng"
                                     },()=>{
-                                        this.startPrint.bind(this)
+                                        this.startPrint()
                                     })
                                 }
                             }>
@@ -135,6 +136,7 @@ export default class Print extends Component {
                 printVids.push(i.vid)
             }
             window.Android.print(printVids.join(","),this.state.language);
+            this.props.history.replace({pathname:"visitor"})
             return;
         }
         this.state.printing = true
