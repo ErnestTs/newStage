@@ -1315,9 +1315,13 @@ export default class VisitorInfo extends Component {
                         if(count >= 20) {
                             clearInterval(window.interval)
                             window.interval = null
+                            // Toast.open({
+                            //     type:"danger",
+                            //     content: "未通过人脸校验，请重新抓拍人脸"
+                            // });
                             Toast.open({
                                 type:"danger",
-                                content: "未通过人脸校验，请重新抓拍人脸"
+                                content: "未检测到人脸。1.请注意拍摄正面照片。2.请避免刘海、帽子等遮挡额头。3.请避免口罩遮挡至鼻梁处。"
                             })
                             this.state.faceLoading = false
                             return
