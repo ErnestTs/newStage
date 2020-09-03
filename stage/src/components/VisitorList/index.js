@@ -258,6 +258,21 @@ export default class VisitorList extends Component{
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
                             locale={{emptyText: '暂无数据'}}
+                            onRow={(record)=>{
+                                return {
+                                    onClick:(e)=>{
+                                        let oArr = this.state.dataSource
+                                        for(let i = 0;i < oArr.length;i++){
+                                            if(oArr[i].vid === record.vid){
+                                                oArr[i].checked = !oArr[i].checked
+                                            }
+                                        }
+                                        this.setState({
+                                            dataSource:oArr
+                                        })
+                                    }
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -326,7 +341,7 @@ export default class VisitorList extends Component{
                                         }).bind(this)
                                     }
                                 />
-                                <span className="signInBoard_Btn" onClick={this.getEmpNameById.bind(this)}>读取</span>
+                                {/* <span className="signInBoard_Btn" onClick={this.getEmpNameById.bind(this)}>读取</span> */}
                             </li>
                             <li>
                                 <span className="signInBoard_label">
@@ -1033,10 +1048,10 @@ export default class VisitorList extends Component{
                 _this.setState({
                     signInInfo:obj
                 })
-                Toast.open({
-                    type:"danger",
-                    content: "无效员工"
-                })
+                // Toast.open({
+                //     type:"danger",
+                //     content: "无效员工"
+                // })
                 return
             }
         },1000)
