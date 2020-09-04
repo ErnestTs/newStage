@@ -1349,6 +1349,14 @@ export default class VisitorInfo extends Component {
                     faceLoading:false
                 })
                 clearInterval(window.interval)
+            }else if(res.result == 2){
+                Toast.open({
+                    type:"danger",
+                    content: "未检测到人脸。1.请注意拍摄正面照片。2.请避免刘海、帽子等遮挡额头。3.请避免口罩遮挡至鼻梁处。"
+                })
+                clearInterval(window.interval)
+                window.interval = null
+                this.state.faceLoading = false
             }
         });
     }
