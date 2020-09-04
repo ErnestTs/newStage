@@ -153,8 +153,8 @@ export default class Login extends Component {
 
                     // /**存储结果用于刷新token,其他session暂不修改 */
                     // sessionStorage.result = JSON.stringify(result);
-                    sessionStorage.opname = result.username;
-                    sessionStorage.company = result.company;
+                    sessionStorage.opname = result.sName;
+                    sessionStorage.company = result.gname;
                     let sname = user;
                     sessionStorage.token = result.userid + '-' + result.token;
                     sessionStorage.permissionSwitch = result.permissionSwitch;
@@ -172,8 +172,6 @@ export default class Login extends Component {
                     sessionStorage.badgeCustom = result.badgeCustom;
                     sessionStorage.mainCompany = result.company;
                     sessionStorage.questionnaireSwitch = result.questionnaireSwitch;
-                    sessionStorage.opname = result.username;
-                    sessionStorage.company = result.company;
                     sessionStorage.gid = result.gid
                     sessionStorage.gname = result.gname
 				
@@ -188,8 +186,6 @@ export default class Login extends Component {
                         sessionStorage.photoSwitch = false;
                     }
 
-
-                    // this.getCompayInfo(result.userid,user,this.state.username)
 
                     this.setState({
                         username: "",
@@ -440,8 +436,8 @@ export default class Login extends Component {
 				sessionStorage.badgeCustom = result.badgeCustom;
 				sessionStorage.mainCompany = result.company;
 				sessionStorage.questionnaireSwitch = result.questionnaireSwitch;
-				sessionStorage.opname = result.username;
-				sessionStorage.company = result.company;
+				sessionStorage.opname = result.sName;
+				sessionStorage.company = result.gname;
 				sessionStorage.gid = result.gid
 				sessionStorage.gname = result.gname
 				
