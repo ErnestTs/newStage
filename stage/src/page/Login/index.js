@@ -183,6 +183,13 @@ export default class Login extends Component {
                     });
                     this.getValideCode()
                 }
+                else if (data.status == 42) {
+                    Toast.open({
+                        type:"danger",
+                        content: "账号已过期，请联系管理员"
+                    });
+                    this.getValideCode()
+                }
                 else {
                     Toast.open({
                         type:"danger",
@@ -441,6 +448,13 @@ export default class Login extends Component {
                     content: "用户名或者密码错误，请重新输入"
                 });
 			}
+            else if (data.status == 42) {
+                Toast.open({
+                    type:"danger",
+                    content: "账号已过期，请联系管理员"
+                });
+                this.getValideCode()
+            }
 			else {
                 Toast.open({
                     type:"danger",
