@@ -26,6 +26,8 @@ import TempCards from "../../components/TempCards/index"
 import Resident from "../../components/Resident/index"
 import Blacklist from "../../components/Blacklist/index"
 import Companylist from "../../components/Companylist/index"
+import Register_officeBuilding from "../../components/Register_officeBuilding/index"
+import VisitorInfo_officeBuilding from "../../components/VisitorInfo_officeBuilding/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -82,10 +84,14 @@ export default class Homepage extends Component {
     }
 
     componentDidMount(){
+        // 守卫
         if(!sessionStorage.token){
             this.props.history.push("/login")
             return;
         }
+
+        // 切换组件
+        // 切换读卡设备 1-证照通 3-senseid def-读卡器
         switch(Common.$_Get().idcard){
             case "1":
                 this.setState({
@@ -103,6 +109,8 @@ export default class Homepage extends Component {
                 })
                 break;
         }
+        
+        // 多企业模式切换 0-
 
 
         let _this = this
