@@ -24,6 +24,8 @@ import Print from "../../components/Print/index"
 import VisitorList from "../../components/VisitorList/index"
 import TempCards from "../../components/TempCards/index"
 import Resident from "../../components/Resident/index"
+import Blacklist from "../../components/Blacklist/index"
+import Companylist from "../../components/Companylist/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -56,8 +58,6 @@ export default class Homepage extends Component {
                     <div id="page_home_mainView">
                         <Router>
                             <Switch>
-                                <Route path="/home/companylist" component={Companylist} />
-                                <Route path="/home/blacklist" component={Blacklist} />
                                 <Route path="/home/qrcode" component={Qrcode} />
                                 <Route path="/home/Certificates" component={this.state.Certificates} />
                                 <Route path="/home/appointmentInfo" component={AppointmentInfo} />
@@ -70,6 +70,8 @@ export default class Homepage extends Component {
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
                                 <Route path="/home/resident" component={Resident} />
+                                <Route path="/home/companylist" component={Companylist} />
+                                <Route path="/home/blacklist" component={Blacklist} />
                                 <Redirect to={Common.$_Get().idcard==3?"/home/visitor":this.state.defaultPath} />
                             </Switch>
                         </Router>
