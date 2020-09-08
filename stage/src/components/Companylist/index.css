@@ -1,0 +1,227 @@
+#component_Companylist{
+    width: 100%;
+    height: 100%;
+    float: left;
+    position: relative;
+    background: #F5F6FA
+}
+
+.component_Companylist_tableBoard {
+    width: 95%;
+    margin: auto;
+    margin-top: 2.7%;
+    height: 100%;
+}
+
+.component_Companylist_tableBoard .ant-table-thead {
+    background: #EBEBEB;
+    border-radius: 12px;
+}
+
+.component_Companylist_tableBoard .ant-table-container table > thead > tr:first-child th {
+    background: #EBEBEB;
+    color: #202224 !important;
+}
+
+.component_Companylist_tableBoard .ant-table-container table > thead > tr:first-child th:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+.component_Companylist_tableBoard .ant-table-container table > thead > tr:first-child th:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.component_Companylist_tableBoard tr {
+    height: 95px;
+}
+.component_Companylist_tableBoard .ant-table-thead tr{
+    height: 48px;
+}
+
+.component_Companylist_tableBoard .ant-table-cell {
+    text-align: center
+}
+
+#component_Companylist_searchContent {
+    float: left;
+    margin-bottom: 4.25vh;
+    width: 100%;
+    overflow: hidden;
+    height: 4vh;
+}
+
+#component_Companylist_searchContent #component_Companylist_inputBox {
+    width: 25%;
+    height: 100%;
+    text-align: left;
+    background: #F5F6FA;
+    border: 1px solid #AA9D84;
+    border-radius: 19px;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+    float: right;
+    position: relative
+}
+
+#component_Companylist_searchContent #component_Companylist_inputBox img {
+    position: absolute;
+    height: 40%;
+    top: 55%;
+    left: 1vw;
+    transform: translateY(-50%)
+}
+
+#component_Companylist_searchContent #component_Companylist_inputBox input{
+    border: none;
+    outline: none;
+    background: #F5F6FA;
+    line-height: normal;
+    padding-left: 2.265vw;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #A6A6A6;
+    width: 90%;
+    margin-left: 5%;
+    height: 100%;
+}
+
+#component_Companylist_searchContent #component_Companylist_btn_refresh {
+    /* float: left; */
+    float: right;
+    width: 5.8%;
+    line-height: 4vh;
+    text-align: center;
+    background: #AA9D84;
+    border-radius: 8px;
+    font-size: 1.68vh;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.component_Companylist_tableBox{
+    width: 100%;
+    background: #fff;
+    border-radius: 14px;
+    box-sizing: border-box;
+    float: left;
+    height: 60vh;
+    overflow: hidden;
+    box-sizing: border-box
+}
+
+@media screen and (max-height: 619px) {
+    .component_Companylist_tableBox{
+        height: 50vh;
+    }
+}
+
+#component_Companylist_PaginationBox {
+    float: left;
+    height: 90px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+#component_Companylist_Pagination {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%,-50%)
+}
+
+#component_Companylist .ant-pagination-item-active {
+    background: #AA9D84;
+    color: #FFFFFF;
+    border-color: #AA9D84
+}
+
+
+#component_Companylist .ant-pagination-item-active a{
+    color: #FFFFFF !important;
+}
+
+#component_Companylist .ant-pagination-item:hover {
+    border-color: #AA9D84;
+}
+#component_Companylist .ant-pagination-next:hover {
+    border-color: #AA9D84;
+}
+#component_Companylist .ant-pagination-prev:hover {
+    border-color: #AA9D84;
+}
+
+
+#component_Companylist .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Companylist .ant-pagination-prev:hover .ant-pagination-item-link {
+    border-color: #AA9D84;
+    color: #AA9D84
+}
+
+#component_Companylist .ant-pagination-item:focus a, .ant-pagination-item:hover a {
+    color: #AA9D84
+}
+
+
+#component_Companylist #component_Companylist_stateList {
+    border: 1px solid #DCDEE0;
+    border-radius: 10px;
+    float: left;
+    width: 36.3%;
+    height: 100%;
+    box-sizing: border-box;
+    line-height: 4vh;
+    overflow: hidden
+}
+
+#component_Companylist #component_Companylist_stateList li {
+    float: left;
+    width: 33.33333%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1.48vh;
+    border-left: 1px solid #DCDEE0;
+    cursor: pointer;
+    background-color: #fff;
+}
+#component_Companylist #component_Companylist_stateList li:nth-child(1){
+    border-left: 0;
+}
+
+#component_Companylist #component_Companylist_stateList .action {
+    background: #AA9D84;
+    overflow: hidden;
+    color: #FFFFFF;
+}
+
+.component_Companylist_IFSToast {
+    position: fixed;
+    left: 50%;
+    top: 76px;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.15);
+    border-radius: 4px;
+    width: 124px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+.component_Companylist_IFSToast i {
+    display: inline-block;
+    background: url(../../resource/i.png) no-repeat;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
