@@ -56,7 +56,7 @@
     height: 100%;
     text-align: left;
     background: #F5F6FA;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 19px;
     box-sizing: border-box;
     overflow: hidden;
@@ -93,7 +93,7 @@
     width: 5.8%;
     line-height: 4vh;
     text-align: center;
-    background: #AA9D84;
+    background: #0F4C81;
     border-radius: 8px;
     font-size: 1.68vh;
     color: #FFFFFF;
@@ -135,9 +135,9 @@
 }
 
 #component_Companylist .ant-pagination-item-active {
-    background: #AA9D84;
+    background: #0F4C81;
     color: #FFFFFF;
-    border-color: #AA9D84
+    border-color: #0F4C81
 }
 
 
@@ -146,28 +146,28 @@
 }
 
 #component_Companylist .ant-pagination-item:hover {
-    border-color: #AA9D84;
+    border-color: #0F4C81;
 }
 #component_Companylist .ant-pagination-next:hover {
-    border-color: #AA9D84;
+    border-color: #0F4C81;
 }
 #component_Companylist .ant-pagination-prev:hover {
-    border-color: #AA9D84;
+    border-color: #0F4C81;
 }
 
 
 #component_Companylist .ant-pagination-next:hover .ant-pagination-item-link {
-    border-color: #AA9D84;
-    color: #AA9D84
+    border-color: #0F4C81;
+    color: #0F4C81
 }
 
 #component_Companylist .ant-pagination-prev:hover .ant-pagination-item-link {
-    border-color: #AA9D84;
-    color: #AA9D84
+    border-color: #0F4C81;
+    color: #0F4C81
 }
 
 #component_Companylist .ant-pagination-item:focus a, .ant-pagination-item:hover a {
-    color: #AA9D84
+    color: #0F4C81
 }
 
 
@@ -197,7 +197,7 @@
 }
 
 #component_Companylist #component_Companylist_stateList .action {
-    background: #AA9D84;
+    background: #0F4C81;
     overflow: hidden;
     color: #FFFFFF;
 }

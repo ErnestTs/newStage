@@ -210,7 +210,10 @@ export default class Companylist extends Component {
                 let countNeedAuthorize = 0;
                 for(let i = 0; i < res.result.length;i++){
                     let item = res.result[i];
-                    let gList = item.gids.split(",")
+                    let gList=[]
+                    if(!!item.gids){
+                        gList = item.gids.split(",")
+                    }
                     if(gList.indexOf(sessionStorage.gid)!==-1&&item.isUse == 1){
                         if((item.vaPerm&1)==1){
                             item.invite = true
