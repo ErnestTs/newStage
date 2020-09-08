@@ -32,6 +32,14 @@ import Appointment_1 from "../../resource/menu_icon/Appointment/1.png"
 import Appointment_2 from "../../resource/menu_icon/Appointment/2.png"
 import Appointment_3 from "../../resource/menu_icon/Appointment/3.png"
 
+import Blacklist_1 from "../../resource/menu_icon/Blacklist/1.png"
+import Blacklist_2 from "../../resource/menu_icon/Blacklist/2.png"
+import Blacklist_3 from "../../resource/menu_icon/Blacklist/3.png"
+
+import Companylist_1 from "../../resource/menu_icon/Companylist/1.png"
+import Companylist_2 from "../../resource/menu_icon/Companylist/2.png"
+import Companylist_3 from "../../resource/menu_icon/Companylist/3.png"
+
 
 export default class Menu extends Component {
     constructor(props){
@@ -73,6 +81,16 @@ export default class Menu extends Component {
                     normal:Appointment_1,
                     hidden:Appointment_2,
                     active:Appointment_3
+                },
+                Blacklist:{
+                    normal:Blacklist_1,
+                    hidden:Blacklist_2,
+                    active:Blacklist_3
+                },
+                Companylist:{
+                    normal:Companylist_1,
+                    hidden:Companylist_2,
+                    active:Companylist_3
                 },
             },
             open: true,     // true-完整菜单 false-缩略菜单
@@ -118,6 +136,8 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
                             {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
+                            {this.renderItem("公司列表",this.state.icon.Companylist,7, "companylist")}
+                            {this.renderItem("黑名单列表",this.state.icon.Blacklist,8, "Blacklist")}
                         </li>
                     </ul>
                 </div>
@@ -135,6 +155,8 @@ export default class Menu extends Component {
                         <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
                             {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
+                            {this.renderItem("公司列表",this.state.icon.Companylist,7, "companylist")}
+                            {this.renderItem("黑名单列表",this.state.icon.Blacklist,8, "Blacklist")}
                         </li>
                     </ul>
                 </div>
