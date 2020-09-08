@@ -56,6 +56,8 @@ export default class Homepage extends Component {
                     <div id="page_home_mainView">
                         <Router>
                             <Switch>
+                                <Route path="/home/companylist" component={Companylist} />
+                                <Route path="/home/blacklist" component={Blacklist} />
                                 <Route path="/home/qrcode" component={Qrcode} />
                                 <Route path="/home/Certificates" component={this.state.Certificates} />
                                 <Route path="/home/appointmentInfo" component={AppointmentInfo} />
