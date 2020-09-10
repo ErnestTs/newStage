@@ -142,7 +142,7 @@
 
 #component_Register_cardInfo_mask img {
     width: 43%;
-    margin-top: 10%
+    /* margin-top: 10% */
 }
 
 @media screen and (max-width: 1280px) {
