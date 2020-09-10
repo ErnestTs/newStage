@@ -620,5 +620,33 @@ export default class Common {
 		return JSON.parse(str);
 	}
 
+	/**
+	 * @description [校验通行策略]
+	 * @param {Array} floor [楼层]
+	 */
+	static checkPassConfig(floor){
+		if(!floor){
+			return false
+		}
+		let resBoolean = false
+		let gNamesList = [];
+		let gName = sessionStorage.gname
+		for(let i =0; i < floor.length;i++){
+			gNamesList.push(floor[i].replace(/_/g,"-"))
+		}
+		let sendData = {
+			"reqDate":new Date().getTime(),
+			"userid": sessionStorage.userid,
+			// "gNames":["T1-10F12F","T2-10F12F16F"]
+			"gNames":gNamesList
+		}
+		this.ajaxProcWithoutAsync("getSendCardStatus",sendData,sessionStorage.token).done((res)=>{
+			if(res.status == 0){
+				resBoolean = true
+			}
+		})
+		return resBoolean
+	}
+
 }
 
