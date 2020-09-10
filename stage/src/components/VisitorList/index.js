@@ -1037,6 +1037,15 @@ export default class VisitorList extends Component{
             })
             return;
         }else{
+            let _this = this
+            window.tempSerCard = function(e){
+                if(e.keyCode == 13){
+                    _this.setTempCard()
+                }
+            }
+            document.body.addEventListener("keyup",
+                window.tempSerCard
+            )
             this.getDefAccess(oList)
             this.setToast(1)
         }
@@ -1050,6 +1059,9 @@ export default class VisitorList extends Component{
             tempCard:"",
             targetFloorName:""
         })
+        document.body.removeEventListener("keyup",
+            window.tempSerCard
+        )
         this.setToast(0)
     }
 
