@@ -353,6 +353,9 @@ export default class VisitorList extends Component{
                             className="component_VisitorList_btnGroup_actions"
                             style={{display:this.state.vType==3||this.state.vType==0?"block":"none"}}
                         >
+                            <li className="component_VisitorList_setTempCard" onClick={this.getVisitorInfo.bind(this)}>
+                                <span>刷新</span>
+                            </li>
                             <li className="component_VisitorList_setTempCard" onClick={this.sendCard.bind(this)}>
                                 <span>发卡</span>
                             </li>
@@ -648,7 +651,8 @@ export default class VisitorList extends Component{
         this.setState({
             vState:i,
             dataSource: tempArr,
-            selectedRowKeys:!!tempArr.length?[tempArr[0].key]:[]
+            selectedRowKeys:!!tempArr.length?[tempArr[0].key]:[],
+            onSelectList:!!tempArr.length?[tempArr[0]]:[],
         },()=>{
             if(index == this.state.vState){
                 return;
@@ -851,7 +855,7 @@ export default class VisitorList extends Component{
                     }
                 }
 
-                
+
                 this.setState({
                     dataSource:resArr,
                     vStateList:vStateList,
