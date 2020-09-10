@@ -45,7 +45,7 @@ export default class VisitorList extends Component{
                 {
                     name:"待发卡访客",
                     interface:"getNotSendCardVisit",
-                    stateList:["pad","wechat","invitation","stage","QL_FK"]
+                    stateList:["PAD","wechat","invitation","stage","QL_FK"]
                 }
             ],
             vStateList:[
@@ -56,7 +56,7 @@ export default class VisitorList extends Component{
                 {name:"邀请总数",count:0,key:"invite"},
                 {name:"签到人数",count:0,key:"checkIn"},
                 {name:"未到人数",count:0,key:"noArrived"},
-                {name:"pad",count:0,key:"pad"},
+                {name:"PAD",count:0,key:"PAD"},
                 {name:"小程序",count:0,key:"wechat"},
                 {name:"邀请函",count:0,key:"invitation"},
                 {name:"礼宾台",count:0,key:"stage"},
@@ -308,7 +308,7 @@ export default class VisitorList extends Component{
         const { onSelectList,selectedRowKeys } = this.state;
         const rowSelection = {
             onSelectList,
-            // selectedRowKeys,
+            selectedRowKeys,
             type:'radio',
             preserveSelectedRowKeys:false,
             onChange: this.selectedRow.bind(this)
@@ -606,7 +606,7 @@ export default class VisitorList extends Component{
                     }
                 }
                 break;
-            case "pad":
+            case "PAD":
                 for(let i = 0; i <this.state.baseList.length; i++){
                     if(this.state.baseList[i].clientNo == 5){
                         tempArr.push(this.state.baseList[i])
@@ -647,7 +647,8 @@ export default class VisitorList extends Component{
         let index = this.state.vState
         this.setState({
             vState:i,
-            dataSource: tempArr
+            dataSource: tempArr,
+            selectedRowKeys:!!tempArr.length?[tempArr[0].key]:[]
         },()=>{
             if(index == this.state.vState){
                 return;
@@ -697,7 +698,7 @@ export default class VisitorList extends Component{
                             {name:"邀请总数",count:0,key:"invite"},
                             {name:"签到人数",count:0,key:"checkIn"},
                             {name:"未到人数",count:0,key:"noArrived"},
-                            {name:"pad",count:0,key:"pad"},
+                            {name:"PAD",count:0,key:"PAD"},
                             {name:"小程序",count:0,key:"wechat"},
                             {name:"邀请函",count:0,key:"invitation"},
                             {name:"礼宾台",count:0,key:"stage"},
@@ -801,7 +802,7 @@ export default class VisitorList extends Component{
                         item.vTypeOnShow = ""
                     }
                     item.checked = false;
-                    item.key = i+interfaceName+Math.random();
+                    item.key = item.appointmentDate+interfaceName+item.vphone;
                     
                     resArr.push(item)
                 }
@@ -830,7 +831,7 @@ export default class VisitorList extends Component{
                         case "noArrived":
                             vStateList[i].count=noArrived
                             break;
-                        case "pad":
+                        case "PAD":
                             vStateList[i].count=padCount
                             break;
                         case "wechat":
@@ -850,18 +851,13 @@ export default class VisitorList extends Component{
                     }
                 }
 
-
+                
                 this.setState({
                     dataSource:resArr,
                     vStateList:vStateList,
                     baseList:resArr
                 },()=>{
                     this.changeState(this.state.vState)
-                    // if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
-                    //     this.changeState(7)
-                    // }else{
-                    //     this.changeState(this.state.vState)
-                    // }
                 })
             }
         })
