@@ -1,10 +1,10 @@
-.component_Register_mainBoard {
+#component_Register_ob .component_Register_mainBoard {
     width: 91.15%;
     height: 85%;
     margin: auto;
 }
 
-#component_Register {
+#component_Register_ob {
     overflow: hidden;
     height: 100%;
     float: left;
@@ -14,16 +14,16 @@
     box-sizing: border-box;
 }
 
-#component_Register .topBar {
+#component_Register_ob .topBar {
     width: 91.15%;
     height: 49px;
-    background: #EBEBEB;
+    background: #E7EDF2;
     border-radius: 8px;
     margin: auto;
     margin-top: 2.778vh;
 }
 
-.topBar div {
+#component_Register_ob .topBar div {
     text-indent: 53px;
     width: 50%;
     font-size: 16px;
@@ -33,7 +33,7 @@
     font-weight: bolder
 }
 
-.component_Register_appInfo, .component_Register_cardInfo {
+#component_Register_ob .component_Register_appInfo, .component_Register_cardInfo {
     position: relative;
     padding-top: 2.778vh;
     width: 50%;
@@ -42,7 +42,7 @@
     overflow-y: auto
 }
 
-.component_Register_appInfo>ul>li {
+#component_Register_ob .component_Register_appInfo>ul>li {
     width: 87%;
     margin: auto;
     border-bottom: 0.87px solid #E0E0E0;
@@ -50,15 +50,15 @@
     color: #323233;
     letter-spacing: 0;
 }
-.component_Register_appInfo ul li>div{
+#component_Register_ob .component_Register_appInfo ul li>div{
     height: 50px;
     overflow: hidden
 }
-.component_Register_appInfo ul li .companylist {
+#component_Register_ob .component_Register_appInfo ul li .companylist {
     overflow: hidden;
     border: 1px solid #121212;
 }
-.component_Register_appInfo ul li .companylist li {
+#component_Register_ob .component_Register_appInfo ul li .companylist li {
     border-bottom: 1px solid #121212;
     height:30px;
     line-height:30px;
@@ -69,22 +69,22 @@
     overflow: hidden;
 }
 
-.component_Register_appInfo_key {
+#component_Register_ob .component_Register_appInfo_key {
     display: block;
     float: left;
     line-height: 50px;
     width: 100px;
 }
 
-.component_Register_appInfo_key .required {
+#component_Register_ob .component_Register_appInfo_key .required {
     color: red
 }
 
-.component_Register_appInfo_value {
+#component_Register_ob .component_Register_appInfo_value {
     display: block;
     float: left;
     font-size: 14px;
-    color: #AA9D84;
+    color: #0F4C81;
     text-indent: 27px;
     line-height: 48px;
     text-align: left;
@@ -92,7 +92,7 @@
     height: 97%;
 }
 
-.component_Register_appInfo_value input {
+#component_Register_ob .component_Register_appInfo_value input {
     display: inline;
     border: 0;
     outline: none;
@@ -104,7 +104,7 @@
     line-height: normal;
 }
 
-.component_Register_appInfo_value select {
+#component_Register_ob .component_Register_appInfo_value select {
     display: inline;
     border: 0;
     outline: none;
@@ -116,8 +116,8 @@
     line-height: normal;
 }
 
-.component_Register_appInfo_input {
-    border: 1px solid #AA9D84;
+#component_Register_ob .component_Register_appInfo_input {
+    border: 1px solid #0F4C81;
     border-radius: 4px;
     margin-top: 10px;
     text-indent: 10px
@@ -125,17 +125,17 @@
 
 
 @media screen and (max-width: 1280px) {
-    .component_Register_appInfo, .component_Register_cardInfo {
+    #component_Register_ob .component_Register_appInfo, .component_Register_cardInfo {
         padding-top: 4vh;
     }
 }
 
-#component_Register_cardInfo_mask p {
+#component_Register_ob #component_Register_cardInfo_mask p {
     width: 60%;
     margin: auto;
 }
 
-#component_Register_cardInfo_mask,#component_Register_cardInfo_board {
+#component_Register_ob #component_Register_cardInfo_mask,#component_Register_cardInfo_board {
     width: 95%;
     position: absolute;
     height: 90%;
@@ -147,46 +147,47 @@
     overflow: hidden;
 }
 
-#component_Register_cardInfo_mask_photoBox {
+#component_Register_ob #component_Register_cardInfo_mask_photoBox {
     /* width: 43%; */
     /* width: 65%; */
     height: 38vh;
     margin: auto;
     margin-top: 3%;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
     transform: rotate(0deg);
-    background-color: #EBEBEB;
+    background-color: #E7EDF2;
 }
 
-#component_Register_cardInfo_mask_photoBox>img {
+#component_Register_ob #component_Register_cardInfo_mask_photoBox>img {
     width: 45%;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%);
+    margin-top: 0
 }
 
 @media screen and (max-width: 1280px) {
-    #component_Register_cardInfo_mask_photoBox {
+    #component_Register_ob #component_Register_cardInfo_mask_photoBox {
         width: 30%;
     }
 }
 
 @media screen and (max-height: 619px) {
-    #component_Register_cardInfo_mask_photoBox {
+    #component_Register_ob #component_Register_cardInfo_mask_photoBox {
         width: 30%;
         margin-top: 5%
     }
-    #component_Register_loginBTN {
+    #component_Register_ob #component_Register_loginBTN {
         bottom: 0.4% !important;
         height: 4% !important;
     }
 }
 
-#Register_facePhoto {
+#component_Register_ob #Register_facePhoto {
     position: absolute;
     left: 0;
     top: 0;
@@ -197,13 +198,13 @@
     
 }
 
-#cameraPanel {
+#component_Register_ob #cameraPanel {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-#cameraPanel #Register_camera_img{
+#component_Register_ob #cameraPanel #Register_camera_img{
     position: absolute;
     left: 0;
     top: 0;
@@ -211,7 +212,7 @@
     height: 100%;
 }
 
-#Register_facePhoto #camera {
+#component_Register_ob #Register_facePhoto #camera {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -223,16 +224,16 @@
 /* #component_Register_cardInfo_mask p {
     margin-top: 12px;
     font-size: 21px;
-    color: #AA9D84;
+    color: #0F4C81;
     letter-spacing: 0.81px;
     text-align: center;
     line-height: 30px;
 } */
 
-#component_Register_cardInfo_mask p {
+#component_Register_ob #component_Register_cardInfo_mask p {
     margin-top: 6px;
     font-size: 16px;
-    color: #AA9D84;
+    color: #0F4C81;
     letter-spacing: 0.81px;
     text-align: center;
     line-height: 20px;
@@ -244,14 +245,14 @@
     margin-bottom: 2.778vh;
 } */
 
-#component_Register_cardInfo_mask .btn_box{
+#component_Register_ob #component_Register_cardInfo_mask .btn_box{
     height: 7.5%;
     margin-top: 2vh;
     margin-bottom: 2vh;
 }
 
-#component_Register_cardInfo_mask .btn_box div{
-    background: #AA9D84;
+#component_Register_ob #component_Register_cardInfo_mask .btn_box div{
+    background: #0F4C81;
     border-radius: 8px; 
     width: 27.6%;
     height: 100%;
@@ -261,16 +262,16 @@
     display: inline-block;
 }
 
-#component_Register_cardInfo_mask .btn_box div:nth-child(2){
+#component_Register_ob #component_Register_cardInfo_mask .btn_box div:nth-child(2){
     margin-left: 20px;
     box-sizing: border-box;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     background: #fff;
-    color: #AA9D84;
+    color: #0F4C81;
 }
 
 
-#component_Register_cardInfo_mask .btn_box div span{
+#component_Register_ob #component_Register_cardInfo_mask .btn_box div span{
     position: absolute;
     left: 0;
     top: 50%;
@@ -280,7 +281,7 @@
 }
 
 
-#component_Register_cardInfo_board .headerBox{
+#component_Register_ob #component_Register_cardInfo_board .headerBox{
     width: 100px;
     height: 100px;
     border: 1px solid #185EDB;
@@ -289,11 +290,11 @@
     margin-top: 34px
 }
 
-#component_Register_cardInfo_board .cardForm {
+#component_Register_ob #component_Register_cardInfo_board .cardForm {
     margin-top: 38px;
 }
 
-#component_Register_cardInfo_board .cardForm .cardForm_item {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item {
     width: 100%;
     height: 54px;
     line-height: 54px;
@@ -302,7 +303,7 @@
     margin: auto;
 }
 
-#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_key {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_key {
     text-align: left;
     display: block;
     float: left;
@@ -311,9 +312,9 @@
     color: #323233;
 }
 
-#component_Register_cardInfo_board .cardForm .cardForm_item input {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item input {
     width: 51%;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 4px;
     height: 30px;
     text-indent: 15px;
@@ -323,25 +324,25 @@
 }
 
 @media screen and (max-width: 1280px) {
-    #component_Register_cardInfo_board .cardForm .cardForm_item input {
+    #component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item input {
         font-size: 12px;
     }
 }
 
-.cardForm_item_address {
+#component_Register_ob .cardForm_item_address {
     font-size: 14px;
-    color: #AA9D84;
+    color: #0F4C81;
     letter-spacing: 0;  
     float: left;
 }
 
-#component_Register_cardInfo_board .cardForm .cardForm_item .btn {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item .btn {
     width: 15%;
     height: 100%;
     float: left;
     margin-left: 5%;
     text-align: center;
-    background: #AA9D84;
+    background: #0F4C81;
     border-radius: 4px;
     color:#fff;
     height: 30px;
@@ -350,19 +351,19 @@
     cursor: pointer;
 }
 
-#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card {
     width: 60%;
     float: left;
 }
-#component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card img {
+#component_Register_ob #component_Register_cardInfo_board .cardForm .cardForm_item .cardForm_item_card img {
     width: 100%;
 }
 
-#component_Register_loginBTN {
+#component_Register_ob #component_Register_loginBTN {
     position: fixed;
     width: 274px;
     height: 5%;
-    background: #121212;
+    background: #0F4C81;
     border-radius: 8px;
     text-align: center;
     color:#fff;
@@ -373,7 +374,7 @@
     font-size: 18px;
 }
 
-#component_Register_loginBTN span {
+#component_Register_ob #component_Register_loginBTN span {
     position: absolute;
     left: 0;
     top: 50%;
@@ -382,7 +383,7 @@
 }
 
 @media screen and (max-width: 1280px) {
-    #component_Register_loginBTN {
+    #component_Register_ob #component_Register_loginBTN {
         width: 180px;
         height: 5%;
         right: 5%;
@@ -391,24 +392,24 @@
 
 
 
-.answerState {
+#component_Register_ob .answerState {
     font-size: 14px;
     letter-spacing: 0;
     line-height: 50px;
     margin-left: 30px;
 }
 
-.answerState.err{
+#component_Register_ob .answerState.err{
     color: #FF4444;
 }
-.answerState.success{
+#component_Register_ob .answerState.success{
     color: #44FF44;
 }
-.answerState.exemption{
+#component_Register_ob .answerState.exemption{
     color: #00BBBB;
 }
 
-.appintmentState {
+#component_Register_ob .appintmentState {
     font-size: 16px;
     letter-spacing: 0;
     text-align: center;
@@ -421,33 +422,33 @@
     margin-left: 60px;
 }
 
-.appintmentState.err{
+#component_Register_ob .appintmentState.err{
     background: #F8C6C6;
     color: #F56C6C;
 }
-.appintmentState.authorize{
+#component_Register_ob .appintmentState.authorize{
     background: #FADF91;
     color: #FF7B00;
 }
-.appintmentState.signIn{
+#component_Register_ob .appintmentState.signIn{
     background: #C3F1EB;
     color: #00BA9A;
 }
-.appintmentState.finish{
+#component_Register_ob .appintmentState.finish{
     background: #C2DAF9;
-    color: #AA9D84;
+    color: #0F4C81;
 }
 
-.vtypeBox {
+#component_Register_ob .vtypeBox {
     overflow: auto;
 }
 
-.vtypeBox .component_Register_appInfo_vtypeItemBox {
+#component_Register_ob .vtypeBox .component_Register_appInfo_vtypeItemBox {
     float: left;
     padding: 7px 0;
 }
 
-.vtypeBox .component_Register_appInfo_vtypeItemBox li {
+#component_Register_ob .vtypeBox .component_Register_appInfo_vtypeItemBox li {
     padding: 0 23px;
     line-height: 34px;
     background: #F4F4F4;
@@ -461,7 +462,7 @@
     cursor: pointer;
 }
 
-.vtypeBox .component_Register_appInfo_sexTypeBox li {
+#component_Register_ob .vtypeBox .component_Register_appInfo_sexTypeBox li {
     padding: 0 31px;
     line-height: 34px;
     background: #F4F4F4;
@@ -473,34 +474,34 @@
     color: #999;
     cursor: pointer;
 }
-.vtypeBox .component_Register_appInfo_sexTypeBox li.action {
-    background: #AA9D84;
-    border: 1px solid #AA9D84;
+#component_Register_ob .vtypeBox .component_Register_appInfo_sexTypeBox li.action {
+    background: #0F4C81;
+    border: 1px solid #0F4C81;
     color: #fff
 }
 
-.vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
-    background: #AA9D84;
-    border: 1px solid #AA9D84;
+#component_Register_ob .vtypeBox .component_Register_appInfo_vtypeItemBox li.action {
+    background: #0F4C81;
+    border: 1px solid #0F4C81;
     color: #fff
 }
 
 
-.component_Register_mainBoard ol,ul,dl{
+#component_Register_ob .component_Register_mainBoard ol,ul,dl{
     margin:0;
 }
 
-.component_Register_Item ul {
+#component_Register_ob .component_Register_Item ul {
     padding-top: 7px;
     text-align: left;
 }
 
-.component_Register_Item ul .memberItem {
+#component_Register_ob .component_Register_Item ul .memberItem {
     margin-bottom: 18px;
 }
 
-.component_Register_Item ul .memberItem input {
-    border: 1px solid #AA9D84;
+#component_Register_ob .component_Register_Item ul .memberItem input {
+    border: 1px solid #0F4C81;
     color: #323233;
     height: 34px;
     border-radius: 6px;
@@ -508,27 +509,27 @@
     width: 33%;
     line-height: normal;
 }
-.component_Register_Item ul .memberItem input:nth-child(even) {
+#component_Register_ob .component_Register_Item ul .memberItem input:nth-child(even) {
     margin-left: 10px;
 }
 
-.component_Register_Item #addMember {
+#component_Register_ob .component_Register_Item #addMember {
     margin-bottom: 7px;
     text-align: center;
     line-height: 34px;
-    background: #AA9D84;
+    background: #0F4C81;
     border-radius: 8px;
     text-align: center;
     color:#fff;
     cursor: pointer;
 }
 
-.component_Register_memberBox {
+#component_Register_ob .component_Register_memberBox {
     
 }
 
 
-#component_Register_Toast {
+#component_Register_ob #component_Register_Toast {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -537,7 +538,7 @@
     left: 0;
 }
 
-#component_Register_tempCardBox,#component_Register_ToastBox {
+#component_Register_ob #component_Register_tempCardBox,#component_Register_ToastBox {
     width: 28.125vw;
     /* height: 24vh; */
     background-color: #fff;
@@ -549,7 +550,7 @@
     overflow: hidden;
 }
 
-#component_Register_tempCardBox .title {
+#component_Register_ob #component_Register_tempCardBox .title {
     text-align: center;
     font-size: 2.222vh;
     color: #323233;
@@ -558,7 +559,7 @@
     margin-bottom: 1.57vh;
 }
 
-#component_Register_tempCardBox .inputBox {
+#component_Register_ob #component_Register_tempCardBox .inputBox {
     width: 100%;
     margin: auto;
     font-size: 2.1vh;
@@ -566,17 +567,17 @@
     text-align: center
 }
 
-#component_Register_tempCardBox .inputBox input {
+#component_Register_ob #component_Register_tempCardBox .inputBox input {
     width: 14vw;
     height: 3.7vh;
     background: #FFFFFF;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 6px;
     text-indent: 5%;
     line-height: 3.7vh;
 }
 
-#component_Register_tempCardBox .btnGroup {
+#component_Register_ob #component_Register_tempCardBox .btnGroup {
     margin: auto;
     overflow: hidden;
     width: 13.4vw;
@@ -584,27 +585,27 @@
     margin-bottom: 4vh
 }
 
-#component_Register_tempCardBox .btnGroup li {
+#component_Register_ob #component_Register_tempCardBox .btnGroup li {
     height: 3.7vh;
     float: left;
     width: 5.4vw;
     line-height: 3.7vh;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 6px;
     font-size: 2vh;
     cursor: pointer;
-    color:  #AA9D84;
+    color:  #0F4C81;
 }
 
-#component_Register_tempCardBox .btnGroup li:last-child {
+#component_Register_ob #component_Register_tempCardBox .btnGroup li:last-child {
     float: right;
-    background: #AA9D84;
+    background: #0F4C81;
     color: #fff;
 }
 
-#component_Register_ToastBox .inputBox {
+#component_Register_ob #component_Register_ToastBox .inputBox {
     width: 100%;
     margin: auto;
     font-size: 2.1vh;
@@ -613,7 +614,7 @@
     box-sizing: border-box;
     padding: 0 2vw;
 }
-#component_Register_ToastBox .btnGroup {
+#component_Register_ob #component_Register_ToastBox .btnGroup {
     margin: auto;
     overflow: hidden;
     width: 13.4vw;
@@ -622,22 +623,22 @@
     text-align: center
 }
 
-#component_Register_ToastBox .btnGroup li {
+#component_Register_ob #component_Register_ToastBox .btnGroup li {
     height: 3.7vh;
     width: 5.4vw;
     line-height: 3.7vh;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #AA9D84;
+    border: 1px solid #0F4C81;
     border-radius: 6px;
     font-size: 2vh;
     cursor: pointer;
     color:  #fff;
     margin: auto;
-    background-color: #AA9D84;
+    background-color: #0F4C81;
 }
 
-#component_Register_tempCardBox_icon {
+#component_Register_ob #component_Register_tempCardBox_icon {
     width: 51px;
     height: 51px;
     margin: auto;
@@ -645,6 +646,6 @@
     margin-bottom: 1.57vh;
 }
 
-#component_Register .defAccess {
+#component_Register_ob #component_Register .defAccess {
     color: #FF7B00
 }

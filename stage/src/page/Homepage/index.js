@@ -44,7 +44,11 @@ export default class Homepage extends Component {
         this.state= {
             open: true,
             title:"",
-            defaultPath:"/home/qrcode"
+            defaultPath:"/home/qrcode",
+
+            // Certificates:{},
+            // VisitorInfoCom:{},
+            // RegisterCom:{}
         }
     }
 
@@ -64,10 +68,10 @@ export default class Homepage extends Component {
                                 <Route path="/home/Certificates" component={this.state.Certificates} />
                                 <Route path="/home/appointmentInfo" component={AppointmentInfo} />
                                 <Route path="/home/logistics" component={Logistics} />
-                                <Route path="/home/register" component={Register} />
+                                <Route path="/home/register" component={this.state.RegisterCom} />
                                 <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
                                 <Route path="/home/face" name="face" component={FaceRecognition} />
-                                <Route path="/home/visitorInfo" name="VisitorInfo" component={VisitorInfo} />
+                                <Route path="/home/visitorInfo" name="VisitorInfo" component={this.state.VisitorInfoCom} />
                                 <Route path="/home/print" name="print" component={Print} />
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
                                 <Route path="/home/cards" component={TempCards} />
@@ -110,7 +114,27 @@ export default class Homepage extends Component {
                 break;
         }
         
-        // 多企业模式切换 0-
+        // 多企业模式切换 0-单企业 1-多企业
+        switch(sessionStorage.sid){
+            case "0":
+                this.setState({
+                    VisitorInfoCom: VisitorInfo,
+                    RegisterCom: Register,
+                })
+                break;
+            case "1":
+                this.setState({
+                    VisitorInfoCom: VisitorInfo_officeBuilding,
+                    RegisterCom : Register_officeBuilding
+                })
+                break;
+            default:
+                this.setState({
+                    VisitorInfoCom: VisitorInfo,
+                    RegisterCom: Register,
+                })
+                break;
+        }
 
 
         let _this = this

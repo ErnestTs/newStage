@@ -105,7 +105,7 @@ export default class Register extends Component {
     render(){
         var appointmentState = this.renderItemState({type:2,value:1})
         return (
-            <div id="component_Register">
+            <div id="component_Register_ob">
                 <div className="topBar">
                     <div className="fll">来访信息
                     {appointmentState}
@@ -385,9 +385,9 @@ export default class Register extends Component {
                                 <div onClick={this.openCamera.bind(this)}>
                                     <span>{this.state.photoSwitch ?"拍照":"调用摄像头"}</span>
                                 </div>
-                                <div onClick={this.setToast.bind(this,1)}>
+                                {/* <div onClick={this.setToast.bind(this,1)}>
                                     <span>发卡</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
@@ -866,9 +866,9 @@ export default class Register extends Component {
                     if(Common.strict){
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
-                                if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
-                                    continue;
-                                }
+                                // if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
+                                //     continue;
+                                // }
                                 eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     resArr.push({name:eList[i].egname,egid:eList[i].egid})
@@ -878,9 +878,9 @@ export default class Register extends Component {
                     }else{
                         for(let i = 0;i < eList.length; i++){
                             if(!!eList[i].gids&&eList[i].gids.indexOf(sessionStorage.gid) !== -1){
-                                if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
-                                    continue;
-                                }
+                                // if(eList[i].egname.indexOf("FACE")==0||eList[i].egname.indexOf("人脸")==0){
+                                //     continue;
+                                // }
                                 eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     let tempGname = eList[i].egname.replace(/F/g, "")
@@ -996,7 +996,7 @@ export default class Register extends Component {
         if(!this.state.faceState&&!this.state.tempCard){
             Toast.open({
                 type:"danger",
-                content: "请记录人脸或发卡"
+                content: "请记录人脸"
             })
             return
         }
