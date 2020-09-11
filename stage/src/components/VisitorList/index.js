@@ -806,7 +806,7 @@ export default class VisitorList extends Component{
                         item.vTypeOnShow = ""
                     }
                     item.checked = false;
-                    item.key = item.appointmentDate+interfaceName+item.vphone;
+                    item.key = item.appointmentDate+interfaceName+item.vphone+item.vid;
                     
                     resArr.push(item)
                 }
