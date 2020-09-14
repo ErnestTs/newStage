@@ -68,6 +68,15 @@ export default class AppointmentInfo extends Component {
     }
 
     render(){
+        let vTime = this.state.visitInfo.vtime||null;
+        let leaveTime = this.state.visitInfo.leaveTime||null;
+        if((typeof vTime).toLocaleLowerCase()=="string"){
+            vTime = vTime.replace(/-/g,"/")
+        }
+        if((typeof leaveTime).toLocaleLowerCase()=="string"){
+            leaveTime = leaveTime.replace(/-/g,"/")
+        }
+        
         // 渲染当前访客状态
         var appointmentState_val = 1;
         if(!!this.state.visitInfo.signOutDate){
@@ -104,9 +113,9 @@ export default class AppointmentInfo extends Component {
                     <div className="component_AppointmentInfo_appInfo fll">
                         <ul>
                             {this.renderItem("来访人姓名",this.state.visitInfo.vname,"vname",{type:0,value:this.state.answerState})}
-                            {this.renderItem("预约时间",new Date(this.state.visitInfo.vtime).format("yyyy-MM-dd hh:mm:ss"))}
+                            {this.renderItem("预约时间",new Date(vTime).format("yyyy-MM-dd hh:mm:ss"))}
                             {this.renderItem("来访事由",this.state.visitInfo.vtype)}
-                            {this.renderItem("离开时间",!!this.state.visitInfo.leaveTime?new Date(this.state.visitInfo.leaveTime).format("yyyy-MM-dd hh:mm:ss"):"")}
+                            {this.renderItem("离开时间",!!leaveTime?new Date(leaveTime).format("yyyy-MM-dd hh:mm:ss"):"")}
                             {this.renderItem("来访人电话",this.state.visitInfo.vphone)}
                             {this.renderItem("被访人姓名",this.state.empInfo.ename)}
                             {this.renderItem("被访人电话",this.state.empInfo.ephone)}

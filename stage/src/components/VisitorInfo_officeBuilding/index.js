@@ -594,6 +594,39 @@ export default class VisitorInfo extends Component {
         
         let cameraOffsetHeight = document.getElementById("component_Register_cardInfo_mask_photoBox").offsetHeight+"px"
         document.getElementById("component_Register_cardInfo_mask_photoBox").style.width = cameraOffsetHeight;
+
+        if(Common.$_Get().idcard == "3"){
+            let _this = this
+			window.callbackCamera = function(res){
+                _this.state.photoURL = res
+                _this.setState({
+                    photoURL:res
+                })
+                let sendData = {"photoUrl":res};
+                Common.ajaxProcWithoutAsync("uploadFace",sendData,sessionStorage.token)
+                let count = 0;
+                window.interval = setInterval(() => {
+                    if(count >= 20) {
+                        clearInterval(window.interval)
+                        window.interval = null
+                        // Toast.open({
+                        //     type:"danger",
+                        //     content: "未通过人脸校验，请重新抓拍人脸"
+                        // });
+                        Toast.open({
+                            type:"danger",
+                            content: "未检测到人脸。1.请注意拍摄正面照片。2.请避免刘海、帽子等遮挡额头。3.请避免口罩遮挡至鼻梁处。"
+                        })
+                        _this.state.faceLoading = false
+                        return
+                    }else {
+                        _this.state.faceLoading = true
+                        _this.getFaceStatus(res)
+                        count++
+                    }
+                }, 1000);
+            }
+        }
     }
 
     /**
@@ -1235,6 +1268,10 @@ export default class VisitorInfo extends Component {
      * @description [打开摄像头]
      */
     openCamera(){
+        if(Common.$_Get().idcard == "3"){
+            window.Android.startActivity("camera");
+            return
+        }
         if(!this.state.photoSwitch){
             this.setState({
                 photoSwitch:true
