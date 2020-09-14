@@ -1343,7 +1343,19 @@ export default class Register extends Component {
         this.setState({
             openToast:type
         },()=>{
+            document.body.removeEventListener("keyup",
+                window.tempSerCard
+            )
             if(type == 1){
+                let _this = this
+                window.tempSerCard = function(e){
+                    if(e.keyCode == 13){
+                        _this.setTempCard()
+                    }
+                }
+                document.body.addEventListener("keyup",
+                    window.tempSerCard
+                )
                 this.inputRef.focus();
             }
         })
