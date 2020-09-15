@@ -37,7 +37,8 @@
     font-size: 20px;
     background: #0F4C81;
     border-radius: 8px;
-    margin: auto
+    margin: auto;
+    line-height: 5vh;
 }
 
 

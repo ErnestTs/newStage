@@ -180,7 +180,7 @@ export default class PassPort extends Component {
                     "idcardContent":{
                         "certNumber":extendCol.cardId||"",
                         "partyName":item.vname||"",
-                        "address": this.state.cardInfo.address
+                        "address": this.state.cardInfo.address||""
                     },
                     "tid":item.tid||"",
                     "vgroup":item.vgroup||"",
@@ -197,7 +197,9 @@ export default class PassPort extends Component {
                     "aid":item.aid||"",
                     "signin":item.signin
                 }
-                this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
+                if(this.checkExtendTime(item)){
+                    this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
+                }
             }else {
                 resObj.state = false
             }
@@ -254,7 +256,7 @@ export default class PassPort extends Component {
                             "idcardContent":{
                                 "certNumber":extendCol.cardId||"",
                                 "partyName":item.vname||"",
-                                "address": this.state.cardInfo.address
+                                "address": this.state.cardInfo.address||""
                             },
                             "tid":item.tid||"",
                             "vgroup":item.vgroup||"",
@@ -271,7 +273,9 @@ export default class PassPort extends Component {
                             "aid":item.aid||"",
                             "signin":item.signin
                         }
-                        this.state.routerData.push(obj)
+                        if(this.checkExtendTime(item)){
+                            this.state.routerData.push(obj)
+                        }
                     }
                     if(!!this.state.routerData.length){
                         this.props.history.push({pathname:"/home/appointmentInfo", state:this.state.routerData});
@@ -291,5 +295,104 @@ export default class PassPort extends Component {
                 }
             }
         })
+    }
+
+
+    /**
+     * @description [校验签到时间是否合法]
+     * @param {Object} data 
+     */
+	checkExtendTime(data) {
+        // 将预约时间转为毫秒
+		let appTime = new Date(data.appointmentDate).getTime(),
+		// 获取当前时间毫秒
+			today = new Date().getTime(),
+			preTime, latTime;
+
+		// 获取最早和最晚签到时间 为预约当天的上班和下班时间
+		preTime = new Date(appTime - (parseInt(sessionStorage.preExtendTime) * 60000)).getTime();
+		latTime = new Date(appTime + (parseInt(sessionStorage.latExtendTime) * 60000)).getTime();
+		if(sessionStorage.latExtendTime == 0) {
+			latTime = new Date(new Date(appTime).format("yyyy-MM-dd 23:59:59")).getTime();
+		}
+		if(sessionStorage.preExtendTime == 0) {
+			latTime = new Date(new Date(appTime).format("yyyy-MM-dd 00:00:00")).getTime();
+		}
+
+		// 当前时间的年-月-日 舍去时分秒
+		let early = new Date(today).format('yyyy-MM-dd'),
+			later = "";
+		// 当前天的毫秒  early为当天0点 later为当天23点
+		early = new Date(early).getTime();
+		early = early - 8 * 60 * 60000;
+		later = early + 23 * 60 * 60000;
+
+		
+		// qrcodeType 二维码有效期类型 0 天数 1次数
+		if(data.qrcodeType == 0){
+			// early = data.appointmentDate;
+			// later = data.appointmentDate + 24 * 60 * 60000 * data.qrcodeConf;
+			data.qrcodeConf = data.qrcodeConf == 0? 1: data.qrcodeConf;			// add by 方 预约时默认天数为0 修改为1
+			early = new Date(new Date(data.appointmentDate).format("yyyy-MM-dd")).getTime();
+			later = new Date(new Date(data.appointmentDate + data.qrcodeConf * 86400000).format("yyyy-MM-dd")).getTime();
+			if(today > later){
+                Toast.open({
+                    type:"danger",
+                    content: "该预约已过期"
+                })
+				return false
+			}else if(today < early){
+                Toast.open({
+                    type:"danger",
+                    content: "该预约尚未到来访时间"
+                })
+				return false
+			}else if(!!data.visitDate && new Date(data.visitDate).getDate() != new Date(today).getDate()){
+                Toast.open({
+                    type:"danger",
+                    content: "今日已签到，请勿重复签到"
+                })
+				return false
+			}
+		}
+
+		if (sessionStorage.preExtendTime === '0' || sessionStorage.latExtendTime === '0') {
+			if (appTime < early) {
+                Toast.open({
+                    type:"danger",
+                    content: "该预约已过期"
+                })
+				return false;
+			}
+			else if (appTime > later) {
+                Toast.open({
+                    type:"danger",
+                    content: "该预约尚未到来访时间"
+                })
+				return false;
+			}
+		}
+		else if (today < preTime) {
+			if(data.qrcodeConf > 1){
+				return true
+			}
+            Toast.open({
+                type:"danger",
+                content: "该预约尚未到签入时间"
+            })
+			return false;
+		}
+		else if (today > latTime) {
+			if(data.qrcodeConf > 1){
+				return true
+			}
+            Toast.open({
+                type:"danger",
+                content: "该预约已超过来访时间"
+            })
+			return false;
+		}
+
+		return true;
     }
 }

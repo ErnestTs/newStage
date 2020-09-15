@@ -39,6 +39,7 @@
     border-radius: 8px;
     margin: auto;
     position: relative;
+    line-height: 5vh;
 }
 
 .btn_box div span {
