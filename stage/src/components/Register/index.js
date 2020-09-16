@@ -796,7 +796,8 @@ export default class Register extends Component {
             gid:sessionStorage.gid,
             tid:this.state.tid,
             vType:this.state.vType,
-            card: null
+            card: null,
+            clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
         };
 
         if(!this.state.showCardMask){

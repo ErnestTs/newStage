@@ -246,7 +246,8 @@ export default class VisitorInfo extends Component {
 			memberName: "",
 			gid:sessionStorage.gid,
             vType:vType,
-            tid:tid
+            tid:tid,
+            clientNo: 3,    // 0-pad 1-小程序 2-邀请函 3-礼宾台 4-访客机
         };
         
         this.state.inSubmit = true
@@ -443,7 +444,7 @@ export default class VisitorInfo extends Component {
 			if (data.status === 0 && data.result.length !== 0) {
                 let tempArr = [];
                 for(let i = 0; i < data.result.length;i++){
-                    if(data.result[i].empType === 1||data.result[i].empType === 0){
+                    if(data.result[i].empType === 1||data.result[i].empType === 0||data.result[i].empType === 2){
                         tempArr.push(data.result[i])
                     }
                 }
