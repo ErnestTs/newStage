@@ -114,12 +114,59 @@ export default class FaceRecognition extends Component {
 
 			Common.uploadForm('Upload', formData, sessionStorage.token).done(function (data) {
 				if (data.status === 0) {
-					var sendData = this.routerData;
-					sendData.photoUrl = data.result.url;
-					this.appointmentSignin(sendData);
+					// var sendData = this.routerData;
+					// sendData.photoUrl = data.result.url;
+					// this.appointmentSignin(sendData);
+                    let photoUrl = {"photoUrl":data.result.url};
+                    Common.ajaxProcWithoutAsync("uploadFace",photoUrl,sessionStorage.token)
+                    let count = 0;
+                    window.interval = setInterval(() => {
+                        if(count >= 20) {
+                            clearInterval(window.interval)
+                            window.interval = null
+                            Toast.open({
+                                type:"danger",
+                                content: "未检测到人脸。1.请注意拍摄正面照片。2.请避免刘海、帽子等遮挡额头。3.请避免口罩遮挡至鼻梁处。"
+                            })
+                            this.state.faceLoading = false
+                            return
+                        }else {
+                            this.state.faceLoading = true
+                            this.getFaceStatus(data.result.url)
+                            count++
+                        }
+                    }, 1000);
 				}
 			}.bind(this));
 		}
+    }
+    
+    /**
+     * @description [校验人脸]
+     * @param {String} url 
+     */
+    getFaceStatus(url) {
+        let sendData = {photoUrl:url};
+        Common.ajaxProc("getFaceStatus",sendData,sessionStorage.token).done((res)=>{
+            if(res.result == 0) {
+                this.setState({
+                    faceLoading:false,
+                    faceState:true
+                })
+                clearInterval(window.interval)
+				var sendData = this.routerData;
+				sendData.photoUrl = url;
+				this.appointmentSignin(sendData);
+            }else if(res.result == 2){
+                Toast.open({
+                    type:"danger",
+                    content: "未检测到人脸。1.请注意拍摄正面照片。2.请避免刘海、帽子等遮挡额头。3.请避免口罩遮挡至鼻梁处。"
+                })
+                clearInterval(window.interval)
+                window.interval = null
+                this.state.faceLoading = false
+            }
+        });
     }
 
     takePhoto(){
@@ -165,7 +212,7 @@ export default class FaceRecognition extends Component {
 		ctx.drawImage(img, -50, 0, img.width - 50, img.height);
 		// ctx.drawImage(img, -100, 0, img.width, img.height);
 
-		baseCode = canvas.toDataURL();
+		// baseCode = canvas.toDataURL();
 
 		/**
 		 * 	将base64转换成二进制流
