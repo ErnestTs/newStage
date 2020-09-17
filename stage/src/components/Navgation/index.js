@@ -14,6 +14,9 @@ import Common from "../../Common/index"
 export default class Navgation extends Component {
     constructor(props){
         super(props)
+        this.state={
+            exitOnShow:false
+        }
     }
 
     render() {
@@ -22,7 +25,7 @@ export default class Navgation extends Component {
             <div id="topBar">
                 <div id="navgation">
                     <img src={logo} alt="" className="logo" />
-                    <div className="exit">
+                    <div className="exit" style={{display:this.state.exitOnShow?"block":"none"}}>
                         <span>
                             <img src={exitPng} alt="" />
                         </span>
@@ -31,6 +34,32 @@ export default class Navgation extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount(){
+        if(window.location.hash !== "#/login"){
+            this.setState({
+                exitOnShow:true
+            })
+        }else{
+            this.setState({
+                exitOnShow:false
+            })
+        }
+
+        let _this = this
+        
+        document.body.onhashchange=function(){
+            if(window.location.hash !== "#/login"){
+                _this.setState({
+                    exitOnShow:true
+                })
+            }else{
+                _this.setState({
+                    exitOnShow:false
+                })
+            }
+        }
     }
 
     /**
