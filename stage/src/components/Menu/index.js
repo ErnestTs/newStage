@@ -171,6 +171,9 @@ export default class Menu extends Component {
      * @param {Number} i 
      */
     renderItem(name, icon, i, path){
+        if(path=="companylist" && sessionStorage.sid==0){
+            return
+        }
         let className = "menu_item";
         let oIcon = "";
         // 判断icon形态

@@ -35,18 +35,18 @@ export default class Blacklist extends Component {
                   dataIndex: 'phone',
                   key: 'phone',
                 },
-                {
-                  title: '禁止访问企业（中文）',
-                  dataIndex: 'sname',
-                  key: 'sname',
-                  width:"30%"
-                },
-                {
-                  title: '禁止访问企业（英文）',
-                  dataIndex: 'sname_eng',
-                  key: 'sname_eng',
-                  width:"30%"
-                },
+                // {
+                //   title: '禁止访问企业（中文）',
+                //   dataIndex: 'sname',
+                //   key: 'sname',
+                //   width:"30%"
+                // },
+                // {
+                //   title: '禁止访问企业（英文）',
+                //   dataIndex: 'sname_eng',
+                //   key: 'sname_eng',
+                //   width:"30%"
+                // },
                 {
                   title: '备注',
                   dataIndex: 'remark',
@@ -76,7 +76,7 @@ export default class Blacklist extends Component {
                         <img src={search_icon} />
                         <input 
                             type="text" 
-                            placeholder="请输入姓名/手机号/公司名/备注搜索"
+                            placeholder="请输入姓名/手机号/备注搜索"
                             onChange={this.searchInfo.bind(this)}
                         />
                     </div>
@@ -220,9 +220,9 @@ export default class Blacklist extends Component {
             if(
                 oList[i].name.indexOf(key) !== -1||
                 oList[i].remark.indexOf(key) !== -1||
-                oList[i].phone.indexOf(key) !== -1||
+                oList[i].phone.indexOf(key) !== -1
                 // oList[i].sname_eng.indexOf(key) !== -1||
-                oList[i].sname.indexOf(key) !== -1
+                // oList[i].sname.indexOf(key) !== -1
             ){
                 tempDefArr.unshift(oList[i])
             }else if(oList[i].sname_eng == "all"){

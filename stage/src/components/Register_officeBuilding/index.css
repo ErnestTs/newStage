@@ -498,6 +498,7 @@
 
 #component_Register_ob .component_Register_Item ul .memberItem {
     margin-bottom: 18px;
+    margin-left: 100px;
 }
 
 #component_Register_ob .component_Register_Item ul .memberItem input {
@@ -506,7 +507,7 @@
     height: 34px;
     border-radius: 6px;
     text-align: center;
-    width: 33%;
+    width: 40%;
     line-height: normal;
 }
 #component_Register_ob .component_Register_Item ul .memberItem input:nth-child(even) {

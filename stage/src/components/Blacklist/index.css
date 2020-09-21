@@ -14,12 +14,12 @@
 }
 
 .component_Blacklist_tableBoard .ant-table-thead {
-    background: #EBEBEB;
+    background: #E7EDF2;
     border-radius: 12px;
 }
 
 .component_Blacklist_tableBoard .ant-table-container table > thead > tr:first-child th {
-    background: #EBEBEB;
+    background: #E7EDF2;
     color: #202224 !important;
 }
 
@@ -45,17 +45,17 @@
 
 #component_Blacklist_searchContent {
     float: left;
-    margin-bottom: 4.25vh;
+    margin-bottom: 3vh;
     width: 100%;
     overflow: hidden;
 }
 
 #component_Blacklist_searchContent #component_Blacklist_inputBox {
     width: 40%;
-    height: 40px;
+    height: 4vh;
     text-align: left;
     background: #F5F6FA;
-    border: 1px solid #AA9D84;
+    border: 1px solid #4091F7;
     border-radius: 19px;
     box-sizing: border-box;
     overflow: hidden;
@@ -68,7 +68,7 @@
     border: none;
     outline: none;
     background: #F5F6FA;
-    line-height: normal;
+    line-height: 4vh;
     padding-left: 2.265vw;
     box-sizing: border-box;
     font-size: 14px;
