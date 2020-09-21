@@ -140,12 +140,21 @@ export default class VisitorList extends Component{
                     }
                 },
                 {
-                    title: '被访公司（英文）',
-                    dataIndex: 'company',
+                    title: ()=>{
+                        if(this.state.vState==0||this.state.vState==3||this.state.vState==4){
+                            return '临时卡号'
+                        }else{
+                            return '被访公司（英文）'
+                        }
+                    },
                     key: 'company',
                     width:"11%",
                     render:(data)=>{
-                        return data.split("#")[1]
+                        if(this.state.vState==0||this.state.vState==3||this.state.vState==4){
+                            return data.cardNo
+                        }else{
+                            return data.company.split("#")[0]
+                        }
                     }
                 },
                 {
