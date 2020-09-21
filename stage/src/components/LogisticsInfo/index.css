@@ -83,7 +83,7 @@
 #component_logisticsInfo_board .dataList .memberItem input:nth-of-type(1) {
     width: 15%;
     margin-right: 14%;
-    text-align: center;
+    /* text-align: center; */
 }
 
 #component_logisticsInfo_board .dataList .memberItem .memberState {
