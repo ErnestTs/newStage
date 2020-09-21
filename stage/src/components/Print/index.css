@@ -111,16 +111,17 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    padding:3.7vh 2.3vw;
+    padding:7vh 2.3vw;
+    width: 50%;
 }
 
 #print_langBox_board div {
     color: #4D4E50;
-    font-size: 1.8vh;
+    font-size: 3vh;
     letter-spacing: 0;
     text-align: center;
     line-height: 2.7vh;
-    margin-bottom: 10%
+    margin-bottom: 7%
 }
 
 #print_langBox_board ul {
@@ -133,7 +134,7 @@
     background: #4091F7;
     border-radius: 6px;
     display: inline-block;
-    font-size: 1.8vh;
+    font-size: 3vh;
     color: #FFFFFF;
     padding: 0.8vh 2vw;
     cursor: pointer;
@@ -141,7 +142,8 @@
     text-align: center;
     box-sizing: border-box;
     margin: auto;
-    margin-bottom: 10%
+    margin-bottom: 4%;
+    line-height: 10vh
 }
 
 #print_langBox_board ul li:nth-child(2){

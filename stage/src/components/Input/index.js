@@ -26,11 +26,12 @@ export default class Input extends Component {
                 
                 <input
                     id={!!!!this.props.id?this.props.id:""}
-                    type={!!this.props.type?this.props.type:"text"} 
+                    type={!!this.props.type?this.props.type:"text"}
                     placeholder={!this.props.placeholder?"":this.props.placeholder}
                     onFocus={()=>{this.setState({focus:true})}}
                     onBlur={()=>{this.setState({focus:false})}}
                     onChange={this.props.onChange}
+                    value={this.props.value}
                 />
             </div>
         )

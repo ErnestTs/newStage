@@ -39,6 +39,7 @@ export default class Login extends Component {
                         placeholder="请输入用户名/邮箱地址"
                         onChange={this.setValue.bind(this,"username")}
                         state=""
+                        value={this.state.username}
                     />
                     <Input 
                         title="密码" 
@@ -46,6 +47,7 @@ export default class Login extends Component {
                         style={{marginBottom:"30px"}}
                         placeholder="请输入密码" 
                         onChange={this.setValue.bind(this,"password")} 
+                        value={this.state.password}
                     />
                     {/* <Input
                         title="验证码"
@@ -71,6 +73,12 @@ export default class Login extends Component {
     componentDidMount(){
         // this.getValideCode();
 		if(Common.$_Get().idcard == 3){
+            let user = Common.$_Get().account,
+                pwd = Common.$_Get().pw;
+            this.setState({
+                username:user,
+                password:pwd
+            })
 			this.login()
 		}
     }
