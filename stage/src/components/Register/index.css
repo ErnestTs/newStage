@@ -408,6 +408,20 @@
     margin-left: 10px;
 }
 
+.component_Register_Item ul .memberItem span {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 5%;
+    cursor: pointer;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+    font-weight: 900;
+}
+
 .component_Register_Item #addMember {
     margin-bottom: 7px;
     text-align: center;

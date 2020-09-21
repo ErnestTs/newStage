@@ -186,6 +186,7 @@ export default class Register extends Component {
                                                 <li className="memberItem" key={i+"memberItem"}>
                                                     <input type="text" value={item.name} onChange={this.setMember.bind(this,i,'name')} placeholder="随访人员姓名" />
                                                     <input type="text" value={item.mobile} onChange={this.setMember.bind(this,i,'mobile')} placeholder="随访人员手机号" />
+                                                    <span onClick={this.delMember.bind(this,i)}>X</span>
                                                 </li>
                                             )
                                         })
@@ -707,6 +708,21 @@ export default class Register extends Component {
 	addMember(){
         let tempArr = this.state.memberList;
 		tempArr.push({name:"",mobile:""})
+		this.setState({
+			memberList:tempArr
+		})
+	}
+
+	/**
+	 * @description [删除随访人员]
+	 */
+	delMember(i){
+        let tempArr = this.state.memberList;
+        if(tempArr.length==1){
+            tempArr[0] = {name:"",mobile:""}
+        }else{
+            tempArr.splice(i,1)
+        }
 		this.setState({
 			memberList:tempArr
 		})
