@@ -455,21 +455,44 @@ export default class Register extends Component {
     getMainCompanyInfo(){
 		Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((data)=>{
 			if (data.status === 0 && data.result.length !== 0) {
-				for(var i = 0; i < data.result.length; i++){
-                    if (data.status === 0 && data.result.length !== 0) {
-                        let tempArr = [];
-                        for(let i = 0; i < data.result.length;i++){
-                            if(data.result[i].empType === 1){
-                                tempArr.push(data.result[i])
-                            }
+                let tempArr = [];
+                let onShowArr=[]
+                for(let i = 0; i < data.result.length;i++){
+                    let endDate = 0
+                    if(!!data.result[i].endDate){
+                        endDate = new Date(data.result[i].endDate.slice(0,4)+"-"+data.result[i].endDate.slice(4,6)+"-"+data.result[i].endDate.slice(6,8)+" 23:59:59").getTime();
+                    }
+                    if(data.result[i].empType === 1){
+                        onShowArr.push(data.result[i])
+                    }
+                    if(data.result[i].empType === 1||data.result[i].empType === 0||data.result[i].empType === 2){
+                        if(new Date().getTime()<endDate||!data.result[i].endDate){
+                            tempArr.push(data.result[i])
                         }
-                        this.setState({
-                            empName:"",
-                            empNamePool: data.result,
-                            empNameList: tempArr,
-                        });
                     }
                 }
+				this.setState({
+                    empName:"",
+					empNamePool: tempArr,
+					empNameList: onShowArr,
+                });
+                
+                // 由于代码更新 暂停使用
+				// for(var i = 0; i < data.result.length; i++){
+                //     if (data.status === 0 && data.result.length !== 0) {
+                //         let tempArr = [];
+                //         for(let i = 0; i < data.result.length;i++){
+                //             if(data.result[i].empType === 1){
+                //                 tempArr.push(data.result[i])
+                //             }
+                //         }
+                //         this.setState({
+                //             empName:"",
+                //             empNamePool: data.result,
+                //             empNameList: tempArr,
+                //         });
+                //     }
+                // }
             }
             this.setState({
                 empCompany: sessionStorage.mainCompany,
@@ -555,15 +578,25 @@ export default class Register extends Component {
 		Common.ajaxProc('getSubAccountEmpList', { userid: sessionStorage.userid, subaccountId: id }, sessionStorage.token).done(function (data) {
 			if (data.status === 0 && data.result.length !== 0 && !!id) {
                 let tempArr = [];
+                let onShowArr=[]
                 for(let i = 0; i < data.result.length;i++){
+                    let endDate = 0
+                    if(!!data.result[i].endDate){
+                        endDate = new Date(data.result[i].endDate.slice(0,4)+"-"+data.result[i].endDate.slice(4,6)+"-"+data.result[i].endDate.slice(6,8)+" 23:59:59").getTime();
+                    }
                     if(data.result[i].empType === 1){
-                        tempArr.push(data.result[i])
+                        onShowArr.push(data.result[i])
+                    }
+                    if(data.result[i].empType === 1||data.result[i].empType === 0||data.result[i].empType === 2){
+                        if(new Date().getTime()<endDate||!data.result[i].endDate){
+                            tempArr.push(data.result[i])
+                        }
                     }
                 }
 				_this.setState({
                     empName:"",
-					empNamePool: data.result,
-					empNameList: tempArr,
+					empNamePool: tempArr,
+					empNameList: onShowArr,
 				});
 			}else{
 				_this.setState({
