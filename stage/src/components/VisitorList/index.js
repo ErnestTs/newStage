@@ -65,6 +65,7 @@ export default class VisitorList extends Component{
                                     checked={data.checked}
                                     style={{display:(this.state.vState==0&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
+                                        return
                                         let tempArr = this.state.dataSource;
                                         for(let i = 0;i < tempArr.length;i++){
                                             if(tempArr[i].key == data.key){
