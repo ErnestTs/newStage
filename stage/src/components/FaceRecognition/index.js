@@ -14,7 +14,8 @@ export default class FaceRecognition extends Component {
         super(props)
         this.state= {
 			photo:false,
-			photoURL:""
+			photoURL:"",
+			faceLoading:false
         }
     }
 
@@ -92,6 +93,12 @@ export default class FaceRecognition extends Component {
 
     nextStep(){
 		let _this = this;
+		if(this.state.faceLoading){
+			return
+		}else {
+			this.state.faceLoading = true
+		}
+		console.log(1)
 		if (this.uploadBlob === undefined && sessionStorage.photoSwitch === 'true') {
             Toast.open({
                 type:"danger",

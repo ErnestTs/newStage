@@ -186,7 +186,7 @@ export default class Register extends Component {
                                                 <li className="memberItem" key={i+"memberItem"}>
                                                     <input type="text" value={item.name} onChange={this.setMember.bind(this,i,'name')} placeholder="随访人员姓名" />
                                                     <input type="text" value={item.mobile} onChange={this.setMember.bind(this,i,'mobile')} placeholder="随访人员手机号" />
-                                                    <span onClick={this.delMember.bind(this,i)}>X</span>
+                                                    <span onClick={this.delMember.bind(this,i)}></span>
                                                 </li>
                                             )
                                         })

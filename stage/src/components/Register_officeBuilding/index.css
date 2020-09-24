@@ -523,9 +523,12 @@
     text-align: center;
     line-height: 24px;
     border-radius: 50%;
-    background: red;
+    /* background: red; */
     color: #fff;
     font-weight: 900;
+    background: url(../../resource/btn_del.png) center center no-repeat;
+    background-size: 100% 100%;
+    vertical-align: middle;
 }
 
 #component_Register_ob .component_Register_Item #addMember {
