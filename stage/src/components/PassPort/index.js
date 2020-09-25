@@ -39,8 +39,8 @@ export default class PassPort extends Component {
      */
     scanCard(){
         // 0-获取身份证信息
-        // let cardInfo = Common.scanByPassPort();
-        let cardInfo={certNumber:"37020219921104351X",partyName:"方超",address:"山东省青岛市市南区湖南路七号九户"}
+        let cardInfo = Common.scanByPassPort();
+        // let cardInfo={certNumber:"37020219921104351X",partyName:"方超",address:"山东省青岛市市南区湖南路七号九户"}
         this.state.cardInfo = cardInfo
 
         // 1-获取物流信息
