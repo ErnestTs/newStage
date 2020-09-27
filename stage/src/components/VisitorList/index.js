@@ -131,7 +131,14 @@ export default class VisitorList extends Component{
                     width:"11%",
                 },
                 {
-                    title: '被访公司（中文）',
+                    // title: '被访公司（中文）',
+                    title: ()=>{
+                        if(this.state.vState==0||this.state.vState==3||this.state.vState==4){
+                            return '被访公司'
+                        }else{
+                            return '被访公司（中文）'
+                        }
+                    },
                     dataIndex: 'company',
                     key: 'company',
                     width:"11%",
