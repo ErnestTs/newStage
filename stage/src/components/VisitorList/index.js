@@ -25,7 +25,7 @@ export default class VisitorList extends Component{
                 {
                     name:"签到访客",
                     interface:"SearchVisitByCondition",
-                    stateList:["visiting","leave","total",]
+                    stateList:["visiting","leave","noReceived","Received","total"]
                 },
                 {
                     name:"预约访客",
@@ -40,7 +40,7 @@ export default class VisitorList extends Component{
                 {
                     name:"常驻访客",
                     interface:"SearchRVisitorByCondition",
-                    stateList:["total","leave","visiting"]
+                    stateList:["visiting","leave","total"]
                 }
             ],
             vStateList:[
@@ -51,19 +51,21 @@ export default class VisitorList extends Component{
                 {name:"签到人数",count:0,key:"checkIn"},
                 {name:"未到人数",count:0,key:"noArrived"},
                 {name:"访客总数",count:0,key:"total"},
+                {name:"待接待人数",count:0,key:"noReceived"},
+                {name:"已接待人数",count:0,key:"Received"},
             ],
             vState:0,
             columns:[
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"25%",
+                  width:"14%",
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:(this.state.vState==0&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
+                                    style={{display:((this.state.vState==0||this.state.vState==7)&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
                                         return
                                         let tempArr = this.state.dataSource;
@@ -105,11 +107,30 @@ export default class VisitorList extends Component{
                     title: '手机号',
                     dataIndex: 'vphone',
                     key: 'vphone',
+                    render:(data)=>{
+                        return data.slice(0,3)+"****"+data.slice(data.length-4,data.length)
+                    }
                 },
                 {
                     title: '拜访事由',
                     dataIndex: 'vTypeOnShow',
                     key: 'vTypeOnShow',
+                },
+                {
+                    title: '访客单位',
+                    dataIndex: 'vcompany',
+                    key: 'vcompany',
+                },
+                {
+                    title: '接待人姓名',
+                    dataIndex: 'rname',
+                    key: 'rname',
+                },
+                {
+                    title: '是否进入实验室',
+                    dataIndex: 'vcompany',
+                    key: 'vcompany',
+                    width:"12%",
                 },
                 {
                     title: '签到时间',
@@ -183,7 +204,7 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul 
                             className="component_VisitorList_btnGroup_actions"
-                            style={{display:this.state.vState==0&&this.state.vType==0?"block":"none"}}
+                            style={{display:(this.state.vState==0||this.state.vState==7)&&this.state.vType==0?"block":"none"}}
                         >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
                                 <span>全选</span>
@@ -224,7 +245,11 @@ export default class VisitorList extends Component{
                                         return
                                     }else{
                                         return (
-                                            <li key={i+"vstate"} className={this.state.vState == i?"action":""} onClick={this.changeState.bind(this,i)}>
+                                            <li key={i+"vstate"}
+                                                style={{width:100/this.state.vTypelist[this.state.vType].stateList.length+"%"}}
+                                                className={this.state.vState == i?"action":""}
+                                                onClick={this.changeState.bind(this,i)}
+                                            >
                                                 {item.name}({item.count})
                                             </li>
                                         )
@@ -528,6 +553,9 @@ export default class VisitorList extends Component{
      * @param {Number} index [下标]
      */
     changeState(i){
+        if(arguments.length ==0 ){
+            i = this.state.vState
+        }
         let vStateList = this.state.vStateList;
         let tempArr = [];
         switch(vStateList[i].key){
@@ -540,6 +568,15 @@ export default class VisitorList extends Component{
                         continue
                     }
                     tempArr.push(this.state.baseList[i])
+                }
+                for(let i = 0; i < tempArr.length;i++){
+                    for(let j = i+1;j < tempArr.length;j++){
+                        if(new Date(tempArr[i].signOutDate.replace(/-/g,"/")).getTime()<new Date(tempArr[j].signOutDate.replace(/-/g,"/")).getTime()){
+                            let temp = tempArr[i];
+                            tempArr[i] = tempArr[j];
+                            tempArr[j] = temp
+                        }
+                    }
                 }
                 break;
             case "visiting":
@@ -567,6 +604,20 @@ export default class VisitorList extends Component{
             case "noArrived":
                 for(let i = 0; i <this.state.baseList.length; i++){
                     if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "noReceived":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(!this.state.baseList[i].rname){
+                        tempArr.push(this.state.baseList[i])
+                    }
+                }
+                break;
+            case "Received":
+                for(let i = 0; i <this.state.baseList.length; i++){
+                    if(!!this.state.baseList[i].rname){
                         tempArr.push(this.state.baseList[i])
                     }
                 }
@@ -611,11 +662,13 @@ export default class VisitorList extends Component{
                         vStateList:[
                             {name:"正在拜访人数",count:0,key:"visiting"},
                             {name:"离开人数",count:0,key:"leave"},
-                            {name:"访客总数",count:0,key:"total"},
                             {name:"预约总数",count:0,key:"appointment"},
                             {name:"邀请总数",count:0,key:"invite"},
                             {name:"签到人数",count:0,key:"checkIn"},
-                            {name:"未到人数",count:0,key:"noArrived"}
+                            {name:"未到人数",count:0,key:"noArrived"},
+                            {name:"访客总数",count:0,key:"total"},
+                            {name:"待接待人数",count:0,key:"noReceived"},
+                            {name:"已接待人数",count:0,key:"Received"},
                         ]
                     })
                     return
@@ -628,6 +681,8 @@ export default class VisitorList extends Component{
                 let invite = data.result.length;
                 let checkIn = 0;
                 let noArrived = 0;
+                let noReceived = 0;
+                let Received = 0;
 
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
@@ -671,6 +726,11 @@ export default class VisitorList extends Component{
                         }
                         noArrived++;
                     }
+                    if(!!item.rname){
+                        Received++
+                    }else{
+                        noReceived++
+                    }
 
                     if(!!item.visitType){
                         item.vTypeOnShow = item.visitType.split("#")[0]
@@ -707,6 +767,12 @@ export default class VisitorList extends Component{
                         case "noArrived":
                             vStateList[i].count=noArrived
                             break;
+                        case "noReceived":
+                            vStateList[i].count=noReceived
+                            break;
+                        case "Received":
+                            vStateList[i].count=Received
+                            break;
                         default:
                             break;
                     }
@@ -717,7 +783,7 @@ export default class VisitorList extends Component{
                     vStateList:vStateList,
                     baseList:resArr
                 },()=>{
-                    this.changeState(0)
+                    this.changeState()
                 })
             }
         })
