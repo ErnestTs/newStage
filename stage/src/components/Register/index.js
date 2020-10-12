@@ -659,7 +659,8 @@ export default class Register extends Component {
 				var tempArr = [];
                 var gid = sessionStorage.gid;
 				for(var i = 0; i < data.result.length; i++){
-					if(!data.result[i].gids||(data.result[i].vaPerm&2)!==2){
+					// if(!data.result[i].gids||(data.result[i].vaPerm&2)!==2){             201012修改 企业关闭预约后依然可以现场登记
+                    if(!data.result[i].gids){
 						continue;
                     }
 					let gids = data.result[i].gids.split(",")
