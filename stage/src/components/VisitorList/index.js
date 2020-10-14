@@ -115,8 +115,11 @@ export default class VisitorList extends Component{
                     key: 'vphone',
                     width:"10%",
                     render:(data)=>{
-                        // return <span>{data.replace(/(?<=[\d]{3})[\d](?=[\d]{4})/g, "*")}</span>
-                        return <span>{data.substring(0,3)+"****"+data.substring(7,11)}</span>
+                        if(!!data){
+                            return <span>{data.substring(0,3)+"****"+data.substring(7,11)}</span>
+                        }else{
+                            return <span></span>
+                        }
                     }
                 },
                 {
@@ -255,7 +258,11 @@ export default class VisitorList extends Component{
                     key: 'vphone',
                     render:(data)=>{
                         // return <span>{data.replace(/(?<=[\d]{3})[\d](?=[\d]{4})/g, "*")}</span>
-                        return <span>{data.substring(0,3)+"****"+data.substring(7,11)}</span>
+                        if(!!data){
+                            return <span>{data.substring(0,3)+"****"+data.substring(7,11)}</span>
+                        }else{
+                            return <span></span>
+                        }
                     }
                 },
                 {
