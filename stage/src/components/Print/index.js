@@ -62,6 +62,13 @@ export default class Print extends Component {
                             }>
                                 English
                             </li>
+                            <li onClick={
+                                ()=>{
+                                    this.props.history.replace({pathname:"visitor"})
+                                }
+                            }>
+                                关闭
+                            </li>
                         </ul>
                     </div>
                 </div>
