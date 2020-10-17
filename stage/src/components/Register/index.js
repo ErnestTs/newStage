@@ -765,7 +765,10 @@ export default class Register extends Component {
 					empNamePool: tempArr,
 					empNameList: onShowArr,
                     empCompanyDefAccess:item.vegids
-				});
+				},()=>{
+                    let defEmp = onShowArr[0]
+                    _this.selectEmp(defEmp.empName,defEmp.empid,defEmp.empPhone,defEmp.vegids)
+                });
 			}else{
 				_this.setState({
                     empName:"",
