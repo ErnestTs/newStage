@@ -1,5 +1,6 @@
 import React,{Component} from "react"
 import $ from "jquery"
+import Pinyin from "pinyin"
 
 import Common from "../../Common/index"
 
@@ -665,6 +666,9 @@ export default class Register extends Component {
                     }
 					let gids = data.result[i].gids.split(",")
 					if(gids.indexOf(gid)!== -1&&data.result[i].isUse == 1){
+                        data.result[i].pinyin = Pinyin(data.result[i].companyName,{
+                            style:Pinyin.STYLE_NORMAL
+                        }).join("")
 						tempArr.push(data.result[i])
 					}
                 }
@@ -701,7 +705,8 @@ export default class Register extends Component {
             for (let i = 0; i < this.state.empCompanyPool.length; i++) {
                 let item = this.state.empCompanyPool[i];
                 let company = item.companyName;
-                if (company.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+                let companyPinyin = item.pinyin;
+                if (company.toLowerCase().indexOf(key.toLowerCase()) !== -1||companyPinyin.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
                     this.state.empCompanyList.push(item);
                 }
             }
