@@ -894,8 +894,13 @@ export default class VisitorInfo extends Component {
                                 eList[i].egname = eList[i].egname.replace(/&amp;/g, "&");
                                 if(egids.indexOf(eList[i].egid+"")!==-1){
                                     let tempGname = eList[i].egname.replace(/F/g, "")
-                                    defGnames.push(tempGname+"F");
-                                    defGnames.push(tempGname+"M");
+                                    if(tempGname.indexOf("&") == -1){
+                                        defGnames.push(tempGname+"F");
+                                        defGnames.push(tempGname+"M");
+                                    }else {
+                                        defGnames.push(tempGname.split("&")[0]+"F&"+tempGname.split("&")[1]);
+                                        defGnames.push(tempGname.split("&")[0]+"M&"+tempGname.split("&")[1]);
+                                    }
                                 }
                                 if(defGnames.indexOf(eList[i].egname)!=-1){
                                     resArr.unshift({name:eList[i].egname,egid:eList[i].egid,def:true})
