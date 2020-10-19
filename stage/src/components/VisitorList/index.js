@@ -1023,6 +1023,7 @@ export default class VisitorList extends Component{
             for(let i = 0; i < tempArr.length; i++){
                 let item = tempArr[i]
                 if(!!item.company){
+                    item.vphone = !item.vphone?"":item.vphone
                     if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1 || item.vphone.indexOf(key) !== -1){
                         resArr.push(item)
                     }
