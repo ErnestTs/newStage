@@ -128,9 +128,13 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '是否进入实验室',
-                    dataIndex: 'vcompany',
-                    key: 'vcompany',
+                    dataIndex: 'secret',
+                    key: 'secret',
                     width:"12%",
+                    render:(data)=>{
+                        let content = data?"是":"否"
+                        return <span>{content}</span>
+                    }
                 },
                 {
                     title: '签到时间',
@@ -686,6 +690,12 @@ export default class VisitorList extends Component{
 
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
+                    let extendCol = !!data.result[i].extendCol?JSON.parse(data.result[i].extendCol.replace(/&quot;/g,'"')):{};
+                    let secret = !!extendCol.secret;
+
+                    item.secret = secret
+
+                    
 					if (item.appointmentDate !== null) {
 						item.appointmentDate = new Date(item.appointmentDate).format("yyyy-MM-dd hh:mm:ss");
 					}
