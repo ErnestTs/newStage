@@ -230,7 +230,10 @@ export default class VisitorList extends Component{
                             columns={this.state.columns} 
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
-                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
+                            pagination={{ 
+                                pageSize:Math.round(parseInt(this.state.tableHeight)/90),
+                                // onChange:this.pageChange.bind(this)
+                            }}
                             locale={{emptyText: '暂无数据'}}
                         />
                     </div>
@@ -628,5 +631,13 @@ export default class VisitorList extends Component{
                 dataSource:resArr
             })
         },0)
+    }
+
+    /**
+     * @description [分页跳转]
+     * @param {Object} e [Event]
+     */
+    pageChange(e){
+        console.log(e)
     }
 }
