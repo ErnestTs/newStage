@@ -56,13 +56,14 @@ export default class VisitorList extends Component{
                 {
                   title: '姓名',
                   key: 'vname',
-                  width:"25%",
+                  width:"17%",
+                  align:'center',
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none"}}
+                                    style={{display:this.state.vState==2&&this.state.vType==0?"inline-block":"none",float:"left"}}
                                     onClick={()=>{
                                         let tempArr = this.state.dataSource;
                                         for(let i = 0;i < tempArr.length;i++){
@@ -77,7 +78,7 @@ export default class VisitorList extends Component{
                                     }}
                                 />
                                 <div className="defaultImg">
-                                    <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} />
+                                    {/* <img onClick={this.goLogin.bind(this,data)} src={data.vphoto || defaultImg} /> */}
                                     <span onClick={this.goLogin.bind(this,data)}>{data.vname}</span>
                                     <img
                                         className="printIcon"

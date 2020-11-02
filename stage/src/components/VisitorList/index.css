@@ -266,12 +266,12 @@
 }
 
 #component_VisitorList_tableBoard .tableItem_name {
-    text-align: left;
+    /* text-align: left; */
     overflow: hidden;
 }
 
 #component_VisitorList_tableBoard .tableItem_name span {
-    margin-left: 4%;
+    /* margin-left: 4%; */
 }
 
 #component_VisitorList_tableBoard .tableItem_name span img {
