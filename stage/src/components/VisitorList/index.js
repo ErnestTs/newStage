@@ -162,7 +162,7 @@ export default class VisitorList extends Component{
                         if(this.state.vState==0||this.state.vState==3||this.state.vState==4){
                             return data.cardNo
                         }else{
-                            return data.company.split("#")[0]
+                            return data.company.split("#")[1]
                         }
                     }
                 },
@@ -448,11 +448,7 @@ export default class VisitorList extends Component{
                             onRow={(record)=>{
                                 return {
                                     onClick:(e)=>{
-                                        return
-                                        this.setState({
-                                            selectedRowKeys:[record.key],
-                                            onSelectList:[record],
-                                        })
+                                        this.selectedRow([record.key],[record])
                                     }
                                 }
                             }}
@@ -685,7 +681,7 @@ export default class VisitorList extends Component{
                         let toady = new Date().format("yyyy-MM-dd")
                         let pCardDate = (JSON.parse(item.extendCol.replace(/&quot;/g,'"'))).pCardDate
                         if(pCardDate==toady){
-                            continue;
+                            // continue;
                         }
                     }
 
@@ -725,12 +721,13 @@ export default class VisitorList extends Component{
                         item.vTypeOnShow = ""
                     }
                     item.checked = false;
-                    item.key = item.appointmentDate+interfaceName+item.vphone+item.vid;
+                    item.key = item.appointmentDate+interfaceName+item.vphone+item.vid+i;
                     
                     resArr.push(item)
                 }
 
                 let totalPage = data.result.count
+                this.selectedRow([resArr[0].key],[resArr[0]])
                 this.setState({
                     dataSource:resArr,
                     baseList:resArr,
@@ -1040,7 +1037,7 @@ export default class VisitorList extends Component{
                                         let oTargetAccess = JSON.parse(oList[0].extendCol.replace(/&quot;/g, '"')).access
                                         let egids = oTargetAccess;
                                         let floorsListOnShow = [];
-                                        let defGname = "";
+                                        var defGname = "";
                                         for(let i = 0; i<this.state.floorsList.length;i++){
                                             if(this.state.floorsList[i].egid == egids){
                                                 if(oTargetSex){
@@ -1048,13 +1045,10 @@ export default class VisitorList extends Component{
                                                 }else{
                                                     defGname = this.state.floorsList[i].name.replace(/M/g, "F");
                                                 }
+                                                break;
                                             }
-                                            // if(
-                                            //     (!!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "F"||this.state.floorsList[i].name.indexOf("F&")!=-1))||
-                                            //     (!oTargetSex && (this.state.floorsList[i].name[this.state.floorsList[i].name.length-1] == "M"||this.state.floorsList[i].name.indexOf("M&")!=-1))
-                                            // ){
-                                            //     continue
-                                            // }
+                                        }
+                                        for(let i = 0; i<this.state.floorsList.length;i++) {
                                             if(defGname == this.state.floorsList[i].name){
                                                 this.state.floorsList[i].def = true
                                                 floorsListOnShow.unshift(this.state.floorsList[i])
@@ -1125,7 +1119,6 @@ export default class VisitorList extends Component{
             if(type.interface == "getNotSendCardVisitPage"){
                 sendData.searchType = 0;
                 sendData.clientNo = this.state.vStateList[index].type;
-                console.log(sendData.clientNo)
             }
             Common.ajaxProcWithoutAsync(type.interface, sendData, sessionStorage.token).done((res)=>{
                 if(index != undefined){
