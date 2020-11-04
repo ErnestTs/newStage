@@ -29,7 +29,7 @@ export default class Common {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			type: 'post',
-			timeout: 30000,
+			timeout: 60000,
 			headers: {
 				'X-COOLVISIT-TOKEN': token
 			},
@@ -62,7 +62,7 @@ export default class Common {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			type: 'post',
-			timeout: 30000,
+			timeout: 60000,
 			async: false,
 			headers: {
 				'X-COOLVISIT-TOKEN': token
@@ -96,7 +96,7 @@ export default class Common {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			type: 'post',
-			timeout: 10000,
+			timeout: 60000,
 			headers: {
 				'User-Agent':'android_senseid'
 			},
