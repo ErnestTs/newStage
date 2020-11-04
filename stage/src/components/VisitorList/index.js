@@ -24,43 +24,42 @@ export default class VisitorList extends Component{
             vTypelist:[
                 {
                     name:"登记访客",
-                    interface:"SearchVisitByCondition",
+                    interface:"SearchVisitByConditionPage",
+                    async:"SearchVisitByCondition",
                     stateList:["total","leave","visiting"]
                 },
                 {
                     name:"预约访客",
-                    interface:"SearchAppointmentByCondition",
+                    interface:"SearchAppointmentByConditionPage",
+                    async:"SearchAppointmentByCondition",
                     stateList:["appointment","checkIn","noArrived"]
                 },
                 {
                     name:"邀请访客",
-                    interface:"searchInviteByCondition",
+                    interface:"searchInviteByConditionPage",
+                    async:"searchInviteByCondition",
                     stateList:["invite","checkIn","noArrived"]
                 },
-                // {
-                //     name:"常驻访客",
-                //     interface:"SearchRVisitorByCondition",
-                //     stateList:["total","leave","visiting"]
-                // },
                 {
                     name:"待发卡访客",
-                    interface:"getNotSendCardVisit",
+                    interface:"getNotSendCardVisitPage",
+                    async:"getNotSendCardVisit",
                     stateList:["PAD","wechat","invitation","stage","QL_FK"]
                 }
             ],
             vStateList:[
-                {name:"访客总数",count:0,key:"total"},
-                {name:"离开人数",count:0,key:"leave"},
-                {name:"正在拜访人数",count:0,key:"visiting"},
-                {name:"预约总数",count:0,key:"appointment"},
-                {name:"邀请总数",count:0,key:"invite"},
-                {name:"签到人数",count:0,key:"checkIn"},
-                {name:"未到人数",count:0,key:"noArrived"},
-                {name:"PAD",count:0,key:"PAD"},
-                {name:"小程序",count:0,key:"wechat"},
-                {name:"邀请函",count:0,key:"invitation"},
-                {name:"礼宾台",count:0,key:"stage"},
-                {name:"访客机",count:0,key:"QL_FK"},
+                {name:"访客总数",count:0,key:"total",type:0},
+                {name:"离开人数",count:0,key:"leave",type:2},
+                {name:"正在拜访人数",count:0,key:"visiting",type:1},
+                {name:"预约总数",count:0,key:"appointment",type:0},
+                {name:"邀请总数",count:0,key:"invite",type:0},
+                {name:"签到人数",count:0,key:"checkIn",type:1},
+                {name:"未到人数",count:0,key:"noArrived",type:2},
+                {name:"PAD",count:0,key:"PAD",type:5},
+                {name:"小程序",count:0,key:"wechat",type:1},
+                {name:"邀请函",count:0,key:"invitation",type:2},
+                {name:"礼宾台",count:0,key:"stage",type:3},
+                {name:"访客机",count:0,key:"QL_FK",type:4},
             ],
             vState:0,
             columns:[
@@ -323,7 +322,12 @@ export default class VisitorList extends Component{
             notSendCardVisits:0,
             floorsList:[],
             floorsListOnShow:[],
-            targetFloorName:""
+            targetFloorName:"",
+
+            page: 1,
+            totalPage:0,
+
+            keyword:""
         }
     }
 
@@ -432,8 +436,14 @@ export default class VisitorList extends Component{
                             className="tableBox" 
                             columns={this.state.vType !== 3?this.state.columns:this.state.tempCardColumns}
                             dataSource={this.state.dataSource}
-                            scroll={{y:this.state.tableHeight}} 
-                            pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90),showSizeChanger:false }}
+                            scroll={{y:this.state.tableHeight}}
+                            pagination={{ 
+                                pageSize:Math.round(parseInt(this.state.tableHeight)/90),
+                                total:this.state.totalPage,
+                                current:this.state.page,
+                                onChange:this.pageChange.bind(this),
+                                showSizeChanger:false 
+                            }}
                             locale={{emptyText: '暂无数据'}}
                             onRow={(record)=>{
                                 return {
@@ -514,9 +524,7 @@ export default class VisitorList extends Component{
         // })
         
         // 设定表格高度
-        this.setState({
-            tableHeight:document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
-        })
+        this.state.tableHeight = document.getElementById("component_VisitorList_tableBox").offsetHeight*coefficient
 
         // 初始化
         this.init()
@@ -577,11 +585,12 @@ export default class VisitorList extends Component{
             vType:index,
             vState:vTypeIndex,
             onSelectList:[],
-            columns:colArr
+            columns:colArr,
+            page:1
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
-            this.queryRecord()
+            // this.queryRecord()
         })
     }
 
@@ -590,99 +599,12 @@ export default class VisitorList extends Component{
      * @param {Number} index [下标]
      */
     changeState(i){
-        let vStateList = this.state.vStateList;
-        let tempArr = [];
-        switch(vStateList[i].key){
-            case "total":
-                tempArr = this.state.baseList
-                break;
-            case "leave":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 2){
-                        continue
-                    }
-                    tempArr.push(this.state.baseList[i])
-                }
-                break;
-            case "visiting":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 1 && this.state.baseList[i].state !== 5){
-                        continue
-                    }
-                    tempArr.push(this.state.baseList[i])
-                }
-                break;
-            case "appointment":
-                tempArr = this.state.baseList
-                break;
-            case "invite":
-                tempArr = this.state.baseList
-                break;
-            case "checkIn":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(!!this.state.baseList[i].visitdate){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "noArrived":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4||this.state.baseList[i].state == 6){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "PAD":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 5){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "wechat":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 1){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "invitation":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 2){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "stage":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 3){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            case "QL_FK":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].clientNo == 4){
-                        tempArr.push(this.state.baseList[i])
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-        let index = this.state.vState
         this.setState({
             vState:i,
-            dataSource: tempArr,
-            selectedRowKeys:!!tempArr.length?[tempArr[0].key]:[],
-            onSelectList:!!tempArr.length?[tempArr[0]]:[],
+            page:1
         },()=>{
-            if(index == this.state.vState){
-                return;
-            }
-            this.queryRecord()
+            this.getVisitorInfo()
         })
-        this.state.dataSource = tempArr
     }
 
     /**
@@ -694,7 +616,7 @@ export default class VisitorList extends Component{
             date:date
         },()=>{
             this.getVisitorInfo();
-            this.queryRecord()
+            // this.queryRecord()
         })
     }
 
@@ -702,54 +624,54 @@ export default class VisitorList extends Component{
      * @description [根据时间查询访客信息]
      * @param {Boolean} noRefresh [是否刷新]
      */
-    getVisitorInfo(noRefresh){
+    getVisitorInfo(){
         let interfaceName = this.state.vTypelist[this.state.vType].interface;
         let sendData = {
             userid: sessionStorage.userid,
             gid: sessionStorage.gid,
             date: this.state.date,
             endDate: this.state.date,
+
+            searchType: this.state.vStateList[this.state.vState].type,
+
+            startIndex:(this.state.page-1)*Math.round(parseInt(this.state.tableHeight)/90),
+            requestedCount:Math.round(parseInt(this.state.tableHeight)/90),
+            reception: this.state.keyword
         };
-        Common.ajaxProcWithoutAsync(interfaceName, sendData, sessionStorage.token).done((data)=>{
+        if(interfaceName == "getNotSendCardVisitPage"){
+            sendData.searchType = 0;
+            sendData.clientNo = this.state.vStateList[this.state.vState].type;
+        }
+        Common.ajaxProc(interfaceName, sendData, sessionStorage.token).done((data)=>{
             if(data.status == 0){
                 this.getTempCardCount()
-                if(!data.result.length){
+                if(!data.result.list || !data.result.list.length){
                     this.setState({
                         dataSource:[],
                         baseList:[],
                         vStateList:[
-                            {name:"访客总数",count:0,key:"total"},
-                            {name:"离开人数",count:0,key:"leave"},
-                            {name:"正在拜访人数",count:0,key:"visiting"},
-                            {name:"预约总数",count:0,key:"appointment"},
-                            {name:"邀请总数",count:0,key:"invite"},
-                            {name:"签到人数",count:0,key:"checkIn"},
-                            {name:"未到人数",count:0,key:"noArrived"},
-                            {name:"PAD",count:0,key:"PAD"},
-                            {name:"小程序",count:0,key:"wechat"},
-                            {name:"邀请函",count:0,key:"invitation"},
-                            {name:"礼宾台",count:0,key:"stage"},
-                            {name:"访客机",count:0,key:"QL_FK"},
+                            {name:"访客总数",count:0,key:"total",type:0},
+                            {name:"离开人数",count:0,key:"leave",type:2},
+                            {name:"正在拜访人数",count:0,key:"visiting",type:1},
+                            {name:"预约总数",count:0,key:"appointment",type:0},
+                            {name:"邀请总数",count:0,key:"invite",type:0},
+                            {name:"签到人数",count:0,key:"checkIn",type:1},
+                            {name:"未到人数",count:0,key:"noArrived",type:2},
+                            {name:"PAD",count:0,key:"PAD",type:5},
+                            {name:"小程序",count:0,key:"wechat",type:1},
+                            {name:"邀请函",count:0,key:"invitation",type:2},
+                            {name:"礼宾台",count:0,key:"stage",type:3},
+                            {name:"访客机",count:0,key:"QL_FK",type:4},
                         ]
+                    },()=>{
+                        this.getListInfoWithAsync()
                     })
                     return
                 }
                 let resArr = [];
-                let total = data.result.length;
-                let leave = 0;
-                let visiting = 0;
-                let appointment = data.result.length;
-                let invite = data.result.length;
-                let checkIn = 0;
-                let noArrived = 0;
-                let padCount = 0;
-                let wechatCount = 0;
-                let invitationCount = 0;
-                let stageCount = 0;
-                let QL_FKCount = 0
 
-                for(let i = 0; i < data.result.length; i++){
-                    let item = data.result[i];
+                for(let i = 0; i < data.result.list.length; i++){
+                    let item = data.result.list[i];
 					if (item.appointmentDate !== null) {
 						item.appointmentDate = new Date(item.appointmentDate).format("yyyy-MM-dd hh:mm:ss");
 					}
@@ -759,7 +681,7 @@ export default class VisitorList extends Component{
 					if (item.signOutDate !== null) {
 						item.signOutDate = new Date(item.signOutDate).format("yyyy-MM-dd hh:mm:ss");
                     }
-                    if(interfaceName == "getNotSendCardVisit"&&!noRefresh){
+                    if(interfaceName == "getNotSendCardVisitPage"){
                         let toady = new Date().format("yyyy-MM-dd")
                         let pCardDate = (JSON.parse(item.extendCol.replace(/&quot;/g,'"'))).pCardDate
                         if(pCardDate==toady){
@@ -769,16 +691,10 @@ export default class VisitorList extends Component{
 
                     if(!!item.signOutDate){
                         item.state = 2;
-                        leave++;
-                        checkIn++;
                     }else if(!!item.leaveTime){
                         item.state = 5;
-                        visiting++;
-                        checkIn++;
                     }else if(!!item.visitdate){
                         item.state = 1;
-                        visiting++;
-                        checkIn++;
                     }else {
                         if(item.status == 4){
                             item.state = 3;
@@ -802,27 +718,7 @@ export default class VisitorList extends Component{
                                     break;
                             }
                         }
-                        noArrived++;
                     }
-                    // 处理发卡计数
-                    switch(item.clientNo){
-                        case 1:
-                            wechatCount++
-                            break;
-                        case 2:
-                            invitationCount++
-                            break;
-                        case 3:
-                            stageCount++
-                            break;
-                        case 4:
-                            QL_FKCount++
-                            break;
-                        case 5:
-                            padCount++
-                            break;
-                    }
-
                     if(!!item.visitType){
                         item.vTypeOnShow = item.visitType.split("#")[0]
                     }else{
@@ -834,57 +730,13 @@ export default class VisitorList extends Component{
                     resArr.push(item)
                 }
 
-                let vStateList = this.state.vStateList;
-                for(let i = 0; i < vStateList.length; i++){
-                    switch(vStateList[i].key){
-                        case "total":
-                            vStateList[i].count=total
-                            break;
-                        case "leave":
-                            vStateList[i].count=leave
-                            break;
-                        case "visiting":
-                            vStateList[i].count=visiting
-                            break;
-                        case "appointment":
-                            vStateList[i].count=appointment
-                            break;
-                        case "invite":
-                            vStateList[i].count=invite
-                            break;
-                        case "checkIn":
-                            vStateList[i].count=checkIn
-                            break;
-                        case "noArrived":
-                            vStateList[i].count=noArrived
-                            break;
-                        case "PAD":
-                            vStateList[i].count=padCount
-                            break;
-                        case "wechat":
-                            vStateList[i].count=wechatCount
-                            break;
-                        case "invitation":
-                            vStateList[i].count=invitationCount
-                            break;
-                        case "stage":
-                            vStateList[i].count=stageCount
-                            break;
-                        case "QL_FK":
-                            vStateList[i].count=QL_FKCount
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
+                let totalPage = data.result.count
                 this.setState({
                     dataSource:resArr,
-                    vStateList:vStateList,
-                    baseList:resArr
+                    baseList:resArr,
+                    totalPage:totalPage
                 },()=>{
-                    this.changeState(this.state.vState)
+                    this.getListInfoWithAsync()
                 })
             }
         })
@@ -1003,38 +855,15 @@ export default class VisitorList extends Component{
      * @param {Event} e
      */
     queryRecord(e){
-        if(!e){
-            e = {
-                target:{
-                    value: document.getElementById("visitorListQuery").value
-                }
-            }
-        }
-        let key = e.target.value;
-        if(!key){
-            this.getVisitorInfo()
+        if(e.target.value == this.state.keyword){
             return
         }
-        let _this = this;
+        let _this = this
+        let target = e.target
         setTimeout(()=>{
-            this.getVisitorInfo(true)
-            let tempArr = this.state.dataSource;
-            let resArr = []
-            for(let i = 0; i < tempArr.length; i++){
-                let item = tempArr[i]
-                if(!!item.company){
-                    item.vphone = !item.vphone?"":item.vphone
-                    if(item.vname.indexOf(key) !== -1 || item.company.indexOf(key) !== -1 || item.vphone.indexOf(key) !== -1){
-                        resArr.push(item)
-                    }
-                }else if(item.vname.indexOf(key) !== -1 || item.vphone.indexOf(key) !== -1){
-                    resArr.push(item)
-                }
-            }
-            _this.setState({
-                dataSource:resArr
-            })
-        },0)
+            _this.state.keyword = target.value
+            _this.getVisitorInfo()
+        },2000)
     }
 
     /**
@@ -1162,23 +991,28 @@ export default class VisitorList extends Component{
             gid: sessionStorage.gid,
             date: this.state.date,
             endDate: this.state.date,
+            searchType:1,
+            clientNo:0,
+            startIndex:this.state.page,
+            requestedCount:Math.round(parseInt(this.state.tableHeight)/90),
+            reception:""
         };
-        Common.ajaxProcWithoutAsync("getNotSendCardVisit", sendData, sessionStorage.token).done((res)=>{
+        Common.ajaxProc("getNotSendCardVisitPage", sendData, sessionStorage.token).done((res)=>{
             if(res.status == 0){
-                if(!!res.result.length){
-                    let tempCount = 0;
-                    let toady = new Date().format("yyyy-MM-dd")
-                    for(let i = 0;i < res.result.length;i++){
-                        let pCardDate = (JSON.parse(res.result[i].extendCol.replace(/&quot;/g,'"'))).pCardDate;
-                        if(pCardDate==toady){
-                            continue;
-                        }
-                        if(!!res.result[i].clientNo){
-                            tempCount++
-                        }
-                    }
+                if(!!res.result.count){
+                    // let tempCount = 0;
+                    // let toady = new Date().format("yyyy-MM-dd")
+                    // for(let i = 0;i < res.result.length;i++){
+                    //     let pCardDate = (JSON.parse(res.result[i].extendCol.replace(/&quot;/g,'"'))).pCardDate;
+                    //     if(pCardDate==toady){
+                    //         continue;
+                    //     }
+                    //     if(!!res.result[i].clientNo){
+                    //         tempCount++
+                    //     }
+                    // }
                     this.setState({
-                        notSendCardVisits:tempCount
+                        notSendCardVisits:res.result.count
                     })
                 }else{
                     this.setState({
@@ -1242,6 +1076,65 @@ export default class VisitorList extends Component{
                     }
                 }
             }
+        })
+    }
+
+    /**
+     * @description [修改分页]
+     * @param {Number} page [页码]
+     */
+    pageChange(page) {
+        this.setState({
+            page: page
+        },()=>{
+            this.getVisitorInfo()
+        })
+    }
+
+    /**
+     * @description [异步获取页面信息]
+     */
+    getListInfoWithAsync(){
+        let type = this.state.vTypelist[this.state.vType]
+        let vStateList = this.state.vStateList
+
+        let stateList = type.stateList;
+        
+        for(let i = 0; i < stateList.length; i++){
+            let item = stateList[i]
+            let typeNumber = null;
+            let index = undefined
+            for(let j = 0; j < vStateList.length; j++){
+                if(vStateList[j].key == item){
+                    typeNumber = this.state.vStateList[j].type;
+                    index = j
+                    break;
+                }
+            }
+            
+            let sendData = {
+                userid: sessionStorage.userid,
+                gid: sessionStorage.gid,
+                date: this.state.date,
+                endDate: this.state.date,
+                searchType:typeNumber,
+                startIndex:0,
+                requestedCount:1,
+                reception:""
+            };
+            if(type.interface == "getNotSendCardVisitPage"){
+                sendData.searchType = 0;
+                sendData.clientNo = this.state.vStateList[index].type;
+                console.log(sendData.clientNo)
+            }
+            Common.ajaxProcWithoutAsync(type.interface, sendData, sessionStorage.token).done((res)=>{
+                if(index != undefined){
+                    vStateList[index].count = res.result.count  
+                }
+            })
+        }
+        this.setState({
+            vStateList:vStateList
         })
     }
 }
