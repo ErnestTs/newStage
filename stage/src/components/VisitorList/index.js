@@ -990,7 +990,7 @@ export default class VisitorList extends Component{
             endDate: this.state.date,
             searchType:1,
             clientNo:0,
-            startIndex:this.state.page,
+            startIndex:1,
             requestedCount:Math.round(parseInt(this.state.tableHeight)/90),
             reception:""
         };
