@@ -49,7 +49,7 @@ export default class VisitorList extends Component{
             ],
             vStateList:[
                 {name:"访客总数",count:0,key:"total",type:0},
-                {name:"离开人数",count:0,key:"leave",type:2},
+                {name:"离开人数",count:0,key:"leave",type:3},
                 {name:"正在拜访人数",count:0,key:"visiting",type:1},
                 {name:"预约总数",count:0,key:"appointment",type:0},
                 {name:"邀请总数",count:0,key:"invite",type:0},
@@ -647,7 +647,7 @@ export default class VisitorList extends Component{
                         baseList:[],
                         vStateList:[
                             {name:"访客总数",count:0,key:"total",type:0},
-                            {name:"离开人数",count:0,key:"leave",type:2},
+                            {name:"离开人数",count:0,key:"leave",type:3},
                             {name:"正在拜访人数",count:0,key:"visiting",type:1},
                             {name:"预约总数",count:0,key:"appointment",type:0},
                             {name:"邀请总数",count:0,key:"invite",type:0},
