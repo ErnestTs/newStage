@@ -1120,7 +1120,7 @@ export default class VisitorList extends Component{
                 sendData.searchType = 0;
                 sendData.clientNo = this.state.vStateList[index].type;
             }
-            Common.ajaxProcWithoutAsync(type.interface, sendData, sessionStorage.token).done((res)=>{
+            Common.ajaxProc(type.interface, sendData, sessionStorage.token).done((res)=>{
                 if(index != undefined){
                     vStateList[index].count = res.result.count  
                 }
