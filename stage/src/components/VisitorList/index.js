@@ -651,7 +651,7 @@ export default class VisitorList extends Component{
                             {name:"正在拜访人数",count:0,key:"visiting",type:1},
                             {name:"预约总数",count:0,key:"appointment",type:0},
                             {name:"邀请总数",count:0,key:"invite",type:0},
-                            {name:"签到人数",count:0,key:"checkIn",type:1},
+                            {name:"签到人数",count:0,key:"checkIn",type:4},
                             {name:"未到人数",count:0,key:"noArrived",type:2},
                             {name:"PAD",count:0,key:"PAD",type:5},
                             {name:"小程序",count:0,key:"wechat",type:1},
