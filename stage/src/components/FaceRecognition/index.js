@@ -290,10 +290,10 @@ export default class FaceRecognition extends Component {
             // 	/**邀请函签到 */
         	if ((sendData.action === 'qrcode' || sendData.action === 'list') && sendData.qrtype === 'a') {
         		sessionStorage.vid = "a" + sendData.vid;
-        		this.aSignin("appointmentSignin", sendData);
+				this.aSignin("appointmentSignin", sendData);
         	}else {
 				/**邀请签到 */
-				if (sendData.signin === "1") {
+				if (sendData.signin == "1") {
 					sessionStorage.vid = "a" + sendData.vid;
 					this.aSignin("appointmentSignin", sendData);
 				}else{

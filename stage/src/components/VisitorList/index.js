@@ -275,7 +275,6 @@ export default class VisitorList extends Component{
     init(){
         // 获取当前表单
         this.getVisitorInfo()
-        this.getVisitorStatistics()
     }
 
 
@@ -299,7 +298,6 @@ export default class VisitorList extends Component{
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
-            this.getVisitorStatistics()
         })
     }
 
@@ -326,7 +324,6 @@ export default class VisitorList extends Component{
         },()=>{
             this.getVisitorInfo()
             // this.queryRecord()
-            this.getVisitorStatistics()
         })
     }
 
@@ -353,18 +350,10 @@ export default class VisitorList extends Component{
                 if(!data.result.list || !data.result.list.length){
                     this.setState({
                         dataSource:[],
-                        baseList:[],
-                        vStateList:[
-                            {name:"访客总数",count:0,key:"total",type:0},
-                            {name:"离开人数",count:0,key:"leave",type:3},
-                            {name:"正在拜访人数",count:0,key:"visiting",type:1},
-                            {name:"预约总数",count:0,key:"appointment",type:0},
-                            {name:"邀请总数",count:0,key:"invite",type:0},
-                            {name:"签到人数",count:0,key:"checkIn",type:4},
-                            {name:"未到人数",count:0,key:"noArrived",type:2},
-                        ]
+                        baseList:[]
                     },()=>{
-                        this.getListInfoWithAsync()
+                        // this.getListInfoWithAsync()
+                        this.getVisitorStatistics()
                     })
                     return
                 }
@@ -423,7 +412,8 @@ export default class VisitorList extends Component{
                     baseList:resArr,
                     totalPage:totalPage
                 },()=>{
-                    this.getListInfoWithAsync()
+                    // this.getListInfoWithAsync()
+                    this.getVisitorStatistics()
                 })
             }
         })
@@ -490,6 +480,9 @@ export default class VisitorList extends Component{
         }
         let extendCol = !!data.extendCol?JSON.parse(data.extendCol.replace(/&quot;/g,'"')):{};
         let qrType = this.state.vTypelist[this.state.vType].interface == "searchInviteByCondition"?"a":"v"
+        if(this.state.vTypelist[this.state.vType].async=="searchInviteByCondition"){
+            data.signin = 1
+        }
         let obj = {
             "visitInfo":{
                 "peopleCount":data.peopleCount||"",
@@ -507,7 +500,8 @@ export default class VisitorList extends Component{
                 "vcompany":data.vcompany||"",
                 "remark":data.remark||"",
                 "leaveTime":data.leaveTime||"",
-                "gid":data.gid||""
+                "gid":data.gid||"",
+                "signin":data.signin
             },
             "empInfo":{
                 "ename":data.empName||"",
@@ -532,9 +526,6 @@ export default class VisitorList extends Component{
             "qrcodeConf":data.qrcodeConf||"",
             "aid":data.aid||"",
             "signin":data.signin
-        }
-        if(this.state.vTypelist[this.state.vType].async=="searchInviteByCondition"){
-           obj.signin = 1
         }
         this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
     }
