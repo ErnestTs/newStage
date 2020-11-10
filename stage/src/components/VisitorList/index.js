@@ -25,24 +25,28 @@ export default class VisitorList extends Component{
                     name:"登记访客",
                     interface:"SearchVisitByConditionPage",
                     async:"SearchVisitByCondition",
-                    stateList:["total","leave","visiting"]
+                    stateList:["total","leave","visiting"],
+                    type:0
                 },
                 {
                     name:"预约访客",
                     interface:"SearchAppointmentByConditionPage",
                     async:"SearchAppointmentByCondition",
-                    stateList:["appointment","checkIn","noArrived"]
+                    stateList:["appointment","checkIn","noArrived"],
+                    type:2
                 },
                 {
                     name:"邀请访客",
                     interface:"searchInviteByConditionPage",
                     async:"searchInviteByCondition",
-                    stateList:["invite","checkIn","noArrived"]
+                    stateList:["invite","checkIn","noArrived"],
+                    type:1
                 },
                 {
                     name:"常驻访客",
                     interface:"SearchRVisitorByConditionPage",
-                    stateList:["total","leave","visiting"]
+                    stateList:["total","leave","visiting"],
+                    type:0
                 }
             ],
             vStateList:[
@@ -271,6 +275,7 @@ export default class VisitorList extends Component{
     init(){
         // 获取当前表单
         this.getVisitorInfo()
+        this.getVisitorStatistics()
     }
 
 
@@ -294,7 +299,7 @@ export default class VisitorList extends Component{
         },()=>{
             // 获取当前表单
             this.getVisitorInfo()
-            // this.queryRecord()
+            this.getVisitorStatistics()
         })
     }
 
@@ -321,6 +326,7 @@ export default class VisitorList extends Component{
         },()=>{
             this.getVisitorInfo()
             // this.queryRecord()
+            this.getVisitorStatistics()
         })
     }
 
@@ -527,6 +533,9 @@ export default class VisitorList extends Component{
             "aid":data.aid||"",
             "signin":data.signin
         }
+        if(this.state.vTypelist[this.state.vType].async=="searchInviteByCondition"){
+           obj.signin = 1
+        }
         this.props.history.push({pathname:"/home/appointmentInfo", state:[obj]});
     }
 
@@ -562,6 +571,7 @@ export default class VisitorList extends Component{
      * @description [异步获取页面信息]
      */
     getListInfoWithAsync(){
+        return
         let type = this.state.vTypelist[this.state.vType]
         let vStateList = this.state.vStateList
 
@@ -601,6 +611,61 @@ export default class VisitorList extends Component{
         }
         this.setState({
             vStateList:vStateList
+        })
+    }
+
+    /**
+     * @description [单接口获取访客数]
+     */
+    getVisitorStatistics(){
+        let type = this.state.vTypelist[this.state.vType].type
+        let sendData = {
+            userid: sessionStorage.userid,
+            gid: sessionStorage.gid,
+            date: this.state.date,
+            endDate: this.state.date,
+            signinType:type
+        };
+        Common.ajaxProcWithoutAsync("getVisitorStatistics", sendData, sessionStorage.token).done((res)=>{
+            if(!!res.result){
+                let vStateList = this.state.vStateList
+                for(let i of vStateList){
+                    switch (i.key) {
+                        case "total":
+                            i.count = res.result.totalVisitor
+                            break;
+                    
+                        case "leave":
+                            i.count = res.result.signOutCount
+                            break;
+                
+                        case "visiting":
+                            i.count = res.result.nowVCount
+                            break;
+            
+                        case "appointment":
+                            i.count = res.result.totalVisitor
+                            break;
+        
+                        case "invite":
+                            i.count = res.result.totalVisitor
+                            break;
+    
+                        case "checkIn":
+                            i.count = res.result.arrivedCount
+                            break;
+
+                        case "noArrived":
+                            i.count = res.result.noArrivedCount
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.setState({
+                    vStateList:vStateList
+                })
+            }
         })
     }
 }

@@ -98,7 +98,6 @@ export default class FaceRecognition extends Component {
 		}else {
 			this.state.faceLoading = true
 		}
-		console.log(1)
 		if (this.uploadBlob === undefined && sessionStorage.photoSwitch === 'true') {
             Toast.open({
                 type:"danger",
