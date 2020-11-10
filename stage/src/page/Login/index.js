@@ -239,6 +239,7 @@ export default class Login extends Component {
 				sessionStorage.mainCompany = result.company;
 				sessionStorage.questionnaireSwitch = result.questionnaireSwitch;
                 sessionStorage.jumpSwitch = "1";
+                sessionStorage.blackListSwitch = result.blackListSwitch
                 
 			}else {
                 Toast.open({

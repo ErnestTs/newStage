@@ -779,6 +779,16 @@ export default class Register extends Component {
             }
         }
 
+        if(!!sessionStorage.blackListSwitch){
+            if(!this.state.vphone&&!!this.state.showCardMask) {
+                Toast.open({
+                    type:"danger",
+                    content: "请填入访客手机号或身份信息!"
+                })
+                return
+            }
+        }
+
         if(!!this.state.vphone&& !this.checkPhoneNum(this.state.vphone)){
             Toast.open({
                 type:"danger",
