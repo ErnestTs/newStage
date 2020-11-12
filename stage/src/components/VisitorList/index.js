@@ -645,20 +645,20 @@ export default class VisitorList extends Component{
                     this.setState({
                         dataSource:[],
                         baseList:[],
-                        vStateList:[
-                            {name:"访客总数",count:0,key:"total",type:0},
-                            {name:"离开人数",count:0,key:"leave",type:3},
-                            {name:"正在拜访人数",count:0,key:"visiting",type:1},
-                            {name:"预约总数",count:0,key:"appointment",type:0},
-                            {name:"邀请总数",count:0,key:"invite",type:0},
-                            {name:"签到人数",count:0,key:"checkIn",type:4},
-                            {name:"未到人数",count:0,key:"noArrived",type:2},
-                            {name:"PAD",count:0,key:"PAD",type:5},
-                            {name:"小程序",count:0,key:"wechat",type:1},
-                            {name:"邀请函",count:0,key:"invitation",type:2},
-                            {name:"礼宾台",count:0,key:"stage",type:3},
-                            {name:"访客机",count:0,key:"QL_FK",type:4},
-                        ]
+                        // vStateList:[
+                        //     {name:"访客总数",count:0,key:"total",type:0},
+                        //     {name:"离开人数",count:0,key:"leave",type:3},
+                        //     {name:"正在拜访人数",count:0,key:"visiting",type:1},
+                        //     {name:"预约总数",count:0,key:"appointment",type:0},
+                        //     {name:"邀请总数",count:0,key:"invite",type:0},
+                        //     {name:"签到人数",count:0,key:"checkIn",type:4},
+                        //     {name:"未到人数",count:0,key:"noArrived",type:2},
+                        //     {name:"PAD",count:0,key:"PAD",type:5},
+                        //     {name:"小程序",count:0,key:"wechat",type:1},
+                        //     {name:"邀请函",count:0,key:"invitation",type:2},
+                        //     {name:"礼宾台",count:0,key:"stage",type:3},
+                        //     {name:"访客机",count:0,key:"QL_FK",type:4},
+                        // ]
                     },()=>{
                         this.getListInfoWithAsync()
                     })
@@ -1123,11 +1123,11 @@ export default class VisitorList extends Component{
             Common.ajaxProc(type.interface, sendData, sessionStorage.token).done((res)=>{
                 if(index != undefined){
                     vStateList[index].count = res.result.count  
+                    this.setState({
+                        vStateList:vStateList
+                    })
                 }
             })
         }
-        this.setState({
-            vStateList:vStateList
-        })
     }
 }
