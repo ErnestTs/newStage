@@ -124,10 +124,21 @@ export default class VisitorList extends Component{
                         }
                     }
                 },
+                // {
+                //     title: '拜访事由',
+                //     dataIndex: 'vTypeOnShow',
+                //     key: 'vTypeOnShow',
+                // },
                 {
-                    title: '拜访事由',
-                    dataIndex: 'vTypeOnShow',
-                    key: 'vTypeOnShow',
+                    title: '发卡楼层',
+                    dataIndex: 'authorizedFloor',
+                    key: 'authorizedFloor',
+                    render:(data)=>{
+                        if(!!data&&data[data.length-1]=="/"){
+                            data = data.slice(0,data.length-1)
+                        }
+                        return <span>{data}</span>
+                    }
                 },
                 {
                     title: "被访人",
@@ -267,10 +278,21 @@ export default class VisitorList extends Component{
                         }
                     }
                 },
+                // {
+                //     title: '拜访事由',
+                //     dataIndex: 'vTypeOnShow',
+                //     key: 'vTypeOnShow',
+                // },
                 {
-                    title: '拜访事由',
-                    dataIndex: 'vTypeOnShow',
-                    key: 'vTypeOnShow',
+                    title: '已授权楼层',
+                    dataIndex: 'floors',
+                    key: 'floors',
+                    render:(data)=>{
+                        if(!!data&&data[data.length-1]=="/"){
+                            data = data.slice(0,data.length-1)
+                        }
+                        return <span>{data}</span>
+                    }
                 },
                 {
                     title: '被访人',
@@ -293,17 +315,6 @@ export default class VisitorList extends Component{
                     width:"15%",
                     render:(data)=>{
                         return data.split("#")[1]
-                    }
-                },
-                {
-                    title: '已授权楼层',
-                    dataIndex: 'floors',
-                    key: 'floors',
-                    render:(data)=>{
-                        if(!!data&&data[data.length-1]=="/"){
-                            data = data.slice(0,data.length-1)
-                        }
-                        return <span>{data}</span>
                     }
                 },
                 {
@@ -671,6 +682,16 @@ export default class VisitorList extends Component{
 
                 for(let i = 0; i < data.result.list.length; i++){
                     let item = data.result.list[i];
+                    item.authorizedFloor = ""
+                    let access = JSON.parse(item.extendCol.replace(/&quot;/g,'"')).access;
+                    if(!!item.cardNo){
+                        for(let i of this.state.floorsList){
+                            if(i.egid == access){
+                                item.authorizedFloor = i.name
+                                break;
+                            }
+                        }
+                    }
 					if (item.appointmentDate !== null) {
 						item.appointmentDate = new Date(item.appointmentDate).format("yyyy-MM-dd hh:mm:ss");
 					}

@@ -19,7 +19,7 @@ export default class Common {
 	
 	static Version = "2.4.8.0";
 
-	static FreshToken = 6;
+	static FreshToken = 6;		// 刷新token时间 h
 
 	static strict = !!this.$_Get().strict;
 
