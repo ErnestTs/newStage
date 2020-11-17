@@ -365,7 +365,14 @@ export default class VisitorList extends Component{
 
                     if(searchType == 2) {
                         item.visitdate = null
+                    }else if(searchType == 0) {
+                        let today = new Date(this.state.date.replace(/-/g,"/")).getTime();
+                        let vDate = new Date(new Date(item.visitdate).format("yyyy/MM/dd")).getTime();
+                        if(today !== vDate) {
+                            item.visitdate = null
+                        }
                     }
+                    
 					if (item.appointmentDate !== null) {
 						item.appointmentDate = new Date(item.appointmentDate).format("yyyy-MM-dd hh:mm:ss");
 					}
