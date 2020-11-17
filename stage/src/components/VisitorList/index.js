@@ -333,13 +333,14 @@ export default class VisitorList extends Component{
      */
     getVisitorInfo(){
         let interfaceName = this.state.vTypelist[this.state.vType].interface;
+        let searchType = this.state.vStateList[this.state.vState].type;
         let sendData = {
             userid: sessionStorage.userid,
             gid: sessionStorage.gid,
             date: this.state.date,
             endDate: this.state.date,
 
-            searchType: this.state.vStateList[this.state.vState].type,
+            searchType: searchType,
 
             startIndex:(this.state.page-1)*Math.round(parseInt(this.state.tableHeight)/90),
             requestedCount:Math.round(parseInt(this.state.tableHeight)/90),
@@ -361,6 +362,10 @@ export default class VisitorList extends Component{
 
                 for(let i = 0; i < data.result.list.length; i++){
                     let item = data.result.list[i];
+
+                    if(searchType == 2) {
+                        item.visitdate = null
+                    }
 					if (item.appointmentDate !== null) {
 						item.appointmentDate = new Date(item.appointmentDate).format("yyyy-MM-dd hh:mm:ss");
 					}
