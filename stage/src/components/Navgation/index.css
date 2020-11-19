@@ -10,10 +10,11 @@
 }
 
 #navgation .logo {
-    float: left;
-    margin-left: 5vw;
+    position: absolute;
+    left: 5vw;
     width: 6.76vw;
-    margin-top: 22px;
+    top: 50%;
+    transform: translateY(-50%)
 }
 
 #navgation {

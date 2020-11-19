@@ -125,39 +125,39 @@ export default class Menu extends Component {
                     </div>
                     <ul>
                         <li className="menu_itemGroup0">
-                            {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
+                            {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")} */}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
-                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
-                            {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
+                            {/* {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
+                            {this.renderItem("现场登记",this.state.icon.Register,3,"register")} */}
                             {this.renderItem("今日访客",this.state.icon.Visitors,4,"visitor")}
                         </li>
-                        <li className="menu_itemGroup2">
+                        {/* <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
                             {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
                             {this.renderItem("公司列表",this.state.icon.Companylist,7, "companylist")}
                             {this.renderItem("黑名单列表",this.state.icon.Blacklist,8, "Blacklist")}
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
                 <div id="menu_small" style={{display:!this.state.open?"block":"none"}}>
                     <ul>
                         <li className="menu_itemGroup0">
-                            {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")}
+                            {/* {this.renderItem("二维码",this.state.icon.QRcode,0, "qrcode")} */}
                             {this.renderItem("证件扫描",this.state.icon.Certificates,1,"Certificates")}
                         </li>
                         <li className="menu_itemGroup1">
-                            {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
-                            {this.renderItem("现场登记",this.state.icon.Register,3,"register")}
+                            {/* {this.renderItem("现场预约",this.state.icon.Appointment,2,"visitorInfo")}
+                            {this.renderItem("现场登记",this.state.icon.Register,3,"register")} */}
                             {this.renderItem("今日访客",this.state.icon.Visitors,4,"visitor")}
                         </li>
-                        <li className="menu_itemGroup2">
+                        {/* <li className="menu_itemGroup2">
                             {this.renderItem("物流管理",this.state.icon.Logistics,5,"logistics")}
                             {this.renderItem("临时卡",this.state.icon.Cards,6,"cards")}
                             {this.renderItem("公司列表",this.state.icon.Companylist,7, "companylist")}
                             {this.renderItem("黑名单列表",this.state.icon.Blacklist,8, "Blacklist")}
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
