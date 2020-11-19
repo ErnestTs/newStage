@@ -28,13 +28,13 @@ export default class VisitorList extends Component{
                     stateList:["total","leave","visiting"],
                     type:0
                 },
-                {
-                    name:"预约访客",
-                    interface:"SearchAppointmentByConditionPage",
-                    async:"SearchAppointmentByCondition",
-                    stateList:["appointment","checkIn","noArrived"],
-                    type:2
-                },
+                // {
+                //     name:"预约访客",
+                //     interface:"SearchAppointmentByConditionPage",
+                //     async:"SearchAppointmentByCondition",
+                //     stateList:["appointment","checkIn","noArrived"],
+                //     type:2
+                // },
                 {
                     name:"邀请访客",
                     interface:"searchInviteByConditionPage",
@@ -42,12 +42,12 @@ export default class VisitorList extends Component{
                     stateList:["invite","checkIn","noArrived"],
                     type:1
                 },
-                {
-                    name:"常驻访客",
-                    interface:"SearchRVisitorByConditionPage",
-                    stateList:["total","leave","visiting"],
-                    type:0
-                }
+                // {
+                //     name:"常驻访客",
+                //     interface:"SearchRVisitorByConditionPage",
+                //     stateList:["total","leave","visiting"],
+                //     type:0
+                // }
             ],
             vStateList:[
                 {name:"访客总数",count:0,key:"total",type:0},
