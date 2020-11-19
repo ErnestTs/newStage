@@ -108,9 +108,9 @@ export default class VisitorList extends Component{
                     key: 'empName',
                 },
                 {
-                    title: '手机号',
-                    dataIndex: 'vphone',
-                    key: 'vphone',
+                    title: '邮箱',
+                    dataIndex: 'vemail',
+                    key: 'vemail',
                 },
                 {
                     title: '拜访事由',
@@ -666,6 +666,7 @@ export default class VisitorList extends Component{
                             break;
                     }
                 }
+                console.log(vStateList)
                 this.setState({
                     vStateList:vStateList
                 })
