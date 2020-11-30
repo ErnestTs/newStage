@@ -25,7 +25,7 @@ export default class VisitorList extends Component{
                 {
                     name:"签到访客",
                     interface:"SearchVisitByCondition",
-                    stateList:["visiting","leave","noReceived","Received","total"]
+                    stateList:["noReceived","Received","visiting","leave","total"]
                 },
                 {
                     name:"预约访客",
@@ -41,6 +41,11 @@ export default class VisitorList extends Component{
                     name:"常驻访客",
                     interface:"SearchRVisitorByCondition",
                     stateList:["visiting","leave","total"]
+                },
+                {
+                    name:"供应商打印",
+                    interface:"",
+                    stateList:[]
                 }
             ],
             vStateList:[
@@ -172,6 +177,45 @@ export default class VisitorList extends Component{
                     }
                 },
             ],
+            subColumns:[
+                {
+                  title: '项目名称',
+                  key: 'vname',
+                  width:"14%",
+                  render: (data)=>{
+                        return(
+                            <div className="tableItem_name">
+                                <Checkbox 
+                                    checked={data.checked}
+                                />
+                                <div className="defaultImg">
+                                    <span>{data.vname}</span>
+                                </div>
+                            </div>
+                        )
+                  }
+                },
+                {
+                    title: '工作单位',
+                    dataIndex: 'signOutDate',
+                    key: 'signOutDate'
+                },
+                {
+                    title: '项目负责人',
+                    dataIndex: 'signOutDate',
+                    key: 'signOutDate'
+                },
+                {
+                    title: '联系电话',
+                    dataIndex: 'signOutDate',
+                    key: 'signOutDate'
+                },
+                {
+                    title: '作业日期与时间',
+                    dataIndex: 'signOutDate',
+                    key: 'signOutDate'
+                },
+            ],
             baseList:[],
             dataSource:[],
             date:new Date().format('yyyy-MM-dd'),
@@ -199,7 +243,12 @@ export default class VisitorList extends Component{
                             {
                                 this.state.vTypelist.map((item,i)=>{
                                     return (
-                                        <li className={this.state.vType == i?"action":""} key={i+"vtype"} onClick={this.changeVtype.bind(this,i)}>
+                                        <li 
+                                            className={this.state.vType == i?"action":""}
+                                            key={i+"vtype"}
+                                            onClick={this.changeVtype.bind(this,i)}
+                                            style={{width:100/this.state.vTypelist.length+"%"}}
+                                        >
                                             <span>{item.name}</span>
                                         </li>
                                     )
@@ -224,6 +273,16 @@ export default class VisitorList extends Component{
                             </li>
                             <li className="component_VisitorList_btnCancel" onClick={this.selectAll.bind(this,false)}>
                                 <span>取消</span>
+                            </li>
+                        </ul>
+                        <ul 
+                            className="component_VisitorList_btnGroup_actions"
+                            style={{display:this.state.vType == 4?"block":"none"}}
+                        >
+                            <li 
+                                className="component_VisitorList_btnSelectAll"
+                            >
+                                <span>打印</span>
                             </li>
                         </ul>
                         {/* <ul 
@@ -283,7 +342,7 @@ export default class VisitorList extends Component{
                     <div id="component_VisitorList_tableBoard">
                         <Table 
                             className="tableBox" 
-                            columns={this.state.columns} 
+                            columns={this.state.vType!=4?this.state.columns:this.state.subColumns}
                             dataSource={this.state.dataSource} 
                             scroll={{y:this.state.tableHeight}} 
                             pagination={{ pageSize:Math.round(parseInt(this.state.tableHeight)/90) }}
