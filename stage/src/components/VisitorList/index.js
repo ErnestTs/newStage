@@ -44,6 +44,8 @@ export default class VisitorList extends Component{
                 }
             ],
             vStateList:[
+                {name:"待接待人数",count:0,key:"noReceived"},
+                {name:"已接待人数",count:0,key:"Received"},
                 {name:"正在拜访人数",count:0,key:"visiting"},
                 {name:"离开人数",count:0,key:"leave"},
                 {name:"预约总数",count:0,key:"appointment"},
@@ -51,8 +53,6 @@ export default class VisitorList extends Component{
                 {name:"签到人数",count:0,key:"checkIn"},
                 {name:"未到人数",count:0,key:"noArrived"},
                 {name:"访客总数",count:0,key:"total"},
-                {name:"待接待人数",count:0,key:"noReceived"},
-                {name:"已接待人数",count:0,key:"Received"},
             ],
             vState:0,
             columns:[
@@ -65,7 +65,7 @@ export default class VisitorList extends Component{
                             <div className="tableItem_name">
                                 <Checkbox 
                                     checked={data.checked}
-                                    style={{display:((this.state.vState==0||this.state.vState==7)&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
+                                    style={{display:((this.state.vState==0||this.state.vState==2)&&this.state.vType==0)||this.state.vType==1?"inline-block":"none"}}
                                     onClick={()=>{
                                         return
                                         let tempArr = this.state.dataSource;
@@ -208,7 +208,7 @@ export default class VisitorList extends Component{
                         </ul>
                         <ul 
                             className="component_VisitorList_btnGroup_actions"
-                            style={{display:(this.state.vState==0||this.state.vState==7)&&this.state.vType==0?"block":"none"}}
+                            style={{display:(this.state.vState==0||this.state.vState==2)&&this.state.vType==0?"block":"none"}}
                         >
                             <li className="component_VisitorList_btnSelectAll" onClick={this.selectAll.bind(this,true)}>
                                 <span>全选</span>
@@ -664,6 +664,8 @@ export default class VisitorList extends Component{
                         dataSource:[],
                         baseList:[],
                         vStateList:[
+                            {name:"待接待人数",count:0,key:"noReceived"},
+                            {name:"已接待人数",count:0,key:"Received"},
                             {name:"正在拜访人数",count:0,key:"visiting"},
                             {name:"离开人数",count:0,key:"leave"},
                             {name:"预约总数",count:0,key:"appointment"},
@@ -671,8 +673,6 @@ export default class VisitorList extends Component{
                             {name:"签到人数",count:0,key:"checkIn"},
                             {name:"未到人数",count:0,key:"noArrived"},
                             {name:"访客总数",count:0,key:"total"},
-                            {name:"待接待人数",count:0,key:"noReceived"},
-                            {name:"已接待人数",count:0,key:"Received"},
                         ]
                     })
                     return
