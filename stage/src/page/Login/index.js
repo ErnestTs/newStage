@@ -7,6 +7,8 @@ import Common from "../../Common/index"
 // Toast
 import Toast from "../../components/ToastPublic/index.jsx"
 
+import translation from "./translation"
+
 
 /**
  * @author 方超 qq978070462
