@@ -579,7 +579,7 @@ export default class VisitorList extends Component{
      * @description [获取员工列表]
      */
     getEmpList(){
-        Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
+        Common.ajaxProc('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
             if(res.status == 0){
                 this.setState({
                     empList: res.result
