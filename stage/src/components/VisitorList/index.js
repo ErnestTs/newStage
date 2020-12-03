@@ -14,6 +14,7 @@ import Toast from "../../components/ToastPublic/index.jsx"
 import defaultImg from "../../resource/defaultPhoto_mini.png"
 import printImg from "../../resource/printImg.png"
 import warningImg from "../../resource/warning.png"
+import loadingGif from "../../resource/loading.gif"
 
 export default class VisitorList extends Component{
     constructor(props){
@@ -42,11 +43,11 @@ export default class VisitorList extends Component{
                     interface:"SearchRVisitorByCondition",
                     stateList:["visiting","leave","total"]
                 },
-                {
-                    name:"供应商打印",
-                    interface:"",
-                    stateList:[]
-                }
+                // {
+                //     name:"供应商打印",
+                //     interface:"",
+                //     stateList:[]
+                // }
             ],
             vStateList:[
                 {name:"待接待人数",count:0,key:"noReceived"},
@@ -231,6 +232,8 @@ export default class VisitorList extends Component{
             },
 
             empList:[],         // 员工列表
+
+            maskSwitch: false,   // 遮罩开关
         }
     }
 
@@ -522,6 +525,15 @@ export default class VisitorList extends Component{
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div id="visitorList_mask" style={{display:this.state.maskSwitch?"block":"none"}}>
+                    <div>
+                        <img src={loadingGif} />
+                        正在提交
+                    </div>
+
+                    
                 </div>
             </div>
         )
@@ -1132,7 +1144,10 @@ export default class VisitorList extends Component{
             if(!!this.state.signInInfo.phone){
                 sendData.rphone=this.state.signInInfo.phone
             }
-            Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
+            this.setState({
+                maskSwitch:true
+            })
+            Common.ajaxProc("setReceptionist",sendData, sessionStorage.token).done((res)=>{
                 if(res.status==0){
                     Toast.open({
                         type:"success",
@@ -1140,6 +1155,7 @@ export default class VisitorList extends Component{
                     })
                     this.setState({
                         goSignIn:false,
+                        maskSwitch:false,
                         signInInfo:{
                             empId:"",
                             cardId:"",
@@ -1148,6 +1164,14 @@ export default class VisitorList extends Component{
                         }
                     })
                     printList.push({vid:"v"+item.vid})
+                }else{
+                    Toast.open({
+                        type:"danger",
+                        content: "绑定失败"
+                    })
+                    this.setState({
+                        maskSwitch:false
+                    })
                 }
             })
         }

@@ -347,7 +347,7 @@
 
 #component_VisitorList_tableBoard .tableItem_name .defaultImg .printIcon {
     margin-left: 5%;
-    width: 6%;
+    width: 12%;
     height: auto;
 }
 
@@ -484,4 +484,38 @@
     color: #FFFFFF;
     padding: 0.8vh 1.45vw;
     cursor: pointer;
+}
+
+#visitorList_mask {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0;
+    z-index: 100;
+    
+}
+
+#visitorList_mask>div {
+    width: 20%;
+    overflow: hidden;
+    font-size: 24px;
+    color: #4091F7;
+    border-radius: 6px;
+    background-color: #fff;
+    text-align: center;
+    padding: 2.4% 0;
+    margin: 0 auto;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+}
+
+#visitorList_mask>div img {
+    display: block;
+    width: 20%;
+    margin: 0 auto;
+    margin-bottom: 2.5%
 }
