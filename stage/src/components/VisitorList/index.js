@@ -1094,31 +1094,38 @@ export default class VisitorList extends Component{
     /**
      * @description [设置接待人]
      */
-    setReceptionist(){
+    async setReceptionist(){
+        await this.asyceSetState({
+            maskSwitch:true
+        })
         if(!this.state.signInInfo.name){
             Toast.open({
                 type:"danger",
                 content: "请输入接待人姓名"
             })
+            this.setState({
+                maskSwitch:false
+            })
             return
         }else {
-            Common.ajaxProcWithoutAsync('getSubAccountEmpList', {userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
-                let empList = res.result;
-                let flag = false;
-                for(let i = 0;i < empList.length;i++){
-                    if(this.state.signInInfo.name == empList[i].empName){
-                        flag = true;
-                        break;
-                    }
+            let empList = this.state.empList;
+            let flag = false;
+            for(let i = 0;i < empList.length;i++){
+                if(this.state.signInInfo.name == empList[i].empName){
+                    flag = true;
+                    break;
                 }
-                if(!flag){
-                    Toast.open({
-                        type:"danger",
-                        content: "无效员工"
-                    })
-                    return
-                }
-            })
+            }
+            if(!flag){
+                Toast.open({
+                    type:"danger",
+                    content: "无效员工"
+                })
+                this.setState({
+                    maskSwitch:false
+                })
+                return
+            }
         }
         let selectedList = []
         for(let i = 0;i < this.state.dataSource.length;i++){
@@ -1144,10 +1151,7 @@ export default class VisitorList extends Component{
             if(!!this.state.signInInfo.phone){
                 sendData.rphone=this.state.signInInfo.phone
             }
-            this.setState({
-                maskSwitch:true
-            })
-            Common.ajaxProc("setReceptionist",sendData, sessionStorage.token).done((res)=>{
+            Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
                 if(res.status==0){
                     Toast.open({
                         type:"success",
@@ -1155,7 +1159,6 @@ export default class VisitorList extends Component{
                     })
                     this.setState({
                         goSignIn:false,
-                        maskSwitch:false,
                         signInInfo:{
                             empId:"",
                             cardId:"",
@@ -1169,15 +1172,19 @@ export default class VisitorList extends Component{
                         type:"danger",
                         content: "绑定失败"
                     })
-                    this.setState({
-                        maskSwitch:false
-                    })
                 }
             })
         }
+        await this.asyceSetState({
+            maskSwitch:false
+        })
         this.props.history.replace({pathname:"print",state:{printList:printList}})
     }
-
+    async asyceSetState(state) {
+        new Promise((resolve, reject) => {
+          this.setState(state, () => { resolve() })
+        })
+    }
     /**
      * @description [根据IC卡查员工姓名]
      */
