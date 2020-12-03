@@ -1151,7 +1151,7 @@ export default class VisitorList extends Component{
             if(!!this.state.signInInfo.phone){
                 sendData.rphone=this.state.signInInfo.phone
             }
-            Common.ajaxProcWithoutAsync("setReceptionist",sendData, sessionStorage.token).done((res)=>{
+            Common.ajaxProc("setReceptionist",sendData, sessionStorage.token).done((res)=>{
                 if(res.status==0){
                     Toast.open({
                         type:"success",
@@ -1167,6 +1167,12 @@ export default class VisitorList extends Component{
                         }
                     })
                     printList.push({vid:"v"+item.vid})
+                    if(++i >= selectedList.length){
+                        this.asyceSetState({
+                            maskSwitch:false
+                        })
+                        this.props.history.replace({pathname:"print",state:{printList:printList}})
+                    }
                 }else{
                     Toast.open({
                         type:"danger",
@@ -1175,10 +1181,6 @@ export default class VisitorList extends Component{
                 }
             })
         }
-        await this.asyceSetState({
-            maskSwitch:false
-        })
-        this.props.history.replace({pathname:"print",state:{printList:printList}})
     }
     async asyceSetState(state) {
         new Promise((resolve, reject) => {
