@@ -11,6 +11,10 @@ header {
     text-align: center;
 }
 
+body {
+    padding: 10px 0;
+}
+
 .alignL {
    text-align: left;
    padding-left: 10px
@@ -160,6 +164,8 @@ header {
 .line14 table {
     width: 100%;
     text-align: center;
+    border-right: none;
+    border-left: none;
 }
 .line14 table .content {
     width: 30%;
