@@ -728,6 +728,21 @@ export default class VisitorList extends Component{
             date: this.state.date,
             endDate: this.state.date,
         };
+        this.setState({
+            dataSource:[],
+            baseList:[],
+            vStateList:[
+                {name:"待接待人数",count:0,key:"noReceived"},
+                {name:"已接待人数",count:0,key:"Received"},
+                {name:"正在拜访人数",count:0,key:"visiting"},
+                {name:"离开人数",count:0,key:"leave"},
+                {name:"预约总数",count:0,key:"appointment"},
+                {name:"邀请总数",count:0,key:"invite"},
+                {name:"签到人数",count:0,key:"checkIn"},
+                {name:"未到人数",count:0,key:"noArrived"},
+                {name:"访客总数",count:0,key:"total"},
+            ]
+        })
         Common.ajaxProc(interfaceName, sendData, sessionStorage.token).done((data)=>{
             if(data.status == 0){
                 if(!data.result.length){
