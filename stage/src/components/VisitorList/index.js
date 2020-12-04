@@ -728,7 +728,7 @@ export default class VisitorList extends Component{
             date: this.state.date,
             endDate: this.state.date,
         };
-        Common.ajaxProcWithoutAsync(interfaceName, sendData, sessionStorage.token).done((data)=>{
+        Common.ajaxProc(interfaceName, sendData, sessionStorage.token).done((data)=>{
             if(data.status == 0){
                 if(!data.result.length){
                     this.setState({

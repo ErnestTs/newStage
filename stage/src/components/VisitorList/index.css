@@ -298,8 +298,8 @@
 }
 
 #component_VisitorList_tableBoard .tableItem_name .defaultImg img {
-    height: 3.7vh;
-    width: 3.7vh;
+    height: 6vh;
+    width: 6vh;
 }
 
 #component_VisitorList_tableBoard .tableItem_name .ant-checkbox-wrapper {
@@ -347,7 +347,7 @@
 
 #component_VisitorList_tableBoard .tableItem_name .defaultImg .printIcon {
     margin-left: 5%;
-    width: 12%;
+    width: 20%;
     height: auto;
 }
 
