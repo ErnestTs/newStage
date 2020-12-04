@@ -32,6 +32,9 @@ body {
 .w26 {
     width: 26%;
 }
+.w15 {
+    width: 15%;
+}
 .w12 {
     width: 12%;
 }
@@ -67,6 +70,7 @@ body {
     padding: 0 10px;
     box-sizing: border-box;
     min-height: 40px;
+    height: 100%;
 }
 
 .borderBottom {
@@ -89,11 +93,11 @@ body {
 }
 
 .line4 .block {
-    width: 35%;
+    width: 25%;
 }
 
 .line4 .title1 {
-    width: 10%;
+    /* width: 10%; */
     border-left: 3px solid #000;
     border-right: 3px solid #000;
 }
@@ -177,11 +181,11 @@ body {
 }
 
 .line18 .block {
-    width: 13%;
+    width: 10%;
     height: 80px;
     box-sizing: border-box;
-    border-right: 2px solid #000;
-    border-left: 2px solid #000;
+    /* border-right: 2px solid #000;
+    border-left: 2px solid #000; */
 }
 
 .line21 div {
