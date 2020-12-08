@@ -24,7 +24,7 @@ export default class Print extends Component {
             <div id="component_print">
                 <div id="printArea">
                     <div id="mainFrame">
-                        <iframe id="viframe" src={this.state.printUrl+"&l="+this.state.language} >
+                        <iframe id="viframe" src={!!this.state.language?this.state.printUrl+"&l="+this.state.language:""} >
 
                         </iframe>
                     </div>
