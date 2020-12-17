@@ -322,7 +322,7 @@ export default class Login extends Component {
 	*/
 
 	getExtendVisitor(userid) {
-		Common.ajaxProcWithoutAsync("GetExtendVisitor", { userid: userid }, sessionStorage.token).done(function (data) {
+		Common.ajaxProc("GetExtendVisitor", { userid: userid }, sessionStorage.token).done(function (data) {
 			let result;
 			if (data.status === 0) {
 				result = data.result;
@@ -337,7 +337,7 @@ export default class Login extends Component {
 	 * @description [获取门岗信息]
 	 */
 	getGateway() {
-		Common.ajaxProcWithoutAsync("getGate", {userid:sessionStorage.userid}, sessionStorage.token).done(function (data) {
+		Common.ajaxProc("getGate", {userid:sessionStorage.userid}, sessionStorage.token).done(function (data) {
 			// 替代为
 			if(data.status === 0 && data.result.length !== 0){
 				sessionStorage.gateway = sessionStorage.gname
@@ -355,7 +355,7 @@ export default class Login extends Component {
 	 * @description [添加答题有效日期_tid默认为38-普通访客]
 	 */
 	getVisitorTypeByTid(){
-		Common.ajaxProcWithoutAsync("getVisitorTypeByTid", {"userid": sessionStorage.userid,tid: 38}, sessionStorage.token).done((data)=>{
+		Common.ajaxProc("getVisitorTypeByTid", {"userid": sessionStorage.userid,tid: 38}, sessionStorage.token).done((data)=>{
 			if(data.result != null){
 				sessionStorage.setItem("povDays", data.result.povDays)
 			}else {
@@ -386,8 +386,8 @@ export default class Login extends Component {
 			}else{
 				sessionStorage.setItem("EquipmentAccess",resStr.join(","))
 			}
-            this.props.history.push("/home")
 		})
+        this.props.history.push("/home")
     }
     
     /**
