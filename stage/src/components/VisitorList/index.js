@@ -128,6 +128,23 @@ export default class VisitorList extends Component{
                     key: 'vcompany',
                 },
                 {
+                    title: '访客车牌号',
+                    dataIndex: 'plateNum',
+                    key: 'plateNum',
+                    width:"10%",
+                    render:(data)=>{
+                        let oArr = data.split(",");
+
+                        return <ul style={{height:"100%"}}>
+                            {
+                                oArr.map((val,i)=>{
+                                    return <li key={val+i+"plateNum"}>{val}</li>
+                                })
+                            }
+                        </ul>
+                    }
+                },
+                {
                     title: '接待人姓名',
                     dataIndex: 'rname',
                     key: 'rname',
@@ -136,7 +153,7 @@ export default class VisitorList extends Component{
                     title: '是否进入实验室',
                     dataIndex: 'secret',
                     key: 'secret',
-                    width:"12%",
+                    width:"7%",
                     render:(data)=>{
                         let content = data?"是":"否"
                         return <span>{content}</span>
@@ -835,6 +852,8 @@ export default class VisitorList extends Component{
                     }
                     item.checked = false;
                     item.key = i+"#"+interfaceName+Math.random();
+
+                    item.plateNum = "鲁BU5994,鲁BU5994,鲁BU5994,鲁BU5994,鲁BU5994"
                     
                     resArr.push(item)
                 }
