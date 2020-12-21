@@ -44,7 +44,7 @@ export default class Homepage extends Component {
         this.state= {
             open: true,
             title:"",
-            defaultPath:"/home/qrcode",
+            defaultPath:"/home/Certificates",
 
             // Certificates:{},
             // VisitorInfoCom:{},
