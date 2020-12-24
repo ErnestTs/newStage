@@ -230,8 +230,12 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '作业日期与时间',
-                    dataIndex: 'appointmentDate',
-                    key: 'appointmentDate'
+                    dataIndex: '',
+                    key: '',
+                    width:"30%",
+                    render: (data)=>{
+                          return data.appointmentDate+" — "+data.endDate
+                    }
                 },
             ],
             baseList:[],
@@ -654,6 +658,7 @@ export default class VisitorList extends Component{
 
         if(this.state.vType == 4) {
             tempArr = this.state.baseList
+            this.getEndDateByWid()
         }else {
             switch(vStateList[i].key){
                 case "total":
@@ -726,6 +731,10 @@ export default class VisitorList extends Component{
         this.setState({
             vState:i,
             dataSource: tempArr
+        },()=>{
+            if(this.state.vType == 4) {
+                this.getEndDateByWid()
+            }
         })
     }
 
@@ -1315,5 +1324,20 @@ export default class VisitorList extends Component{
             i.checked = false
         }
         this.setState({})
+    }
+
+    /**
+     * @description [获取截止时间]
+     */
+    getEndDateByWid(){
+        for(let i = 0; i < this.state.dataSource.length; i++){
+            let dataSource = this.state.dataSource;
+            Common.ajaxProc("getWorkSheet",{wid:dataSource[i].wid, userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
+                dataSource[i].endDate = !!res.result.endDate?new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"):""
+                this.setState({
+                    dataSource:dataSource
+                })
+            })
+        }
     }
 }
