@@ -33,8 +33,8 @@
             <div class="title">
                 工作单位全称：
             </div>
-            <div>
-
+            <div class="oh">
+                <span id="rcName"></span>
             </div>
         </li>
         <li class="line4">
@@ -42,13 +42,13 @@
                 现场负责人姓名：
             </div>
             <div class="block">
-
+                <span id="leader"></span>
             </div>
             <div class="title1 w12">
                 联系电话：
             </div>
             <div>
-
+                <span id="phone"></span>
             </div>
         </li>
         <li class="line3">
@@ -56,7 +56,7 @@
                 作业位置：
             </div>
             <div>
-
+                <span id="workArea"></span>
             </div>
         </li>
         <li class="line6">
@@ -67,19 +67,19 @@
                 自：
             </div>
             <div class="block">
-                
+                <span id="startDate"></span>
             </div>
             <div class="since w5">
                 至：
             </div>
             <div class="block">
-                
+                <span id="endDate"></span>
             </div>
             <div  class="w12 title1">
                 作业人数：
             </div>
             <div class="block">
-                
+                <span id="staff"></span>
             </div>
         </li>
         <li class="line7">
@@ -89,7 +89,11 @@
         <li class="line7">
             作业人员信息：
         </li>
-        <li class="line10"></li>
+        <li class="line10">
+            <ul id="staffList">
+
+            </ul>
+        </li>
         <li class="line11" style="border-bottom:1px dashed #000">
             <div>
                 分项许可证附件（请勾选）
@@ -335,5 +339,7 @@
             </div>
         </li>
     </ul>
+    <script src="./jquery-2.1.3.min.js"></script>
+    <script src="./index.js"></script>
 </body>
 </html>

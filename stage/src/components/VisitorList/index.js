@@ -43,11 +43,11 @@ export default class VisitorList extends Component{
                     interface:"SearchRVisitorByCondition",
                     stateList:["visiting","leave","total"]
                 },
-                // {
-                //     name:"供应商打印",
-                //     interface:"",
-                //     stateList:[]
-                // }
+                {
+                    name:"供应商打印",
+                    interface:"SearchVisitByCondition",
+                    stateList:[]
+                }
             ],
             vStateList:[
                 {name:"待接待人数",count:0,key:"noReceived"},
@@ -133,7 +133,7 @@ export default class VisitorList extends Component{
                     key: 'plateNum',
                     width:"10%",
                     render:(data)=>{
-                        let oArr = data.split(",");
+                        let oArr = !!data?data.split(","):[];
 
                         return <ul style={{height:"100%"}}>
                             {
@@ -198,7 +198,7 @@ export default class VisitorList extends Component{
             subColumns:[
                 {
                   title: '项目名称',
-                  key: 'vname',
+                  key: '',
                   width:"14%",
                   render: (data)=>{
                         return(
@@ -207,7 +207,7 @@ export default class VisitorList extends Component{
                                     checked={data.checked}
                                 />
                                 <div className="defaultImg">
-                                    <span>{data.vname}</span>
+                                    <span>{data.pName}</span>
                                 </div>
                             </div>
                         )
@@ -215,23 +215,23 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '工作单位',
-                    dataIndex: 'signOutDate',
-                    key: 'signOutDate'
+                    dataIndex: 'vcompany',
+                    key: 'vcompany'
                 },
                 {
                     title: '项目负责人',
-                    dataIndex: 'signOutDate',
-                    key: 'signOutDate'
+                    dataIndex: 'vname',
+                    key: 'vname'
                 },
                 {
                     title: '联系电话',
-                    dataIndex: 'signOutDate',
-                    key: 'signOutDate'
+                    dataIndex: 'vphone',
+                    key: 'vphone'
                 },
                 {
                     title: '作业日期与时间',
-                    dataIndex: 'signOutDate',
-                    key: 'signOutDate'
+                    dataIndex: 'appointmentDate',
+                    key: 'appointmentDate'
                 },
             ],
             baseList:[],
@@ -301,6 +301,7 @@ export default class VisitorList extends Component{
                         >
                             <li 
                                 className="component_VisitorList_btnSelectAll"
+                                onClick={this.printSupplier.bind(this)}
                             >
                                 <span>打印</span>
                             </li>
@@ -650,72 +651,77 @@ export default class VisitorList extends Component{
         }
         let vStateList = this.state.vStateList;
         let tempArr = [];
-        switch(vStateList[i].key){
-            case "total":
-                tempArr = this.state.baseList
-                break;
-            case "leave":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 2){
-                        continue
+
+        if(this.state.vType == 4) {
+            tempArr = this.state.baseList
+        }else {
+            switch(vStateList[i].key){
+                case "total":
+                    tempArr = this.state.baseList
+                    break;
+                case "leave":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(this.state.baseList[i].state !== 2){
+                            continue
+                        }
+                        tempArr.push(this.state.baseList[i])
                     }
-                    tempArr.push(this.state.baseList[i])
-                }
-                for(let i = 0; i < tempArr.length;i++){
-                    for(let j = i+1;j < tempArr.length;j++){
-                        if(new Date(tempArr[i].signOutDate.replace(/-/g,"/")).getTime()<new Date(tempArr[j].signOutDate.replace(/-/g,"/")).getTime()){
-                            let temp = tempArr[i];
-                            tempArr[i] = tempArr[j];
-                            tempArr[j] = temp
+                    for(let i = 0; i < tempArr.length;i++){
+                        for(let j = i+1;j < tempArr.length;j++){
+                            if(new Date(tempArr[i].signOutDate.replace(/-/g,"/")).getTime()<new Date(tempArr[j].signOutDate.replace(/-/g,"/")).getTime()){
+                                let temp = tempArr[i];
+                                tempArr[i] = tempArr[j];
+                                tempArr[j] = temp
+                            }
                         }
                     }
-                }
-                break;
-            case "visiting":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state !== 1 && this.state.baseList[i].state !== 5){
-                        continue
-                    }
-                    tempArr.push(this.state.baseList[i])
-                }
-                break;
-            case "appointment":
-                tempArr = this.state.baseList
-                break;
-            case "invite":
-                tempArr = this.state.baseList
-                break;
-            case "checkIn":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
-                        continue
-                    }
-                    tempArr.push(this.state.baseList[i])
-                }
-                break;
-            case "noArrived":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                    break;
+                case "visiting":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(this.state.baseList[i].state !== 1 && this.state.baseList[i].state !== 5){
+                            continue
+                        }
                         tempArr.push(this.state.baseList[i])
                     }
-                }
-                break;
-            case "noReceived":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(!this.state.baseList[i].rname){
+                    break;
+                case "appointment":
+                    tempArr = this.state.baseList
+                    break;
+                case "invite":
+                    tempArr = this.state.baseList
+                    break;
+                case "checkIn":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                            continue
+                        }
                         tempArr.push(this.state.baseList[i])
                     }
-                }
-                break;
-            case "Received":
-                for(let i = 0; i <this.state.baseList.length; i++){
-                    if(!!this.state.baseList[i].rname){
-                        tempArr.push(this.state.baseList[i])
+                    break;
+                case "noArrived":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(this.state.baseList[i].state == 0||this.state.baseList[i].state == 3||this.state.baseList[i].state == 4){
+                            tempArr.push(this.state.baseList[i])
+                        }
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                case "noReceived":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(!this.state.baseList[i].rname){
+                            tempArr.push(this.state.baseList[i])
+                        }
+                    }
+                    break;
+                case "Received":
+                    for(let i = 0; i <this.state.baseList.length; i++){
+                        if(!!this.state.baseList[i].rname){
+                            tempArr.push(this.state.baseList[i])
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         this.setState({
             vState:i,
@@ -745,6 +751,9 @@ export default class VisitorList extends Component{
             date: this.state.date,
             endDate: this.state.date,
         };
+        if(this.state.vType == 4) {
+            sendData.vType = "供应商类"
+        }
         this.setState({
             dataSource:[],
             baseList:[],
@@ -853,8 +862,15 @@ export default class VisitorList extends Component{
                     item.checked = false;
                     item.key = i+"#"+interfaceName+Math.random();
 
-                    item.plateNum = "鲁BU5994,鲁BU5994,鲁BU5994,鲁BU5994,鲁BU5994"
-                    
+                    if(this.state.vType == 4 ) {
+                        if(!item.visitdate){
+                            continue;
+                        }else{
+                            item.pName = extendCol.pName
+                            item.wid = extendCol.wid
+                        }
+                    }
+
                     resArr.push(item)
                 }
 
@@ -1279,5 +1295,25 @@ export default class VisitorList extends Component{
             acc = 16 * acc + c;
             return acc;
         }, 0);
+    }
+
+    /**
+     * @description [打印供应商]
+     */
+    printSupplier(){
+        let oArr = []
+        for(let i of this.state.dataSource) {
+            if(i.checked){
+                oArr.push(i)
+            }
+        }
+        // let url = window.location.href.split(":")[0] + "://" + window.location.host + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid
+        
+        let url = "http://test3.coolvisit.top" + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid+"&token="+sessionStorage.token
+        window.open(url,'_blank')
+        for(let i of this.state.dataSource) {
+            i.checked = false
+        }
+        this.setState({})
     }
 }
