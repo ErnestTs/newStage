@@ -203,7 +203,16 @@ export default class VisitorList extends Component{
                   render: (data)=>{
                         return(
                             <div className="tableItem_name">
-                                <Checkbox 
+                                <Checkbox
+                                    onClick={()=>{
+                                        let oArr = this.state.dataSource
+                                        for(let i=0; i<oArr.length;i++){
+                                            oArr[i].checked = false
+                                        }
+                                        this.setState({
+                                            dataSource:oArr
+                                        })
+                                    }}
                                     checked={data.checked}
                                 />
                                 <div className="defaultImg">
@@ -809,6 +818,10 @@ export default class VisitorList extends Component{
                 let noReceived = 0;
                 let Received = 0;
 
+                if(this.state.vType == 4 ) {
+                    this.widDict = []
+                }
+
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
                     let extendCol = !!data.result[i].extendCol?JSON.parse(data.result[i].extendCol.replace(/&quot;/g,'"')):{};
@@ -875,6 +888,11 @@ export default class VisitorList extends Component{
                         if(!item.visitdate){
                             continue;
                         }else{
+                            if(this.widDict.indexOf(extendCol.wid) !== -1){
+                                continue;
+                            }else{
+                                this.widDict.push(extendCol.wid)
+                            }
                             item.pName = extendCol.pName
                             item.wid = extendCol.wid
                         }
@@ -1316,9 +1334,9 @@ export default class VisitorList extends Component{
                 oArr.push(i)
             }
         }
-        // let url = window.location.href.split(":")[0] + "://" + window.location.host + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid
+        let url = window.location.href.split(":")[0] + "://" + window.location.host + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid+"&token="+sessionStorage.token+"&gid="+sessionStorage.gid
         
-        let url = "http://test3.coolvisit.top" + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid+"&token="+sessionStorage.token
+        // let url = "http://test3.coolvisit.top" + "/stage/licence/index.html?wid="+oArr[0].wid+"&userid="+sessionStorage.userid+"&token="+sessionStorage.token+"&gid="+sessionStorage.gid
         window.open(url,'_blank')
         for(let i of this.state.dataSource) {
             i.checked = false

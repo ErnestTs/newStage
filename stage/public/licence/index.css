@@ -136,6 +136,13 @@ body {
     line-height: 46px !important;
 }
 
+.line7t {
+    text-align: center;
+    font-weight: normal;
+    min-height: 46px;
+    line-height: 46px !important;
+}
+
 .line10 {
     min-height: 46px;
 }

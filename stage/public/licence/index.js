@@ -1,7 +1,7 @@
 var protocol = window.location.href.split(":")[0] + "://";
 var url = protocol + window.location.host + "/qcvisit/";
 
-var url = "http://test3.coolvisit.top/qcvisit/"
+// var url = "http://test3.coolvisit.top/qcvisit/"
 
 Date.prototype.format = function (format) {
     var o = {
@@ -24,7 +24,7 @@ Date.prototype.format = function (format) {
 };
 
 /**
- * 获取url中的参数
+ * @description [获取url中的参数]
  * @returns {Object}
  */
 function getUrlProps (){
@@ -40,36 +40,60 @@ function getUrlProps (){
     return res
 }
 
+function getWid({createTime,wid}){
+    let wStr = ""
+    let tStr = new Date(createTime).format("yyyyMMddhhmmss")
+    if(wid < 10){
+        wStr = "0"+wid
+    }else if(wid < 100){
+        wStr = ""+wid
+    }else {
+        wStr = ""+parseInt(wid/10)
+    }
+    return tStr+wStr
+}
+
 /**
  * @description [获取数据]
  * @param {*} param0 
  */
-function getSupplierInfo({wid, userid, token}){
-    let req = {
-        wid:wid,
-        userid:userid
-        }
+function getSupplierInfo({wid, userid, token,gid}){
+    let today = new Date().format("yyyy-MM-dd")
+    let reqForSearchVisitByCondition = {
+        userid:userid,
+        date:today,
+        endDate:today,
+        gid:gid||""
+    }
     $.ajax({
         method: "post",
-        url: url + "getResidentVisitorByWs",
+        url: url + "SearchVisitByCondition",
         contentType: "application/json",
         headers: {
             'X-COOLVISIT-TOKEN': token
         },
         async:false,
-        data: JSON.stringify(req),
+        data: JSON.stringify(reqForSearchVisitByCondition),
         success:(res)=>{
-            $("#staff").html(res.result.length)
-
-
             let staffList = res.result;
+            let count = 0
             for(let i = 0; i < staffList.length; i++){
                 let item = staffList[i]
-                let jsx = "<li><div>姓名："+item.name+"</div><div>手机号码："+item.phone+"</div><div>身份证号："+item.cardid+"</div></li>"
-                $("#staffList").append(jsx)
+                let extendCol = !!item.extendCol?JSON.parse(item.extendCol.replace(/&quot;/g,'"')):{};
+                if(extendCol.wid == wid) {
+                    count++
+                    let jsx = "<li><div>姓名："+item.vname+"</div><div>手机号码："+item.vphone+"</div><div>身份证号："+(!!item.cardId?item.cardId:"")+"</div></li>"
+                    $("#staffList").append(jsx)
+                }
             }
+            $("#staff").html(count)
         }
     })
+
+    let reqForGetWorkSheet = {
+        wid:wid,
+        userid:userid
+    }
     $.ajax({
         method: "post",
         url: url + "getWorkSheet",
@@ -77,14 +101,16 @@ function getSupplierInfo({wid, userid, token}){
         headers: {
             'X-COOLVISIT-TOKEN': token
         },
-        data: JSON.stringify(req),
+        data: JSON.stringify(reqForGetWorkSheet),
         success:(res)=>{
             $("#leader").html(res.result.leader)
             $("#phone").html(res.result.phone)
             $("#rcName").html(res.result.rcName)
             $("#workArea").html(res.result.workArea)
+            $("#workContent").html(res.result.workContent)
             $("#startDate").html(new Date(res.result.startDate).format("yyyy-MM-dd hh:mm:ss"))
             $("#endDate").html(new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"))
+            $("#rid").html(getWid({createTime:res.result.createTime,wid:res.result.wid}))
         }
     })
 }
@@ -93,8 +119,10 @@ var props = getUrlProps();
 const wid = props.wid;
 const userid = props.userid;
 const token = props.token;
+const gid = props.gid
 getSupplierInfo({
     wid:wid,
     userid:userid,
-    token:token
+    token:token,
+    gid:gid
 })
