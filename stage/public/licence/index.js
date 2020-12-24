@@ -85,8 +85,6 @@ function getSupplierInfo({wid, userid, token}){
             $("#workArea").html(res.result.workArea)
             $("#startDate").html(new Date(res.result.startDate).format("yyyy-MM-dd hh:mm:ss"))
             $("#endDate").html(new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"))
-
-            
         }
     })
 }

@@ -220,13 +220,13 @@ export default class VisitorList extends Component{
                 },
                 {
                     title: '项目负责人',
-                    dataIndex: 'vname',
-                    key: 'vname'
+                    dataIndex: 'leader',
+                    key: 'leader'
                 },
                 {
                     title: '联系电话',
-                    dataIndex: 'vphone',
-                    key: 'vphone'
+                    dataIndex: 'phone',
+                    key: 'phone'
                 },
                 {
                     title: '作业日期与时间',
@@ -1333,7 +1333,9 @@ export default class VisitorList extends Component{
         for(let i = 0; i < this.state.dataSource.length; i++){
             let dataSource = this.state.dataSource;
             Common.ajaxProc("getWorkSheet",{wid:dataSource[i].wid, userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
-                dataSource[i].endDate = !!res.result.endDate?new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"):""
+                dataSource[i].endDate = !!res.result.endDate?new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"):"";
+                dataSource[i].leader = !!res.result.leader?res.result.leader:"";
+                dataSource[i].phone = !!res.result.phone?res.result.phone:"";
                 this.setState({
                     dataSource:dataSource
                 })
