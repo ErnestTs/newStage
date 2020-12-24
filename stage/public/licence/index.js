@@ -65,7 +65,6 @@ function getSupplierInfo({wid, userid, token}){
             let staffList = res.result;
             for(let i = 0; i < staffList.length; i++){
                 let item = staffList[i]
-                console.log(item)
                 let jsx = "<li><div>姓名："+item.name+"</div><div>手机号码："+item.phone+"</div><div>身份证号："+item.cardid+"</div></li>"
                 $("#staffList").append(jsx)
             }
