@@ -14,6 +14,7 @@ import Qrcode from "../../components/Qrcode/index"
 import IdCard from "../../components/IdCard/index"
 import Register from "../../components/Register/index"
 import PassPort from "../../components/PassPort/index"
+import Huashi from "../../components/Huashi/index"
 import Senseid from "../../components/Senseid/index"
 import AppointmentInfo from  "../../components/AppointmentInfo/index"
 import Logistics from "../../components/Logistics/index"
@@ -95,11 +96,16 @@ export default class Homepage extends Component {
         }
 
         // 切换组件
-        // 切换读卡设备 1-证照通 3-senseid def-读卡器
+        // 切换读卡设备 1-证照通 2-华视 3-senseid def-读卡器
         switch(Common.$_Get().idcard){
             case "1":
                 this.setState({
                     Certificates: PassPort
+                })
+                break;
+            case "2":
+                this.setState({
+                    Certificates: Huashi
                 })
                 break;
             case "3":
