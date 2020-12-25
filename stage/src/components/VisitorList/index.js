@@ -1328,13 +1328,13 @@ export default class VisitorList extends Component{
      * @description [打印供应商]
      */
     printSupplier(){
-        if(Common.$_Get().idcard == 3){
-            Toast.open({
-                type:"danger",
-                content: "该设备暂不支持承包商作业许可证打印"
-            })
-            return
-        }
+        // if(Common.$_Get().idcard == 3){
+        //     Toast.open({
+        //         type:"danger",
+        //         content: "该设备暂不支持承包商作业许可证打印"
+        //     })
+        //     return
+        // }
         let oArr = []
         for(let i of this.state.dataSource) {
             if(i.checked){
