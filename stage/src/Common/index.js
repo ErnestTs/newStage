@@ -360,9 +360,24 @@ export default class Common {
 		);
 	}
 
+	/**
+	 * @description [初始化身份证阅读器]
+	 */
 	static initIdCard(){
 		$("#page_home_mainView").append(
 			'<embed id="CertCtl" type="application/cert-reader" />'
+		);
+	}
+
+	/**
+	 * @description [初始化华视]
+	 */
+	static initHuashi(){
+		if(!!document.getElementById("CVR_IDCard")){
+			return
+		}
+		$("#page_home_mainView").append(
+			'<object id=CVR_IDCard height=0 width=0 classid=clsid:10946843-7507-44FE-ACE8-2B3483D179B7 name=CVR_IDCard></object>'
 		);
 	}
 
