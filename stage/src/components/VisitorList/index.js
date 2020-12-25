@@ -243,7 +243,7 @@ export default class VisitorList extends Component{
                     key: '',
                     width:"30%",
                     render: (data)=>{
-                          return data.appointmentDate+" — "+data.endDate
+                          return data.startDate+" — "+data.endDate
                     }
                 },
             ],
@@ -1328,13 +1328,13 @@ export default class VisitorList extends Component{
      * @description [打印供应商]
      */
     printSupplier(){
-        // if(Common.$_Get().idcard == 3){
-        //     Toast.open({
-        //         type:"danger",
-        //         content: "该设备暂不支持承包商作业许可证打印"
-        //     })
-        //     return
-        // }
+        if(Common.$_Get().idcard == 3){
+            Toast.open({
+                type:"danger",
+                content: "该设备暂不支持承包商作业许可证打印"
+            })
+            return
+        }
         let oArr = []
         for(let i of this.state.dataSource) {
             if(i.checked){
@@ -1359,6 +1359,7 @@ export default class VisitorList extends Component{
             let dataSource = this.state.dataSource;
             Common.ajaxProc("getWorkSheet",{wid:dataSource[i].wid, userid:sessionStorage.userid}, sessionStorage.token).done((res)=>{
                 dataSource[i].endDate = !!res.result.endDate?new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"):"";
+                dataSource[i].startDate = !!res.result.startDate?new Date(res.result.startDate).format("yyyy-MM-dd hh:mm:ss"):"";
                 dataSource[i].leader = !!res.result.leader?res.result.leader:"";
                 dataSource[i].phone = !!res.result.phone?res.result.phone:"";
                 this.setState({
