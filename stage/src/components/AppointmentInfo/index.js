@@ -177,7 +177,7 @@ export default class AppointmentInfo extends Component {
 
                         <div id="component_AppointmentInfo_cardInfo_board" style={{display:!!this.state.cardInfo.address?"block":"none"}}>
                             <div className="headerBox">
-                                <img src={defaultPhoto} />
+                                <img src={this.state.cardInfo.idcardPhoto||defaultPhoto} />
                             </div>
                             <div className="cardForm">
                                 <div className="cardForm_item">
@@ -221,7 +221,6 @@ export default class AppointmentInfo extends Component {
         }
         let _this = this
 
-
         this.routerData = this.props.history.location.state[this.state.infoOnShow];
 
         console.log(this.routerData)
@@ -255,7 +254,8 @@ export default class AppointmentInfo extends Component {
             cardInfo:{
                 name: this.routerData.idcardContent.partyName,
                 cardId: this.routerData.idcardContent.certNumber,
-                address: this.routerData.idcardContent.address||""
+                address: this.routerData.idcardContent.address||"",
+                idcardPhoto: this.routerData.idcardContent.photo||""
             }
         })
 
@@ -270,6 +270,9 @@ export default class AppointmentInfo extends Component {
         switch(Common.$_Get().idcard){
             case "1":
                 Common.initPassPort()
+                break;
+            case "2":
+                Common.initHuashi()
                 break;
             case "3":
                 let _this = this;
@@ -802,6 +805,27 @@ export default class AppointmentInfo extends Component {
                         address: cardInfo.address||""
                     }
                 })
+                break;
+            case "2":
+                let huashiState = window.CVR_IDCard.ReadCard();
+                let cardInfo={}
+                if(huashiState !=0){
+                    Toast.open({
+                        type:"danger",
+                        content: "读卡失败"
+                    })
+                    return
+                }else{
+                    let CVR_IDCard = window.CVR_IDCard;
+                    this.setState({
+                        cardInfo:{
+                            cardId:CVR_IDCard.CardNo,
+                            name: CVR_IDCard.Name,
+                            address: CVR_IDCard.Address,
+                            idcardPhoto: 'data:image/jpeg;base64,' + CVR_IDCard.Picture
+                        }
+                    })
+                }
                 break;
             case "3":
                 window.Android.startActivity("id")
