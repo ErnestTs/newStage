@@ -1,0 +1,57 @@
+#component_PassPort {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.scanCard_background {
+    width: 25.4vh;
+    height: 25.4vh;
+    margin: auto;
+    margin-top: 11.8%;
+    background: url(../../resource/scanCard.png) no-repeat;
+    background-size: contain;
+}
+
+#component_PassPort p {
+    text-align: center;
+    font-size: 21px;
+    color: #4091F7;
+    letter-spacing: 0.81px;
+    line-height: 30px;
+    margin-top: 25px;
+}
+
+.btn_box {
+    width: 100%;
+    height: 5vh;
+    margin-top: 3.7vh
+}
+
+.btn_box div {
+    height: 100%;
+    width: 460px;
+    text-align: center;
+    height: 5vh;
+    color:#fff;
+    font-size: 20px;
+    background: #0F4C81;
+    border-radius: 8px;
+    margin: auto;
+    position: relative;
+    line-height: 5vh;
+}
+
+.btn_box div span {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+/* @media screen and (max-width: 1280px) {
+    .scanCard_background {
+        margin-top: 3%;
+    }
+} */
