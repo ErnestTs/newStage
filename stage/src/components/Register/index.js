@@ -216,7 +216,7 @@ export default class Register extends Component {
                                                         }
                                                     }
                                                 >
-                                                    {item.name}
+                                                    {item.name.split("#")[0]}
                                                 </li>
                                             )
                                         })

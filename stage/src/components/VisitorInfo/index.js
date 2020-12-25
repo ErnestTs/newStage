@@ -164,7 +164,7 @@ export default class VisitorInfo extends Component {
                                     this.state.visitorTypeList.map((item,i)=>{
                                         return (
                                             <option key={i+"vType"} value={item.value}>
-                                                {item.name}
+                                                {item.name.split("#")[0]}
                                             </option>
                                         )
                                     })

@@ -114,7 +114,7 @@ export default class AppointmentInfo extends Component {
                         <ul>
                             {this.renderItem("来访人姓名",this.state.visitInfo.vname,"vname",{type:0,value:this.state.answerState})}
                             {this.renderItem("预约时间",new Date(vTime).format("yyyy-MM-dd hh:mm:ss"))}
-                            {this.renderItem("来访事由",this.state.visitInfo.vtype)}
+                            {this.renderItem("来访事由",!!this.state.visitInfo.vtype?this.state.visitInfo.vtype.split("#")[0]:"")}
                             {this.renderItem("离开时间",!!leaveTime?new Date(leaveTime).format("yyyy-MM-dd hh:mm:ss"):"")}
                             {this.renderItem("来访人电话",this.state.visitInfo.vphone)}
                             {this.renderItem("被访人姓名",this.state.empInfo.ename)}
