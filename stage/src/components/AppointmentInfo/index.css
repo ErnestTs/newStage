@@ -140,7 +140,7 @@
 #component_AppointmentInfo_cardInfo_board .headerBox{
     width: 100px;
     height: 100px;
-    border: 1px solid #185EDB;
+    /* border: 1px solid #185EDB; */
     border-radius: 4px;
     margin: auto;
     margin-top: 34px
