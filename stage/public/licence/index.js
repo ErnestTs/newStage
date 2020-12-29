@@ -85,7 +85,7 @@ function getSupplierInfo({wid, userid, token,gid}){
                 let extendCol = !!item.extendCol?JSON.parse(item.extendCol):{};
                 if(extendCol.wid == wid) {
                     count++
-                    let jsx = "<li><div>姓名："+item.vname+"</div><div>手机号码："+item.vphone+"</div>"+(!!item.cardId?"<div>身份证号："+item.cardId+"</div>":"")+"</li>"
+                    let jsx = "<li><div>姓名："+item.vname+"</div><div>手机号码："+item.vphone+"</div>"+(!!item.cardId?"<div style='width:50%'>身份证号："+item.cardId+"</div>":"")+"</li>"
                     $("#staffList").append(jsx)
                 }
             }
