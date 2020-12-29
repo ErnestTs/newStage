@@ -1,7 +1,7 @@
 var protocol = window.location.href.split(":")[0] + "://";
 var url = protocol + window.location.host + "/qcvisit/";
 
-// var url = "http://test3.coolvisit.top/qcvisit/"
+var url = "http://test3.coolvisit.top/qcvisit/"
 
 Date.prototype.format = function (format) {
     var o = {
@@ -78,8 +78,11 @@ function getSupplierInfo({wid, userid, token,gid}){
             let staffList = res.result;
             let count = 0
             for(let i = 0; i < staffList.length; i++){
-                let item = staffList[i]
-                let extendCol = !!item.extendCol?JSON.parse(item.extendCol.replace(/&quot;/g,'"')):{};
+                let item = staffList[i];
+                item.extendCol = item.extendCol.replace(/&quot;/g,'"')
+                item.extendCol = item.extendCol.replace(/"\[{/g, "[{");
+                item.extendCol = item.extendCol.replace(/}]"/g, "}]");
+                let extendCol = !!item.extendCol?JSON.parse(item.extendCol):{};
                 if(extendCol.wid == wid) {
                     count++
                     let jsx = "<li><div>姓名："+item.vname+"</div><div>手机号码："+item.vphone+"</div>"+(!!item.cardId?"<div>身份证号："+item.cardId+"</div>":"")+"</li>"
@@ -111,6 +114,26 @@ function getSupplierInfo({wid, userid, token,gid}){
             $("#startDate").html(new Date(res.result.startDate).format("yyyy-MM-dd hh:mm:ss"))
             $("#endDate").html(new Date(res.result.endDate).format("yyyy-MM-dd hh:mm:ss"))
             $("#rid").html(getWid({createTime:res.result.createTime,wid:res.result.wid}))
+
+            let subWorkTypes = JSON.parse(res.result.subWorkType.replace(/&quot;/g, '"'))
+            let length = subWorkTypes.length;
+            if(length < 4){
+                length = 4
+            }else if(!!((length-4)%5)){
+                length += (5-(length-4)%5)
+            }
+            for(let i = 0; i < length; i++){
+                if(!subWorkTypes[i]) {
+                    subWorkTypes[i] = {
+                        selected:"",
+                        name:""
+                    }
+                }
+                let jsx = '<div><span class="checkBox'+(subWorkTypes[i].selected?" checked":"")+'"></span><span>'+subWorkTypes[i].name+'</span></div>'
+                $("#subWork").append(jsx)
+            }
+
+            $("#subWork").append('<div style="width:100%;border:0"><span>其他:</span></div>')
         }
     })
 }

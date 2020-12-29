@@ -154,15 +154,31 @@ body {
     border-right: 1px dashed #000;
 }
 .line11 div:last-child {
-    border: none !important
+    /* border: none !important; */
+}
+
+#subWork div {
+    height: 40px !important;
+    overflow: hidden;
+    border-bottom: 1px dashed #000;
 }
 
 .checkBox{
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #000;
     margin-right: 10px;
+    vertical-align: middle
+}
+
+.checkBox+span {
+    vertical-align: middle
+}
+
+.checkBox.checked {
+    background: url(./check.png) 100% 100% no-repeat;
+    background-size: cover;
 }
 
 .line11:last-child {

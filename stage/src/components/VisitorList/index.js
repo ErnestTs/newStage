@@ -824,7 +824,7 @@ export default class VisitorList extends Component{
 
                 for(let i = 0; i < data.result.length; i++){
                     let item = data.result[i];
-                    let extendCol = !!data.result[i].extendCol?JSON.parse(data.result[i].extendCol.replace(/&quot;/g,'"')):{};
+                    let extendCol = !!data.result[i].extendCol?JSON.parse(data.result[i].extendCol.replace(/&quot;/g,'"').replace(/"\[{/g, "[{").replace(/}]"/g, "}]")):{};
                     let secret = !!extendCol.secret;
 
                     item.secret = secret
