@@ -18,7 +18,7 @@ export default class Common {
 	// static cameraUrl = "http://www.coolvisit.top/stage/MyCamera.swf";
 	// static customPrintUrl = "http://www.coolvisit.top/card/custom/";
 	
-	static Version = "2.4.8"
+	static Version = "2.4.9"
 
 	static FreshToken = 6
 
