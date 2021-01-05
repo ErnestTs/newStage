@@ -29,6 +29,7 @@ import Blacklist from "../../components/Blacklist/index"
 import Companylist from "../../components/Companylist/index"
 import Register_officeBuilding from "../../components/Register_officeBuilding/index"
 import VisitorInfo_officeBuilding from "../../components/VisitorInfo_officeBuilding/index"
+import h5Video from "../../components/H5Video/index"
 
 import Menu from "../../components/Menu/index"
 
@@ -79,6 +80,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/resident" component={Resident} />
                                 <Route path="/home/companylist" component={Companylist} />
                                 <Route path="/home/blacklist" component={Blacklist} />
+                                <Route path="/home/video" component={h5Video} />
                                 <Redirect to={Common.$_Get().idcard==3?"/home/visitor":this.state.defaultPath} />
                             </Switch>
                         </Router>

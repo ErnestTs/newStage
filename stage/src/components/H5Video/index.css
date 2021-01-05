@@ -1,0 +1,70 @@
+#component_Face {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+#component_Face #facePhoto{
+    width: 600px;
+    padding-bottom: 50px;
+    margin: auto;
+    margin-top: 3%;
+}
+
+#component_Face #facePhoto #cameraPanel {
+    width: 400px;
+    height: 303px;
+    margin: auto;
+    border: 1px solid #DCDEE0;
+    position: relative;
+}
+
+#component_Face #facePhoto #cameraPanel img {
+    width: 100%;
+    height: 100%;
+}
+
+#facePhoto {
+    width: 400px;
+    height: 25rem;
+    left: 0;
+    top: 0;
+    position: relative;
+}
+
+#faceBtn {
+    width: 400px;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+#faceBtn div {
+    border: 2px solid #4091F7;
+    width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    line-height: 40px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#faceBtn #faceRepeatBtn {
+    float: left;
+    color: #4091F7;
+    background: #FFFFFF;
+}
+
+#faceNextBtn {
+    float: right;
+    background: #4091F7;
+    color: #FFFFFF;
+}
+
+#canvas,#video {
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    transform: translateX(-50%)
+}
