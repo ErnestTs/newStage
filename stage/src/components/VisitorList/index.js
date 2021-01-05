@@ -42,12 +42,12 @@ export default class VisitorList extends Component{
                     stateList:["invite","checkIn","noArrived"],
                     type:1
                 },
-                {
-                    name:"常驻访客",
-                    interface:"SearchRVisitorByConditionPage",
-                    stateList:["total","leave","visiting"],
-                    type:0
-                }
+                // {
+                //     name:"常驻访客",
+                //     interface:"SearchRVisitorByConditionPage",
+                //     stateList:["total","leave","visiting"],
+                //     type:0
+                // }
             ],
             vStateList:[
                 {name:"访客总数",count:0,key:"total",type:0},
@@ -484,6 +484,7 @@ export default class VisitorList extends Component{
      * @description [点击签到]
      */
     goLogin(data){
+        return
         if(data.visitType == "常驻访客"){
             return
         }
