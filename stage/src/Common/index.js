@@ -22,6 +22,8 @@ export default class Common {
 
 	static FreshToken = 6
 
+	static NetworkProtocol = Common.protocol
+
 	static ajaxProc(action, data, token) {
 		let jqXHR = $.ajax({
 			url: this.url + action,

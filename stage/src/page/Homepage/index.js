@@ -51,6 +51,7 @@ export default class Homepage extends Component {
             // Certificates:{},
             // VisitorInfoCom:{},
             // RegisterCom:{}
+            // FaceCom:{}
         }
     }
 
@@ -72,7 +73,7 @@ export default class Homepage extends Component {
                                 <Route path="/home/logistics" component={Logistics} />
                                 <Route path="/home/register" component={this.state.RegisterCom} />
                                 <Route path="/home/logisticsInfo" name="LogisticsInfo" component={LogisticsInfo} />
-                                <Route path="/home/face" name="face" component={FaceRecognition} />
+                                <Route path="/home/face" name="face" component={this.state.FaceCom} />
                                 <Route path="/home/visitorInfo" name="VisitorInfo" component={this.state.VisitorInfoCom} />
                                 <Route path="/home/print" name="print" component={Print} />
                                 <Route path="/home/visitor" name="visitor" component={VisitorList} />
@@ -80,7 +81,6 @@ export default class Homepage extends Component {
                                 <Route path="/home/resident" component={Resident} />
                                 <Route path="/home/companylist" component={Companylist} />
                                 <Route path="/home/blacklist" component={Blacklist} />
-                                <Route path="/home/video" component={h5Video} />
                                 <Redirect to={Common.$_Get().idcard==3?"/home/visitor":this.state.defaultPath} />
                             </Switch>
                         </Router>
@@ -140,6 +140,20 @@ export default class Homepage extends Component {
                 this.setState({
                     VisitorInfoCom: VisitorInfo,
                     RegisterCom: Register,
+                })
+                break;
+        }
+
+        // 人脸采集切换 NetworkProtocol http-flash https-canvas+h5
+        switch(Common.NetworkProtocol){
+            // case "https://":
+            //     this.setState({
+            //         FaceCom:h5Video
+            //     })
+            //     break;
+            default:
+                this.setState({
+                    FaceCom:FaceRecognition
                 })
                 break;
         }
